@@ -9,7 +9,7 @@ import { flex, flexColumn, toTimeAgoString } from '@styles/utils';
 const Box = styled.div`
   position: relative;
   ${flexColumn}
-  width: 100%;
+  width: calc(100% - 80px);
   ${props =>
     !props.editMode === true &&
     css`
@@ -61,6 +61,7 @@ const HeaderEditButton = styled.button`
 `;
 
 const CommentItemContent = styled.p`
+  width: calc(100% - 2rem);
   padding: 1rem;
   white-space: pre-wrap;
 `;

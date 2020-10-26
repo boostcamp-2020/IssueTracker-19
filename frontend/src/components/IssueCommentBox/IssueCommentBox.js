@@ -27,7 +27,8 @@ const ImageBox = styled.div`
 `;
 
 const ImageItem = styled.img`
-  width: 100%;
+  width: 40px;
+  height: 40px;
   object-fit: scale-down;
 `;
 
