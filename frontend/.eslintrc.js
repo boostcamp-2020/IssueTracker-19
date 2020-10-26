@@ -1,0 +1,40 @@
+module.exports = {
+  env: {
+    browser: true,
+    es2021: true,
+  },
+  extends: [
+    'plugin:react/recommended',
+    'airbnb',
+    'plugin:prettier/recommended',
+  ],
+  plugins: ['react', 'prettier'],
+  parser: 'babel-eslint',
+  parserOptions: {
+    ecmaFeatures: {
+      jsx: true,
+    },
+    ecmaVersion: 12,
+    sourceType: 'module',
+  },
+  rules: {
+    'prettier/prettier': 'error',
+    'no-var': 'warn',
+    'no-unused-vars': 'off',
+    'prefer-const': 'off',
+    'no-console': 'warn',
+    'no-plusplus': ['error', { allowForLoopAfterthoughts: true }],
+    'no-unused-expressions': ['warn'],
+    'import/prefer-default-export': 'off',
+    'no-param-reassign': ['error', { props: false }],
+    'import/extensions': ['off'],
+    'no-continue': 'off',
+    'no-constant-condition': ['error', { checkLoops: false }],
+    'import/no-unresolved': 'off',
+    'class-methods-use-this': 'off',
+    'no-new': 'off',
+    'no-shadow': 'off',
+    'no-restricted-globals': 'warn',
+  },
+  ignorePatterns: ['node_modules', 'babel.config.js'],
+};

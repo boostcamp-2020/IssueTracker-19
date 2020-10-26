@@ -1,0 +1,52 @@
+{
+  "name": "backend",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start:dev": "nodemon --exec babel-node app.js",
+    "start:prod": "pm2 start app.js --interpreter node_modules/.bin/babel-node",
+    "test": "jest"
+  },
+  "_moduleAliases": {
+    "@": ".",
+    "@config": "./config",
+    "@lib": "./lib",
+    "@middlewares": "./middlewares",
+    "@models": "./models",
+    "@routes": "./routes"
+  },
+  "dependencies": {
+    "axios": "^0.20.0",
+    "babel-eslint": "^10.1.0",
+    "bcrypt": "^5.0.0",
+    "camelcase": "^6.1.0",
+    "concurrently": "^5.3.0",
+    "cookie-parser": "^1.4.5",
+    "cors": "^2.8.5",
+    "debug": "^4.2.0",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "http-errors": "^1.8.0",
+    "jsonwebtoken": "^8.5.1",
+    "module-alias": "^2.2.2",
+    "morgan": "^1.10.0",
+    "mysql2": "^2.1.0",
+    "passport": "^0.4.1",
+    "passport-github2": "^0.1.12",
+    "passport-local": "^1.0.0"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.12.1",
+    "@babel/core": "^7.12.3",
+    "@babel/node": "^7.12.1",
+    "@babel/preset-env": "^7.12.1",
+    "eslint": "^7.12.0",
+    "eslint-config-airbnb-base": "^14.2.0",
+    "eslint-config-prettier": "^6.12.0",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-prettier": "^3.1.4",
+    "jest": "^26.4.2",
+    "nodemon": "^2.0.4",
+    "prettier": "^2.1.2"
+  }
+}

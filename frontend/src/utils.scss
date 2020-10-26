@@ -1,0 +1,25 @@
+$light-box-shadow: 1px 1px 4px 1.5px rgba(0, 0, 0, 0.1);
+$normal-box-shadow: 1px 1px 4px 3.5px rgba(0, 0, 0, 0.1);
+$skyblue-box-shadow: 0 0 0 3px #b3d1f3;
+
+$app-color: #29b6af;
+
+$light-gray: #d0d0d0;
+$lighter-gray: #e0e0e0;
+$lightest-gray: #f0f0f0;
+
+$black-1: #111;
+$black-2: #222;
+$black-3: #333;
+$black-4: #444;
+$black-5: #555;
+$black-6: #666;
+$black-7: #777;
+$black-8: #888;
+$black-9: #999;
+
+@mixin flex($justify-content: flex-start, $align-items: stretch) {
+  display: flex;
+  justify-content: $justify-content;
+  align-items: $align-items;
+}
