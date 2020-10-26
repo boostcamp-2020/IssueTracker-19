@@ -13,8 +13,16 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        
+        if let token = UserDefaults.standard.value(forKey: "GoogleToken") as? String {
+            HTTPAgent.shared.getUser(token: token)
+        }
     }
 
 
+    @IBAction func githubLogin(_ sender: UIButton) {
+        HTTPAgent.shared.githubLoginAction()
+    }
+    
 }
 
