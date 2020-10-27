@@ -27,7 +27,6 @@ class IssueViewController: UIViewController {
         
         collectionView.collectionViewLayout = flowLayout
         collectionView.backgroundColor = UIColor.systemGray5
-        
     }
 }
 

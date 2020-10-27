@@ -46,7 +46,7 @@ class HTTPAgent: LoginProtocol {
                 if let json = try! JSONSerialization.jsonObject(with: data!, options: []) as? [String : Any]{
                     
                     if let token = json["access_token"] as? String {
-                        self.getUser(token: token)
+                        self.getUser(token: token, completion: nil)
                     }
                 }
             }
@@ -57,7 +57,7 @@ class HTTPAgent: LoginProtocol {
         }
     }
     
-    func getUser(token: String) {
+    func getUser(token: String, completion: ((Int) -> Void)? = nil) {
         let urlString = "https:api.github.com/user"
         UserDefaults.standard.set(token, forKey: "GoogleToken")
         
@@ -71,7 +71,9 @@ class HTTPAgent: LoginProtocol {
         request.setValue("application/vnd.github.v3+json", forHTTPHeaderField: "Accept")
         
         let task = URLSession.shared.dataTask(with: request) { data, response, error in
-            
+            if let httpResponse = response as? HTTPURLResponse {
+                completion?(httpResponse.statusCode)
+            }
         }
         
         task.resume()
