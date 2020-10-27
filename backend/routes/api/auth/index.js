@@ -2,7 +2,7 @@ import express from 'express';
 import githubRouter from './github';
 import * as authController from './auth.controller';
 
-const router = express();
+const router = express.Router();
 
 router.use('/github', githubRouter);
 router.post('/login', authController.login);
