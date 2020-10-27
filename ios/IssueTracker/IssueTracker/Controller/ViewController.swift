@@ -15,9 +15,6 @@ class ViewController: UIViewController {
 	override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-
-        
-		
     }
 	
 	override func viewDidAppear(_ animated: Bool) {
@@ -27,9 +24,9 @@ class ViewController: UIViewController {
 		}
 	}
 
-
     @IBAction func githubLogin(_ sender: UIButton) {
         HTTPAgent.shared.githubLoginAction()
+        performSegue(withIdentifier: "loginSuccessSegue", sender: nil)
     }
     
 	@IBAction func appleLogin(_ sender: UIButton) {
