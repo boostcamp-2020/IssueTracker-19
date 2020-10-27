@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		4C827FBF2546BBBD009526A4 /* gicho.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C827FBE2546BBBD009526A4 /* gicho.swift */; };
 		C117D89E2547C7CF0081DCD7 /* IssueViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C117D89D2547C7CF0081DCD7 /* IssueViewController.swift */; };
 		C12542602547F44C00DE2BB8 /* IssueCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C125425F2547F44C00DE2BB8 /* IssueCollectionViewCell.swift */; };
 		C12542632548007500DE2BB8 /* UIExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C12542622548007500DE2BB8 /* UIExtension.swift */; };
@@ -21,7 +20,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		4C827FBE2546BBBD009526A4 /* gicho.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = gicho.swift; sourceTree = "<group>"; };
 		C117D89D2547C7CF0081DCD7 /* IssueViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueViewController.swift; sourceTree = "<group>"; };
 		C125425F2547F44C00DE2BB8 /* IssueCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueCollectionViewCell.swift; sourceTree = "<group>"; };
 		C12542622548007500DE2BB8 /* UIExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIExtension.swift; sourceTree = "<group>"; };
@@ -101,7 +99,6 @@
 				C19656502546B9B9007DD55A /* Assets.xcassets */,
 				C19656522546B9B9007DD55A /* LaunchScreen.storyboard */,
 				C19656552546B9B9007DD55A /* Info.plist */,
-				4C827FBE2546BBBD009526A4 /* gicho.swift */,
 			);
 			path = IssueTracker;
 			sourceTree = "<group>";
@@ -179,7 +176,6 @@
 			files = (
 				C117D89E2547C7CF0081DCD7 /* IssueViewController.swift in Sources */,
 				C12542602547F44C00DE2BB8 /* IssueCollectionViewCell.swift in Sources */,
-				4C827FBF2546BBBD009526A4 /* gicho.swift in Sources */,
 				C196564C2546B9B6007DD55A /* ViewController.swift in Sources */,
 				C19656602546CC4F007DD55A /* HTTPAgent.swift in Sources */,
 				C19656482546B9B6007DD55A /* AppDelegate.swift in Sources */,
