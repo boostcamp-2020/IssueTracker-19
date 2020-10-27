@@ -15,21 +15,26 @@ class ViewController: UIViewController {
 	override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-
-        
-		
     }
 	
 	override func viewDidAppear(_ animated: Bool) {
 		super.viewDidAppear(animated)
 		if let token = UserDefaults.standard.value(forKey: "GoogleToken") as? String {
-			HTTPAgent.shared.getUser(token: token)
-		}
-	}
-
+            HTTPAgent.shared.getUser(token: token, completion: { [weak self] statuscode in
+                if statuscode == 200 {
+                    DispatchQueue.main.async {
+                        self?.performSegue(withIdentifier: "loginSuccessSegue", sender: nil)
+                    }
+                } else {
+                    UserDefaults.standard.removeObject(forKey: "GoogleToken")
+                }
+            })
+        }
+    }
 
     @IBAction func githubLogin(_ sender: UIButton) {
         HTTPAgent.shared.githubLoginAction()
+        performSegue(withIdentifier: "loginSuccessSegue", sender: nil)
     }
     
 	@IBAction func appleLogin(_ sender: UIButton) {
