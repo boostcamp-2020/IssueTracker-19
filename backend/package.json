@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start:dev": "cross-env MODE=dev nodemon --exec babel-node app.js",
-    "start:prod": "pm2 start app.js --interpreter node_modules/.bin/babel-node",
+    "start": "pm2 start app.js --interpreter node_modules/.bin/babel-node",
     "test": "jest"
   },
   "_moduleAliases": {
