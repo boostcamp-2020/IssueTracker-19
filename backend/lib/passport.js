@@ -2,6 +2,7 @@ import passport from 'passport';
 import { Strategy as LocalStrategy } from 'passport-local';
 import { Strategy as GitHubStrategy } from 'passport-github2';
 import { userModel } from '@models';
+import { AUTH } from '@lib/constants';
 import config from '@config';
 import bcrypt from 'bcrypt';
 
@@ -59,12 +60,14 @@ export default () => {
         callbackURL: process.env.MODE === 'dev' ? devCallbackURL : callbackURL,
       },
       async (accessToken, refreshToken, profile, done) => {
-        /**
-         * TODO
-         * db에서 해당 id 조회 후 없으면 insert, 있으면 해당 아이디로 로그인 처리
-         * 성공하면 done(null, 전달할 값); 호출
-         * 실패하면 done(err); 호출
-         */
+        const { username: nickname, id } = profile;
+        const [[user]] = await userModel.getUserById({ id });
+        if (user) {
+          done(null, user);
+          return;
+        }
+        await userModel.addUser({ id, nickname, auth: AUTH.GITHUB });
+        done(null, user);
       },
     ),
   );

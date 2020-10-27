@@ -32,6 +32,14 @@ app.use(passport.session());
 passportConfig();
 
 app.use('/api', apiRouter);
+app.all('*', (req, res) => {
+  if (process.env.MODE === 'dev') {
+    res.redirect(process.env.DEV_URL);
+    return;
+  }
+  // TODO : sendFile 경로 수정 -> frontend build 결과물의 index.html로 변경
+  res.sendFile(path.join(__dirname, 'public/index.html'));
+});
 
 app.use((req, res, next) => {
   next(createError(404));
