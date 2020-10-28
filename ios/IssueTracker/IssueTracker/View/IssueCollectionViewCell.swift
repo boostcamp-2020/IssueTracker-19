@@ -50,8 +50,7 @@ class IssueCollectionViewCell: UICollectionViewCell {
         label.textAlignment = .center
         return label
     }()
-    
-    
+        
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupViews()

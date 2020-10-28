@@ -11,6 +11,7 @@
 		C117D89E2547C7CF0081DCD7 /* IssueViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C117D89D2547C7CF0081DCD7 /* IssueViewController.swift */; };
 		C12542602547F44C00DE2BB8 /* IssueCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C125425F2547F44C00DE2BB8 /* IssueCollectionViewCell.swift */; };
 		C12542632548007500DE2BB8 /* UIExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C12542622548007500DE2BB8 /* UIExtension.swift */; };
+		C136F60C25495F93007A09F8 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = C136F60B25495F93007A09F8 /* .swiftlint.yml */; };
 		C19656482546B9B6007DD55A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C19656472546B9B6007DD55A /* AppDelegate.swift */; };
 		C196564A2546B9B6007DD55A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C19656492546B9B6007DD55A /* SceneDelegate.swift */; };
 		C196564C2546B9B6007DD55A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C196564B2546B9B6007DD55A /* ViewController.swift */; };
@@ -26,6 +27,7 @@
 		C117D89D2547C7CF0081DCD7 /* IssueViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueViewController.swift; sourceTree = "<group>"; };
 		C125425F2547F44C00DE2BB8 /* IssueCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueCollectionViewCell.swift; sourceTree = "<group>"; };
 		C12542622548007500DE2BB8 /* UIExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIExtension.swift; sourceTree = "<group>"; };
+		C136F60B25495F93007A09F8 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
 		C19656442546B9B6007DD55A /* IssueTracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = IssueTracker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C19656472546B9B6007DD55A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C19656492546B9B6007DD55A /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -56,7 +58,6 @@
 				0AC642BD38CA333388D53582 /* Pods-IssueTracker.debug.xcconfig */,
 				F4058FAEFC005D172BDD6980 /* Pods-IssueTracker.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -107,6 +108,7 @@
 		C19656462546B9B6007DD55A /* IssueTracker */ = {
 			isa = PBXGroup;
 			children = (
+				C136F60B25495F93007A09F8 /* .swiftlint.yml */,
 				C117D8A72547C9380081DCD7 /* Controller */,
 				C117D8A62547C9300081DCD7 /* View */,
 				C117D8A52547C9270081DCD7 /* Model */,
@@ -139,6 +141,7 @@
 				C19656402546B9B6007DD55A /* Sources */,
 				C19656412546B9B6007DD55A /* Frameworks */,
 				C19656422546B9B6007DD55A /* Resources */,
+				C136F60925495DD4007A09F8 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -187,6 +190,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C136F60C25495F93007A09F8 /* .swiftlint.yml in Resources */,
 				C19656542546B9B9007DD55A /* LaunchScreen.storyboard in Resources */,
 				C19656512546B9B9007DD55A /* Assets.xcassets in Resources */,
 				C196564F2546B9B6007DD55A /* Main.storyboard in Resources */,
@@ -217,6 +221,23 @@
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
+		};
+		C136F60925495DD4007A09F8 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n${PODS_ROOT}/SwiftLint/swiftlint\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -308,7 +329,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -363,7 +384,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -381,6 +402,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = B3PWYBKFUK;
 				INFOPLIST_FILE = IssueTracker/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -400,6 +422,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = B3PWYBKFUK;
 				INFOPLIST_FILE = IssueTracker/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
