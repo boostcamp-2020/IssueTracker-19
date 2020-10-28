@@ -1,34 +1,91 @@
+import { milestoneModel } from '@models';
 /**
  * GET /api/milestones
  */
-export const getMilestones = (req, res, next) => {
-  // TODO : 로직 작성
-  res.json({ milestones: [] });
+export const getMilestoneList = async (req, res, next) => {
+  try {
+    const [row] = await milestoneModel.getMilestoneList();
+    res.json({ milestones: row });
+  } catch (err) {
+    next(err);
+  }
+};
+
+/**
+ * GET /api/milestones/:no
+ */
+export const getMilestone = async (req, res, next) => {
+  try {
+    const { no } = req.params;
+    const [row] = await milestoneModel.getMilestone({ no: no });
+    res.json({ milestones: row });
+  } catch (err) {
+    next(err);
+  }
 };
 
 /**
  * POST /api/milestones
  */
-export const addMilestone = (req, res, next) => {
-  // TODO : 로직 작성
-  const { title, description, dueDate } = req.body;
-  res.status(201).end();
+export const addMilestone = async (req, res, next) => {
+  try {
+    const { title, description, dueDate } = req.body;
+    await milestoneModel.addMilestone({ title: title, description: description, dueDate: dueDate });
+    res.status(201).end();
+  } catch (err) {
+    next(err);
+  }
 };
 
 /**
  * PUT /api/milestones/:no
  */
-export const changeMilestone = (req, res, next) => {
-  const { no } = req.params;
-  // TODO : 로직 작성
-  res.status(200).end();
+export const changeMilestone = async (req, res, next) => {
+  try {
+    const { no } = req.params;
+    const { title, description, dueDate } = req.body;
+    await milestoneModel.changeMilestone({ title: title, description: description, dueDate: dueDate, no: no });
+    res.status(200).end();
+  } catch (err) {
+    next(err);
+  }
 };
 
 /**
  * DELETE /api/milestones/:no
  */
-export const deleteMilestone = (req, res, next) => {
-  const { no } = req.params;
-  // TODO : 로직 작성
-  res.status(200).end();
+export const deleteMilestone = async (req, res, next) => {
+  try {
+    const { no } = req.params;
+    await milestoneModel.deleteMilestone({ no: no });
+    res.status(200).end();
+  } catch (err) {
+    next(err);
+  }
+};
+
+/**
+ * PATCH /api/milestones/:no/open
+ */
+export const openMilestone = async (req, res, next) => {
+  try {
+    const { no } = req.params;
+    await milestoneModel.openMilestone({ no: no });
+    res.status(200).end();
+  } catch (err) {
+    next(err);
+  }
+};
+
+/**
+ * PATCH /api/milestones/:no/close
+ */
+export const closeMilestone = async (req, res, next) => {
+  try {
+    const { no } = req.params;
+    await milestoneModel.closeMilestone({ no: no });
+    res.status(200).end();
+  } catch (err) {
+    next(err);
+  }
 };
