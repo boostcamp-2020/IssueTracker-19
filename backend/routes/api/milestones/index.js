@@ -1,7 +1,7 @@
 import express from 'express';
 import * as milestonesController from './milestones.controller';
 
-const router = express.Router();
+const router = express.Router({ mergeParams: true });
 
 router.get('/', milestonesController.getMilestones);
 router.post('/', milestonesController.addMilestone);
