@@ -15,26 +15,8 @@ export const getIssues = (req, res, next) => {
  */
 export const addIssue = (req, res, next) => {
   // TODO : camelCase로 변경하는 것을 프론트에서 할지 여기서 할 지 결정
-  const { title, assignee_no, milestone_no, label_no } = req.body;
+  const { title, assigneeNo, milestoneNo, labelNo } = req.body;
 
   // TODO : 이슈 추가 로직 구현
   res.status(201).end();
-};
-
-/**
- * PATCH /api/issues/:no/close
- */
-export const closeIssue = (req, res, next) => {
-  const { no } = req.params;
-  // TODO : 로직 작성
-  res.status(200).end();
-};
-
-/**
- * PATCH /api/issues/:no/open
- */
-export const openIssue = (req, res, next) => {
-  const { no } = req.params;
-  // TODO : 로직 작성
-  res.status(200).end();
 };
