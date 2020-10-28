@@ -50,13 +50,24 @@ export const getIssues = async (req, res, next) => {
     while (true) {
       if (commentIdx >= commentList.length) break;
       const comment = commentList[commentIdx];
-      const { no } = comment;
+      const { no, isHead } = comment;
 
       if (+comment.issueNo !== +issueNo) break;
-      comments.push({ no, issueNo: comment.issueNo });
+      comments.push({
+        no,
+        issueNo,
+        isHead,
+        author: comment.author,
+      });
       commentIdx += 1;
     }
-    return { ...issue, labels, assignees, commentCount: comments.length };
+    return {
+      ...issue,
+      labels,
+      assignees,
+      comments,
+      commentCount: comments.length,
+    };
   });
 
   const filterdIssues = issuesWithLabelsAndMileStones.filter(issue => {
@@ -81,7 +92,19 @@ export const getIssues = async (req, res, next) => {
     if (milestone && issue.milestone !== milestone) {
       return false;
     }
-    // TODO : comment 조건 필터링!! 내가 댓글을 작성한 이슈인지 -> 이거 구현이 애매해서 잠시 보류
+    if (+comment) {
+      // TODO : isHead인 코멘트를 내가 작성한 코멘트라고 할지 안할지에 따라 아래 조건이 수정됨
+      const authorNickname = req.user;
+      if (
+        !issue.comments.some(
+          issueComment =>
+            !+issueComment.isHead && issueComment.author === authorNickname,
+        )
+      ) {
+        return false;
+      }
+    }
+
     if (label) {
       if (Array.isArray(label)) {
         // label 조건이 여러 조건일 때(배열로 올 때)
