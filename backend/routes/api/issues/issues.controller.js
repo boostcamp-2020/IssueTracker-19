@@ -1,22 +1,32 @@
-import { issueModel } from '@models';
+import { issueModel, commentModel } from '@models';
 /**
  * GET /api/issues
  */
 export const getIssues = async (req, res, next) => {
   const { isOpened, author, assignee, milestone, comment, label } = req.query;
 
-  const [issues] = await issueModel.getIssueList();
-  const [labelList] = await issueModel.getIssuesLableList();
-  const [assigneeList] = await issueModel.getIssuesAssigneeList();
+  const [
+    [issues],
+    [labelList],
+    [assigneeList],
+    [commentList],
+  ] = await Promise.all([
+    issueModel.getIssueList(),
+    issueModel.getIssuesLableList(),
+    issueModel.getIssuesAssigneeList(),
+    commentModel.getComments(),
+  ]);
 
   let labelIdx = 0;
   let assigneeIdx = 0;
+  let commentIdx = 0;
 
   // TODO : 이 부분 서비스 코드로 분리하기
   const issuesWithLabelsAndMileStones = issues.map(issue => {
     const { no: issueNo } = issue;
     const labels = [];
     const assignees = [];
+    const comments = [];
     while (true) {
       if (labelIdx >= labelList.length) break;
       const label = labelList[labelIdx];
@@ -36,7 +46,17 @@ export const getIssues = async (req, res, next) => {
       assignees.push({ no, nickname, image });
       assigneeIdx += 1;
     }
-    return { ...issue, labels, assignees };
+
+    while (true) {
+      if (commentIdx >= commentList.length) break;
+      const comment = commentList[commentIdx];
+      const { no } = comment;
+
+      if (+comment.issueNo !== +issueNo) break;
+      comments.push({ no, issueNo: comment.issueNo });
+      commentIdx += 1;
+    }
+    return { ...issue, labels, assignees, commentCount: comments.length };
   });
 
   const filterdIssues = issuesWithLabelsAndMileStones.filter(issue => {
