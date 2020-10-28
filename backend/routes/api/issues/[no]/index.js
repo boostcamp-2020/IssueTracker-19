@@ -8,7 +8,7 @@ import closeRouter from './close';
 import commentRouter from './comments';
 import * as issueNoController from './no.controller';
 
-const router = express.Router();
+const router = express.Router({ mergeParams: true });
 
 router.use('/title', titleRouter);
 router.use('/assignees', assigneeRouter);

@@ -4,7 +4,7 @@ import issueRouter from './issues';
 import labelRouter from './labels';
 import milestoneRouter from './milestones';
 
-const router = express.Router();
+const router = express.Router({ mergeParams: true });
 
 router.use('/auth', authRouter);
 router.use('/issues', issueRouter);

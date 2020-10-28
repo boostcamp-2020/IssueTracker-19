@@ -1,7 +1,7 @@
 import express from 'express';
 import * as labelsController from './labels.controller';
 
-const router = express.Router();
+const router = express.Router({ mergeParams: true });
 
 router.get('/', labelsController.getLabels);
 router.post('/', labelsController.addLabel);
