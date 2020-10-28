@@ -6,6 +6,7 @@ import milestoneRouter from './milestone';
 import openRouter from './open';
 import closeRouter from './close';
 import commentRouter from './comments';
+import * as issueNoController from './no.controller';
 
 const router = express.Router();
 
@@ -16,5 +17,7 @@ router.use('/milestone', milestoneRouter);
 router.use('/comments', commentRouter);
 router.use('/open', openRouter);
 router.use('/close', closeRouter);
+
+router.use('/', issueNoController.getIssue);
 
 export default router;
