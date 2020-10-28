@@ -5,16 +5,6 @@ import { issueModel } from '@models';
 export const getIssues = async (req, res, next) => {
   const { isOpened, author, assignee, milestone, comment, label } = req.query;
 
-  // let filterOptionSql = 'WHERE ';
-  // const options = [];
-  // if(author) options.push(`u.nickname = ${author}`);
-  // if(assignee) {
-  //   // options.push(`assignee = ${author}`);
-  // }
-  // if(milestone) options.push(`m.title = ${milestone}`);
-  // if(comment) options.push(`author = ${author}`);
-  // if(author) options.push(`author = ${author}`);
-
   const [issues] = await issueModel.getIssueList();
   const [labelList] = await issueModel.getIssuesLableList();
   const [assigneeList] = await issueModel.getIssuesAssigneeList();
@@ -49,27 +39,49 @@ export const getIssues = async (req, res, next) => {
     return { ...issue, labels, assignees };
   });
 
-  // TODO : 여기에 필터조건 걸기
-  // TODO ::: 여기서 필터링하는 것보다 mysql 쿼리로 필터링을 거는게 좀 더 유연하게 될 듯..
-
   const filterdIssues = issuesWithLabelsAndMileStones.filter(issue => {
-    if (author && issue.author !== author) {
+    // 프론트 단에서 자기 자신일 때 @me로 안하고 그냥 nickname이나 user.no 넘겨주면 더 편할 것 같다고 생각(프론트 구현의 측면에서 볼 때)
+    if (isOpened) {
+      if (+issue.isOpened !== +isOpened) {
+        return false;
+      }
+    }
+    if (author) {
+      const authorNickname = author === '@me' ? req.user : author;
+      if (issue.author !== authorNickname) {
+        return false;
+      }
+    }
+    if (assignee) {
+      const assigneeNickname = assignee === '@me' ? req.user : assignee;
+      if (!issue.assignees.some(a => a.nickname === assigneeNickname)) {
+        return false;
+      }
+    }
+    if (milestone && issue.milestone !== milestone) {
       return false;
     }
-    if (assignee && !issue.assignees.some(a => a === assignee)) {
-      return false;
+    // TODO : comment 조건 필터링!! 내가 댓글을 작성한 이슈인지 -> 이거 구현이 애매해서 잠시 보류
+    if (label) {
+      if (Array.isArray(label)) {
+        // label 조건이 여러 조건일 때(배열로 올 때)
+        if (
+          !label.some(l =>
+            issue.labels.some(issueLabel => issueLabel.name === l),
+          )
+        ) {
+          return false;
+        }
+      } else if (!issue.labels.some(issueLabel => issueLabel.name === label)) {
+        // label 조건이 단일 조건일 때
+        return false;
+      }
     }
-    // if (label) {
-    //   if (Array.isArray(label) && label) {
-    //     return;
-    //   }
-    //   return;
-    // }
     return true;
   });
 
   // TODO : 해당 조건으로 검색하는 로직 구현
-  // 검색 조건 + '검색어'로 검색이 가능해야함!
+  // 검색 조건 + '검색어'로 검색이 가능해야함! -> 이 조건은 mysql 쿼리 던질 때 WHERE title LIKE '%keyword%' 옵션으로 검색하는게 좋을 듯
 
   res.json({ issues: filterdIssues });
 };
