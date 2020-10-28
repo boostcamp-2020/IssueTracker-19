@@ -9,8 +9,6 @@ export const getIssues = async (req, res, next) => {
   const [labelList] = await issueModel.getIssuesLableList();
   const [assigneeList] = await issueModel.getIssuesAssigneeList();
 
-  console.log('label', labelList);
-
   let labelIdx = 0;
   let assigneeIdx = 0;
 
