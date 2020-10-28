@@ -4,12 +4,13 @@ import pool from '@lib/db';
 
 export const issueModel = {
   /* prettier-ignore */
-  getIssueList() {
+  getIssueList(filterOptions = '') {
     const sql = `SELECT i.no, u.nickname as author, i.title, i.is_opened as isOpened, i.created_at as createdAt, 
     i.closed_at as closedAt, m.title as milestone, (SELECT COUNT(comment.no) FROM comment WHERE issue_no=i.no) as commentCount 
     FROM issue i 
     LEFT JOIN milestone m ON m.no = i.milestone_no
     LEFT JOIN user u ON u.no = i.author_no
+    ${filterOptions}
     ORDER BY i.no;`;
     return pool.query(sql);
   },

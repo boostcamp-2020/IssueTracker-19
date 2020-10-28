@@ -3,13 +3,21 @@ import { issueModel } from '@models';
  * GET /api/issues
  */
 export const getIssues = async (req, res, next) => {
-  const { open, author, assignee, milestone, comment, label } = req.query;
+  const { isOpened, author, assignee, milestone, comment, label } = req.query;
+
+  // let filterOptionSql = 'WHERE ';
+  // const options = [];
+  // if(author) options.push(`u.nickname = ${author}`);
+  // if(assignee) {
+  //   // options.push(`assignee = ${author}`);
+  // }
+  // if(milestone) options.push(`m.title = ${milestone}`);
+  // if(comment) options.push(`author = ${author}`);
+  // if(author) options.push(`author = ${author}`);
 
   const [issues] = await issueModel.getIssueList();
   const [labelList] = await issueModel.getIssuesLableList();
   const [assigneeList] = await issueModel.getIssuesAssigneeList();
-
-  console.log('label', labelList);
 
   let labelIdx = 0;
   let assigneeIdx = 0;
@@ -42,7 +50,23 @@ export const getIssues = async (req, res, next) => {
   });
 
   // TODO : 여기에 필터조건 걸기
-  const filterdIssues = issuesWithLabelsAndMileStones.filter(i => i);
+  // TODO ::: 여기서 필터링하는 것보다 mysql 쿼리로 필터링을 거는게 좀 더 유연하게 될 듯..
+
+  const filterdIssues = issuesWithLabelsAndMileStones.filter(issue => {
+    if (author && issue.author !== author) {
+      return false;
+    }
+    if (assignee && !issue.assignees.some(a => a === assignee)) {
+      return false;
+    }
+    // if (label) {
+    //   if (Array.isArray(label) && label) {
+    //     return;
+    //   }
+    //   return;
+    // }
+    return true;
+  });
 
   // TODO : 해당 조건으로 검색하는 로직 구현
   // 검색 조건 + '검색어'로 검색이 가능해야함!
