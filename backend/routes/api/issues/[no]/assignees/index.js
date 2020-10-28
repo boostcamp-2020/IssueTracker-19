@@ -1,9 +1,9 @@
 import express from 'express';
-import * as assigneeController from './assignee.controller';
+import * as assigneeController from './assignees.controller';
 
 const router = express.Router();
 
 router.post('/', assigneeController.addIssueAssignee);
-router.delete('/', assigneeController.deleteIssueAssignee);
+router.delete('/:assigneeNo', assigneeController.deleteIssueAssignee);
 
 export default router;
