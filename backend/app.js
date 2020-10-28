@@ -7,8 +7,11 @@ import cookieParser from 'cookie-parser';
 import logger from 'morgan';
 import passport from 'passport';
 import cors from 'cors';
+import session from 'express-session';
+import config from '@config';
 
 import apiRouter from './routes/api/index';
+import passportConfig from './lib/passport';
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -19,9 +22,24 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(session(config.session)); // 세션, 쿠키 유효시간 설정-> config.js파일 변경
+app.use((req, res, next) => {
+  res.locals.session = req.session;
+  next();
+});
 app.use(passport.initialize());
+app.use(passport.session());
+passportConfig();
 
 app.use('/api', apiRouter);
+app.all('*', (req, res) => {
+  if (process.env.MODE === 'dev') {
+    res.redirect(process.env.DEV_URL);
+    return;
+  }
+  // TODO : sendFile 경로 수정 -> frontend build 결과물의 index.html로 변경
+  res.sendFile(path.join(__dirname, 'public/index.html'));
+});
 
 app.use((req, res, next) => {
   next(createError(404));
@@ -33,7 +51,7 @@ app.use((err, req, res, next) => {
   console.error(err.message);
 
   res.status(err.status || 500);
-  res.json({ error: err.status || 500 });
+  res.json({ message: err.message });
 });
 
 app.listen(port, () => {

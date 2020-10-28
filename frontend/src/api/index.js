@@ -29,7 +29,7 @@ instance.interceptors.response.use(
   },
 );
 
-export const apiClient = {
+export const API = {
   get(url, headers, cancelToken) {
     return instance({
       url,
