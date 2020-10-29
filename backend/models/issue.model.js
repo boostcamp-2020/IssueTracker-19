@@ -44,7 +44,10 @@ export const issueModel = {
   deleteIssueAssignee({}) {},
   addIssueLabel({}) {},
   deleteIssueLabel({}) {},
-  changeIssueMilestone({}) {},
+  changeIssueMilestone({ no, milestoneNo = null }) {
+    const sql = 'UPDATE issue SET milestone_no=? WHERE no=?;';
+    return pool.execute(sql, [milestoneNo, no]);
+  },
   openIssue({ no }) {
     const sql = 'UPDATE issue SET is_opened=1 WHERE no=?;';
     return pool.execute(sql, [no]);
