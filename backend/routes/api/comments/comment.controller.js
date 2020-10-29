@@ -1,11 +1,10 @@
 import { commentModel } from '@models';
 
 /**
- * POST /api/issues/:no/comments
+ * POST /api/comments
  */
 export const addComment = async (req, res, next) => {
-  const { no: issueNo } = req.params;
-  const { content, isHead } = req.body;
+  const { issueNo, content, isHead } = req.body;
 
   try {
     await commentModel.addComment({
@@ -21,7 +20,7 @@ export const addComment = async (req, res, next) => {
 };
 
 /**
- * PATCH /api/issues/:no/comments/:commentNo
+ * PATCH /api/comments/:commentNo
  */
 export const changeComment = (req, res, next) => {
   const { no, commentNo } = req.params;
@@ -38,7 +37,7 @@ export const changeComment = (req, res, next) => {
 };
 
 /**
- * DELETE /api/issues/:no/comments/:commentNo
+ * DELETE /api/comments/:commentNo
  */
 export const deleteComment = (req, res, next) => {
   const { no, commentNo } = req.params;
