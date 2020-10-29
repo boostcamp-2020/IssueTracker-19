@@ -78,13 +78,14 @@ export const getIssues = async (req, res, next) => {
       }
     }
     if (author) {
-      const authorNickname = author === '@me' ? req.user : author;
+      const authorNickname = author === '@me' ? req.user.nickname : author;
       if (issue.author !== authorNickname) {
         return false;
       }
     }
     if (assignee) {
-      const assigneeNickname = assignee === '@me' ? req.user : assignee;
+      const assigneeNickname =
+        assignee === '@me' ? req.user.nickname : assignee;
       if (!issue.assignees.some(a => a.nickname === assigneeNickname)) {
         return false;
       }
@@ -94,7 +95,7 @@ export const getIssues = async (req, res, next) => {
     }
     if (+comment) {
       // TODO : isHead인 코멘트를 내가 작성한 코멘트라고 할지 안할지에 따라 아래 조건이 수정됨
-      const authorNickname = req.user;
+      const authorNickname = req.user.nickname;
       if (
         !issue.comments.some(
           issueComment =>

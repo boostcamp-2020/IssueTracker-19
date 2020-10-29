@@ -9,7 +9,7 @@ import bcrypt from 'bcrypt';
 export default () => {
   passport.serializeUser((user, done) => {
     // 로그인 성공시 1번 호출되어 사용자의 식별자를 세션저장소에 저장, 두 번째 매개변수는 추후 req.user로 접근 가능
-    done(null, user.nickname);
+    done(null, { nickname: user.nickname, no: user.no });
   });
 
   passport.deserializeUser((user, done) => {
