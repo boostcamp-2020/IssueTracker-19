@@ -147,10 +147,28 @@ export const getIssues = async (req, res, next) => {
 /**
  * POST /api/issues
  */
-export const addIssue = (req, res, next) => {
-  // TODO : camelCase로 변경하는 것을 프론트에서 할지 여기서 할 지 결정
-  const { title, assigneeNo, milestoneNo, labelNo } = req.body;
+export const addIssue = async (req, res, next) => {
+  try {
+    const { title, assigneeNos, milestoneNo, labelNos, content } = req.body;
+    const { no: authorNo } = req.user;
 
-  // TODO : 이슈 추가 로직 구현
-  res.status(201).end();
+    const [{ insertId: issueNo }] = await issueModel.addIssue({
+      title,
+      authorNo,
+      milestoneNo,
+    });
+
+    // TODO :: commentModel의 addComment 호출해서 isHead = 1으로 추가할 것
+
+    if (labelNos && labelNos.length) {
+      await labelModel.bulkAddIssueLabel({ labelNos, issueNo });
+    }
+
+    if (assigneeNos && assigneeNos.length) {
+      await assigneeModel.bulkAddassignee({ assigneeNos, issueNo });
+    }
+    res.status(201).end();
+  } catch (err) {
+    next(err);
+  }
 };
