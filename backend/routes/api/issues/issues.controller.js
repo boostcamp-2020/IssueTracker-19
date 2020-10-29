@@ -1,4 +1,5 @@
 import { issueModel, commentModel, labelModel, assigneeModel } from '@models';
+
 /**
  * GET /api/issues
  */
