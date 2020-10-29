@@ -3,13 +3,13 @@ import pool from '@lib/db';
 // TODO : 테스트 필요
 
 export const issueModel = {
-  /* prettier-ignore */
-  getIssueList() {
+  getIssueList({ keyword }) {
     const sql = `SELECT i.no, u.nickname as author, i.title, i.is_opened as isOpened, i.created_at as createdAt, 
     i.closed_at as closedAt, m.title as milestone
     FROM issue i 
     LEFT JOIN milestone m ON m.no = i.milestone_no
     LEFT JOIN user u ON u.no = i.author_no
+    WHERE i.title LIKE '%${keyword}%'
     ORDER BY i.no;`;
     return pool.query(sql);
   },
