@@ -8,7 +8,7 @@
 
 import UIKit
 
-class IssueCollectionViewCell: UICollectionViewCell {
+class IssueCollectionViewCell: UICollectionViewListCell {
     let view: UIView = {
         let view = UIView()
         view.backgroundColor = UIColor.systemGray6
@@ -53,42 +53,86 @@ class IssueCollectionViewCell: UICollectionViewCell {
         
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setupViews()
+        setupViews(inset: 30)
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func setupViews() {
-        addSubview(view)
-        
-        view.frame = CGRect(x: 0, y: 0, width: frame.width, height: frame.height)
-        view.backgroundColor = UIColor.systemBackground
-        view.layer.addBorder([.top], color: UIColor.systemGray, width: 0.5)
-        
+    func setupViews(inset: CGFloat) {
+        setupBaseView(inset: inset)
+        setupIssueTitle()
+        setupIssueDescription()
+        setupMilestone()
+        setupLabel()
+    }
+    
+    private func setupIssueTitle() {
         view.addSubview(issueTitle)
-        issueTitle.frame = CGRect(x: 15, y: 10, width: frame.width * 0.6, height: 25)
-        
+        issueTitle.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            issueTitle.topAnchor.constraint(equalTo: view.topAnchor, constant: 10),
+            issueTitle.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.25),
+            issueTitle.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 15),
+            issueTitle.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.6)
+        ])
+    }
+    
+    private func setupIssueDescription() {
         view.addSubview(issueDescription)
-        issueDescription.frame = CGRect(x: 15, y: 35, width: frame.width * 0.6, height: 60)
-        
+        issueDescription.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            issueDescription.topAnchor.constraint(equalTo: issueTitle.bottomAnchor),
+            issueDescription.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.6),
+            issueDescription.leadingAnchor.constraint(equalTo: issueTitle.leadingAnchor),
+            issueDescription.widthAnchor.constraint(equalTo: issueTitle.widthAnchor)
+        ])
+    }
+    
+    private func setupMilestone() {
         view.addSubview(milestone)
-        milestone.frame = CGRect(x: frame.width - (milestone.intrinsicContentSize.width + 30),
-                                 y: 10,
-                                 width: milestone.intrinsicContentSize.width + 20,
-                                 height: milestone.intrinsicContentSize.height + 5)
+        milestone.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            milestone.topAnchor.constraint(equalTo: view.topAnchor, constant: 10),
+            milestone.heightAnchor.constraint(equalToConstant: milestone.intrinsicContentSize.height + 5),
+            milestone.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10),
+            milestone.widthAnchor.constraint(equalToConstant: milestone.intrinsicContentSize.width + 20),
+            milestone.leadingAnchor.constraint(greaterThanOrEqualTo: issueTitle.trailingAnchor, constant: 1)
+        ])
         milestone.layer.borderWidth = 1
         milestone.layer.cornerRadius = 5
         milestone.layer.borderColor = UIColor.systemGray3.cgColor
-
+    }
+    
+    private func setupLabel() {
         view.addSubview(label)
-        label.frame = CGRect(x: frame.width - (label.intrinsicContentSize.width + 30),
-                             y: 35,
-                             width: label.intrinsicContentSize.width + 20,
-                             height: label.intrinsicContentSize.height + 5)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            label.topAnchor.constraint(equalTo: milestone.bottomAnchor, constant: 3),
+            label.heightAnchor.constraint(equalToConstant: label.intrinsicContentSize.height + 5),
+            label.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10),
+            label.widthAnchor.constraint(equalToConstant: label.intrinsicContentSize.width + 20)
+        ])
         label.backgroundColor = .systemPink
         label.layer.cornerRadius = 5
         label.clipsToBounds = true
+    }
+    
+    func setupBaseView(inset: CGFloat) {
+        addSubview(view)
+        view.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            view.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
+            view.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor),
+            view.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: inset),
+            view.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor),
+            separatorLayoutGuide.leadingAnchor.constraint(equalTo: leadingAnchor)
+        ])
+        view.backgroundColor = UIColor.systemBackground
+    }
+    
+    func setupViewsIfNeeded() {
+        contentView.backgroundColor = .systemBackground
     }
 }
