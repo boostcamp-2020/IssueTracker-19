@@ -5,7 +5,6 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17126"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
-        <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -106,50 +105,40 @@
                     <view key="view" contentMode="scaleToFill" id="tHu-VI-KCo">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="758"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" contentInsetAdjustmentBehavior="never" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="1g9-BR-DgB">
-                                <rect key="frame" x="0.0" y="56" width="375" height="619"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" sectionInsetReference="layoutMargins" id="bah-G2-YKq">
-                                    <size key="itemSize" width="128" height="128"/>
-                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
-                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                </collectionViewFlowLayout>
-                                <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="cell" id="nPg-gX-E5l">
-                                        <rect key="frame" x="8" y="8" width="128" height="128"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="UWr-Fi-KwW">
-                                            <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                        </collectionViewCellContentView>
-                                    </collectionViewCell>
-                                </cells>
-                                <connections>
-                                    <outlet property="dataSource" destination="J5c-pF-frK" id="0Mh-gV-60n"/>
-                                    <outlet property="delegate" destination="J5c-pF-frK" id="b29-Dd-PXc"/>
-                                </connections>
-                            </collectionView>
-                        </subviews>
                         <viewLayoutGuide key="safeArea" id="4Ph-jJ-jeH"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                        <constraints>
-                            <constraint firstItem="1g9-BR-DgB" firstAttribute="trailing" secondItem="4Ph-jJ-jeH" secondAttribute="trailing" id="DR7-lO-h3Y"/>
-                            <constraint firstItem="1g9-BR-DgB" firstAttribute="bottom" secondItem="4Ph-jJ-jeH" secondAttribute="bottom" id="EOd-lX-uFb"/>
-                            <constraint firstItem="1g9-BR-DgB" firstAttribute="leading" secondItem="4Ph-jJ-jeH" secondAttribute="leading" id="cxx-lf-pgW"/>
-                            <constraint firstItem="1g9-BR-DgB" firstAttribute="top" secondItem="4Ph-jJ-jeH" secondAttribute="top" id="pqA-vB-qa6"/>
-                        </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="이슈" largeTitleDisplayMode="always" id="1wl-ev-fRz"/>
+                    <navigationItem key="navigationItem" title="이슈" largeTitleDisplayMode="always" id="1wl-ev-fRz">
+                        <barButtonItem key="rightBarButtonItem" title="edit" id="nD9-zO-N4r">
+                            <connections>
+                                <action selector="issueEditButton:" destination="J5c-pF-frK" id="o9E-jQ-Oap"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
-                        <outlet property="collectionView" destination="1g9-BR-DgB" id="8gA-uK-h1a"/>
                         <segue destination="Zva-Qn-br1" kind="presentation" identifier="newIssueSegue" id="Pck-2y-p0S"/>
+                        <segue destination="uYF-Zc-Jxh" kind="show" identifier="presentIssueEdit" id="Nuc-32-9lj"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="c3e-rB-1a3" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2807.1999999999998" y="116.00985221674877"/>
+        </scene>
+        <!--Issue Edit View Controller-->
+        <scene sceneID="yrm-nC-cq9">
+            <objects>
+                <viewController id="uYF-Zc-Jxh" customClass="IssueEditViewController" customModule="IssueTracker" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="4Ef-HG-huC">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="758"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="Jl6-Vd-yUY"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="Lct-tQ-VkU"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="T6e-9I-HXB" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3617" y="116"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="9hi-mu-K1D">

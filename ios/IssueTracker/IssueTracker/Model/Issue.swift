@@ -29,5 +29,5 @@ struct Issue: Codable {
     var createdAt: Date
     var closedAt: Date?
     var milestone: Milestone?
-    var commentCount:Int
+    var commentCount: Int
 }
