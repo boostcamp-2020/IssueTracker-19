@@ -10,7 +10,7 @@ export const commentModel = {
     ORDER BY issue_no;`;
     return pool.query(sql);
   },
-  addComment({ issueNo, userNo, content, isHead }) {
+  addComment({ issueNo, userNo, content, isHead = '0' }) {
     const sql = `INSERT INTO comment (issue_no, author_no, content, is_head) VALUES (?, ?, ?, ?)`;
     return pool.execute(sql, [issueNo, userNo, content, isHead]);
   },
