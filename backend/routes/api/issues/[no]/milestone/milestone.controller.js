@@ -1,9 +1,15 @@
+import { issueModel } from '@models';
+
 /**
  * PATCH /api/issues/:no/milestone
  */
-export const changeMilestone = (req, res, next) => {
-  const { no } = req.params;
-  const { milestoneNo } = req.body;
-  // TODO : 로직 작성
-  res.status(200).end();
+export const changeMilestone = async (req, res, next) => {
+  try {
+    const { no } = req.params;
+    const { milestoneNo } = req.body;
+    await issueModel.changeIssueMilestone({ no, milestoneNo });
+    res.status(200).end();
+  } catch (err) {
+    next(err);
+  }
 };
