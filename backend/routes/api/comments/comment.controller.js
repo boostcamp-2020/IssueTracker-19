@@ -50,10 +50,18 @@ export const changeComment = async (req, res, next) => {
 /**
  * DELETE /api/comments/:no
  */
-export const deleteComment = (req, res, next) => {
-  const { no, commentNo } = req.params;
+export const deleteComment = async (req, res, next) => {
+  const { no } = req.params;
 
-  // TODO : 유저 수요의 코멘트인지 확인
-  // TODO : 로직 작성
-  res.status(200).end();
+  try {
+    // 유저 소유의 코멘트인지 확인
+    if ((await isCommentOwner(req.user.no, no)) === false)
+      throw new Error('This guy is cheating!!!');
+
+    // 실제 코멘트 삭제
+    await commentModel.deleteComment({ no });
+    res.status(200).end();
+  } catch (err) {
+    next(err);
+  }
 };
