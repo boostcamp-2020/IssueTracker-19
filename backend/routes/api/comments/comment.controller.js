@@ -36,8 +36,7 @@ export const changeComment = async (req, res, next) => {
 
   try {
     // 유저 소유의 코멘트인지 확인
-    if ((await isCommentOwner(req.user.no, no)) === false)
-      throw new Error('This guy is cheating!!!');
+    if (!(await isCommentOwner(req.user.no, no))) return res.status(403);
 
     // 실제 코멘트 변경
     await commentModel.changeComment({ no, content });
@@ -55,8 +54,7 @@ export const deleteComment = async (req, res, next) => {
 
   try {
     // 유저 소유의 코멘트인지 확인
-    if ((await isCommentOwner(req.user.no, no)) === false)
-      throw new Error('This guy is cheating!!!');
+    if (!(await isCommentOwner(req.user.no, no))) return res.status(403);
 
     // 실제 코멘트 삭제
     await commentModel.deleteComment({ no });
