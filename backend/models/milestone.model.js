@@ -6,8 +6,8 @@ import { AUTH } from '@lib/constants';
 export const milestoneModel = {
   getMilestoneList() {
     const sql =
-      `select T.no, T.is_closed, T.is_deleted, T.due_date, T.description,
-      (SELECT count(*) FROM issue where is_opened=0 and milestone_no=T.no)  as closedTasks, 
+      `select T.no, T.is_closed as isClosed, T.is_deleted, T.due_date, T.description,
+      (SELECT count(*) FROM issue where is_opened=0 and milestone_no=T.no) as closedTasks, 
       (SELECT count(*) FROM issue where milestone_no=T.no) as totalTasks 
       from milestone as T 
       left outer join issue as I 
@@ -34,11 +34,11 @@ export const milestoneModel = {
   },
   changeMilestone({ title, description, dueDate, no }) {
     const sql =
-      'UPDATE milestone SET title=?, description=?, due_date=?  WHERE no=?;';
+      'UPDATE milestone SET title=?, description=?, due_date=? WHERE no=?;';
     return pool.execute(sql, [title, description, dueDate, no]);
   },
   deleteMilestone({ no }) {
-    const sql = 'UPDATE milestone SET is_deleted=1  WHERE no=?;';
+    const sql = 'UPDATE milestone SET is_deleted=1 WHERE no=?;';
     return pool.execute(sql, [no]);
   },
   openMilestone({ no }) {

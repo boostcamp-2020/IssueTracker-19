@@ -44,7 +44,7 @@ export const changeMilestone = async (req, res, next) => {
   try {
     const { no } = req.params;
     const { title, description, dueDate } = req.body;
-    await milestoneModel.changeMilestone({ title: title, description: description, dueDate: dueDate, no: no });
+    await milestoneModel.changeMilestone({ title, description, dueDate, no });
     res.status(200).end();
   } catch (err) {
     next(err);
@@ -57,7 +57,7 @@ export const changeMilestone = async (req, res, next) => {
 export const deleteMilestone = async (req, res, next) => {
   try {
     const { no } = req.params;
-    await milestoneModel.deleteMilestone({ no: no });
+    await milestoneModel.deleteMilestone({ no });
     res.status(200).end();
   } catch (err) {
     next(err);
