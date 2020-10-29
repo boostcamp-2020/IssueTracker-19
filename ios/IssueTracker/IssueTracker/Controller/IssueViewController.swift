@@ -8,29 +8,28 @@
 
 import UIKit
 
+enum Section: Hashable {
+    case main
+}
+
+var all = ["1", "2", "3"]
+
 class IssueViewController: UIViewController {
-    @IBOutlet weak var collectionView: UICollectionView!
-	
-    private enum Section: CaseIterable {
-        case issue
-    }
+    private var dataSource: UICollectionViewDiffableDataSource<Section, String>! = nil
+    private var collectionView: UICollectionView! = nil
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        collectionView.register(IssueCollectionViewCell.self, forCellWithReuseIdentifier: "IssueCell")
-        
-        let flowLayout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
-        flowLayout.estimatedItemSize = CGSize(width: collectionView.frame.width, height: 100)
-        flowLayout.minimumLineSpacing = 0
-        flowLayout.minimumInteritemSpacing = 0
-        
-        collectionView.collectionViewLayout = flowLayout
-        collectionView.backgroundColor = UIColor.systemGray5
 		
+        configureHierarchy()
+        configureDataSource()
 		addFloatingButton(view: view)
     }
-	
+    
+    @IBAction func issueEditButton(_ sender: UIBarButtonItem) {
+        performSegue(withIdentifier: "presentIssueEdit", sender: nil)
+    }
+    	
 	func addFloatingButton(view: UIView) {
 		let button = UIButton()
 		view.addSubview(button)
@@ -57,18 +56,63 @@ class IssueViewController: UIViewController {
 		performSegue(withIdentifier: "newIssueSegue", sender: nil)
 	}
 }
-
-extension IssueViewController: UICollectionViewDelegate, UICollectionViewDataSource {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 10
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "IssueCell",
-                                                            for: indexPath) as? IssueCollectionViewCell else {
-            return UICollectionViewCell()
+extension IssueViewController {
+    private func createLayout() -> UICollectionViewLayout {
+        var config = UICollectionLayoutListConfiguration(appearance: .plain)
+        config.trailingSwipeActionsConfigurationProvider = { (indexPath) -> UISwipeActionsConfiguration in
+            return UISwipeActionsConfiguration(actions: [UIContextualAction(
+                                                    style: .destructive,
+                                                    title: "Delete",
+                                                    handler: { [weak self] _, _, completion in
+                                                        let sample = all[indexPath.item]
+                                                        all.removeAll { $0 == sample }
+                                                        self?.updateList()
+                                                        completion(true)
+                                                    })])
         }
         
-        return cell
+        config.backgroundColor = .systemGray5
+        config.showsSeparators = true
+        
+        return UICollectionViewCompositionalLayout.list(using: config)
     }
+}
+extension IssueViewController {
+    private func configureHierarchy() {
+        collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: createLayout())
+        view.addSubview(collectionView)
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            collectionView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
+            collectionView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor),
+            collectionView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor),
+            collectionView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor)
+        ])
+        
+        collectionView.delegate = self
+    }
+    private func configureDataSource() {
+        
+        let cellRegistration = UICollectionView.CellRegistration<IssueCollectionViewCell, String> { (cell, _, _) in
+            cell.setupViewsIfNeeded()
+            cell.setupViews(inset: 0)
+            cell.backgroundConfiguration?.backgroundColor = .clear
+        }
+        
+        dataSource = UICollectionViewDiffableDataSource<Section, String>(collectionView: collectionView) { (collectionView: UICollectionView, indexPath: IndexPath, item: String) -> UICollectionViewCell? in
+            return collectionView.dequeueConfiguredReusableCell(using: cellRegistration, for: indexPath, item: item)
+        }
+        
+        updateList()
+    }
+    
+    private func updateList() {
+        var snapshot = NSDiffableDataSourceSnapshot<Section, String>()
+        snapshot.appendSections([.main])
+        snapshot.appendItems(all)
+        dataSource.apply(snapshot, animatingDifferences: false)
+    }
+}
+
+extension IssueViewController: UICollectionViewDelegate {
 }
