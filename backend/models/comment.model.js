@@ -22,4 +22,8 @@ export const commentModel = {
     const sql = `DELETE FROM comment WHERE no=?`;
     return pool.execute(sql, [no]);
   },
+  getCommentAuthor({ no }) {
+    const sql = `SELECT author_no as authorNo FROM comment WHERE no=?`;
+    return pool.execute(sql, [no]);
+  },
 };
