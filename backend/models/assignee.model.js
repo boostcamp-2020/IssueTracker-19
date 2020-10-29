@@ -2,12 +2,16 @@ import pool from '@lib/db';
 
 export const assigneeModel = {
   bulkAddassignee({ assigneeNos, issueNo }) {
+    const assigneesLength = assigneeNos.length;
     const sql = assigneeNos.reduce(
-      (acc, assigneeNo) =>
+      (acc, assigneeNo, idx) =>
         acc +
-        `INSERT INTO assignee (user_no, issue_no) VALUES (${assigneeNo}, ${issueNo});`,
-      '',
+        `(${assigneeNo}, ${issueNo})${
+          idx === assigneesLength - 1 ? ';' : ', '
+        }`,
+      'INSERT INTO assignee (user_no, issue_no) VALUES ',
     );
+    console.log(sql);
     return pool.query(sql);
   },
 };
