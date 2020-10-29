@@ -4,14 +4,13 @@ import { commentModel } from '@models';
  * POST /api/comments
  */
 export const addComment = async (req, res, next) => {
-  const { issueNo, content, isHead } = req.body;
+  const { issueNo, content } = req.body;
 
   try {
     await commentModel.addComment({
       issueNo,
       userNo: req.user.id,
       content,
-      isHead,
     });
     res.status(201).end();
   } catch (err) {
