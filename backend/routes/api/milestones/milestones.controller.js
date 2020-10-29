@@ -17,7 +17,7 @@ export const getMilestoneList = async (req, res, next) => {
 export const getMilestone = async (req, res, next) => {
   try {
     const { no } = req.params;
-    const [row] = await milestoneModel.getMilestone({ no: no });
+    const [row] = await milestoneModel.getMilestone({ no });
     res.json({ milestones: row });
   } catch (err) {
     next(err);
@@ -30,7 +30,7 @@ export const getMilestone = async (req, res, next) => {
 export const addMilestone = async (req, res, next) => {
   try {
     const { title, description, dueDate } = req.body;
-    await milestoneModel.addMilestone({ title: title, description: description, dueDate: dueDate });
+    await milestoneModel.addMilestone({ title, description, dueDate });
     res.status(201).end();
   } catch (err) {
     next(err);
@@ -70,7 +70,7 @@ export const deleteMilestone = async (req, res, next) => {
 export const openMilestone = async (req, res, next) => {
   try {
     const { no } = req.params;
-    await milestoneModel.openMilestone({ no: no });
+    await milestoneModel.openMilestone({ no });
     res.status(200).end();
   } catch (err) {
     next(err);
@@ -83,7 +83,7 @@ export const openMilestone = async (req, res, next) => {
 export const closeMilestone = async (req, res, next) => {
   try {
     const { no } = req.params;
-    await milestoneModel.closeMilestone({ no: no });
+    await milestoneModel.closeMilestone({ no });
     res.status(200).end();
   } catch (err) {
     next(err);
