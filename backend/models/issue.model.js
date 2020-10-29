@@ -3,13 +3,13 @@ import pool from '@lib/db';
 // TODO : 테스트 필요
 
 export const issueModel = {
-  /* prettier-ignore */
-  getIssueList() {
+  getIssueList({ keyword }) {
     const sql = `SELECT i.no, u.nickname as author, i.title, i.is_opened as isOpened, i.created_at as createdAt, 
     i.closed_at as closedAt, m.title as milestone
     FROM issue i 
     LEFT JOIN milestone m ON m.no = i.milestone_no
     LEFT JOIN user u ON u.no = i.author_no
+    WHERE i.title LIKE '%${keyword}%'
     ORDER BY i.no;`;
     return pool.query(sql);
   },
@@ -36,14 +36,26 @@ export const issueModel = {
       ORDER BY a.issue_no, u.no;`;
     return pool.query(sql);
   },
-  changeIssueTitle({}) {},
+  changeIssueTitle({ no, title }) {
+    const sql = 'UPDATE issue SET title=? WHERE no=?;';
+    return pool.execute(sql, [title, no]);
+  },
   addIssueAssignee({}) {},
   deleteIssueAssignee({}) {},
   addIssueLabel({}) {},
   deleteIssueLabel({}) {},
-  changeIssueMilestone({}) {},
-  openIssue({}) {},
-  closeIssue({}) {},
+  changeIssueMilestone({ no, milestoneNo = null }) {
+    const sql = 'UPDATE issue SET milestone_no=? WHERE no=?;';
+    return pool.execute(sql, [milestoneNo, no]);
+  },
+  openIssue({ no }) {
+    const sql = 'UPDATE issue SET is_opened=1 WHERE no=?;';
+    return pool.execute(sql, [no]);
+  },
+  closeIssue({ no }) {
+    const sql = 'UPDATE issue SET is_opened=0 WHERE no=?;';
+    return pool.execute(sql, [no]);
+  },
   addIssueComment({}) {},
   changeIssueComment({}) {},
   deleteIssueComment({}) {},

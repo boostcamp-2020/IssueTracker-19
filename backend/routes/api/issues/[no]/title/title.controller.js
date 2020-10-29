@@ -1,10 +1,16 @@
+import { issueModel } from '@models';
+
 /**
  * PATCH /api/issues/:no/title
  */
-export const changeTitle = (req, res, next) => {
-  const { no } = req.params;
-  const { title } = req.body;
-  // TODO : title 변경 로직 구현
+export const changeTitle = async (req, res, next) => {
+  try {
+    const { no } = req.params;
+    const { title } = req.body;
 
-  res.status(200).end();
+    await issueModel.changeIssueTitle({ no, title });
+    res.status(200).end();
+  } catch (err) {
+    next(err);
+  }
 };

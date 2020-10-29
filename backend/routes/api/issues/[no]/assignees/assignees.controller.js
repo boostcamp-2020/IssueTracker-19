@@ -5,12 +5,10 @@ import { assigneeModel } from '@models';
  */
 export const addIssueAssignee = async (req, res, next) => {
   try {
-    const { no } = req.params;
-    const { assigneeNo } = req.body;
-    // TODO : 로직 작성
+    const { no: issueNo } = req.params;
+    const { assigneeNos } = req.body;
 
-    // 더미데이터 사용
-    await assigneeModel.bulkAddassignee({ assigneeNos: [1, 2], issueNo: no });
+    await assigneeModel.bulkAddassignee({ assigneeNos, issueNo });
     res.status(200).end();
   } catch (err) {
     next(err);
