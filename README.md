@@ -24,3 +24,7 @@
 |   |    +---services
 |   |    +---store
 ```
+
+#### [week 1] 데모영상
+
+![1주차데모영상](https://user-images.githubusercontent.com/21030956/97560389-f022fd80-1a21-11eb-8e3a-32fe241695e5.gif)
