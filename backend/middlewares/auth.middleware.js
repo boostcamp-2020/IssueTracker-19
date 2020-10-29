@@ -1,5 +1,5 @@
 export const authenticated = (req, res, next) => {
-  if (req.user) {
+  if (req.user.nickname) {
     next();
     return;
   }
