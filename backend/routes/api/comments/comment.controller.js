@@ -21,18 +21,21 @@ export const addComment = async (req, res, next) => {
 /**
  * PATCH /api/comments/:commentNo
  */
-export const changeComment = (req, res, next) => {
-  const { no, commentNo } = req.params;
+export const changeComment = async (req, res, next) => {
+  const { no } = req.params;
   const { content } = req.body;
 
-  // TODO : 유저 수요의 코멘트인지 확인
   try {
-    await commentModel.changeComment();
+    // 유저 소유의 코멘트인지 확인
+    const { authorNo } = await commentModel.getCommentAuthor({ no });
+    if (req.user.id !== authorNo) throw new Error('This guy is cheating!!!');
+
+    // 실제 코멘트 변경
+    await commentModel.changeComment({ no, content });
     res.status(200).end();
   } catch (err) {
     next(err);
   }
-  
 };
 
 /**
