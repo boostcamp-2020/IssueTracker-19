@@ -36,7 +36,10 @@ export const issueModel = {
       ORDER BY a.issue_no, u.no;`;
     return pool.query(sql);
   },
-  changeIssueTitle({}) {},
+  changeIssueTitle({ no, title }) {
+    const sql = 'UPDATE issue SET title=? WHERE no=?;';
+    return pool.execute(sql, [title, no]);
+  },
   addIssueAssignee({}) {},
   deleteIssueAssignee({}) {},
   addIssueLabel({}) {},
