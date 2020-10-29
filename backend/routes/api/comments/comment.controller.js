@@ -1,5 +1,14 @@
 import { commentModel } from '@models';
 
+// 유저 소유의 코멘트인지 확인하는 함수
+const isCommentOwner = async (userNo, commentNo) => {
+  const [row] = await commentModel.getCommentAuthor({
+    no: commentNo,
+  });
+  if (userNo === row[0].authorNo) return true;
+  return false;
+};
+
 /**
  * POST /api/comments
  */
@@ -9,7 +18,7 @@ export const addComment = async (req, res, next) => {
   try {
     await commentModel.addComment({
       issueNo,
-      userNo: req.user.id,
+      userNo: req.user.no,
       content,
     });
     res.status(201).end();
@@ -19,7 +28,7 @@ export const addComment = async (req, res, next) => {
 };
 
 /**
- * PATCH /api/comments/:commentNo
+ * PATCH /api/comments/:no
  */
 export const changeComment = async (req, res, next) => {
   const { no } = req.params;
@@ -27,8 +36,8 @@ export const changeComment = async (req, res, next) => {
 
   try {
     // 유저 소유의 코멘트인지 확인
-    const { authorNo } = await commentModel.getCommentAuthor({ no });
-    if (req.user.id !== authorNo) throw new Error('This guy is cheating!!!');
+    if ((await isCommentOwner(req.user.no, no)) === false)
+      throw new Error('This guy is cheating!!!');
 
     // 실제 코멘트 변경
     await commentModel.changeComment({ no, content });
@@ -39,7 +48,7 @@ export const changeComment = async (req, res, next) => {
 };
 
 /**
- * DELETE /api/comments/:commentNo
+ * DELETE /api/comments/:no
  */
 export const deleteComment = (req, res, next) => {
   const { no, commentNo } = req.params;
