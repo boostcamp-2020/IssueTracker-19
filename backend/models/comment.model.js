@@ -10,4 +10,16 @@ export const commentModel = {
     ORDER BY issue_no;`;
     return pool.query(sql);
   },
+  addComment(issueNo, userNo, content, isHead) {
+    const sql = `INSERT INTO comment (issue_no, author_no, content, is_head) VALUES (?, ?, ?, ?)`;
+    return pool.execute(sql, [issueNo, userNo, content, isHead]);
+  },
+  changeComment(no, content) {
+    const sql = `UPDATE comment SET content=? WHERE no=?`;
+    return pool.execute(sql, [content, no]);
+  },
+  deleteComment(no) {
+    const sql = `DELETE FROM comment WHERE no=?`;
+    return pool.execute(sql, [no]);
+  },
 };
