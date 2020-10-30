@@ -23,13 +23,11 @@ export const milestoneModel = {
     return pool.execute(sql, [no, no, no]);
   },
   addMilestone({ title, description, dueDate }) {
-    const sql =
-      'INSERT INTO milestone (title, description, due_date) VALUES (?, ?, ?);';
+    const sql = 'INSERT INTO milestone (title, description, due_date) VALUES (?, ?, ?);';
     return pool.execute(sql, [title, description, dueDate]);
   },
   changeMilestone({ title, description, dueDate, no }) {
-    const sql =
-      'UPDATE milestone SET title=?, description=?, due_date=? WHERE no=?;';
+    const sql = 'UPDATE milestone SET title=?, description=?, due_date=? WHERE no=?;';
     return pool.execute(sql, [title, description, dueDate, no]);
   },
   deleteMilestone({ no }) {

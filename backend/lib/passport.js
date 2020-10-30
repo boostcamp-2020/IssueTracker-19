@@ -56,8 +56,7 @@ export default () => {
     new GitHubStrategy(
       {
         clientID: process.env.MODE === 'dev' ? devClientID : clientID,
-        clientSecret:
-          process.env.MODE === 'dev' ? devClientSecret : clientSecret,
+        clientSecret: process.env.MODE === 'dev' ? devClientSecret : clientSecret,
         callbackURL: process.env.MODE === 'dev' ? devCallbackURL : callbackURL,
       },
       async (accessToken, refreshToken, profile, done) => {

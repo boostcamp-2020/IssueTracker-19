@@ -1,8 +1,4 @@
-export const bubblingEventBinder = bindTarget => (
-  eventType,
-  selector,
-  callback
-) => {
+export const bubblingEventBinder = bindTarget => (eventType, selector, callback) => {
   bindTarget.addEventListener(eventType, e => {
     const closestEl = e.target.closest(selector);
     if (!closestEl) {
@@ -17,5 +13,4 @@ export const bubblingEventBinder = bindTarget => (
 
 export const qs = (selector, base = document) => base.querySelector(selector);
 
-export const qsa = (selector, base = document) =>
-  base.querySelectorAll(selector);
+export const qsa = (selector, base = document) => base.querySelectorAll(selector);
