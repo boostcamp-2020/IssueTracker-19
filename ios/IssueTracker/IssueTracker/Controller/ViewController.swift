@@ -7,13 +7,20 @@
 //
 
 import UIKit
+import Combine
+
+enum Notification {
+    static let googleLoginSuccess = Foundation.Notification.Name("googleLoginSuccess")
+}
 
 class ViewController: UIViewController {
 	@IBOutlet weak var idTextField: UITextField!
 	@IBOutlet weak var pwdTextField: UITextField!
+    var publisher: Cancellable?
 	
 	override func viewDidLoad() {
         super.viewDidLoad()
+        configureSubscriber()
         // Do any additional setup after loading the view.
     }
 	
@@ -34,7 +41,6 @@ class ViewController: UIViewController {
 
     @IBAction func githubLogin(_ sender: UIButton) {
         HTTPAgent.shared.githubLoginAction()
-        performSegue(withIdentifier: "loginSuccessSegue", sender: nil)
     }
     
 	@IBAction func appleLogin(_ sender: UIButton) {
@@ -43,10 +49,32 @@ class ViewController: UIViewController {
 	@IBAction func loginButton(_ sender: Any) {
 		if !(6...16).contains(idTextField.text?.count ?? 0)
 			|| !(6...16).contains(pwdTextField.text?.count ?? 0) {
-			let alert = UIAlertController(title: "로그인", message: "아이디와 비밀번호의 길이가 적합하지 않습니다.", preferredStyle: .alert)
-			let defaultAction = UIAlertAction(title: "OK", style: .destructive)
-			alert.addAction(defaultAction)
-			present(alert, animated: false, completion: nil)
+            presentAlert(title: "로그인", message: "아이디와 비밀번호의 길이가 적합하지 않습니다.")
 		}
 	}
+    
+    func presentAlert(title: String, message: String) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let defaultAction = UIAlertAction(title: "OK", style: .destructive)
+        alert.addAction(defaultAction)
+        present(alert, animated: false, completion: nil)
+    }
+    
+    func presentIssueList(statusCode: Int) {
+        if statusCode == 200 {
+            performSegue(withIdentifier: "loginSuccessSegue", sender: nil)
+        } else {
+            presentAlert(title: "실패", message: "구글 로그인에 실패했습니다.")
+        }
+    }
+    
+    func configureSubscriber() {
+        publisher = NotificationCenter.default
+            .publisher(for: Notification.googleLoginSuccess)
+            .sink { [weak self] notification in
+                DispatchQueue.main.async {
+                    self?.presentIssueList(statusCode: notification.userInfo?["statusCode"] as? Int ?? 0)
+                }
+        }
+    }
 }
