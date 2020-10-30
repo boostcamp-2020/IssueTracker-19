@@ -2,14 +2,14 @@
 
 ## Week 1 마일스톤
 
-- [iOS](https://github.com/boostcamp-2020/IssueTracker-19/projects/1)
+- [iOS](https://github.com/boostcamp-2020/IssueTracker-19/projects/2)
 - [Web](https://github.com/boostcamp-2020/IssueTracker-19/projects/1)
 
 ## Git 사용규칙
 
 - [Branch strategy](https://github.com/boostcamp-2020/IssueTracker-19/wiki/Branch-strategy)
 
-- [Commit, PR 컨벤션](https://github.com/boostcamp-2020/IssueTracker-19/wiki/GitHub-%EC%82%AC%EC%9A%A9%EA%B7%9C%EC%B9%99)
+- [Commit, PR 컨벤션](https://github.com/boostcamp-2020/IssueTracker-19/wiki/Commit,-PR-%EC%BB%A8%EB%B2%A4%EC%85%98)
 
 ## 협업 규칙
 
