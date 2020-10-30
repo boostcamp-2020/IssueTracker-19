@@ -5,22 +5,9 @@ import { issueModel, commentModel, labelModel, assigneeModel } from '@models';
  */
 export const getIssues = async (req, res, next) => {
   try {
-    const {
-      isOpened,
-      author,
-      assignee,
-      milestone,
-      comment,
-      label,
-      keyword,
-    } = req.query;
+    const { isOpened, author, assignee, milestone, comment, label, keyword } = req.query;
 
-    const [
-      [issues],
-      [labelList],
-      [assigneeList],
-      [commentList],
-    ] = await Promise.all([
+    const [[issues], [labelList], [assigneeList], [commentList]] = await Promise.all([
       issueModel.getIssueList({ keyword: keyword ?? '' }),
       issueModel.getIssuesLableList(),
       issueModel.getIssuesAssigneeList(),
@@ -94,8 +81,7 @@ export const getIssues = async (req, res, next) => {
         }
       }
       if (assignee) {
-        const assigneeNickname =
-          assignee === '@me' ? req.user.nickname : assignee;
+        const assigneeNickname = assignee === '@me' ? req.user.nickname : assignee;
         if (!issue.assignees.some(a => a.nickname === assigneeNickname)) {
           return false;
         }
@@ -108,8 +94,7 @@ export const getIssues = async (req, res, next) => {
         const authorNickname = req.user.nickname;
         if (
           !issue.comments.some(
-            issueComment =>
-              !+issueComment.isHead && issueComment.author === authorNickname,
+            issueComment => !+issueComment.isHead && issueComment.author === authorNickname,
           )
         ) {
           return false;
@@ -119,16 +104,10 @@ export const getIssues = async (req, res, next) => {
       if (label) {
         if (Array.isArray(label)) {
           // label 조건이 여러 조건일 때(배열로 올 때)
-          if (
-            !label.some(l =>
-              issue.labels.some(issueLabel => issueLabel.name === l),
-            )
-          ) {
+          if (!label.some(l => issue.labels.some(issueLabel => issueLabel.name === l))) {
             return false;
           }
-        } else if (
-          !issue.labels.some(issueLabel => issueLabel.name === label)
-        ) {
+        } else if (!issue.labels.some(issueLabel => issueLabel.name === label)) {
           // label 조건이 단일 조건일 때
           return false;
         }

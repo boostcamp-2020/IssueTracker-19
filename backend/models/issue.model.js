@@ -18,8 +18,7 @@ export const issueModel = {
     return pool.execute(sql, [no]);
   },
   addIssue({ title, authorNo, milestoneNo }) {
-    const sql =
-      'INSERT INTO issue (title, author_no, milestone_no) VALUES (?, ?, ?);';
+    const sql = 'INSERT INTO issue (title, author_no, milestone_no) VALUES (?, ?, ?);';
     return pool.execute(sql, [title, authorNo, milestoneNo]);
   },
   getIssuesLableList() {
