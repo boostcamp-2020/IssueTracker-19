@@ -4,8 +4,8 @@ import { milestoneModel } from '@models';
  */
 export const getMilestoneList = async (req, res, next) => {
   try {
-    const [row] = await milestoneModel.getMilestoneList();
-    res.json({ milestones: row });
+    const [milestones] = await milestoneModel.getMilestoneList();
+    res.json({ milestones });
   } catch (err) {
     next(err);
   }
@@ -17,8 +17,8 @@ export const getMilestoneList = async (req, res, next) => {
 export const getMilestone = async (req, res, next) => {
   try {
     const { no } = req.params;
-    const [row] = await milestoneModel.getMilestone({ no });
-    res.json({ milestones: row });
+    const [milestone] = await milestoneModel.getMilestone({ no });
+    res.json({ milestone });
   } catch (err) {
     next(err);
   }
