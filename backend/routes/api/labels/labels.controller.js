@@ -4,8 +4,8 @@ import { labelModel } from '@models';
  */
 export const getLabels = async (req, res, next) => {
   try {
-    const [row] = await labelModel.getLabels();
-    res.json({ lables: row });
+    const [labels] = await labelModel.getLabels();
+    res.json({ labels });
   } catch (err) {
     next(err);
   }
