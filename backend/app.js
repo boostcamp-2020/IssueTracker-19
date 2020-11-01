@@ -22,7 +22,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(session(config.session)); // 세션, 쿠키 유효시간 설정-> config.js파일 변경
+app.use(session(config.session));
 app.use((req, res, next) => {
   res.locals.session = req.session;
   next();
