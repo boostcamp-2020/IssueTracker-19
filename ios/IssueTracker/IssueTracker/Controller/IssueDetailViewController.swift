@@ -35,6 +35,7 @@ class IssueDetailViewController: UIViewController {
 	
 	@IBOutlet weak var collectionView: UICollectionView!
 	var issue: Issue!
+	var commentList = [IssueComment]()
 	var dataSource: DataSource?
 	
 	override func viewDidLoad() {
@@ -44,6 +45,23 @@ class IssueDetailViewController: UIViewController {
 		setupDataSource()
 		applySnapshot()
     }
+	
+	override func viewDidAppear(_ animated: Bool) {
+		super.viewDidAppear(animated)
+		updateIssueDetail()
+	}
+	
+	func updateIssueDetail() {
+		commentList = [
+			IssueComment(author: "godrm",
+						 content: "레이블 전체 목록을 볼 수 있는게 어떨까요\n 전체 설명이 보여야 선택할 수 있으니까\n\n마크다운 문법을 지원하고 \n HTML형태로 보여줘야 할까요"),
+			IssueComment(author: "crong",
+						 content: "긍정적인 기능이네요\n 댓글은 두 줄"),
+			IssueComment(author: "honux",
+						 content: "안녕하세요 호눅스입니다")
+		]
+		applySnapshot()
+	}
 	
 	// MARK: - Tab bar item Actions
 	@IBAction func backButton(_ sender: UIBarButtonItem) {
@@ -72,7 +90,7 @@ extension IssueDetailViewController {
 			guard let cell = collectionView
 					.dequeueReusableCell(withReuseIdentifier: IssueDetailCommentViewCell.identifier,
 										 for: indexPath) as? IssueDetailCommentViewCell
-			else { fatalError() }
+			else { return nil }
 			
 			cell.issueComment = item
 			return cell
@@ -91,16 +109,10 @@ extension IssueDetailViewController {
 		}
 	}
 	
-	func applySnapshot(animatingDifferences: Bool = false) {
+	func applySnapshot(animatingDifferences: Bool = true) {
 		var snapShot = Snapshot()
 		snapShot.appendSections([.main])
-		snapShot.appendItems([IssueComment(author: "godrm",
-										   content: "레이블 전체 목록을 볼 수 있는게 어떨까요\n 전체 설명이 보여야 선택할 수 있으니까\n\n마크다운 문법을 지원하고 \n HTML형태로 보여줘야 할까요"),
-							  IssueComment(author: "crong",
-										   content: "긍정적인 기능이네요\n 댓글은 두 줄"),
-							  IssueComment(author: "honux",
-										   content: "안녕하세요 호눅스입니다")],
-							 toSection: .main)
+		snapShot.appendItems(commentList, toSection: .main)
 		dataSource?.apply(snapShot, animatingDifferences: animatingDifferences)
 	}
 	
@@ -109,10 +121,12 @@ extension IssueDetailViewController {
 			var configuration = UICollectionLayoutListConfiguration(appearance: .plain)
 			configuration.backgroundColor = .systemGroupedBackground
 			configuration.showsSeparators = false
+			
 			let section = NSCollectionLayoutSection.list(
 				using: configuration,
 				layoutEnvironment: layoutEnvironment
 			)
+			
 			let headerSize = NSCollectionLayoutSize(
 				widthDimension: .fractionalWidth(1.0),
 				heightDimension: .estimated(1000)
@@ -122,21 +136,15 @@ extension IssueDetailViewController {
 				elementKind: UICollectionView.elementKindSectionHeader,
 				alignment: .top
 			)
+			
 			section.boundarySupplementaryItems = [header]
 			section.contentInsets = NSDirectionalEdgeInsets(
 				top: 20, leading: 0, bottom: 0, trailing: 0
 			)
 			section.interGroupSpacing = 20
+			
 			return section
 		}
 		return layout
 	}
 }
-
-//extension NSLayoutConstraint {
-//
-//	override public var description: String {
-//		let id = identifier ?? ""
-//		return "id: \(id), constant: \(constant)" //you may print whatever you want here
-//	}
-//}

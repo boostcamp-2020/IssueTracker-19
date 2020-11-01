@@ -9,7 +9,9 @@
 import UIKit
 
 class IssueDetailCommentViewCell: UICollectionViewCell {
-	static let identifier = "IssueDetailCommentViewCell"
+	static var identifier: String {
+		Self.self.description()
+	}
 
 	@IBOutlet weak var imageView: UIImageView!
 	@IBOutlet weak var authorLabel: UILabel!
@@ -27,7 +29,7 @@ class IssueDetailCommentViewCell: UICollectionViewCell {
         super.awakeFromNib()
 		contentView.backgroundColor = .white
     }
+	
 	@IBAction func editButtonAction(_ sender: UIButton) {
 	}
-	
 }
