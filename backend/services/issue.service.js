@@ -2,8 +2,8 @@ import { issueModel, commentModel } from '@models';
 
 const findIssuesLabels = labelList => {
   let labelIdx = 0;
-  const labels = [];
   return issueNo => {
+    const labels = [];
     while (true) {
       if (labelIdx >= labelList.length) break;
       const label = labelList[labelIdx];
@@ -19,8 +19,8 @@ const findIssuesLabels = labelList => {
 
 const findIssuesAssignees = assigneeList => {
   let assigneeIdx = 0;
-  const assignees = [];
   return issueNo => {
+    const assignees = [];
     while (true) {
       if (assigneeIdx >= assigneeList.length) break;
       const assignee = assigneeList[assigneeIdx];
@@ -36,8 +36,8 @@ const findIssuesAssignees = assigneeList => {
 
 const findIssuesComments = commentList => {
   let commentIdx = 0;
-  const comments = [];
   return issueNo => {
+    const comments = [];
     while (true) {
       if (commentIdx >= commentList.length) break;
       const comment = commentList[commentIdx];
