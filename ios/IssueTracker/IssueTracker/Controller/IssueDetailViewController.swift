@@ -32,7 +32,6 @@ class IssueComment: SectionItem {
 class IssueDetailViewController: UIViewController {
 	typealias DataSource = UICollectionViewDiffableDataSource<Section, IssueComment>
 	typealias Snapshot = NSDiffableDataSourceSnapshot<Section, IssueComment>
-	static let listHeaderElementKind = "list-header-element-kind"
 	
 	@IBOutlet weak var collectionView: UICollectionView!
 	var issue: Issue!
@@ -59,15 +58,17 @@ class IssueDetailViewController: UIViewController {
 extension IssueDetailViewController {
 	func setupCollectionView() {
 		collectionView.collectionViewLayout = createLayout()
-		collectionView.register(UINib(nibName: "IssueDetailHeaderViewCell", bundle: nil),
-								forSupplementaryViewOfKind: Self.listHeaderElementKind,
-								withReuseIdentifier: IssueDetailHeaderViewCell.identifier)
+		
+		collectionView.register(UINib(nibName: "IssueDetailHeaderReusableView", bundle: nil),
+								forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
+								withReuseIdentifier: IssueDetailHeaderReusableView.identifier)
+		
 		collectionView.register(UINib(nibName: "IssueDetailCommentViewCell", bundle: nil),
 								forCellWithReuseIdentifier: IssueDetailCommentViewCell.identifier)
 	}
 	
 	func setupDataSource() {
-		dataSource = DataSource(collectionView: collectionView) {(collectionView, indexPath, item) -> UICollectionViewCell? in
+		dataSource = DataSource(collectionView: collectionView) { collectionView, indexPath, item in
 			guard let cell = collectionView
 					.dequeueReusableCell(withReuseIdentifier: IssueDetailCommentViewCell.identifier,
 										 for: indexPath) as? IssueDetailCommentViewCell
@@ -77,12 +78,12 @@ extension IssueDetailViewController {
 			return cell
 		}
 		
-		dataSource?.supplementaryViewProvider = { (collectionView, kind, indexPath) -> UICollectionReusableView? in
-			guard kind == Self.listHeaderElementKind,
-				  let headerView = collectionView
-					.dequeueReusableSupplementaryView(ofKind: kind,
-													  withReuseIdentifier: IssueDetailHeaderViewCell.identifier,
-													  for: indexPath) as? IssueDetailHeaderViewCell
+		dataSource?.supplementaryViewProvider = { collectionView, kind, indexPath in
+			guard kind == UICollectionView.elementKindSectionHeader,
+				  let headerView = collectionView.dequeueReusableSupplementaryView(
+					ofKind: kind,
+					withReuseIdentifier: IssueDetailHeaderReusableView.identifier,
+					for: indexPath) as? IssueDetailHeaderReusableView
 			else { return nil }
 			
 			headerView.issue = self.issue
@@ -108,15 +109,23 @@ extension IssueDetailViewController {
 			var configuration = UICollectionLayoutListConfiguration(appearance: .plain)
 			configuration.backgroundColor = .systemGroupedBackground
 			configuration.showsSeparators = false
-			let section = NSCollectionLayoutSection.list(using: configuration,
-														 layoutEnvironment: layoutEnvironment)
-			let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
-													heightDimension: .estimated(1000))
-			let header = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerSize,
-																	 elementKind: Self.listHeaderElementKind,
-																	 alignment: .top)
+			let section = NSCollectionLayoutSection.list(
+				using: configuration,
+				layoutEnvironment: layoutEnvironment
+			)
+			let headerSize = NSCollectionLayoutSize(
+				widthDimension: .fractionalWidth(1.0),
+				heightDimension: .estimated(1000)
+			)
+			let header = NSCollectionLayoutBoundarySupplementaryItem(
+				layoutSize: headerSize,
+				elementKind: UICollectionView.elementKindSectionHeader,
+				alignment: .top
+			)
 			section.boundarySupplementaryItems = [header]
-			section.contentInsets = NSDirectionalEdgeInsets(top: 20, leading: 0, bottom: 0, trailing: 0)
+			section.contentInsets = NSDirectionalEdgeInsets(
+				top: 20, leading: 0, bottom: 0, trailing: 0
+			)
 			section.interGroupSpacing = 20
 			return section
 		}

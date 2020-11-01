@@ -1,5 +1,5 @@
 //
-//  IssueDetailHeaderViewCell.swift
+//  IssueDetailHeaderReusableView.swift
 //  IssueTracker
 //
 //  Created by 조기현 on 2020/11/01.
@@ -8,14 +8,16 @@
 
 import UIKit
 
-class IssueDetailHeaderViewCell: UICollectionViewCell {
-	static let identifier = "IssueDetailHeaderViewCell"
-
+class IssueDetailHeaderReusableView: UICollectionReusableView {
+	static var identifier: String {
+		Self.self.description()
+	}
+	
 	@IBOutlet weak var imageView: UIImageView!
 	@IBOutlet weak var authorLabel: UILabel!
 	@IBOutlet weak var noLabel: UILabel!
 	@IBOutlet weak var titleLabel: UILabel!
-	
+
 	var issue: Issue? {
 		didSet {
 			authorLabel.text = issue?.author
@@ -24,10 +26,8 @@ class IssueDetailHeaderViewCell: UICollectionViewCell {
 		}
 	}
 	
-	
 	override func awakeFromNib() {
-        super.awakeFromNib()
-		contentView.backgroundColor = .white
-    }
-
+		super.awakeFromNib()
+		backgroundColor = .white
+	}
 }
