@@ -5,6 +5,7 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17126"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -118,6 +119,7 @@
                     <connections>
                         <segue destination="Zva-Qn-br1" kind="presentation" identifier="newIssueSegue" id="Pck-2y-p0S"/>
                         <segue destination="uYF-Zc-Jxh" kind="show" identifier="presentIssueEdit" id="Nuc-32-9lj"/>
+                        <segue destination="oiX-ag-8Nt" kind="show" identifier="issueDetailSegue" id="zdS-aN-lOz"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="c3e-rB-1a3" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -155,6 +157,64 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7pt-Yx-Yk1" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2788" y="877"/>
+        </scene>
+        <!--Issue Detail View Controller-->
+        <scene sceneID="gss-RP-GlC">
+            <objects>
+                <viewController hidesBottomBarWhenPushed="YES" id="oiX-ag-8Nt" customClass="IssueDetailViewController" customModule="IssueTracker" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Hr8-1g-leQ">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="758"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="L0i-hF-asl">
+                                <rect key="frame" x="0.0" y="56" width="375" height="668"/>
+                                <collectionViewLayout key="collectionViewLayout" id="hGk-4c-76V"/>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="headerView" id="4Sb-ao-3z3" customClass="IssueDetailHeaderViewCell" customModule="IssueTracker" customModuleProvider="target">
+                                        <rect key="frame" x="36.666666666666664" y="0.0" width="302" height="128"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="XbR-4Q-fh2">
+                                            <rect key="frame" x="0.0" y="0.0" width="302" height="128"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </collectionViewCellContentView>
+                                        <size key="customSize" width="302" height="128"/>
+                                    </collectionViewCell>
+                                </cells>
+                                <connections>
+                                    <outlet property="dataSource" destination="oiX-ag-8Nt" id="LVM-Ri-I1A"/>
+                                    <outlet property="delegate" destination="oiX-ag-8Nt" id="bbD-ox-wdT"/>
+                                </connections>
+                            </collectionView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="oyJ-gc-mJa"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="L0i-hF-asl" firstAttribute="leading" secondItem="oyJ-gc-mJa" secondAttribute="leading" id="0jg-uQ-bOe"/>
+                            <constraint firstItem="oyJ-gc-mJa" firstAttribute="trailing" secondItem="L0i-hF-asl" secondAttribute="trailing" id="1C8-Pr-jkA"/>
+                            <constraint firstItem="L0i-hF-asl" firstAttribute="top" secondItem="oyJ-gc-mJa" secondAttribute="top" id="Gwu-7i-boH"/>
+                            <constraint firstItem="oyJ-gc-mJa" firstAttribute="bottom" secondItem="L0i-hF-asl" secondAttribute="bottom" id="sBz-De-8xW"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" largeTitleDisplayMode="never" id="Bla-Lf-ima">
+                        <nil key="title"/>
+                        <barButtonItem key="leftBarButtonItem" title="Back" image="chevron.backward" catalog="system" largeContentSizeImage="chevron.backward" style="done" id="nZo-pK-qZt">
+                            <connections>
+                                <action selector="backButton:" destination="oiX-ag-8Nt" id="6NM-gF-l7H"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" systemItem="edit" id="PCR-gi-vwE">
+                            <connections>
+                                <action selector="editButton:" destination="oiX-ag-8Nt" id="W1v-ap-QOL"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="collectionView" destination="L0i-hF-asl" id="ef5-gl-X4q"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Lh5-Dg-XeN" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3576.8000000000002" y="875.61576354679812"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="JrQ-xi-R2Y">
@@ -196,6 +256,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="chevron.backward" catalog="system" width="96" height="128"/>
         <systemColor name="labelColor">
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
