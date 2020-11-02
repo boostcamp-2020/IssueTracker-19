@@ -8,7 +8,6 @@ export const assigneeModel = {
         acc + `(${assigneeNo}, ${issueNo})${idx === assigneesLength - 1 ? ';' : ', '}`,
       'INSERT INTO assignee (user_no, issue_no) VALUES ',
     );
-    console.log(sql);
     return pool.query(sql);
   },
 };

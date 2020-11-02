@@ -128,9 +128,13 @@ export const issueService = {
         commentCount: comments.length,
         milestoneNo,
         milestoneTitle,
+        comments,
       };
     });
 
-    return getFilterdIssuesByOptions(issuesWithLabelsAndAssignees, nickname, options);
+    return getFilterdIssuesByOptions(issuesWithLabelsAndAssignees, nickname, options).map(item => {
+      delete item.comments;
+      return item;
+    });
   },
 };

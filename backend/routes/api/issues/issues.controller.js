@@ -22,15 +22,15 @@ export const getIssues = async (req, res, next) => {
 export const addIssue = async (req, res, next) => {
   try {
     const { title, assigneeNos, milestoneNo, labelNos, content } = req.body;
-    const { no: authorNo } = req.user;
+    const { no } = req.user;
 
     const [{ insertId: issueNo }] = await issueModel.addIssue({
       title,
-      authorNo,
+      authorNo: no,
       milestoneNo,
     });
 
-    // TODO :: commentModel의 addComment 호출해서 isHead = 1으로 추가할 것
+    await commentModel.addComment({ issueNo, userNo: no, content, isHead: 1 });
 
     if (labelNos && labelNos.length) {
       await labelModel.bulkAddIssueLabel({ labelNos, issueNo });
