@@ -8,13 +8,15 @@
 
 import UIKit
 
-class IssueEditViewController: UIViewController {
-    private var dataSource: UICollectionViewDiffableDataSource<Section, String>! = nil
-    private var collectionView: UICollectionView! = nil
+class IssueEditViewController: UIViewController, ListCollectionViewProtocol {
+    var list = [SampleIssue]()
+    var dataSource: DataSource?
+    var collectionView: UICollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewLayout())
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        updateData()
         configureHierarchy()
         configureDataSource()
         tabBarController?.tabBar.isHidden = true
@@ -35,6 +37,10 @@ class IssueEditViewController: UIViewController {
         toolBar.setItems([spacer, item], animated: true)
     }
     
+    func updateData() {
+        list = sample
+    }
+    
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
@@ -42,7 +48,7 @@ class IssueEditViewController: UIViewController {
     }
 }
 extension IssueEditViewController {
-    private func createLayout() -> UICollectionViewLayout {
+    func createLayout() -> UICollectionViewLayout {
         var config = UICollectionLayoutListConfiguration(appearance: .plain)
         config.backgroundColor = .systemGray5
         
@@ -50,7 +56,7 @@ extension IssueEditViewController {
     }
 }
 extension IssueEditViewController {
-    private func configureHierarchy() {
+    func configureHierarchy() {
         collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: createLayout())
         
         view.addSubview(collectionView)
@@ -63,11 +69,10 @@ extension IssueEditViewController {
         ])
         
         collectionView.allowsMultipleSelection = true
-        collectionView.delegate = self
     }
-    private func configureDataSource() {
+    func configureDataSource() {
         
-        let cellRegistration = UICollectionView.CellRegistration<IssueCollectionViewCell, String> { (cell, _, _) in
+        let cellRegistration = UICollectionView.CellRegistration<IssueCollectionViewCell, SampleIssue> { (cell, _, _) in
             cell.setupViewsIfNeeded()
             cell.setupViews(inset: 30)
             cell.accessories = [
@@ -76,19 +81,12 @@ extension IssueEditViewController {
             cell.backgroundConfiguration?.backgroundColor = .systemBackground
         }
         
-        dataSource = UICollectionViewDiffableDataSource<Section, String>(collectionView: collectionView) { (collectionView: UICollectionView, indexPath: IndexPath, item: String)
+        dataSource = UICollectionViewDiffableDataSource<Section, SampleIssue>(collectionView: collectionView) { (collectionView: UICollectionView, indexPath: IndexPath, item: SampleIssue)
             -> UICollectionViewCell? in
             return collectionView.dequeueConfiguredReusableCell(using: cellRegistration, for: indexPath, item: item)
         }
         
         updateList()
-    }
-    
-    private func updateList() {
-        var snapshot = NSDiffableDataSourceSnapshot<Section, String>()
-        snapshot.appendSections([.main])
-        snapshot.appendItems(all)
-        dataSource.apply(snapshot, animatingDifferences: false)
     }
 }
 

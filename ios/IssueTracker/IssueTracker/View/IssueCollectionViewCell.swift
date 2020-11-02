@@ -53,7 +53,6 @@ class IssueCollectionViewCell: UICollectionViewListCell {
         
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setupViews(inset: 30)
     }
     
     required init?(coder: NSCoder) {
@@ -126,7 +125,7 @@ class IssueCollectionViewCell: UICollectionViewListCell {
             view.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
             view.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor),
             view.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: inset),
-            view.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor),
+            view.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: inset),
             separatorLayoutGuide.leadingAnchor.constraint(equalTo: leadingAnchor)
         ])
         view.backgroundColor = UIColor.systemBackground

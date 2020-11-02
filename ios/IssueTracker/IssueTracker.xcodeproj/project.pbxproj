@@ -127,8 +127,8 @@
 		C19656462546B9B6007DD55A /* IssueTracker */ = {
 			isa = PBXGroup;
 			children = (
-				4C2787BD25500F8800E31035 /* Protocol */,
 				C136F60B25495F93007A09F8 /* .swiftlint.yml */,
+				4C2787BD25500F8800E31035 /* Protocol */,
 				C117D8A72547C9380081DCD7 /* Controller */,
 				C117D8A62547C9300081DCD7 /* View */,
 				C117D8A52547C9270081DCD7 /* Model */,

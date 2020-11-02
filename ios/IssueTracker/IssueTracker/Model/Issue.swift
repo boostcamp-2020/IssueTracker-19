@@ -19,7 +19,7 @@ struct Label: Codable {
 struct Milestone: Codable {
     
 }
-struct Issue: Codable {
+class Issue: SectionItem, Codable {
     var no: Int
     var title: String
     var author: String
@@ -30,4 +30,8 @@ struct Issue: Codable {
     var closedAt: Date?
     var milestone: Milestone?
     var commentCount: Int
+}
+
+class SampleIssue: SectionItem {
+    var text = "3"
 }
