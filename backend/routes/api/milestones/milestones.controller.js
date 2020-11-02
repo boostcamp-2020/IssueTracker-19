@@ -33,7 +33,7 @@ export const getMilestone = async (req, res, next) => {
 export const addMilestone = async (req, res, next) => {
   try {
     const { title, description, dueDate } = req.body;
-    if (verify([title, description, dueDate])) {
+    if (verify([title])) {
       await milestoneModel.addMilestone({ title, description, dueDate });
       res.status(201).end();
       return;
@@ -51,7 +51,7 @@ export const changeMilestone = async (req, res, next) => {
   try {
     const { no } = req.params;
     const { title, description, dueDate } = req.body;
-    if (verify([title, description, dueDate])) {
+    if (verify([title])) {
       await milestoneModel.changeMilestone({ title, description, dueDate, no });
       res.status(200).end();
       return;

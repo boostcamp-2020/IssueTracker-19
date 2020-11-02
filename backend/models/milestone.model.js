@@ -28,11 +28,11 @@ export const milestoneModel = {
       HAVING M.no=?;`;
     return pool.execute(sql, [no, no, no]);
   },
-  addMilestone({ title, description, dueDate }) {
+  addMilestone({ title, description = null, dueDate = null }) {
     const sql = 'INSERT INTO milestone (title, description, due_date) VALUES (?, ?, ?);';
     return pool.execute(sql, [title, description, dueDate]);
   },
-  changeMilestone({ title, description, dueDate, no }) {
+  changeMilestone({ title, description = null, dueDate = null, no }) {
     const sql = 'UPDATE milestone SET title=?, description=?, due_date=? WHERE no=?;';
     return pool.execute(sql, [title, description, dueDate, no]);
   },
