@@ -12,6 +12,12 @@ export const milestoneModel = {
     return pool.query(sql);
   },
   getMilestone({ no }) {
+    const sql = `SELECT no, title, is_closed as isClosed, is_deleted as isDeleted, due_date as dueDate, description 
+    FROM milestone 
+    WHERE no = ?;`;
+    return pool.execute(sql, [no]);
+  },
+  getMilestoneDetail({ no }) {
     const sql = `SELECT M.no, M.title, M.is_closed AS isClosed, M.is_deleted AS isDeleted, M.due_date AS dueDate, M.description, 
       (SELECT COUNT(*) FROM issue WHERE milestone_no = ? AND is_opened=0 ) AS closedTasks,
       (SELECT COUNT(*) FROM issue WHERE milestone_no = ?) AS totalTasks 

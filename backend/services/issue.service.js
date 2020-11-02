@@ -1,4 +1,4 @@
-import { issueModel, commentModel } from '@models';
+import { issueModel, commentModel, assigneeModel, milestoneModel, labelModel } from '@models';
 
 const findIssuesLabels = labelList => {
   let labelIdx = 0;
@@ -128,9 +128,35 @@ export const issueService = {
         commentCount: comments.length,
         milestoneNo,
         milestoneTitle,
+        comments,
       };
     });
 
-    return getFilterdIssuesByOptions(issuesWithLabelsAndAssignees, nickname, options);
+    return getFilterdIssuesByOptions(issuesWithLabelsAndAssignees, nickname, options).map(item => {
+      delete item.comments;
+      return item;
+    });
+  },
+  async getIssue({ no }) {
+    const [[issue]] = await issueModel.getIssueByNo({ no });
+    const { milestoneNo, no: issueNo } = issue;
+
+    if (milestoneNo) {
+      const [[milestone]] = await milestoneModel.getMilestoneDetail({ no: milestoneNo });
+      issue.milestone = milestone;
+    }
+    const [[comments], [assignees], [labels]] = await Promise.all([
+      commentModel.getCommentsByIssueNo({ issueNo }),
+      assigneeModel.getAssigneesByIssueNo({ issueNo }),
+      labelModel.getLabelByIssueNo({ issueNo }),
+    ]);
+
+    issue.assignees = assignees;
+    issue.comments = comments;
+    issue.labels = labels;
+
+    delete issue.milestoneNo;
+
+    return issue;
   },
 };

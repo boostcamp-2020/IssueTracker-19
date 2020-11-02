@@ -17,7 +17,7 @@ export const getMilestoneList = async (req, res, next) => {
 export const getMilestone = async (req, res, next) => {
   try {
     const { no } = req.params;
-    const [milestone] = await milestoneModel.getMilestone({ no });
+    const [[milestone]] = await milestoneModel.getMilestoneDetail({ no });
     res.json({ milestone });
   } catch (err) {
     next(err);
