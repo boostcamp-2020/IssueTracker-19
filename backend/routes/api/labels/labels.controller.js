@@ -1,4 +1,7 @@
 import { labelModel } from '@models';
+import { verify } from '@lib/utils';
+import { errorMessage } from '@lib/constants';
+
 /**
  * GET /api/labels
  */
@@ -17,8 +20,12 @@ export const getLabels = async (req, res, next) => {
 export const addLabel = async (req, res, next) => {
   try {
     const { name, description, color } = req.body;
-    await labelModel.addLabel({ name, description, color });
-    res.status(201).end();
+    if (verify([name, description, color])) {
+      await labelModel.addLabel({ name, description, color });
+      res.status(201).end();
+      return;
+    }
+    res.status(400).json({ message: errorMessage.MISSING_REQUIRED_VALUE });
   } catch (err) {
     next(err);
   }
@@ -31,8 +38,12 @@ export const changeLabel = async (req, res, next) => {
   try {
     const { no } = req.params;
     const { name, description, color } = req.body;
-    await labelModel.changeLabel({ name, description, color, no });
-    res.status(200).end();
+    if (verify([name, description, color])) {
+      await labelModel.changeLabel({ name, description, color, no });
+      res.status(200).end();
+      return;
+    }
+    res.status(400).json({ message: errorMessage.MISSING_REQUIRED_VALUE });
   } catch (err) {
     next(err);
   }
