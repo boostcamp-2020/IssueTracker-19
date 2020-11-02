@@ -140,6 +140,7 @@ export const issueService = {
   async getIssue({ no }) {
     const [[issue]] = await issueModel.getIssueByNo({ no });
     const { milestoneNo, no: issueNo } = issue;
+    issue.milestone = null;
 
     if (milestoneNo) {
       const [[milestone]] = await milestoneModel.getMilestoneDetail({ no: milestoneNo });
