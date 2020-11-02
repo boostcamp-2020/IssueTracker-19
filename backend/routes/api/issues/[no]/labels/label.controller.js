@@ -1,18 +1,21 @@
+import { issueLabelModel } from '@models';
+
 /**
  * POST /api/issues/:no/labels
  */
-export const addIssueLabel = (req, res, next) => {
+export const addIssueLabel = async (req, res, next) => {
+  console.log('123');
   const { no } = req.params;
   const { labelNo } = req.body;
-  // TODO : 로직 작성
-  res.status(200).end();
+  await issueLabelModel.addIssueLabel({ issueNo: no, labelNo });
+  res.status(201).end();
 };
 
 /**
  * DELETE /api/issues/:no/labels/:labelNo
  */
-export const deleteIssueLabel = (req, res, next) => {
-  const { labelNo } = req.params;
-  // TODO : 로직 작성
+export const deleteIssueLabel = async (req, res, next) => {
+  const { no, labelNo } = req.params;
+  await issueLabelModel.deleteIssueLabel({ issueNo: no, labelNo });
   res.status(200).end();
 };
