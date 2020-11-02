@@ -26,6 +26,7 @@ class IssueViewController: UIViewController, ListCollectionViewProtocol {
     var dataSource: DataSource?
     var collectionView: UICollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewLayout())
     var cellRegistration: Registration?
+    var isMultiselectMode: Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,18 +42,31 @@ class IssueViewController: UIViewController, ListCollectionViewProtocol {
     }
     
     @IBAction func issueEditButton(_ sender: UIBarButtonItem) {
-        cellRegistration = Registration { (cell, _, _) in
-            cell.setupViewsIfNeeded()
-            cell.setupViews(inset: 30)
-            cell.backgroundColor = .white
-            cell.accessories = [
-                .multiselect(displayed: .always, options: .init(isHidden: false, reservedLayoutWidth: .custom(5), tintColor: .systemGray6, backgroundColor: .blue))
-            ]
-
-            cell.layoutIfNeeded()
+        if !isMultiselectMode {
+            collectionView.collectionViewLayout = createNoneswipeLayout()
+            cellRegistration = Registration { (cell, _, _) in
+                cell.setupViewsIfNeeded()
+                cell.setupViews(inset: 30)
+                cell.accessories = [
+                    .multiselect(displayed: .always, options: .init(isHidden: false, reservedLayoutWidth: .custom(5), tintColor: .systemGray6, backgroundColor: .blue))
+                ]
+                cell.backgroundConfiguration?.backgroundColor = .systemBackground
+            }
+            collectionView.allowsMultipleSelection = true
+            updateList()
+        } else {
+            collectionView.collectionViewLayout = createSwipeLayout()
+            cellRegistration = Registration { (cell, _, _) in
+                cell.setupViewsIfNeeded()
+                cell.setupViews(inset: 0)
+                cell.backgroundConfiguration?.backgroundColor = .systemBackground
+            }
+            
+            collectionView.allowsMultipleSelection = false
+            updateList()
         }
-        collectionView.allowsMultipleSelection = true
-        updateList()
+        
+        isMultiselectMode.toggle()
     }
     	
 	func addFloatingButton(view: UIView) {
@@ -82,20 +96,27 @@ class IssueViewController: UIViewController, ListCollectionViewProtocol {
 	}
 }
 extension IssueViewController {
-    func createLayout() -> UICollectionViewLayout {
+    func createSwipeLayout() -> UICollectionViewLayout {
         var config = UICollectionLayoutListConfiguration(appearance: .plain)
-//        config.trailingSwipeActionsConfigurationProvider = { (indexPath) -> UISwipeActionsConfiguration in
-//            return UISwipeActionsConfiguration(actions: [UIContextualAction(
-//                                                    style: .destructive,
-//                                                    title: "Delete",
-//                                                    handler: { [weak self] _, _, completion in
-//                                                        let sample = all[indexPath.item]
-//                                                        all.removeAll { $0 == sample }
-//                                                        self?.updateList()
-//                                                        completion(true)
-//                                                    })])
-//        }
+        config.trailingSwipeActionsConfigurationProvider = { (indexPath) -> UISwipeActionsConfiguration in
+            return UISwipeActionsConfiguration(actions: [UIContextualAction(
+                                                    style: .destructive,
+                                                    title: "Delete",
+                                                    handler: { [weak self] _, _, completion in
+                                                        let sample = self?.list[indexPath.item]
+                                                        self?.list.removeAll { $0 == sample }
+                                                        self?.updateList()
+                                                        completion(true)
+                                                    })])
+        }
         
+        config.backgroundColor = .systemGray5
+        
+        return UICollectionViewCompositionalLayout.list(using: config)
+    }
+    
+    func createNoneswipeLayout() -> UICollectionViewLayout {
+        var config = UICollectionLayoutListConfiguration(appearance: .plain)
         config.backgroundColor = .systemGray5
         
         return UICollectionViewCompositionalLayout.list(using: config)
@@ -113,15 +134,15 @@ extension IssueViewController {
             collectionView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor)
         ])
         
-        collectionView.register(IssueCollectionViewCell.self, forCellWithReuseIdentifier: "IssueCell")
         collectionView.delegate = self
+        collectionView.allowsMultipleSelection = true
     }
     func configureDataSource() {
         
         cellRegistration = Registration { (cell, _, _) in
             cell.setupViewsIfNeeded()
             cell.setupViews(inset: 0)
-            cell.backgroundConfiguration?.backgroundColor = .clear
+            cell.backgroundConfiguration?.backgroundColor = .systemBackground
         }
         
         dataSource = DataSource(collectionView: collectionView) { (collectionView: UICollectionView, indexPath: IndexPath, item: SampleIssue) -> UICollectionViewCell? in
@@ -130,12 +151,13 @@ extension IssueViewController {
         
         updateList()
     }
+    
+    func createLayout() -> UICollectionViewLayout {
+        createSwipeLayout()
+    }
 }
 
 extension IssueViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        guard let cell = collectionView.cellForItem(at: indexPath) else {
-            return
-        }
     }
 }
