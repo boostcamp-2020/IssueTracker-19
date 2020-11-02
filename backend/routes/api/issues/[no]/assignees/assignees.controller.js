@@ -18,8 +18,13 @@ export const addIssueAssignee = async (req, res, next) => {
 /**
  * DELETE /api/issues/:no/assignees/:assigneeNo
  */
-export const deleteIssueAssignee = (req, res, next) => {
-  const { assigneeNo } = req.params;
-  // TODO : 로직 작성
-  res.status(200).end();
+export const deleteIssueAssignee = async (req, res, next) => {
+  try {
+    const { no: issueNo, assigneeNo } = req.params;
+
+    await assigneeModel.deleteIssueAssignee({ issueNo, assigneeNo });
+    res.status(200).end();
+  } catch (err) {
+    next(err);
+  }
 };

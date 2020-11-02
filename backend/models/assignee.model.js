@@ -11,4 +11,8 @@ export const assigneeModel = {
     console.log(sql);
     return pool.query(sql);
   },
+  deleteIssueAssignee({ issueNo, assigneeNo }) {
+    const sql = 'DELETE FROM assignee WHERE issue_no=? AND user_no=?;';
+    return pool.execute(sql, [issueNo, assigneeNo]);
+  },
 };
