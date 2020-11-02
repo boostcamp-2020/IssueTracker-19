@@ -1,11 +1,9 @@
 import pool from '@lib/db';
 
-// TODO : 테스트 필요
-
 export const issueModel = {
   getIssueList({ keyword }) {
     const sql = `SELECT i.no, u.nickname as author, i.title, i.is_opened as isOpened, i.created_at as createdAt, 
-    i.closed_at as closedAt, m.title as milestone
+    i.closed_at as closedAt, m.title as milestoneTitle, m.no as milestoneNo
     FROM issue i 
     LEFT JOIN milestone m ON m.no = i.milestone_no
     LEFT JOIN user u ON u.no = i.author_no
@@ -29,7 +27,7 @@ export const issueModel = {
     return pool.query(sql);
   },
   getIssuesAssigneeList() {
-    const sql = `SELECT a.issue_no as issueNo, a.user_no as userNo, u.nickname as nickname, u.pw, u.image 
+    const sql = `SELECT a.issue_no as issueNo, a.user_no as userNo, u.nickname as nickname, u.image 
       FROM assignee a 
       LEFT JOIN user u ON u.no = a.user_no
       ORDER BY a.issue_no, u.no;`;
@@ -39,10 +37,6 @@ export const issueModel = {
     const sql = 'UPDATE issue SET title=? WHERE no=?;';
     return pool.execute(sql, [title, no]);
   },
-  addIssueAssignee({}) {},
-  deleteIssueAssignee({}) {},
-  addIssueLabel({}) {},
-  deleteIssueLabel({}) {},
   changeIssueMilestone({ no, milestoneNo = null }) {
     const sql = 'UPDATE issue SET milestone_no=? WHERE no=?;';
     return pool.execute(sql, [milestoneNo, no]);
@@ -55,7 +49,4 @@ export const issueModel = {
     const sql = 'UPDATE issue SET is_opened=0 WHERE no=?;';
     return pool.execute(sql, [no]);
   },
-  addIssueComment({}) {},
-  changeIssueComment({}) {},
-  deleteIssueComment({}) {},
 };
