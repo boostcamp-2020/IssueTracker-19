@@ -1,7 +1,5 @@
 import pool from '@lib/db';
 
-// TODO : 테스트 필요
-
 export const issueModel = {
   getIssueList({ keyword }) {
     const sql = `SELECT i.no, u.nickname as author, i.title, i.is_opened as isOpened, i.created_at as createdAt, 
@@ -39,10 +37,6 @@ export const issueModel = {
     const sql = 'UPDATE issue SET title=? WHERE no=?;';
     return pool.execute(sql, [title, no]);
   },
-  addIssueAssignee({}) {},
-  deleteIssueAssignee({}) {},
-  addIssueLabel({}) {},
-  deleteIssueLabel({}) {},
   changeIssueMilestone({ no, milestoneNo = null }) {
     const sql = 'UPDATE issue SET milestone_no=? WHERE no=?;';
     return pool.execute(sql, [milestoneNo, no]);
@@ -55,7 +49,4 @@ export const issueModel = {
     const sql = 'UPDATE issue SET is_opened=0 WHERE no=?;';
     return pool.execute(sql, [no]);
   },
-  addIssueComment({}) {},
-  changeIssueComment({}) {},
-  deleteIssueComment({}) {},
 };

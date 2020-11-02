@@ -1,7 +1,5 @@
 import pool from '@lib/db';
 
-// TODO : 테스트 필요
-
 export const labelModel = {
   bulkAddIssueLabel({ labelNos, issueNo }) {
     const sql = labelNos.reduce(
