@@ -8,17 +8,6 @@
 
 import UIKit
 
-class SectionItem: Hashable {
-	let identifier = UUID()
-	
-	static func == (lhs: SectionItem, rhs: SectionItem) -> Bool {
-		return lhs.identifier == rhs.identifier
-	}
-	
-	func hash(into hasher: inout Hasher) {
-		hasher.combine(identifier)
-	}
-}
 
 class IssueComment: SectionItem {
 	let author: String
@@ -29,30 +18,41 @@ class IssueComment: SectionItem {
 	}
 }
 
-class IssueDetailViewController: UIViewController {
-	typealias DataSource = UICollectionViewDiffableDataSource<Section, IssueComment>
-	typealias Snapshot = NSDiffableDataSourceSnapshot<Section, IssueComment>
+
+class IssueDetailViewController: UIViewController, ListCollectionViewProtocol {
 	
-	@IBOutlet weak var collectionView: UICollectionView!
 	var issue: Issue!
-	var commentList = [IssueComment]()
+	var list: [IssueComment] = []
 	var dataSource: DataSource?
+	var collectionView: UICollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewLayout())
 	
 	override func viewDidLoad() {
-        super.viewDidLoad()
+		super.viewDidLoad()
+		view.addSubview(collectionView)
+		collectionView.translatesAutoresizingMaskIntoConstraints = false
+		NSLayoutConstraint.activate([
+			collectionView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
+			collectionView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor),
+			collectionView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor),
+			collectionView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor)
+		])
+		
 		// setup collection view
-		setupCollectionView()
-		setupDataSource()
-		applySnapshot()
-    }
+		configureHierarchy()
+		configureDataSource()
+		updateList()
+	}
 	
+//
 	override func viewDidAppear(_ animated: Bool) {
 		super.viewDidAppear(animated)
+		
+		
 		updateIssueDetail()
 	}
 	
 	func updateIssueDetail() {
-		commentList = [
+		list = [
 			IssueComment(author: "godrm",
 						 content: "레이블 전체 목록을 볼 수 있는게 어떨까요\n 전체 설명이 보여야 선택할 수 있으니까\n\n마크다운 문법을 지원하고 \n HTML형태로 보여줘야 할까요"),
 			IssueComment(author: "crong",
@@ -60,7 +60,7 @@ class IssueDetailViewController: UIViewController {
 			IssueComment(author: "honux",
 						 content: "안녕하세요 호눅스입니다")
 		]
-		applySnapshot()
+		updateList()
 	}
 	
 	// MARK: - Tab bar item Actions
@@ -70,13 +70,16 @@ class IssueDetailViewController: UIViewController {
 	
 	@IBAction func editButton(_ sender: UIBarButtonItem) {
 	}
+
+	
 }
 
-// MARK: - Setup Collection View, Layout and Datasource
 extension IssueDetailViewController {
-	func setupCollectionView() {
+	
+	
+	
+	func configureHierarchy() {
 		collectionView.collectionViewLayout = createLayout()
-		
 		collectionView.register(UINib(nibName: "IssueDetailHeaderReusableView", bundle: nil),
 								forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
 								withReuseIdentifier: IssueDetailHeaderReusableView.identifier)
@@ -85,7 +88,7 @@ extension IssueDetailViewController {
 								forCellWithReuseIdentifier: IssueDetailCommentViewCell.identifier)
 	}
 	
-	func setupDataSource() {
+	func configureDataSource() {
 		dataSource = DataSource(collectionView: collectionView) { collectionView, indexPath, item in
 			guard let cell = collectionView
 					.dequeueReusableCell(withReuseIdentifier: IssueDetailCommentViewCell.identifier,
@@ -95,7 +98,6 @@ extension IssueDetailViewController {
 			cell.issueComment = item
 			return cell
 		}
-		
 		dataSource?.supplementaryViewProvider = { collectionView, kind, indexPath in
 			guard kind == UICollectionView.elementKindSectionHeader,
 				  let headerView = collectionView.dequeueReusableSupplementaryView(
@@ -107,13 +109,6 @@ extension IssueDetailViewController {
 			headerView.issue = self.issue
 			return headerView
 		}
-	}
-	
-	func applySnapshot(animatingDifferences: Bool = true) {
-		var snapShot = Snapshot()
-		snapShot.appendSections([.main])
-		snapShot.appendItems(commentList, toSection: .main)
-		dataSource?.apply(snapShot, animatingDifferences: animatingDifferences)
 	}
 	
 	func createLayout() -> UICollectionViewLayout {
@@ -147,4 +142,5 @@ extension IssueDetailViewController {
 		}
 		return layout
 	}
+	
 }
