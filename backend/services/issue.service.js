@@ -116,12 +116,19 @@ export const issueService = {
     const getIssuesComments = findIssuesComments(commentList);
 
     const issuesWithLabelsAndAssignees = issues.map(issue => {
-      const { no: issueNo } = issue;
+      const { no: issueNo, milestoneNo, milestoneTitle } = issue;
       const labels = getIssuesLabels(issueNo);
       const assignees = getIssuesAssignees(issueNo);
       const comments = getIssuesComments(issueNo);
 
-      return { ...issue, labels, assignees, commentCount: comments.length };
+      return {
+        ...issue,
+        labels,
+        assignees,
+        commentCount: comments.length,
+        milestoneNo,
+        milestoneTitle,
+      };
     });
 
     return getFilterdIssuesByOptions(issuesWithLabelsAndAssignees, nickname, options);
