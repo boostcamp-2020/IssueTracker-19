@@ -11,7 +11,7 @@ export const milestoneModel = {
       GROUP BY M.no;`;
     return pool.query(sql);
   },
-  getMilestone({ no }) {
+  getMilestoneDetail({ no }) {
     const sql = `SELECT M.no, M.title, M.is_closed AS isClosed, M.is_deleted AS isDeleted, M.due_date AS dueDate, M.description, 
       (SELECT COUNT(*) FROM issue WHERE milestone_no = ? AND is_opened=0 ) AS closedTasks,
       (SELECT COUNT(*) FROM issue WHERE milestone_no = ?) AS totalTasks 
