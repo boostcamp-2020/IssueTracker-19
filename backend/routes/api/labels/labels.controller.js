@@ -20,7 +20,7 @@ export const getLabels = async (req, res, next) => {
 export const addLabel = async (req, res, next) => {
   try {
     const { name, description, color } = req.body;
-    if (verify([name, description, color])) {
+    if (verify([name, color])) {
       await labelModel.addLabel({ name, description, color });
       res.status(201).end();
       return;
@@ -38,7 +38,7 @@ export const changeLabel = async (req, res, next) => {
   try {
     const { no } = req.params;
     const { name, description, color } = req.body;
-    if (verify([name, description, color])) {
+    if (verify([name, color])) {
       await labelModel.changeLabel({ name, description, color, no });
       res.status(200).end();
       return;
