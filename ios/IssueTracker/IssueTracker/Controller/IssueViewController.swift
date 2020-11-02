@@ -174,7 +174,10 @@ extension IssueViewController {
 
 extension IssueViewController: UICollectionViewDelegate {
 
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-    }
+	func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+		if !isMultiselectMode {
+			performSegue(withIdentifier: "issueDetailSegue", sender: nil)
+		}
+	}
 
 }
