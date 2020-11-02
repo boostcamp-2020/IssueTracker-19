@@ -12,7 +12,11 @@ export const issueModel = {
     return pool.query(sql);
   },
   getIssueByNo({ no }) {
-    const sql = 'SELECT * FROM issue WHERE no=?;';
+    const sql = `SELECT i.no, u.nickname as author, i.title, i.is_opened as isOpened, i.created_at as createdAt, 
+    i.closed_at as closedAt, i.milestone_no as milestoneNo
+    FROM issue i 
+    LEFT JOIN user u ON u.no = i.author_no
+    WHERE i.no = ?;`;
     return pool.execute(sql, [no]);
   },
   addIssue({ title, authorNo, milestoneNo }) {

@@ -1,10 +1,15 @@
+import { issueService } from '@services';
+
 /**
  * GET /api/issues/:no
  */
-export const getIssue = (req, res, next) => {
-  const { no } = req.params;
+export const getIssue = async (req, res, next) => {
+  try {
+    const { no } = req.params;
+    const issue = await issueService.getIssue({ no });
 
-  // TODO : 하나의 이슈를 가져오는 로직 구현. comment도 같이!
-
-  res.json({ issue: {} });
+    res.json({ issue });
+  } catch (err) {
+    next(err);
+  }
 };

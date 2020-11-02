@@ -13,6 +13,12 @@ export const labelModel = {
     const sql = 'SELECT * FROM label;';
     return pool.query(sql);
   },
+  getLabelByIssueNo({ issueNo }) {
+    const sql = `SELECT label_no as labelNo, issue_no as issueNo 
+    FROM issue_label 
+    WHERE issue_no = ?;`;
+    return pool.execute(sql, [issueNo]);
+  },
   addLabel({ name, description, color }) {
     const sql = 'INSERT INTO label (name, description, color) VALUES (?, ?, ?);';
     return pool.execute(sql, [name, description, color]);

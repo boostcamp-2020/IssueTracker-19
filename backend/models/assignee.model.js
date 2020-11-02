@@ -10,4 +10,10 @@ export const assigneeModel = {
     );
     return pool.query(sql);
   },
+  getAssigneesByIssueNo({ issueNo }) {
+    const sql = `SELECT user_no as userNo, issue_no as issueNo 
+    FROM assignee 
+    WHERE issue_no = ?;`;
+    return pool.execute(sql, [issueNo]);
+  },
 };
