@@ -65,8 +65,6 @@ class IssueViewController: UIViewController, ListCollectionViewProtocol {
             }
             
             collectionView.allowsMultipleSelection = true
-            updateList()
-            
             navigationController?.setToolbarHidden(false, animated: false)
         } else {
             collectionView.collectionViewLayout = createSwipeLayout()
@@ -77,10 +75,10 @@ class IssueViewController: UIViewController, ListCollectionViewProtocol {
             }
             
             collectionView.allowsMultipleSelection = false
-            updateList()
             navigationController?.setToolbarHidden(true, animated: false)
         }
         
+        updateList()
         isMultiselectMode.toggle()
     }
     	

@@ -45,6 +45,7 @@ class ViewController: UIViewController {
 	@IBAction func appleLogin(_ sender: UIButton) {
 		
 	}
+    
 	@IBAction func loginButton(_ sender: Any) {
 		if !(6...16).contains(idTextField.text?.count ?? 0)
 			|| !(6...16).contains(pwdTextField.text?.count ?? 0) {

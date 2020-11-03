@@ -134,18 +134,38 @@
         <!--레이블-->
         <scene sceneID="Cf2-jf-hzY">
             <objects>
-                <viewController id="haK-TN-pmh" sceneMemberID="viewController">
+                <viewController id="haK-TN-pmh" customClass="LabelViewController" customModule="IssueTracker" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="3NO-b0-t32">
                         <rect key="frame" x="0.0" y="0.0" width="390" height="790"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <viewLayoutGuide key="safeArea" id="2NZ-zK-WfJ"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
-                    <navigationItem key="navigationItem" title="레이블" largeTitleDisplayMode="always" id="IVB-fO-uSJ"/>
+                    <navigationItem key="navigationItem" title="레이블" largeTitleDisplayMode="always" id="IVB-fO-uSJ">
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="D9m-Ug-3Td"/>
+                    </navigationItem>
+                    <connections>
+                        <segue destination="vbQ-aR-pab" kind="presentation" identifier="labelEditSegue" animates="NO" modalPresentationStyle="overFullScreen" modalTransitionStyle="coverVertical" id="Ah0-yi-h19"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="VRz-B1-F6f" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2050" y="865"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="RlD-yH-ffY">
+            <objects>
+                <viewController id="vbQ-aR-pab" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="gd1-0g-Xfk">
+                        <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="M4o-Vi-M4k"/>
+                        <color key="backgroundColor" red="0.32735589378238339" green="0.32735589378238339" blue="0.32735589378238339" alpha="0.5" colorSpace="custom" customColorSpace="displayP3"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Pan-yN-WSZ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2049" y="1588"/>
         </scene>
         <!--Filter View Controller-->
         <scene sceneID="zGp-Tu-lMb">
