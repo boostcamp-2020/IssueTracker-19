@@ -25,9 +25,14 @@ class IssueViewController: UIViewController, ListCollectionViewProtocol {
     var collectionView: UICollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewLayout())
     var cellRegistration: Registration?
     var isMultiselectMode: Bool = false
+    var toolbar = UIToolbar()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        let add = UIBarButtonItem(title: "선택 이슈 닫기", style: .plain, target: self, action: nil)
+        let spacer = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil)
+        toolbarItems = [spacer, add]
         
 		updateData()
         configureHierarchy()
@@ -37,6 +42,10 @@ class IssueViewController: UIViewController, ListCollectionViewProtocol {
     
     func updateData() {
         list = sample
+    }
+    
+    @IBAction func filterButton(_ sender: UIBarButtonItem) {
+        performSegue(withIdentifier: "filterSegue", sender: nil)
     }
     
     @IBAction func issueEditButton(_ sender: UIBarButtonItem) {
@@ -54,8 +63,11 @@ class IssueViewController: UIViewController, ListCollectionViewProtocol {
                 ]
                 cell.backgroundConfiguration?.backgroundColor = .systemBackground
             }
+            
             collectionView.allowsMultipleSelection = true
             updateList()
+            
+            navigationController?.setToolbarHidden(false, animated: false)
         } else {
             collectionView.collectionViewLayout = createSwipeLayout()
             cellRegistration = Registration { (cell, _, _) in
@@ -66,6 +78,7 @@ class IssueViewController: UIViewController, ListCollectionViewProtocol {
             
             collectionView.allowsMultipleSelection = false
             updateList()
+            navigationController?.setToolbarHidden(true, animated: false)
         }
         
         isMultiselectMode.toggle()
@@ -161,6 +174,8 @@ extension IssueViewController {
 
 extension IssueViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        performSegue(withIdentifier: "newIssueSegue", sender: nil)
+        if !isMultiselectMode {
+            performSegue(withIdentifier: "newIssueSegue", sender: nil)
+        }
     }
 }

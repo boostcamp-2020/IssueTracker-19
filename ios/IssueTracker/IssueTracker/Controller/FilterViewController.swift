@@ -13,7 +13,9 @@ class FilterViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
     }
 
     @IBAction func cancelButton(_ sender: UIButton) {
@@ -21,6 +23,6 @@ class FilterViewController: UIViewController {
     }
     
     @IBAction func doneButton(_ sender: UIButton) {
-        dismiss(animated: true, completion: nil)
+//        dismiss(animated: true, completion: nil)
     }
 }
