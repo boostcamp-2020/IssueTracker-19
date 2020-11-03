@@ -17,6 +17,16 @@
 		4CB6F8FD254D639300901E9D /* IssueDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CB6F8FC254D639300901E9D /* IssueDetailViewController.swift */; };
 		4CD20476255141CD0001B987 /* IssueDetailBottomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CD20475255141CD0001B987 /* IssueDetailBottomViewController.swift */; };
 		4CD2047925514E4C0001B987 /* CornerRoundedFloatingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CD2047825514E4C0001B987 /* CornerRoundedFloatingView.swift */; };
+		4C44042C2551B07E0075AD9B /* Milestone.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C44042B2551B07E0075AD9B /* Milestone.swift */; };
+		4C4404342551BCBE0075AD9B /* MilestoneViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C4404322551BCBE0075AD9B /* MilestoneViewCell.swift */; };
+		4C4404352551BCBE0075AD9B /* MilestoneViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C4404332551BCBE0075AD9B /* MilestoneViewCell.xib */; };
+		4CD204882551A5230001B987 /* MilestoneViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CD204872551A5230001B987 /* MilestoneViewController.swift */; };
+		C1048958255112230091668C /* IssueAddViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1048957255112230091668C /* IssueAddViewController.swift */; };
+		C104895B2551280C0091668C /* FilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C104895A2551280C0091668C /* FilterViewController.swift */; };
+		C104895E25515CA50091668C /* LabelViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C104895D25515CA50091668C /* LabelViewController.swift */; };
+		C104896F25518EC50091668C /* LabelCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C104896D25518EC50091668C /* LabelCollectionViewCell.swift */; };
+		C104897025518EC50091668C /* LabelCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C104896E25518EC50091668C /* LabelCollectionViewCell.xib */; };
+		C10489732551986B0091668C /* LabelDetailAndAddViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C10489722551986B0091668C /* LabelDetailAndAddViewController.swift */; };
 		C117D89E2547C7CF0081DCD7 /* IssueViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C117D89D2547C7CF0081DCD7 /* IssueViewController.swift */; };
 		C12542602547F44C00DE2BB8 /* IssueCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C125425F2547F44C00DE2BB8 /* IssueCollectionViewCell.swift */; };
 		C12542632548007500DE2BB8 /* UIExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C12542622548007500DE2BB8 /* UIExtension.swift */; };
@@ -42,7 +52,17 @@
 		4CB6F8FC254D639300901E9D /* IssueDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueDetailViewController.swift; sourceTree = "<group>"; };
 		4CD20475255141CD0001B987 /* IssueDetailBottomViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueDetailBottomViewController.swift; sourceTree = "<group>"; };
 		4CD2047825514E4C0001B987 /* CornerRoundedFloatingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CornerRoundedFloatingView.swift; sourceTree = "<group>"; };
+		4C44042B2551B07E0075AD9B /* Milestone.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Milestone.swift; sourceTree = "<group>"; };
+		4C4404322551BCBE0075AD9B /* MilestoneViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MilestoneViewCell.swift; sourceTree = "<group>"; };
+		4C4404332551BCBE0075AD9B /* MilestoneViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MilestoneViewCell.xib; sourceTree = "<group>"; };
+		4CD204872551A5230001B987 /* MilestoneViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MilestoneViewController.swift; sourceTree = "<group>"; };
 		B11756D279E0DA64222E52E5 /* Pods_IssueTracker.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_IssueTracker.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C1048957255112230091668C /* IssueAddViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueAddViewController.swift; sourceTree = "<group>"; };
+		C104895A2551280C0091668C /* FilterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterViewController.swift; sourceTree = "<group>"; };
+		C104895D25515CA50091668C /* LabelViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelViewController.swift; sourceTree = "<group>"; };
+		C104896D25518EC50091668C /* LabelCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelCollectionViewCell.swift; sourceTree = "<group>"; };
+		C104896E25518EC50091668C /* LabelCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LabelCollectionViewCell.xib; sourceTree = "<group>"; };
+		C10489722551986B0091668C /* LabelDetailAndAddViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelDetailAndAddViewController.swift; sourceTree = "<group>"; };
 		C117D89D2547C7CF0081DCD7 /* IssueViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueViewController.swift; sourceTree = "<group>"; };
 		C125425F2547F44C00DE2BB8 /* IssueCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueCollectionViewCell.swift; sourceTree = "<group>"; };
 		C12542622548007500DE2BB8 /* UIExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIExtension.swift; sourceTree = "<group>"; };
@@ -95,6 +115,7 @@
 				C170B358254A9DEC0052FE3D /* Issue.swift */,
 				C196565F2546CC4F007DD55A /* HTTPAgent.swift */,
 				4C2787BA25500F6100E31035 /* SectionItem.swift */,
+				4C44042B2551B07E0075AD9B /* Milestone.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -102,6 +123,8 @@
 		C117D8A62547C9300081DCD7 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				C104896D25518EC50091668C /* LabelCollectionViewCell.swift */,
+				C104896E25518EC50091668C /* LabelCollectionViewCell.xib */,
 				C125425F2547F44C00DE2BB8 /* IssueCollectionViewCell.swift */,
 				4C7C11B6254E87CC008FA858 /* IssueDetailCommentViewCell.swift */,
 				4C7C11B7254E87CC008FA858 /* IssueDetailCommentViewCell.xib */,
@@ -109,6 +132,8 @@
 				4C7C11C2254EC6B8008FA858 /* IssueDetailHeaderReusableView.xib */,
 				C12542622548007500DE2BB8 /* UIExtension.swift */,
 				4CD2047825514E4C0001B987 /* CornerRoundedFloatingView.swift */,
+				4C4404322551BCBE0075AD9B /* MilestoneViewCell.swift */,
+				4C4404332551BCBE0075AD9B /* MilestoneViewCell.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -116,10 +141,15 @@
 		C117D8A72547C9380081DCD7 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				C104895D25515CA50091668C /* LabelViewController.swift */,
+				C10489722551986B0091668C /* LabelDetailAndAddViewController.swift */,
+				C104895A2551280C0091668C /* FilterViewController.swift */,
+				C1048957255112230091668C /* IssueAddViewController.swift */,
 				C117D89D2547C7CF0081DCD7 /* IssueViewController.swift */,
 				C196564B2546B9B6007DD55A /* ViewController.swift */,
 				4CB6F8FC254D639300901E9D /* IssueDetailViewController.swift */,
 				4CD20475255141CD0001B987 /* IssueDetailBottomViewController.swift */,
+				4CD204872551A5230001B987 /* MilestoneViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -229,11 +259,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				C136F60C25495F93007A09F8 /* .swiftlint.yml in Resources */,
+				4C4404352551BCBE0075AD9B /* MilestoneViewCell.xib in Resources */,
 				C19656542546B9B9007DD55A /* LaunchScreen.storyboard in Resources */,
 				C19656512546B9B9007DD55A /* Assets.xcassets in Resources */,
 				C196564F2546B9B6007DD55A /* Main.storyboard in Resources */,
 				4C7C11B9254E87CC008FA858 /* IssueDetailCommentViewCell.xib in Resources */,
 				4C7C11C4254EC6B9008FA858 /* IssueDetailHeaderReusableView.xib in Resources */,
+				C104897025518EC50091668C /* LabelCollectionViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -289,8 +321,11 @@
 				C117D89E2547C7CF0081DCD7 /* IssueViewController.swift in Sources */,
 				4C2787BF25500FD800E31035 /* ListCollectionViewProtocol.swift in Sources */,
 				C12542602547F44C00DE2BB8 /* IssueCollectionViewCell.swift in Sources */,
+				4C4404342551BCBE0075AD9B /* MilestoneViewCell.swift in Sources */,
 				C196564C2546B9B6007DD55A /* ViewController.swift in Sources */,
 				C19656602546CC4F007DD55A /* HTTPAgent.swift in Sources */,
+				C104895E25515CA50091668C /* LabelViewController.swift in Sources */,
+				4C44042C2551B07E0075AD9B /* Milestone.swift in Sources */,
 				C19656482546B9B6007DD55A /* AppDelegate.swift in Sources */,
 				4CB6F8FD254D639300901E9D /* IssueDetailViewController.swift in Sources */,
 				4C7C11B8254E87CC008FA858 /* IssueDetailCommentViewCell.swift in Sources */,
@@ -298,9 +333,15 @@
 				4C7C11C3254EC6B9008FA858 /* IssueDetailHeaderReusableView.swift in Sources */,
 				C196564A2546B9B6007DD55A /* SceneDelegate.swift in Sources */,
 				4CD20476255141CD0001B987 /* IssueDetailBottomViewController.swift in Sources */,
+				4CD204882551A5230001B987 /* MilestoneViewController.swift in Sources */,
+				C104895B2551280C0091668C /* FilterViewController.swift in Sources */,
+				C10489732551986B0091668C /* LabelDetailAndAddViewController.swift in Sources */,
+				C196564A2546B9B6007DD55A /* SceneDelegate.swift in Sources */,
+				C104896F25518EC50091668C /* LabelCollectionViewCell.swift in Sources */,
 				C12542632548007500DE2BB8 /* UIExtension.swift in Sources */,
 				4C2787BB25500F6100E31035 /* SectionItem.swift in Sources */,
 				C170B359254A9DEC0052FE3D /* Issue.swift in Sources */,
+				C1048958255112230091668C /* IssueAddViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

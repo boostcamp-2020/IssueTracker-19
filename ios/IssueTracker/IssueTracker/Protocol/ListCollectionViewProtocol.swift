@@ -24,10 +24,10 @@ protocol ListCollectionViewProtocol {
 }
 
 extension ListCollectionViewProtocol {
-	func updateList() {
+	func updateList(animatingDifferences: Bool = false) {
 		var snapshot = Snapshot()
 		snapshot.appendSections([.main])
 		snapshot.appendItems(list)
-		dataSource?.apply(snapshot, animatingDifferences: false)
+		dataSource?.apply(snapshot, animatingDifferences: animatingDifferences)
 	}
 }

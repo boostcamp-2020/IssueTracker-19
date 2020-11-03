@@ -21,7 +21,6 @@ class ViewController: UIViewController {
 	override func viewDidLoad() {
         super.viewDidLoad()
         configureSubscriber()
-        // Do any additional setup after loading the view.
     }
 	
 	override func viewDidAppear(_ animated: Bool) {
@@ -46,6 +45,7 @@ class ViewController: UIViewController {
 	@IBAction func appleLogin(_ sender: UIButton) {
 		
 	}
+    
 	@IBAction func loginButton(_ sender: Any) {
 		if !(6...16).contains(idTextField.text?.count ?? 0)
 			|| !(6...16).contains(pwdTextField.text?.count ?? 0) {
