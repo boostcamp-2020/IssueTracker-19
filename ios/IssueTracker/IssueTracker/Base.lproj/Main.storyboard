@@ -152,10 +152,10 @@
             </objects>
             <point key="canvasLocation" x="2050" y="865"/>
         </scene>
-        <!--View Controller-->
+        <!--Label Detail And Add View Controller-->
         <scene sceneID="RlD-yH-ffY">
             <objects>
-                <viewController id="vbQ-aR-pab" sceneMemberID="viewController">
+                <viewController id="vbQ-aR-pab" customClass="LabelDetailAndAddViewController" customModule="IssueTracker" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="gd1-0g-Xfk">
                         <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
