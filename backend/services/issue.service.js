@@ -150,8 +150,6 @@ export const issueService = {
       labelModel.getLabelByIssueNo({ issueNo }),
     ]);
 
-    Object.assign(issue, { milestone: null, assignees, comments, labels });
-
-    return issue;
+    return { ...issue, milestone: null, assignees, comments, labels };
   },
 };
