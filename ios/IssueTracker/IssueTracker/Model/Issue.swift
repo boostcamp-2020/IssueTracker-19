@@ -27,6 +27,7 @@ class Issue: SectionItem {
     var closedAt: Date?
     var milestone: Milestone?
     var commentCount: Int
+
 	init(no: Int,
 		 title: String,
 		 author: String,

@@ -168,12 +168,27 @@ extension IssueViewController {
     func createLayout() -> UICollectionViewLayout {
         createSwipeLayout()
     }
+	
+	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+		if let issueDetailVC = segue.destination as? IssueDetailViewController {
+			issueDetailVC.issue = Issue(no: 11,
+										title: "이슈 생성 기능",
+										author: "godrm",
+										assignees: [],
+										labels: [],
+										isOpened: true,
+										createdAt: Date(),
+										closedAt: nil,
+										milestone: nil,
+										commentCount: 2)
+		}
+	}
 }
 
 extension IssueViewController: UICollectionViewDelegate {
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if !isMultiselectMode {
-            performSegue(withIdentifier: "newIssueSegue", sender: nil)
-        }
-    }
+	func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+		if !isMultiselectMode {
+			performSegue(withIdentifier: "issueDetailSegue", sender: nil)
+		}
+	}
 }
