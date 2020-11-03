@@ -19,11 +19,11 @@ export const labelModel = {
     WHERE issue_no = ?;`;
     return pool.execute(sql, [issueNo]);
   },
-  addLabel({ name, description, color }) {
+  addLabel({ name, description = null, color }) {
     const sql = 'INSERT INTO label (name, description, color) VALUES (?, ?, ?);';
     return pool.execute(sql, [name, description, color]);
   },
-  changeLabel({ name, description, color, no }) {
+  changeLabel({ name, description = null, color, no }) {
     const sql = 'UPDATE label SET name=?, description=?, color=? WHERE no=?;';
     return pool.execute(sql, [name, description, color, no]);
   },

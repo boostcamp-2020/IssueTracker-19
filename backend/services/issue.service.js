@@ -132,14 +132,13 @@ export const issueService = {
       };
     });
 
-    return getFilterdIssuesByOptions(issuesWithLabelsAndAssignees, nickname, options).map(item => {
-      delete item.comments;
-      return item;
-    });
+    return getFilterdIssuesByOptions(issuesWithLabelsAndAssignees, nickname, options).map(
+      ({ comments, ...item }) => item,
+    );
   },
   async getIssue({ no }) {
-    const [[issue]] = await issueModel.getIssueByNo({ no });
-    const { milestoneNo, no: issueNo } = issue;
+    const [[{ milestoneNo, ...issue }]] = await issueModel.getIssueByNo({ no });
+    const { no: issueNo } = issue;
 
     if (milestoneNo) {
       const [[milestone]] = await milestoneModel.getMilestoneDetail({ no: milestoneNo });
@@ -151,12 +150,6 @@ export const issueService = {
       labelModel.getLabelByIssueNo({ issueNo }),
     ]);
 
-    issue.assignees = assignees;
-    issue.comments = comments;
-    issue.labels = labels;
-
-    delete issue.milestoneNo;
-
-    return issue;
+    return { ...issue, milestone: null, assignees, comments, labels };
   },
 };

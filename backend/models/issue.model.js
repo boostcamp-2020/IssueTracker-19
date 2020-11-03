@@ -19,7 +19,7 @@ export const issueModel = {
     WHERE i.no = ?;`;
     return pool.execute(sql, [no]);
   },
-  addIssue({ title, authorNo, milestoneNo }) {
+  addIssue({ title, authorNo, milestoneNo = null }) {
     const sql = 'INSERT INTO issue (title, author_no, milestone_no) VALUES (?, ?, ?);';
     return pool.execute(sql, [title, authorNo, milestoneNo]);
   },

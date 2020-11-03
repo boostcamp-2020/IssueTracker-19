@@ -1,4 +1,6 @@
 import { commentModel } from '@models';
+import { verify } from '@lib/utils';
+import { errorMessage } from '@lib/constants';
 
 // 유저 소유의 코멘트인지 확인하는 함수
 const isCommentOwner = async (userNo, commentNo) => {
@@ -13,15 +15,19 @@ const isCommentOwner = async (userNo, commentNo) => {
  * POST /api/comments
  */
 export const addComment = async (req, res, next) => {
-  const { issueNo, content } = req.body;
-
   try {
-    await commentModel.addComment({
-      issueNo,
-      userNo: req.user.no,
-      content,
-    });
-    res.status(201).end();
+    const { issueNo, content } = req.body;
+
+    if (verify([issueNo, content])) {
+      await commentModel.addComment({
+        issueNo,
+        userNo: req.user.no,
+        content,
+      });
+      res.status(201).end();
+      return;
+    }
+    res.status(400).json({ message: errorMessage.MISSING_REQUIRED_VALUE });
   } catch (err) {
     next(err);
   }
@@ -40,10 +46,13 @@ export const changeComment = async (req, res, next) => {
       res.status(403).end();
       return;
     }
-
-    // 실제 코멘트 변경
-    await commentModel.changeComment({ no, content });
-    res.status(200).end();
+    if (verify([content])) {
+      // 실제 코멘트 변경
+      await commentModel.changeComment({ no, content });
+      res.status(200).end();
+      return;
+    }
+    res.status(400).json({ message: errorMessage.MISSING_REQUIRED_VALUE });
   } catch (err) {
     next(err);
   }
