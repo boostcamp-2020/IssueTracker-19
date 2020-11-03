@@ -12,8 +12,6 @@ enum Section: Hashable {
     case main
 }
 
-var all = ["1", "2", "3"]
-
 var sample = [
     SampleIssue(),
     SampleIssue(),
@@ -48,7 +46,11 @@ class IssueViewController: UIViewController, ListCollectionViewProtocol {
                 cell.setupViewsIfNeeded()
                 cell.setupViews(inset: 30)
                 cell.accessories = [
-                    .multiselect(displayed: .always, options: .init(isHidden: false, reservedLayoutWidth: .custom(5), tintColor: .systemGray6, backgroundColor: .blue))
+                    .multiselect(displayed: .always,
+                                 options: .init(isHidden: false,
+                                                reservedLayoutWidth: .custom(5),
+                                                tintColor: .systemGray6,
+                                                backgroundColor: .blue))
                 ]
                 cell.backgroundConfiguration?.backgroundColor = .systemBackground
             }
@@ -159,5 +161,6 @@ extension IssueViewController {
 
 extension IssueViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        performSegue(withIdentifier: "newIssueSegue", sender: nil)
     }
 }
