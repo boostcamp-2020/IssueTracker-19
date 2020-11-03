@@ -185,6 +185,120 @@
             </objects>
             <point key="canvasLocation" x="3576.8000000000002" y="875.61576354679812"/>
         </scene>
+        <!--Issue Detail Bottom View Controller-->
+        <scene sceneID="Eu2-0p-PZB">
+            <objects>
+                <viewController storyboardIdentifier="issueDetailBottomVC" id="Fly-Wc-ZSU" customClass="IssueDetailBottomViewController" customModule="IssueTracker" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="dWf-My-YGf" customClass="CornerRoundedFloatingView" customModule="IssueTracker" customModuleProvider="target">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="758"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="L14-b5-iZc">
+                                <rect key="frame" x="167.66666666666666" y="10" width="40" height="6"/>
+                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="6" id="BCF-2C-BJi"/>
+                                    <constraint firstAttribute="width" constant="40" id="RBz-7n-TyT"/>
+                                </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="3"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sJZ-Go-YBs" customClass="CornerRoundedFloatingView" customModule="IssueTracker" customModuleProvider="target">
+                                <rect key="frame" x="255" y="26" width="100" height="50"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yi8-js-74W">
+                                        <rect key="frame" x="49.666666666666686" y="0.0" width="1" height="50"/>
+                                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="1" id="3G7-eZ-ahx"/>
+                                        </constraints>
+                                    </view>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mYp-fI-C25">
+                                        <rect key="frame" x="0.0" y="0.0" width="49.666666666666664" height="50"/>
+                                        <state key="normal" image="chevron.up" catalog="system"/>
+                                        <connections>
+                                            <action selector="upButtonAction:" destination="Fly-Wc-ZSU" eventType="touchUpInside" id="XKC-pK-bOJ"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IEv-dD-ZFu">
+                                        <rect key="frame" x="50.666666666666686" y="0.0" width="49.333333333333343" height="50"/>
+                                        <state key="normal" image="chevron.down" catalog="system"/>
+                                        <connections>
+                                            <action selector="downButtonAction:" destination="Fly-Wc-ZSU" eventType="touchUpInside" id="2hP-5C-Lsv"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstItem="yi8-js-74W" firstAttribute="centerY" secondItem="sJZ-Go-YBs" secondAttribute="centerY" id="COi-gm-swY"/>
+                                    <constraint firstAttribute="trailing" secondItem="IEv-dD-ZFu" secondAttribute="trailing" id="JBG-6Q-4pD"/>
+                                    <constraint firstItem="yi8-js-74W" firstAttribute="centerX" secondItem="sJZ-Go-YBs" secondAttribute="centerX" id="Rea-is-wDj"/>
+                                    <constraint firstItem="yi8-js-74W" firstAttribute="height" secondItem="sJZ-Go-YBs" secondAttribute="height" id="UiC-6v-f7N"/>
+                                    <constraint firstItem="IEv-dD-ZFu" firstAttribute="top" secondItem="sJZ-Go-YBs" secondAttribute="top" id="VCM-xl-aiV"/>
+                                    <constraint firstItem="IEv-dD-ZFu" firstAttribute="leading" secondItem="yi8-js-74W" secondAttribute="trailing" id="ac9-kO-a3U"/>
+                                    <constraint firstItem="mYp-fI-C25" firstAttribute="leading" secondItem="sJZ-Go-YBs" secondAttribute="leading" id="dAf-j3-NtI"/>
+                                    <constraint firstAttribute="height" constant="50" id="gXO-ET-CdC"/>
+                                    <constraint firstItem="mYp-fI-C25" firstAttribute="top" secondItem="sJZ-Go-YBs" secondAttribute="top" id="ht8-DA-XAS"/>
+                                    <constraint firstAttribute="width" secondItem="sJZ-Go-YBs" secondAttribute="height" multiplier="2" id="pIq-Hu-wQe"/>
+                                    <constraint firstAttribute="bottom" secondItem="mYp-fI-C25" secondAttribute="bottom" id="pjB-so-vAs"/>
+                                    <constraint firstAttribute="bottom" secondItem="IEv-dD-ZFu" secondAttribute="bottom" id="rFG-eH-qTW"/>
+                                    <constraint firstItem="yi8-js-74W" firstAttribute="leading" secondItem="mYp-fI-C25" secondAttribute="trailing" id="y2r-ad-wUP"/>
+                                </constraints>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ewl-yj-YiC" customClass="CornerRoundedFloatingView" customModule="IssueTracker" customModuleProvider="target">
+                                <rect key="frame" x="20" y="26" width="215" height="50"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9IH-Gh-YFE">
+                                        <rect key="frame" x="0.0" y="0.0" width="215" height="50"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                        <state key="normal" title="Comment"/>
+                                        <connections>
+                                            <action selector="addCommentAction:" destination="Fly-Wc-ZSU" eventType="touchUpInside" id="e7a-w8-uWX"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstItem="9IH-Gh-YFE" firstAttribute="top" secondItem="Ewl-yj-YiC" secondAttribute="top" id="EUE-pj-GZI"/>
+                                    <constraint firstAttribute="trailing" secondItem="9IH-Gh-YFE" secondAttribute="trailing" id="J7o-2E-S3p"/>
+                                    <constraint firstAttribute="bottom" secondItem="9IH-Gh-YFE" secondAttribute="bottom" id="QK6-Fp-QTf"/>
+                                    <constraint firstItem="9IH-Gh-YFE" firstAttribute="leading" secondItem="Ewl-yj-YiC" secondAttribute="leading" id="WaN-gH-fLR"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="bFq-zj-anu"/>
+                        <color key="backgroundColor" systemColor="systemGroupedBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="L14-b5-iZc" firstAttribute="top" secondItem="dWf-My-YGf" secondAttribute="top" constant="10" id="4WY-LV-XBi"/>
+                            <constraint firstItem="Ewl-yj-YiC" firstAttribute="top" secondItem="sJZ-Go-YBs" secondAttribute="top" id="JRq-k0-pDa"/>
+                            <constraint firstItem="L14-b5-iZc" firstAttribute="centerX" secondItem="bFq-zj-anu" secondAttribute="centerX" id="KJA-66-0RQ"/>
+                            <constraint firstItem="Ewl-yj-YiC" firstAttribute="leading" secondItem="bFq-zj-anu" secondAttribute="leading" constant="20" id="Mh3-JF-D0v"/>
+                            <constraint firstItem="Ewl-yj-YiC" firstAttribute="height" secondItem="sJZ-Go-YBs" secondAttribute="height" id="SCg-Sg-xTi"/>
+                            <constraint firstItem="bFq-zj-anu" firstAttribute="trailing" secondItem="sJZ-Go-YBs" secondAttribute="trailing" constant="20" id="cfC-Mf-KfD"/>
+                            <constraint firstItem="sJZ-Go-YBs" firstAttribute="top" secondItem="L14-b5-iZc" secondAttribute="bottom" constant="10" id="xg6-SE-5JX"/>
+                            <constraint firstItem="sJZ-Go-YBs" firstAttribute="leading" secondItem="Ewl-yj-YiC" secondAttribute="trailing" constant="20" id="zs9-1o-60a"/>
+                        </constraints>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="shadowOpacity">
+                                <real key="value" value="1"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRounding">
+                                <real key="value" value="10"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                    </view>
+                    <modalPageSheetSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+                    <connections>
+                        <outlet property="commentButtonView" destination="Ewl-yj-YiC" id="rxL-Kh-261"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="goC-le-QKn" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4349.6000000000004" y="875.61576354679812"/>
+        </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="JrQ-xi-R2Y">
             <objects>
@@ -226,6 +340,8 @@
     </scenes>
     <resources>
         <image name="chevron.backward" catalog="system" width="96" height="128"/>
+        <image name="chevron.down" catalog="system" width="128" height="72"/>
+        <image name="chevron.up" catalog="system" width="128" height="72"/>
         <systemColor name="labelColor">
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
@@ -237,6 +353,9 @@
         </systemColor>
         <systemColor name="systemGrayColor">
             <color red="0.55686274509803924" green="0.55686274509803924" blue="0.57647058823529407" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemGroupedBackgroundColor">
+            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

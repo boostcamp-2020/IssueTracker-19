@@ -8,7 +8,6 @@
 
 import UIKit
 
-
 class IssueComment: SectionItem {
 	let author: String
 	let content: String
@@ -18,37 +17,44 @@ class IssueComment: SectionItem {
 	}
 }
 
-
 class IssueDetailViewController: UIViewController, ListCollectionViewProtocol {
 	
 	var issue: Issue!
 	var list: [IssueComment] = []
 	var dataSource: DataSource?
+	
 	var collectionView: UICollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewLayout())
+	var bottomViewController: IssueDetailBottomViewController?
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		view.addSubview(collectionView)
-		collectionView.translatesAutoresizingMaskIntoConstraints = false
-		NSLayoutConstraint.activate([
-			collectionView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
-			collectionView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor),
-			collectionView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor),
-			collectionView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor)
-		])
 		
-		// setup collection view
 		configureHierarchy()
 		configureDataSource()
+		configureBottomView()
 		updateList()
+		
 	}
 	
-//
+	func configureBottomView() {
+		guard let bottomVC = storyboard?.instantiateViewController(identifier: "issueDetailBottomVC")
+				as? IssueDetailBottomViewController
+		else { return }
+		
+		bottomViewController = bottomVC
+		let window = UIApplication.shared.windows.filter { $0.isKeyWindow }.last
+		window?.addSubview(bottomVC.view)
+	}
+	
 	override func viewDidAppear(_ animated: Bool) {
 		super.viewDidAppear(animated)
-		
-		
+		// TODO: 서버 API 통신 구현 후 viewDidLoad로 이동
 		updateIssueDetail()
+		bottomViewController?.showViewWithAnimation()
+	}
+	
+	override func viewWillDisappear(_ animated: Bool) {
+		bottomViewController?.view.removeFromSuperview()
 	}
 	
 	func updateIssueDetail() {
@@ -70,22 +76,26 @@ class IssueDetailViewController: UIViewController, ListCollectionViewProtocol {
 	
 	@IBAction func editButton(_ sender: UIBarButtonItem) {
 	}
-
-	
 }
 
+// MARK: - Collection View Configuration
 extension IssueDetailViewController {
-	
-	
-	
 	func configureHierarchy() {
 		collectionView.collectionViewLayout = createLayout()
 		collectionView.register(UINib(nibName: "IssueDetailHeaderReusableView", bundle: nil),
 								forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
 								withReuseIdentifier: IssueDetailHeaderReusableView.identifier)
-		
 		collectionView.register(UINib(nibName: "IssueDetailCommentViewCell", bundle: nil),
 								forCellWithReuseIdentifier: IssueDetailCommentViewCell.identifier)
+		
+		view.addSubview(collectionView)
+		collectionView.translatesAutoresizingMaskIntoConstraints = false
+		NSLayoutConstraint.activate([
+			collectionView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
+			collectionView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor),
+			collectionView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor),
+			collectionView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor)
+		])
 	}
 	
 	func configureDataSource() {
