@@ -97,7 +97,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="137.68115942028987" y="116.51785714285714"/>
+            <point key="canvasLocation" x="215" y="491"/>
         </scene>
         <!--이슈-->
         <scene sceneID="v0g-I4-gTz">
@@ -129,7 +129,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="c3e-rB-1a3" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2861.5384615384614" y="114.45497630331754"/>
+            <point key="canvasLocation" x="3014" y="-574"/>
         </scene>
         <!--레이블-->
         <scene sceneID="Cf2-jf-hzY">
@@ -150,7 +150,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="VRz-B1-F6f" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2050" y="865"/>
+            <point key="canvasLocation" x="3014" y="116"/>
         </scene>
         <!--Label Detail And Add View Controller-->
         <scene sceneID="RlD-yH-ffY">
@@ -165,7 +165,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Pan-yN-WSZ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2049" y="1588"/>
+            <point key="canvasLocation" x="3788" y="116"/>
         </scene>
         <!--Filter View Controller-->
         <scene sceneID="zGp-Tu-lMb">
@@ -228,7 +228,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="V9n-id-ZiQ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2807" y="865"/>
+            <point key="canvasLocation" x="3788" y="-1248"/>
         </scene>
         <!--Issue Add View Controller-->
         <scene sceneID="9hi-mu-K1D">
@@ -354,7 +354,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7pt-Yx-Yk1" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3617" y="865"/>
+            <point key="canvasLocation" x="3789" y="-574"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="JrQ-xi-R2Y">
@@ -370,11 +370,12 @@
                     <connections>
                         <segue destination="wM5-2z-LiZ" kind="relationship" relationship="viewControllers" id="LG0-FA-Ml4"/>
                         <segue destination="8yf-gQ-8VZ" kind="relationship" relationship="viewControllers" id="VAT-gE-E6M"/>
+                        <segue destination="m65-Ba-NXk" kind="relationship" relationship="viewControllers" id="bb3-ur-Vsw"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZGt-8E-sw9" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1140.5797101449277" y="116.51785714285714"/>
+            <point key="canvasLocation" x="1106" y="491"/>
         </scene>
         <!--이슈-->
         <scene sceneID="Hi8-ZF-Hcj">
@@ -393,7 +394,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pVg-hM-t9x" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2050.7246376811595" y="116.51785714285714"/>
+            <point key="canvasLocation" x="2242" y="-574"/>
         </scene>
         <!--레이블-->
         <scene sceneID="4Uz-VD-gbj">
@@ -412,12 +413,69 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Gwe-s7-Yyg" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1140" y="865"/>
+            <point key="canvasLocation" x="2242" y="116"/>
+        </scene>
+        <!--마일스톤-->
+        <scene sceneID="Bnd-ay-ffN">
+            <objects>
+                <viewController id="MPA-we-Xh4" customClass="MilestoneViewController" customModule="IssueTracker" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="ReH-jp-1zl">
+                        <rect key="frame" x="0.0" y="0.0" width="390" height="790"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="ngz-iU-hsb"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="마일스톤" id="bmu-iz-AAX">
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="hB1-GV-pb5">
+                            <connections>
+                                <segue destination="1m3-1x-TNp" kind="presentation" id="3Ys-Lq-t3L"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="xez-Oq-7LP" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3014" y="802"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="T9J-c0-adv">
+            <objects>
+                <viewController id="1m3-1x-TNp" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="mWh-H4-BBK">
+                        <rect key="frame" x="0.0" y="0.0" width="390" height="790"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="jkZ-73-04w"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="7HF-kt-pfo" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3788" y="802"/>
+        </scene>
+        <!--마일스톤-->
+        <scene sceneID="PPE-9e-Ykn">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="m65-Ba-NXk" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="마일스톤" image="3.circle.fill" catalog="system" id="DO1-wC-JGB"/>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" largeTitles="YES" id="CKH-p4-Lci">
+                        <rect key="frame" x="0.0" y="0.0" width="390" height="108"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="MPA-we-Xh4" kind="relationship" relationship="rootViewController" id="7Nz-I4-pLu"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="E9R-XB-r15" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2242" y="802"/>
         </scene>
     </scenes>
     <resources>
         <image name="1.circle.fill" catalog="system" width="128" height="121"/>
         <image name="2.circle.fill" catalog="system" width="128" height="121"/>
+        <image name="3.circle.fill" catalog="system" width="128" height="121"/>
         <image name="baseline_queue_black_48pt" width="48" height="48"/>
         <systemColor name="labelColor">
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

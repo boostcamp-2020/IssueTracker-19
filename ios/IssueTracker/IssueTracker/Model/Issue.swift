@@ -16,10 +16,7 @@ struct Label: Codable {
     
 }
 
-struct Milestone: Codable {
-    
-}
-class Issue: SectionItem, Codable {
+class Issue: SectionItem {
     var no: Int
     var title: String
     var author: String
@@ -30,6 +27,27 @@ class Issue: SectionItem, Codable {
     var closedAt: Date?
     var milestone: Milestone?
     var commentCount: Int
+	init(no: Int,
+		 title: String,
+		 author: String,
+		 assignees: [User],
+		 labels: [Label],
+		 isOpened: Bool,
+		 createdAt: Date,
+		 closedAt: Date?,
+		 milestone: Milestone?,
+		 commentCount: Int) {
+		self.no = no
+		self.title = title
+		self.author = author
+		self.assignees = assignees
+		self.labels = labels
+		self.isOpened = isOpened
+		self.createdAt = createdAt
+		self.closedAt = closedAt
+		self.milestone = milestone
+		self.commentCount = commentCount
+	}
 }
 
 class SampleIssue: SectionItem {
