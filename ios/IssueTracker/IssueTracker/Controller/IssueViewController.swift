@@ -12,8 +12,6 @@ enum Section: Hashable {
     case main
 }
 
-var all = ["1", "2", "3"]
-
 var sample = [
     SampleIssue(),
     SampleIssue(),
@@ -27,9 +25,14 @@ class IssueViewController: UIViewController, ListCollectionViewProtocol {
     var collectionView: UICollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewLayout())
     var cellRegistration: Registration?
     var isMultiselectMode: Bool = false
+    var toolbar = UIToolbar()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        let add = UIBarButtonItem(title: "선택 이슈 닫기", style: .plain, target: self, action: nil)
+        let spacer = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil)
+        toolbarItems = [spacer, add]
         
 		updateData()
         configureHierarchy()
@@ -41,6 +44,10 @@ class IssueViewController: UIViewController, ListCollectionViewProtocol {
         list = sample
     }
     
+    @IBAction func filterButton(_ sender: UIBarButtonItem) {
+        performSegue(withIdentifier: "filterSegue", sender: nil)
+    }
+    
     @IBAction func issueEditButton(_ sender: UIBarButtonItem) {
         if !isMultiselectMode {
             collectionView.collectionViewLayout = createNoneswipeLayout()
@@ -48,12 +55,17 @@ class IssueViewController: UIViewController, ListCollectionViewProtocol {
                 cell.setupViewsIfNeeded()
                 cell.setupViews(inset: 30)
                 cell.accessories = [
-                    .multiselect(displayed: .always, options: .init(isHidden: false, reservedLayoutWidth: .custom(5), tintColor: .systemGray6, backgroundColor: .blue))
+                    .multiselect(displayed: .always,
+                                 options: .init(isHidden: false,
+                                                reservedLayoutWidth: .custom(5),
+                                                tintColor: .systemGray6,
+                                                backgroundColor: .blue))
                 ]
                 cell.backgroundConfiguration?.backgroundColor = .systemBackground
             }
+            
             collectionView.allowsMultipleSelection = true
-            updateList()
+            navigationController?.setToolbarHidden(false, animated: false)
         } else {
             collectionView.collectionViewLayout = createSwipeLayout()
             cellRegistration = Registration { (cell, _, _) in
@@ -63,9 +75,10 @@ class IssueViewController: UIViewController, ListCollectionViewProtocol {
             }
             
             collectionView.allowsMultipleSelection = false
-            updateList()
+            navigationController?.setToolbarHidden(true, animated: false)
         }
         
+        updateList()
         isMultiselectMode.toggle()
     }
     	
@@ -159,5 +172,8 @@ extension IssueViewController {
 
 extension IssueViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if !isMultiselectMode {
+            performSegue(withIdentifier: "newIssueSegue", sender: nil)
+        }
     }
 }

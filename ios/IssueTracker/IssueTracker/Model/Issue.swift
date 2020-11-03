@@ -33,5 +33,5 @@ class Issue: SectionItem, Codable {
 }
 
 class SampleIssue: SectionItem {
-    var text = "3"
+    var text = "#3"
 }
