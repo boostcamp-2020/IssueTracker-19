@@ -22,7 +22,7 @@ export const login = async (req, res, next) => {
         next(err);
         return;
       }
-      res.json({ id: user.id });
+      res.status(200).end();
     });
   })(req, res, next);
 };
@@ -43,8 +43,8 @@ export const logout = async (req, res) => {
 export const signup = async (req, res, next) => {
   try {
     const { id, nickname, pw, auth } = req.body;
-    if (verify([id, nickname, pw, auth])) {
-      const hashPw = await bcrypt.hash(pw, 10);
+    if (verify([id, nickname, auth])) {
+      const hashPw = pw ? await bcrypt.hash(pw, 10) : null;
       await userModel.addUser({ id, nickname, pw: hashPw, auth });
       res.status(200).end();
       return;
