@@ -1,13 +1,11 @@
 import React from 'react';
-import { Header } from '@components';
+import { Header, LoginBox } from '@components';
 
-const Login = () => {
+export default function Login() {
   return (
     <>
       <Header />
-      Login Page
+      <LoginBox />
     </>
   );
-};
-
-export default Login;
+}

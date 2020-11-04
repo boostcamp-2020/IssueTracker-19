@@ -1,13 +1,11 @@
 import React from 'react';
 import { Header } from '@components';
 
-const Issue = () => {
+export default function Issue() {
   return (
     <>
       <Header />
       Issue Page
     </>
   );
-};
-
-export default Issue;
+}
