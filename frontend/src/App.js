@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import { NotFound, Issue, Login } from './pages';
+import { NotFound, Issue, Login, Label } from './pages';
 
 const App = () => {
   return (
@@ -8,6 +8,7 @@ const App = () => {
       <Switch>
         <Route path="/" exact component={Issue} />
         <Route path="/login" component={Login} />
+        <Route path="/labels" component={Label} />
         <Route component={NotFound} />
       </Switch>
     </BrowserRouter>
