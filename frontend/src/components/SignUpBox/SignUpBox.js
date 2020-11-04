@@ -5,7 +5,7 @@ import { flexColumn } from '@styles/utils';
 import { useHistory } from 'react-router-dom';
 import { AUTH } from '@constants/index';
 
-const SignUpArea = styled.div`
+const SignUpContainer = styled.div`
   background-color: #ecf0f1;
   ${flexColumn}
   flex: 1;
@@ -77,7 +77,7 @@ export default function SignUpBox() {
   };
 
   return (
-    <SignUpArea>
+    <SignUpContainer>
       <Title>회원가입</Title>
       <Form onSubmit={handleSubmit}>
         <InputBox>
@@ -87,22 +87,26 @@ export default function SignUpBox() {
           </label>
         </InputBox>
         <InputBox>
-          <label>닉네임</label>
-          <Input type="text" name="nickname" onChange={handleChange} value={nickname} required />
+          <label>
+            닉네임
+            <Input type="text" name="nickname" onChange={handleChange} value={nickname} required />
+          </label>
         </InputBox>
         <InputBox>
-          <label>비밀번호</label>
-          <Input
-            type="password"
-            name="pw"
-            onChange={handleChange}
-            value={pw}
-            autoComplete="true"
-            required
-          />
+          <label>
+            비밀번호
+            <Input
+              type="password"
+              name="pw"
+              onChange={handleChange}
+              value={pw}
+              autoComplete="true"
+              required
+            />
+          </label>
         </InputBox>
         <SignUpButton>회원가입</SignUpButton>
       </Form>
-    </SignUpArea>
+    </SignUpContainer>
   );
 }
