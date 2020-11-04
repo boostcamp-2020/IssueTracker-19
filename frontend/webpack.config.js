@@ -3,7 +3,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 module.exports = {
-  devtool: 'cheap-module-eval-source-map',
+  devtool: 'source-map',
   entry: {
     main: './src/index.js',
   },
@@ -17,12 +17,14 @@ module.exports = {
       '@constants': path.resolve(__dirname, './src/constants'),
       '@api': path.resolve(__dirname, './src/api'),
       '@imgs': path.resolve(__dirname, './src/imgs'),
+      '@styles': path.resolve(__dirname, './src/styles'),
       '@': path.resolve(__dirname, './src'),
     },
   },
   output: {
     path: path.resolve(__dirname, './dist'),
     filename: '[name].bundle.js',
+    publicPath: '/',
   },
   module: {
     rules: [

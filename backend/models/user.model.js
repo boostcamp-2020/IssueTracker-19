@@ -6,8 +6,8 @@ export const userModel = {
     const sql = 'SELECT * FROM user WHERE id=?;';
     return pool.execute(sql, [id]);
   },
-  addUser({ id, nickname, auth }) {
-    const sql = 'INSERT INTO user (id, nickname, auth) VALUES (?, ?, ?);';
-    return pool.execute(sql, [id, nickname, auth ? auth : AUTH.DEFAULT]);
+  addUser({ id, nickname, pw = null, auth }) {
+    const sql = 'INSERT INTO user (id, nickname, pw, auth) VALUES (?, ?, ?, ?);';
+    return pool.execute(sql, [id, nickname, pw, auth ? auth : AUTH.DEFAULT]);
   },
 };

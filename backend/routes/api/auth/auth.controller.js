@@ -1,4 +1,8 @@
 import passport from 'passport';
+import { verify } from '@lib/utils';
+import { errorMessage } from '@lib/constants';
+import { userModel } from '@models';
+import bcrypt from 'bcrypt';
 
 /* 
 	POST /api/auth/login
@@ -18,7 +22,7 @@ export const login = async (req, res, next) => {
         next(err);
         return;
       }
-      res.json({ id: user.id });
+      res.status(200).end();
     });
   })(req, res, next);
 };
@@ -31,4 +35,22 @@ export const logout = async (req, res) => {
   req.session.save(() => {
     res.status(200).end();
   });
+};
+
+/*
+	POST /api/auth/signup
+*/
+export const signup = async (req, res, next) => {
+  try {
+    const { id, nickname, pw, auth } = req.body;
+    if (verify([id, nickname, auth])) {
+      const hashPw = pw ? await bcrypt.hash(pw, 10) : null;
+      await userModel.addUser({ id, nickname, pw: hashPw, auth });
+      res.status(200).end();
+      return;
+    }
+    res.status(400).json({ message: errorMessage.MISSING_REQUIRED_VALUE });
+  } catch (err) {
+    next(err);
+  }
 };

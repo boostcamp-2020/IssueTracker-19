@@ -7,5 +7,6 @@ const router = express.Router({ mergeParams: true });
 router.use('/github', githubRouter);
 router.post('/login', authController.login);
 router.post('/logout', authController.logout);
+router.post('/signup', authController.signup);
 
 export default router;
