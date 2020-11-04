@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { API } from '@api';
-import { flex, flexCenter, flexColumn } from '@styles/utils';
 
 const LoginForm = styled.form`
   display: flex;
