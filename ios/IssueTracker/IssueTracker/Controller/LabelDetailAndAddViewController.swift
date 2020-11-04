@@ -9,33 +9,34 @@
 import UIKit
 
 class LabelDetailAndAddViewController: UIViewController {
-    private let alertView: UIView = {
-        let alertView = UIView()
-        alertView.backgroundColor = .white
-        alertView.layer.masksToBounds = true
-        alertView.layer.cornerRadius = 12
-        
-        return alertView
-    }()
-
+    @IBOutlet weak var colorPickerView: RoundView!
+    @IBOutlet weak var colorPickerViewTopConstraint: NSLayoutConstraint!
+    @IBOutlet weak var randomColorPickButton: UIButton!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        randomColorPickButton.layer.cornerRadius = randomColorPickButton.frame.width/2.0-1
+        colorPickerViewTopConstraint.constant = -100-colorPickerView.frame.height
+        colorPickerView.layoutIfNeeded()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        self.view.addSubview(alertView)
-        alertView.frame = CGRect(x: 20, y: -300, width: self.view.frame.width-40, height: 300)
-        
-        let titleLabel = UILabel(frame: CGRect(x: 0, y: 0, width: alertView.frame.width, height: 80))
-        titleLabel.text = "hi, my name is KIBEOM"
-        titleLabel.textAlignment = .center
-        alertView.addSubview(titleLabel)
-        
         UIView.animate(withDuration: 0.25, animations: {
-            self.alertView.center = self.view.center
+            self.colorPickerView.center = self.view.center
         })
+    }
+    
+    @IBAction func closeButton(_ sender: UIButton) {
+        UIView.animate(withDuration: 0.25, animations: {
+            self.colorPickerView.center.y = -100-self.colorPickerView.frame.height
+        }, completion: { [weak self] done in
+            if done {
+                self?.dismiss(animated: false, completion: nil)
+            }
+        })
+        
     }
 }

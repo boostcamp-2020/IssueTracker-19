@@ -16,6 +16,7 @@ class FilterViewController: UIViewController {
     }
     
     override func viewDidAppear(_ animated: Bool) {
+        
     }
 
     @IBAction func cancelButton(_ sender: UIButton) {
