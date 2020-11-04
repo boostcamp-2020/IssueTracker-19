@@ -7,9 +7,8 @@ import { AUTH } from '@constants/index';
 
 const SignUpArea = styled.div`
   background-color: #ecf0f1;
-  display: flex;
+  ${flexColumn}
   flex: 1;
-  flex-direction: column;
   align-items: center;
 `;
 const Title = styled.h1`
@@ -56,18 +55,21 @@ const SignUpButton = styled.button`
 export default function SignUpBox() {
   const [form, setForm] = useState({ id: '', nickname: '', pw: '' });
 
+  const { id, nickname, pw } = form;
+
   const history = useHistory();
 
   const handleChange = ({ target }) => {
     const { name, value } = target;
     setForm({ ...form, [name]: value });
   };
-  const SubmitData = async e => {
+  const submitData = async e => {
     e.preventDefault();
+
     const data = {
-      id: form.id,
-      nickname: form.nickname,
-      pw: form.pw,
+      id,
+      nickname,
+      pw,
       auth: AUTH.DEFAULT,
     };
     try {
@@ -85,17 +87,17 @@ export default function SignUpBox() {
       <Box>
         <Input>
           <InputText>아이디</InputText>
-          <InputTextBox type="text" name="id" onChange={handleChange} value={form.id} />
+          <InputTextBox type="text" name="id" onChange={handleChange} value={id} />
         </Input>
         <Input>
           <InputText>닉네임</InputText>
-          <InputTextBox type="text" name="nickname" onChange={handleChange} value={form.nickname} />
+          <InputTextBox type="text" name="nickname" onChange={handleChange} value={nickname} />
         </Input>
         <Input>
           <InputText>비밀번호</InputText>
-          <InputTextBox type="password" name="pw" onChange={handleChange} value={form.pw} />
+          <InputTextBox type="password" name="pw" onChange={handleChange} value={pw} />
         </Input>
-        <SignUpButton onClick={SubmitData}>회원가입</SignUpButton>
+        <SignUpButton onClick={submitData}>회원가입</SignUpButton>
       </Box>
     </SignUpArea>
   );
