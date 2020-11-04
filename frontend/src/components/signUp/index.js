@@ -16,7 +16,14 @@ export const SignUp = () => {
   const handleChangePassword = e => {
     setPassword(e.target.value);
   };
-  const SubmitData = async () => {};
+  const SubmitData = async () => {
+    const data = {
+      id: ID,
+      nickname: nickname,
+      password: password,
+    };
+    await API.post('/api/signup', data);
+  };
   return (
     <Background>
       <SignUpArea>
@@ -34,7 +41,7 @@ export const SignUp = () => {
             <InputText>비밀번호</InputText>
             <InputTextBox type="password" onChange={handleChangePassword} />
           </Input>
-          <SignUpButton>회원가입</SignUpButton>
+          <SignUpButton onClick={SubmitData}>회원가입</SignUpButton>
         </SignUpBox>
       </SignUpArea>
     </Background>
@@ -89,7 +96,7 @@ const SignUpButton = styled.button`
   margin: 2rem;
 
   width: 80%;
-  background-color: #29b6af;
+  background-color: #27ae60;
   border: none;
   border-radius: 3px;
   color: white;
