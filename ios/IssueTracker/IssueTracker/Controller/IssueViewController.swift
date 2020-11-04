@@ -26,6 +26,8 @@ class IssueViewController: UIViewController, ListCollectionViewProtocol {
     var cellRegistration: Registration?
     var isMultiselectMode: Bool = false
     var toolbar = UIToolbar()
+    var toolbarBottomConstraint: NSLayoutConstraint?
+    var floatingButton = UIButton()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,6 +40,17 @@ class IssueViewController: UIViewController, ListCollectionViewProtocol {
         configureHierarchy()
         configureDataSource()
 		addFloatingButton(view: view)
+        
+        navigationItem.rightBarButtonItem = editButtonItem
+        
+        view.addSubview(toolbar)
+        toolbar.translatesAutoresizingMaskIntoConstraints = false
+        toolbarBottomConstraint = toolbar.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 83-toolbar.frame.height)
+        NSLayoutConstraint.activate([
+            toolbar.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+            toolbar.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+            toolbarBottomConstraint!
+        ])
     }
     
     func updateData() {
@@ -47,61 +60,26 @@ class IssueViewController: UIViewController, ListCollectionViewProtocol {
     @IBAction func filterButton(_ sender: UIBarButtonItem) {
         performSegue(withIdentifier: "filterSegue", sender: nil)
     }
-    
-    @IBAction func issueEditButton(_ sender: UIBarButtonItem) {
-        if !isMultiselectMode {
-            collectionView.collectionViewLayout = createNoneswipeLayout()
-            cellRegistration = Registration { (cell, _, _) in
-                cell.setupViewsIfNeeded()
-                cell.setupViews(inset: 30)
-                cell.accessories = [
-                    .multiselect(displayed: .always,
-                                 options: .init(isHidden: false,
-                                                reservedLayoutWidth: .custom(5),
-                                                tintColor: .systemGray6,
-                                                backgroundColor: .blue))
-                ]
-                cell.backgroundConfiguration?.backgroundColor = .systemBackground
-            }
-            
-            collectionView.allowsMultipleSelection = true
-            navigationController?.setToolbarHidden(false, animated: false)
-        } else {
-            collectionView.collectionViewLayout = createSwipeLayout()
-            cellRegistration = Registration { (cell, _, _) in
-                cell.setupViewsIfNeeded()
-                cell.setupViews(inset: 0)
-                cell.backgroundConfiguration?.backgroundColor = .systemBackground
-            }
-            
-            collectionView.allowsMultipleSelection = false
-            navigationController?.setToolbarHidden(true, animated: false)
-        }
-        
-        updateList()
-        isMultiselectMode.toggle()
-    }
     	
 	func addFloatingButton(view: UIView) {
-		let button = UIButton()
-		view.addSubview(button)
-		button.translatesAutoresizingMaskIntoConstraints = false
+		view.addSubview(floatingButton)
+		floatingButton.translatesAutoresizingMaskIntoConstraints = false
 		let guide = view.safeAreaLayoutGuide
 		NSLayoutConstraint.activate([
-			button.trailingAnchor.constraint(equalTo: guide.trailingAnchor, constant: -10),
-			button.bottomAnchor.constraint(equalTo: guide.bottomAnchor, constant: -10),
-			button.widthAnchor.constraint(equalToConstant: 50),
-			button.heightAnchor.constraint(equalTo: button.widthAnchor)
+			floatingButton.trailingAnchor.constraint(equalTo: guide.trailingAnchor, constant: -10),
+			floatingButton.bottomAnchor.constraint(equalTo: guide.bottomAnchor, constant: -10),
+			floatingButton.widthAnchor.constraint(equalToConstant: 50),
+			floatingButton.heightAnchor.constraint(equalTo: floatingButton.widthAnchor)
 		])
-		button.layer.cornerRadius = 25
-		button.backgroundColor = .systemBlue
-		button.layer.shadowColor = UIColor.black.cgColor
-		button.layer.shadowRadius = 12
-		button.layer.shadowOpacity = 0.5
-		button.layer.shadowOffset = CGSize(width: 0, height: 7)
-		button.tintColor = .white
-		button.setImage(UIImage(systemName: "plus"), for: .normal)
-		button.addTarget(self, action: #selector(floatingButtonClickAction), for: .touchUpInside)
+		floatingButton.layer.cornerRadius = 25
+		floatingButton.backgroundColor = .systemBlue
+		floatingButton.layer.shadowColor = UIColor.black.cgColor
+		floatingButton.layer.shadowRadius = 12
+		floatingButton.layer.shadowOpacity = 0.5
+		floatingButton.layer.shadowOffset = CGSize(width: 0, height: 7)
+		floatingButton.tintColor = .white
+		floatingButton.setImage(UIImage(systemName: "plus"), for: .normal)
+		floatingButton.addTarget(self, action: #selector(floatingButtonClickAction), for: .touchUpInside)
 	}
 	
 	@objc func floatingButtonClickAction() {
@@ -134,6 +112,29 @@ extension IssueViewController {
         
         return UICollectionViewCompositionalLayout.list(using: config)
     }
+    
+    override func setEditing(_ editing: Bool, animated: Bool) {
+        super.setEditing(editing, animated: animated)
+        
+        collectionView.isEditing = editing
+        collectionView.allowsSelectionDuringEditing = editing
+        collectionView.allowsMultipleSelectionDuringEditing = editing
+        floatingButton.isHidden = editing
+        
+        if editing {
+            let add = UIBarButtonItem(title: "선택 이슈 닫기", style: .plain, target: self, action: nil)
+            let spacer = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil)
+            toolbar.setItems([spacer, add], animated: false)
+            tabBarController?.tabBar.isHidden = true
+            
+            toolbarBottomConstraint?.constant = toolbar.frame.height-83
+            toolbar.layoutIfNeeded()
+            toolbar.isHidden = false
+        } else {
+            tabBarController?.tabBar.isHidden = false
+            toolbar.isHidden = true
+        }
+    }
 }
 extension IssueViewController {
     func configureHierarchy() {
@@ -155,6 +156,7 @@ extension IssueViewController {
         cellRegistration = Registration { (cell, _, _) in
             cell.setupViewsIfNeeded()
             cell.setupViews(inset: 0)
+            cell.accessories = [.multiselect()]
             cell.backgroundConfiguration?.backgroundColor = .systemBackground
         }
         
@@ -187,7 +189,7 @@ extension IssueViewController {
 
 extension IssueViewController: UICollectionViewDelegate {
 	func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-		if !isMultiselectMode {
+		if !isEditing {
 			performSegue(withIdentifier: "issueDetailSegue", sender: nil)
 		}
 	}

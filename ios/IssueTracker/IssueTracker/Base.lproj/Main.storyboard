@@ -116,11 +116,6 @@
                                 <action selector="filterButton:" destination="J5c-pF-frK" id="6cJ-SA-qcL"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" title="edit" id="nD9-zO-N4r">
-                            <connections>
-                                <action selector="issueEditButton:" destination="J5c-pF-frK" id="o9E-jQ-Oap"/>
-                            </connections>
-                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <segue destination="Zva-Qn-br1" kind="presentation" identifier="newIssueSegue" id="Pck-2y-p0S"/>
