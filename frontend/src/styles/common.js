@@ -8,5 +8,11 @@ export const GlobalStyle = createGlobalStyle`
     --black4 : #444;
     --black5 : #555;
     --black6 : #666;
+
+    --light-gray: #d0d0d0;
+    --lighter-gray: #e0e0e0;
+    --lightest-gray: #f0f0f0;
+
+    --lighter-gray-bg: #eee;
   }
 `;

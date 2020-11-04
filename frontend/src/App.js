@@ -8,7 +8,6 @@ const App = () => {
       <Switch>
         <Route path="/" exact component={Issue} />
         <Route path="/login" component={Login} />
-        <Route path="/signup" component={SignUp} />
         <Route component={NotFound} />
       </Switch>
     </BrowserRouter>
