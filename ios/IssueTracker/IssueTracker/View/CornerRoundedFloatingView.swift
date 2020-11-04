@@ -45,6 +45,12 @@ class CornerRoundedFloatingView: UIView {
 			layer.shadowRadius = shadowRadius
 		}
 	}
+	
+	@IBInspectable var bottomBorderColor: UIColor = .clear {
+		didSet {
+			bottomBorder.backgroundColor = bottomBorderColor.cgColor
+		}
+	}
     
 	override func prepareForInterfaceBuilder() {
 		configure()
@@ -54,7 +60,11 @@ class CornerRoundedFloatingView: UIView {
 		configure()
 	}
 	
+	let bottomBorder = CALayer()
+	
 	func configure() {
+		bottomBorder.backgroundColor = UIColor.clear.cgColor
+		layer.addSublayer(bottomBorder)
 		layer.cornerRadius = cornerRounding
 		layer.shadowColor = shadowColor.cgColor
 		layer.shadowOpacity = shadowOpacity

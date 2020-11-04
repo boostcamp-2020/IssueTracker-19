@@ -10,6 +10,10 @@
 		14CC4F5606CBC1D30E2290A2 /* Pods_IssueTracker.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B11756D279E0DA64222E52E5 /* Pods_IssueTracker.framework */; };
 		4C2787BB25500F6100E31035 /* SectionItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C2787BA25500F6100E31035 /* SectionItem.swift */; };
 		4C2787BF25500FD800E31035 /* ListCollectionViewProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C2787BE25500FD800E31035 /* ListCollectionViewProtocol.swift */; };
+		4C3B3F092552ABC800231F67 /* BottomBorderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C3B3F082552ABC800231F67 /* BottomBorderView.swift */; };
+		4C44042C2551B07E0075AD9B /* Milestone.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C44042B2551B07E0075AD9B /* Milestone.swift */; };
+		4C4404342551BCBE0075AD9B /* MilestoneViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C4404322551BCBE0075AD9B /* MilestoneViewCell.swift */; };
+		4C4404352551BCBE0075AD9B /* MilestoneViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C4404332551BCBE0075AD9B /* MilestoneViewCell.xib */; };
 		4C7C11B8254E87CC008FA858 /* IssueDetailCommentViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C7C11B6254E87CC008FA858 /* IssueDetailCommentViewCell.swift */; };
 		4C7C11B9254E87CC008FA858 /* IssueDetailCommentViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C7C11B7254E87CC008FA858 /* IssueDetailCommentViewCell.xib */; };
 		4C7C11C3254EC6B9008FA858 /* IssueDetailHeaderReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C7C11C1254EC6B8008FA858 /* IssueDetailHeaderReusableView.swift */; };
@@ -17,10 +21,9 @@
 		4CB6F8FD254D639300901E9D /* IssueDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CB6F8FC254D639300901E9D /* IssueDetailViewController.swift */; };
 		4CD20476255141CD0001B987 /* IssueDetailBottomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CD20475255141CD0001B987 /* IssueDetailBottomViewController.swift */; };
 		4CD2047925514E4C0001B987 /* CornerRoundedFloatingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CD2047825514E4C0001B987 /* CornerRoundedFloatingView.swift */; };
-		4C44042C2551B07E0075AD9B /* Milestone.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C44042B2551B07E0075AD9B /* Milestone.swift */; };
-		4C4404342551BCBE0075AD9B /* MilestoneViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C4404322551BCBE0075AD9B /* MilestoneViewCell.swift */; };
-		4C4404352551BCBE0075AD9B /* MilestoneViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C4404332551BCBE0075AD9B /* MilestoneViewCell.xib */; };
 		4CD204882551A5230001B987 /* MilestoneViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CD204872551A5230001B987 /* MilestoneViewController.swift */; };
+		4CDC3CAB2552F6E500FC672B /* NSLayoutConstraint+description.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CDC3CAA2552F6E500FC672B /* NSLayoutConstraint+description.swift */; };
+		4CDFDEA7255291F30084A19E /* MilestoneEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CDFDEA6255291F30084A19E /* MilestoneEditViewController.swift */; };
 		C1048958255112230091668C /* IssueAddViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1048957255112230091668C /* IssueAddViewController.swift */; };
 		C104895B2551280C0091668C /* FilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C104895A2551280C0091668C /* FilterViewController.swift */; };
 		C104895E25515CA50091668C /* LabelViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C104895D25515CA50091668C /* LabelViewController.swift */; };
@@ -45,6 +48,10 @@
 		0AC642BD38CA333388D53582 /* Pods-IssueTracker.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IssueTracker.debug.xcconfig"; path = "Target Support Files/Pods-IssueTracker/Pods-IssueTracker.debug.xcconfig"; sourceTree = "<group>"; };
 		4C2787BA25500F6100E31035 /* SectionItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionItem.swift; sourceTree = "<group>"; };
 		4C2787BE25500FD800E31035 /* ListCollectionViewProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListCollectionViewProtocol.swift; sourceTree = "<group>"; };
+		4C3B3F082552ABC800231F67 /* BottomBorderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomBorderView.swift; sourceTree = "<group>"; };
+		4C44042B2551B07E0075AD9B /* Milestone.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Milestone.swift; sourceTree = "<group>"; };
+		4C4404322551BCBE0075AD9B /* MilestoneViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MilestoneViewCell.swift; sourceTree = "<group>"; };
+		4C4404332551BCBE0075AD9B /* MilestoneViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MilestoneViewCell.xib; sourceTree = "<group>"; };
 		4C7C11B6254E87CC008FA858 /* IssueDetailCommentViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueDetailCommentViewCell.swift; sourceTree = "<group>"; };
 		4C7C11B7254E87CC008FA858 /* IssueDetailCommentViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = IssueDetailCommentViewCell.xib; sourceTree = "<group>"; };
 		4C7C11C1254EC6B8008FA858 /* IssueDetailHeaderReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueDetailHeaderReusableView.swift; sourceTree = "<group>"; };
@@ -52,10 +59,9 @@
 		4CB6F8FC254D639300901E9D /* IssueDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueDetailViewController.swift; sourceTree = "<group>"; };
 		4CD20475255141CD0001B987 /* IssueDetailBottomViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueDetailBottomViewController.swift; sourceTree = "<group>"; };
 		4CD2047825514E4C0001B987 /* CornerRoundedFloatingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CornerRoundedFloatingView.swift; sourceTree = "<group>"; };
-		4C44042B2551B07E0075AD9B /* Milestone.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Milestone.swift; sourceTree = "<group>"; };
-		4C4404322551BCBE0075AD9B /* MilestoneViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MilestoneViewCell.swift; sourceTree = "<group>"; };
-		4C4404332551BCBE0075AD9B /* MilestoneViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MilestoneViewCell.xib; sourceTree = "<group>"; };
 		4CD204872551A5230001B987 /* MilestoneViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MilestoneViewController.swift; sourceTree = "<group>"; };
+		4CDC3CAA2552F6E500FC672B /* NSLayoutConstraint+description.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSLayoutConstraint+description.swift"; sourceTree = "<group>"; };
+		4CDFDEA6255291F30084A19E /* MilestoneEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MilestoneEditViewController.swift; sourceTree = "<group>"; };
 		B11756D279E0DA64222E52E5 /* Pods_IssueTracker.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_IssueTracker.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C1048957255112230091668C /* IssueAddViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueAddViewController.swift; sourceTree = "<group>"; };
 		C104895A2551280C0091668C /* FilterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterViewController.swift; sourceTree = "<group>"; };
@@ -100,6 +106,14 @@
 			path = Protocol;
 			sourceTree = "<group>";
 		};
+		4CDC3CA92552F6C100FC672B /* extension */ = {
+			isa = PBXGroup;
+			children = (
+				4CDC3CAA2552F6E500FC672B /* NSLayoutConstraint+description.swift */,
+			);
+			path = extension;
+			sourceTree = "<group>";
+		};
 		530B9BB278546251FBEEAF99 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -134,6 +148,7 @@
 				4CD2047825514E4C0001B987 /* CornerRoundedFloatingView.swift */,
 				4C4404322551BCBE0075AD9B /* MilestoneViewCell.swift */,
 				4C4404332551BCBE0075AD9B /* MilestoneViewCell.xib */,
+				4C3B3F082552ABC800231F67 /* BottomBorderView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -141,15 +156,16 @@
 		C117D8A72547C9380081DCD7 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				C104895D25515CA50091668C /* LabelViewController.swift */,
-				C10489722551986B0091668C /* LabelDetailAndAddViewController.swift */,
 				C104895A2551280C0091668C /* FilterViewController.swift */,
 				C1048957255112230091668C /* IssueAddViewController.swift */,
-				C117D89D2547C7CF0081DCD7 /* IssueViewController.swift */,
-				C196564B2546B9B6007DD55A /* ViewController.swift */,
-				4CB6F8FC254D639300901E9D /* IssueDetailViewController.swift */,
 				4CD20475255141CD0001B987 /* IssueDetailBottomViewController.swift */,
+				4CB6F8FC254D639300901E9D /* IssueDetailViewController.swift */,
+				C117D89D2547C7CF0081DCD7 /* IssueViewController.swift */,
+				C10489722551986B0091668C /* LabelDetailAndAddViewController.swift */,
+				C104895D25515CA50091668C /* LabelViewController.swift */,
+				4CDFDEA6255291F30084A19E /* MilestoneEditViewController.swift */,
 				4CD204872551A5230001B987 /* MilestoneViewController.swift */,
+				C196564B2546B9B6007DD55A /* ViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -175,6 +191,7 @@
 		C19656462546B9B6007DD55A /* IssueTracker */ = {
 			isa = PBXGroup;
 			children = (
+				4CDC3CA92552F6C100FC672B /* extension */,
 				C136F60B25495F93007A09F8 /* .swiftlint.yml */,
 				4C2787BD25500F8800E31035 /* Protocol */,
 				C117D8A72547C9380081DCD7 /* Controller */,
@@ -320,11 +337,13 @@
 			files = (
 				C117D89E2547C7CF0081DCD7 /* IssueViewController.swift in Sources */,
 				4C2787BF25500FD800E31035 /* ListCollectionViewProtocol.swift in Sources */,
+				4CDC3CAB2552F6E500FC672B /* NSLayoutConstraint+description.swift in Sources */,
 				C12542602547F44C00DE2BB8 /* IssueCollectionViewCell.swift in Sources */,
 				4C4404342551BCBE0075AD9B /* MilestoneViewCell.swift in Sources */,
 				C196564C2546B9B6007DD55A /* ViewController.swift in Sources */,
 				C19656602546CC4F007DD55A /* HTTPAgent.swift in Sources */,
 				C104895E25515CA50091668C /* LabelViewController.swift in Sources */,
+				4C3B3F092552ABC800231F67 /* BottomBorderView.swift in Sources */,
 				4C44042C2551B07E0075AD9B /* Milestone.swift in Sources */,
 				C19656482546B9B6007DD55A /* AppDelegate.swift in Sources */,
 				4CB6F8FD254D639300901E9D /* IssueDetailViewController.swift in Sources */,
@@ -334,6 +353,7 @@
 				C196564A2546B9B6007DD55A /* SceneDelegate.swift in Sources */,
 				4CD20476255141CD0001B987 /* IssueDetailBottomViewController.swift in Sources */,
 				4CD204882551A5230001B987 /* MilestoneViewController.swift in Sources */,
+				4CDFDEA7255291F30084A19E /* MilestoneEditViewController.swift in Sources */,
 				C104895B2551280C0091668C /* FilterViewController.swift in Sources */,
 				C10489732551986B0091668C /* LabelDetailAndAddViewController.swift in Sources */,
 				C196564A2546B9B6007DD55A /* SceneDelegate.swift in Sources */,
