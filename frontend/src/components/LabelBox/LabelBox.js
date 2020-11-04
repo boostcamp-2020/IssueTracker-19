@@ -1,5 +1,5 @@
 import React from 'react';
-import LabelMilestoneTab from './LabelMilestoneTab/LabelMilestoneTab';
+import { LabelMilestoneTab } from '@components/Common';
 import LabelEditBox from './LabelEditBox/LabelEditBox';
 
 export default function LabelBox() {

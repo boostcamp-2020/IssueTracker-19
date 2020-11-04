@@ -14,5 +14,7 @@ export const GlobalStyle = createGlobalStyle`
     --lightest-gray: #f0f0f0;
 
     --lighter-gray-bg: #eee;
+
+    --margin-horizontal: 60px;
   }
 `;
