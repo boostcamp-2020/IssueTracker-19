@@ -28,7 +28,6 @@ export const CancelButton = styled(Button)`
   color: ${colors.black3};
   background-color: ${colors.semiWhite};
   border: 1px solid ${colors.lightGray};
-
   &:hover {
     background-color: ${darken(0.02, colors.semiWhite)};
   }

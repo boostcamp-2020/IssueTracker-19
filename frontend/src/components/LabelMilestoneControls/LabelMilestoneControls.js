@@ -5,6 +5,7 @@ import { flex, flexCenter } from '@styles/utils';
 import { colors } from '@styles/variables';
 import labelIcon from '@imgs/label.svg';
 import MilestoneIcon from '@imgs/milestone.svg';
+import { Link } from 'react-router-dom';
 
 const Container = styled.div`
   ${flex('space-around', 'center')}
@@ -52,20 +53,24 @@ const Count = styled.div`
 export default function LabelMilestoneControls() {
   return (
     <Container>
-      <LabelBox>
-        <ImgIcon src={labelIcon} />
-        <div>Labels</div>
-        <CountBox>
-          <Count>15</Count>
-        </CountBox>
-      </LabelBox>
-      <MilestoneBox>
-        <ImgIcon src={MilestoneIcon} />
-        <div>Milestones</div>
-        <CountBox>
-          <Count>20</Count>
-        </CountBox>
-      </MilestoneBox>
+      <Link to="labels">
+        <LabelBox>
+          <ImgIcon src={labelIcon} />
+          <div>Labels</div>
+          <CountBox>
+            <Count>15</Count>
+          </CountBox>
+        </LabelBox>
+      </Link>
+      <Link to="milestones">
+        <MilestoneBox>
+          <ImgIcon src={MilestoneIcon} />
+          <div>Milestones</div>
+          <CountBox>
+            <Count>20</Count>
+          </CountBox>
+        </MilestoneBox>
+      </Link>
     </Container>
   );
 }

@@ -17,6 +17,15 @@ export const flexColumn = css`
   flex-direction: column;
 `;
 
+export const borderNoneBox = css`
+  border: none;
+  box-sizing: border-box;
+`;
+
+export const skyblueBoxShadow = css`
+  box-shadow: 0 0 0 3px #b3d1f3;
+`;
+
 // 배경색에 따라서 글자색을 검은색 혹은 흰색을 결정
 export const calFontColor = backgroundColor => {
   const d = document.createElement('div');
