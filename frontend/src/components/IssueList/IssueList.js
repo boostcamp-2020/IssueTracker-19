@@ -6,7 +6,7 @@ import { useHistory } from 'react-router-dom';
 
 export default function IssueList() {
   const [issues, setIssues] = useState([]);
-  const [headCheck, setHeadCheck] = useState(false);
+  const [checkAll, setCheckAll] = useState(false);
   const history = useHistory();
 
   const setFilterdIssues = async options => {
@@ -32,8 +32,8 @@ export default function IssueList() {
       <IssueFilterTab
         issues={issues}
         setIssues={setIssues}
-        headCheck={headCheck}
-        setHeadCheck={setHeadCheck}
+        checkAll={checkAll}
+        setCheckAll={setCheckAll}
       />
       {issues.map(({ title, checked }, idx) => (
         <IssueItem
@@ -42,7 +42,7 @@ export default function IssueList() {
           checked={checked}
           issues={issues}
           setIssues={setIssues}
-          setHeadCheck={setHeadCheck}
+          setCheckAll={setCheckAll}
         />
       ))}
     </>
