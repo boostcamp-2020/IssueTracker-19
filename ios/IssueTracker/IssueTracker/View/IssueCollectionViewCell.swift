@@ -8,13 +8,7 @@
 
 import UIKit
 
-class IssueCollectionViewCell: UICollectionViewListCell {
-    let view: UIView = {
-        let view = UIView()
-        view.backgroundColor = UIColor.systemGray6
-        return view
-    }()
-    
+class IssueCollectionViewCell: UICollectionViewListCell {    
     let issueTitle: UILabel = {
         let label = UILabel()
         label.text = "레이블 목록 보기 구현"
@@ -68,34 +62,34 @@ class IssueCollectionViewCell: UICollectionViewListCell {
     }
     
     private func setupIssueTitle() {
-        view.addSubview(issueTitle)
+        contentView.addSubview(issueTitle)
         issueTitle.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            issueTitle.topAnchor.constraint(equalTo: view.topAnchor, constant: 10),
-            issueTitle.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.25),
-            issueTitle.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 15),
-            issueTitle.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.6)
+            issueTitle.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10),
+            issueTitle.heightAnchor.constraint(equalTo: contentView.heightAnchor, multiplier: 0.25),
+            issueTitle.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 15),
+            issueTitle.widthAnchor.constraint(equalTo: contentView.widthAnchor, multiplier: 0.6)
         ])
     }
     
     private func setupIssueDescription() {
-        view.addSubview(issueDescription)
+        contentView.addSubview(issueDescription)
         issueDescription.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             issueDescription.topAnchor.constraint(equalTo: issueTitle.bottomAnchor),
-            issueDescription.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.6),
+            issueDescription.heightAnchor.constraint(equalTo: contentView.heightAnchor, multiplier: 0.6),
             issueDescription.leadingAnchor.constraint(equalTo: issueTitle.leadingAnchor),
             issueDescription.widthAnchor.constraint(equalTo: issueTitle.widthAnchor)
         ])
     }
     
     private func setupMilestone() {
-        view.addSubview(milestone)
+        contentView.addSubview(milestone)
         milestone.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            milestone.topAnchor.constraint(equalTo: view.topAnchor, constant: 10),
+            milestone.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10),
             milestone.heightAnchor.constraint(equalToConstant: milestone.intrinsicContentSize.height + 5),
-            milestone.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10),
+            milestone.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -10),
             milestone.widthAnchor.constraint(equalToConstant: milestone.intrinsicContentSize.width + 20),
             milestone.leadingAnchor.constraint(greaterThanOrEqualTo: issueTitle.trailingAnchor, constant: 1)
         ])
@@ -105,12 +99,12 @@ class IssueCollectionViewCell: UICollectionViewListCell {
     }
     
     private func setupLabel() {
-        view.addSubview(label)
+        contentView.addSubview(label)
         label.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             label.topAnchor.constraint(equalTo: milestone.bottomAnchor, constant: 3),
             label.heightAnchor.constraint(equalToConstant: label.intrinsicContentSize.height + 5),
-            label.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10),
+            label.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -10),
             label.widthAnchor.constraint(equalToConstant: label.intrinsicContentSize.width + 20)
         ])
         label.backgroundColor = .systemPink
@@ -119,16 +113,7 @@ class IssueCollectionViewCell: UICollectionViewListCell {
     }
     
     func setupBaseView(inset: CGFloat) {
-        addSubview(view)
-        view.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            view.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
-            view.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor),
-            view.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: inset),
-            view.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: inset),
-            separatorLayoutGuide.leadingAnchor.constraint(equalTo: leadingAnchor)
-        ])
-        view.backgroundColor = UIColor.systemBackground
+        contentView.backgroundColor = UIColor.systemBackground
     }
     
     func setupViewsIfNeeded() {

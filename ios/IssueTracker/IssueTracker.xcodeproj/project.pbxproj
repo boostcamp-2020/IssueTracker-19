@@ -30,6 +30,7 @@
 		C104896F25518EC50091668C /* LabelCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C104896D25518EC50091668C /* LabelCollectionViewCell.swift */; };
 		C104897025518EC50091668C /* LabelCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C104896E25518EC50091668C /* LabelCollectionViewCell.xib */; };
 		C10489732551986B0091668C /* LabelDetailAndAddViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C10489722551986B0091668C /* LabelDetailAndAddViewController.swift */; };
+		C1140D8325527C6F0096C11E /* DesignableClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1140D8225527C6F0096C11E /* DesignableClass.swift */; };
 		C117D89E2547C7CF0081DCD7 /* IssueViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C117D89D2547C7CF0081DCD7 /* IssueViewController.swift */; };
 		C12542602547F44C00DE2BB8 /* IssueCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C125425F2547F44C00DE2BB8 /* IssueCollectionViewCell.swift */; };
 		C12542632548007500DE2BB8 /* UIExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C12542622548007500DE2BB8 /* UIExtension.swift */; };
@@ -69,6 +70,7 @@
 		C104896D25518EC50091668C /* LabelCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelCollectionViewCell.swift; sourceTree = "<group>"; };
 		C104896E25518EC50091668C /* LabelCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LabelCollectionViewCell.xib; sourceTree = "<group>"; };
 		C10489722551986B0091668C /* LabelDetailAndAddViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelDetailAndAddViewController.swift; sourceTree = "<group>"; };
+		C1140D8225527C6F0096C11E /* DesignableClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DesignableClass.swift; sourceTree = "<group>"; };
 		C117D89D2547C7CF0081DCD7 /* IssueViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueViewController.swift; sourceTree = "<group>"; };
 		C125425F2547F44C00DE2BB8 /* IssueCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueCollectionViewCell.swift; sourceTree = "<group>"; };
 		C12542622548007500DE2BB8 /* UIExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIExtension.swift; sourceTree = "<group>"; };
@@ -137,6 +139,7 @@
 		C117D8A62547C9300081DCD7 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				C1140D8225527C6F0096C11E /* DesignableClass.swift */,
 				C104896D25518EC50091668C /* LabelCollectionViewCell.swift */,
 				C104896E25518EC50091668C /* LabelCollectionViewCell.xib */,
 				C125425F2547F44C00DE2BB8 /* IssueCollectionViewCell.swift */,
@@ -351,6 +354,7 @@
 				4CD2047925514E4C0001B987 /* CornerRoundedFloatingView.swift in Sources */,
 				4C7C11C3254EC6B9008FA858 /* IssueDetailHeaderReusableView.swift in Sources */,
 				C196564A2546B9B6007DD55A /* SceneDelegate.swift in Sources */,
+				C1140D8325527C6F0096C11E /* DesignableClass.swift in Sources */,
 				4CD20476255141CD0001B987 /* IssueDetailBottomViewController.swift in Sources */,
 				4CD204882551A5230001B987 /* MilestoneViewController.swift in Sources */,
 				4CDFDEA7255291F30084A19E /* MilestoneEditViewController.swift in Sources */,
