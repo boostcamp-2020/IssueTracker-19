@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { API } from '@api';
 import styled from 'styled-components';
 import { colors } from '@styles/variables';
@@ -27,13 +27,11 @@ const tempLabels = JSON.parse(
 );
 
 export default function LabelItemBox() {
-  const [fetched, setFetched] = useState(false);
   const [labels, setLabels] = useState([]);
 
   const getLabels = async () => {
     try {
       const { data, status } = await API.get('/api/labels');
-      setFetched(true);
       setLabels(data.labels);
     } catch (err) {
       console.log(err);
@@ -41,7 +39,9 @@ export default function LabelItemBox() {
     }
   };
 
-  if (!fetched) getLabels();
+  useEffect(() => {
+    getLabels();
+  }, []);
 
   return (
     <Box>
