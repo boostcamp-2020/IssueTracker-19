@@ -2,13 +2,18 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { API } from '@api';
 import { flexColumn, flexCenter } from '@styles/utils';
+import { SubmitButton } from '@shared';
 
 const Form = styled.form`
   width: 100%;
   ${flexColumn}
-  align-items: center;
 `;
-const Container = styled.form``;
+const Container = styled.div`
+  margin: 0px 60px 10px;
+  padding-bottom: 5px;
+  border-top: 1px solid #e1e4e8;
+  border-bottom: 1px solid #e1e4e8;
+`;
 const InputBox = styled.label`
   ${flexColumn}
   margin:10px;
@@ -36,10 +41,15 @@ const Textarea = styled.textarea`
   border: 1px solid #e1e4e8;
   font-size: 14px;
 `;
+const SubmitBox = styled.div`
+  margin: 0 60px;
+  display: flex;
+  justify-content: flex-end;
+`;
 export default function MilestoneEditBox() {
   return (
-    <>
-      <Form>
+    <Form>
+      <Container>
         <InputBox>
           <Label htmlFor="milestone_title">Title</Label>
           <Input type="text" id="milestone_title" placeholder="Title" />
@@ -52,7 +62,10 @@ export default function MilestoneEditBox() {
           <Label htmlFor="milestone_description">Description</Label>
           <Textarea cols="40" rows="20" />
         </InputBox>
-      </Form>
-    </>
+      </Container>
+      <SubmitBox>
+        <SubmitButton>Create milestone</SubmitButton>
+      </SubmitBox>
+    </Form>
   );
 }
