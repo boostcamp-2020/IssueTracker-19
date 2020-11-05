@@ -11,6 +11,8 @@ export const colors = {
   lightestGray: '#f0f0f0',
   lighterGrayBg: '#eee',
 
+  grayInputBg: '#f9f9f9',
+
   semiWhite: '#fafbfc',
 
   submitColor: '#2c974b',
