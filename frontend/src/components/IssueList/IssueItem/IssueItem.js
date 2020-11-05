@@ -5,7 +5,7 @@ const Container = styled.div`
   border: 1px solid gray;
 `;
 
-export default function IssueItem({ checked, issues, title, setCheckAll, setIssues }) {
+export default function IssueItem({ checked, issues, title, setIssues }) {
   const handleCheck = ({ target }) => {
     setIssues(
       issues.map(issue => (issue.title === title ? { ...issue, checked: target.checked } : issue)),
