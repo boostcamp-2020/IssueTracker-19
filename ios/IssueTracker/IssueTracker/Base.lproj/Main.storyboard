@@ -590,9 +590,6 @@
                     <view key="view" contentMode="scaleToFill" id="dWf-My-YGf" customClass="CornerRoundedFloatingView" customModule="IssueTracker" customModuleProvider="target">
                         <rect key="frame" x="0.0" y="0.0" width="390" height="790"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="L14-b5-iZc">
-                                <rect key="frame" x="175" y="10" width="40" height="6"/>
                         <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
@@ -654,9 +651,6 @@
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ewl-yj-YiC" customClass="CornerRoundedFloatingView" customModule="IssueTracker" customModuleProvider="target">
                                 <rect key="frame" x="20" y="26" width="230" height="50"/>
-                                <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9IH-Gh-YFE">
-                                        <rect key="frame" x="0.0" y="0.0" width="230" height="50"/>
                                 <rect key="frame" x="20" y="26" width="254" height="50"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9IH-Gh-YFE">
