@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { darken } from 'polished';
 import { colors } from '@styles/variables';
-import { flexCenter } from '@styles/common';
+import { flexCenter } from '@styles/utils';
 
 export const Button = styled.button`
   ${flexCenter}
