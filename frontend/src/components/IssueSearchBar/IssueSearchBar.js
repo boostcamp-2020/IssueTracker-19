@@ -8,10 +8,14 @@ import { LabelMilestoneControls } from '@components';
 import downArrowIcon from '@imgs/down-arrow.svg';
 import mGlass from '@imgs/m-glass.svg';
 
+const SearchContainer = styled.div`
+  margin: 1.2rem 0;
+`;
+
 const SearchBox = styled.div`
   width: 100%;
   height: 3rem;
-  padding: 1.2rem 0;
+  padding: 0.5rem 0;
   ${flex('space-between', 'center')}
 `;
 
@@ -83,7 +87,7 @@ const ClearButton = styled.button`
 
 export default function IssueSearchBar() {
   return (
-    <>
+    <SearchContainer>
       <SearchBox>
         <FilterBox>
           <SelectBox>
@@ -103,6 +107,6 @@ export default function IssueSearchBar() {
       <ClearBox>
         ❎<ClearButton>Clear current search query, filters, and sorts</ClearButton>
       </ClearBox>
-    </>
+    </SearchContainer>
   );
 }
