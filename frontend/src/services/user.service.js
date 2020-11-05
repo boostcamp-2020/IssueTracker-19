@@ -10,4 +10,7 @@ export const userService = {
   signup({ id, nickname, pw, auth }) {
     return API.post('/api/auth/signup', { id, nickname, pw, auth });
   },
+  getUsers() {
+    return API.get('/api/users');
+  },
 };
