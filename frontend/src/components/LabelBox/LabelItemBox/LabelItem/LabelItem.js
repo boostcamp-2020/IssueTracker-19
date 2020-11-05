@@ -32,15 +32,18 @@ const CustomLink = styled(Link)`
   color: ${colors.black6};
 `;
 
+// const Name = styled.span`
+//   background-color: ${color};
+//   color: ${calFontColor(color)};
+// `;
+
+const Name = styled.span``;
+
 export default function LabelItem({ no, name, description, color }) {
-  const Name = styled.span`
-    background-color: ${color};
-    color: ${calFontColor(color)};
-  `;
   return (
     <Box>
       <NameBox>
-        <Name>{name}</Name>
+        <Name style={{ backgroundColor: color, color: calFontColor(color) }}>{name}</Name>
       </NameBox>
       <DescBox>{description}</DescBox>
       <ButtonBox>
