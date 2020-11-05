@@ -78,6 +78,11 @@ module.exports = {
     }),
     new CleanWebpackPlugin(),
   ],
+  optimization: {
+    splitChunks: {
+      chunks: 'all',
+    },
+  },
   devServer: {
     contentBase: path.join(__dirname, './dist'),
     publicPath: '/',
