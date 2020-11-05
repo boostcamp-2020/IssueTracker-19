@@ -67,13 +67,13 @@ export default function LocalBox() {
     e.preventDefault();
     try {
       const { status } = await userService.login({ id, pw });
-      console.log('here', status);
       if (status === 200) {
         history.push('/');
       }
-    } catch (err) {
-      console.error(err);
-      setErrMsg('아이디와 비밀번호를 확인해주세요');
+    } catch ({ response: { status } }) {
+      if (status === 401) {
+        setErrMsg('아이디와 비밀번호를 확인해주세요');
+      }
     }
   };
 
@@ -95,7 +95,7 @@ export default function LocalBox() {
           onChange={handleInputChange}
           value={pw}
           required
-          autoComplete={true}
+          autoComplete="true"
         />
         <ErrMsgSpan>{errMsg}</ErrMsgSpan>
       </InputBox>
