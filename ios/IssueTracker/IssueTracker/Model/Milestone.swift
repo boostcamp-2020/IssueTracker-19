@@ -8,7 +8,16 @@
 
 import Foundation
 
-class Milestone: SectionItem {
+struct Milestone: Hashable, Codable {
+    static func == (lhs: Milestone, rhs: Milestone) -> Bool {
+        return lhs.identifier == rhs.identifier
+    }
+
+    var identifier = UUID()
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(identifier)
+    }
+    
 	let no: Int
 	let title: String
 	let totalTasks: Int
@@ -17,21 +26,4 @@ class Milestone: SectionItem {
 	let isDeleted: Bool
 	let dueDate: Date?
 	let description: String?
-	init(no: Int,
-		 title: String,
-		 totalTasks: Int,
-		 closedTasks: Int,
-		 isClosed: Bool,
-		 isDeleted: Bool,
-		 dueDate: Date?,
-		 description: String?) {
-		self.no = no
-		self.title = title
-		self.totalTasks = totalTasks
-		self.closedTasks = closedTasks
-		self.isClosed = isClosed
-		self.isDeleted = isDeleted
-		self.dueDate = dueDate
-		self.description = description
-	}
 }

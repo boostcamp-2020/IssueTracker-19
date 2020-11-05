@@ -36,6 +36,8 @@
 		C12542632548007500DE2BB8 /* UIExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C12542622548007500DE2BB8 /* UIExtension.swift */; };
 		C136F60C25495F93007A09F8 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = C136F60B25495F93007A09F8 /* .swiftlint.yml */; };
 		C170B359254A9DEC0052FE3D /* Issue.swift in Sources */ = {isa = PBXBuildFile; fileRef = C170B358254A9DEC0052FE3D /* Issue.swift */; };
+		C173761A2553F68100E192C0 /* Label.swift in Sources */ = {isa = PBXBuildFile; fileRef = C17376192553F68100E192C0 /* Label.swift */; };
+		C173761D2553F69E00E192C0 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = C173761C2553F69E00E192C0 /* User.swift */; };
 		C19656482546B9B6007DD55A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C19656472546B9B6007DD55A /* AppDelegate.swift */; };
 		C196564A2546B9B6007DD55A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C19656492546B9B6007DD55A /* SceneDelegate.swift */; };
 		C196564C2546B9B6007DD55A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C196564B2546B9B6007DD55A /* ViewController.swift */; };
@@ -76,6 +78,8 @@
 		C12542622548007500DE2BB8 /* UIExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIExtension.swift; sourceTree = "<group>"; };
 		C136F60B25495F93007A09F8 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
 		C170B358254A9DEC0052FE3D /* Issue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Issue.swift; sourceTree = "<group>"; };
+		C17376192553F68100E192C0 /* Label.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Label.swift; sourceTree = "<group>"; };
+		C173761C2553F69E00E192C0 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		C19656442546B9B6007DD55A /* IssueTracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = IssueTracker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C19656472546B9B6007DD55A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C19656492546B9B6007DD55A /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -132,6 +136,8 @@
 				C196565F2546CC4F007DD55A /* HTTPAgent.swift */,
 				4C2787BA25500F6100E31035 /* SectionItem.swift */,
 				4C44042B2551B07E0075AD9B /* Milestone.swift */,
+				C17376192553F68100E192C0 /* Label.swift */,
+				C173761C2553F69E00E192C0 /* User.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -344,6 +350,7 @@
 				C12542602547F44C00DE2BB8 /* IssueCollectionViewCell.swift in Sources */,
 				4C4404342551BCBE0075AD9B /* MilestoneViewCell.swift in Sources */,
 				C196564C2546B9B6007DD55A /* ViewController.swift in Sources */,
+				C173761D2553F69E00E192C0 /* User.swift in Sources */,
 				C19656602546CC4F007DD55A /* HTTPAgent.swift in Sources */,
 				C104895E25515CA50091668C /* LabelViewController.swift in Sources */,
 				4C3B3F092552ABC800231F67 /* BottomBorderView.swift in Sources */,
@@ -359,6 +366,7 @@
 				4CD204882551A5230001B987 /* MilestoneViewController.swift in Sources */,
 				4CDFDEA7255291F30084A19E /* MilestoneEditViewController.swift in Sources */,
 				C104895B2551280C0091668C /* FilterViewController.swift in Sources */,
+				C173761A2553F68100E192C0 /* Label.swift in Sources */,
 				C10489732551986B0091668C /* LabelDetailAndAddViewController.swift in Sources */,
 				C196564A2546B9B6007DD55A /* SceneDelegate.swift in Sources */,
 				C104896F25518EC50091668C /* LabelCollectionViewCell.swift in Sources */,

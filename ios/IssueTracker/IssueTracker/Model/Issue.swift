@@ -8,49 +8,43 @@
 
 import Foundation
 
-struct User: Codable {
+struct Issue: Hashable, Codable {
+    let uuid: UUID
     
-}
-
-struct Label: Codable {
+    static func == (lhs: Issue, rhs: Issue) -> Bool {
+        return lhs.uuid == rhs.uuid
+    }
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(uuid)
+    }
     
-}
-
-class Issue: SectionItem {
-    var no: Int
-    var title: String
-    var author: String
-    var assignees: [User]
-    var labels: [Label]
-    var isOpened: Bool
-    var createdAt: Date
-    var closedAt: Date?
-    var milestone: Milestone?
-    var commentCount: Int
-
-	init(no: Int,
-		 title: String,
-		 author: String,
-		 assignees: [User],
-		 labels: [Label],
-		 isOpened: Bool,
-		 createdAt: Date,
-		 closedAt: Date?,
-		 milestone: Milestone?,
-		 commentCount: Int) {
-		self.no = no
-		self.title = title
-		self.author = author
-		self.assignees = assignees
-		self.labels = labels
-		self.isOpened = isOpened
-		self.createdAt = createdAt
-		self.closedAt = closedAt
-		self.milestone = milestone
-		self.commentCount = commentCount
-	}
-}
-
-class SampleIssue: SectionItem {
-    var text = "#3"
+    let no: Int
+    let title: String
+    let author: String
+    let assignees: [User]
+    let labels: [Label]
+    let isOpened: Int
+    let createdAt: String
+    let closedAt: String?
+    let milestoneNo: Int?
+    let milestoneTitle: String?
+    let commentCount: Int
+    enum CodingKeys: String, CodingKey {
+        case no, title, author, assignees, labels, isOpened, createdAt, closedAt, milestoneNo, milestoneTitle, commentCount
+    }
+    init(from decoder: Decoder) throws {
+        uuid = UUID()
+        let values = try decoder.container(keyedBy: CodingKeys.self)
+        no = try values.decode(Int.self, forKey: .no)
+        title = try values.decode(String.self, forKey: .title)
+        assignees = try values.decode([User].self, forKey: .assignees)
+        labels = try values.decode([Label].self, forKey: .labels)
+        author = try values.decode(String.self, forKey: .author)
+        isOpened = try values.decode(Int.self, forKey: .isOpened)
+        createdAt = try values.decode(String.self, forKey: .createdAt)
+        closedAt = try values.decode(String?.self, forKey: .closedAt)
+        milestoneNo = try values.decode(Int?.self, forKey: .milestoneNo)
+        milestoneTitle = try values.decode(String?.self, forKey: .milestoneTitle)
+        commentCount = try values.decode(Int.self, forKey: .commentCount)
+    }
 }

@@ -49,7 +49,7 @@ class IssueDetailHeaderReusableView: UICollectionReusableView {
 			authorLabel.text = issue.author
 			titleLabel.text = issue.title
 			noLabel.text = "#\(issue.no)"
-			setLabel(statusLabel, component: issue.isOpened ? IssueOpen() : IssueClosed())
+            setLabel(statusLabel, component: (issue.isOpened != 0) ? IssueOpen() : IssueClosed())
 			setLabel(tmpLabel, component: IssueClosed())
 		}
 	}

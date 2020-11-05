@@ -8,8 +8,12 @@
 
 import UIKit
 
+enum Section: Hashable {
+    case main
+}
+
 protocol ListCollectionViewProtocol {
-	associatedtype Item: SectionItem
+	associatedtype Item: Hashable
 
 	typealias DataSource = UICollectionViewDiffableDataSource<Section, Item>
 	typealias Snapshot = NSDiffableDataSourceSnapshot<Section, Item>

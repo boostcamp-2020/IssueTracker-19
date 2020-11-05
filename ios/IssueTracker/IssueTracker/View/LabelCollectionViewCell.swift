@@ -11,6 +11,7 @@ import UIKit
 class LabelCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var label: UILabel!
     @IBOutlet weak var labelDescription: UILabel!
+    @IBOutlet weak var labelHeightContraint: NSLayoutConstraint!
     
     override func awakeFromNib() {
         super.awakeFromNib()
