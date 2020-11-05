@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { colors } from '@styles/variables';
 import { flexColumn } from '@styles/utils';
 import LabelItem from './LabelItem/LabelItem';
+import LabelEditBox from './LabelEditBox/LabelEditBox';
 
 const Box = styled.div`
   ${flexColumn};
@@ -45,6 +46,7 @@ export default function LabelItemBox() {
   return (
     <Box>
       <LabelHeader>8 Labels</LabelHeader>
+      <LabelEditBox />
       {labels.map(label => (
         <LabelItem key={label.no} {...label} />
       ))}
