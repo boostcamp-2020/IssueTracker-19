@@ -14,6 +14,8 @@ export const colors = {
   semiWhite: '#fafbfc',
 
   submitColor: '#2c974b',
+};
 
+export const numerics = {
   marginHorizontal: '60px',
 };
