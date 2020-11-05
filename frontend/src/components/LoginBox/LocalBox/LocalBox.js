@@ -67,11 +67,12 @@ export default function LocalBox() {
     e.preventDefault();
     try {
       const { status } = await userService.login({ id, pw });
+      console.log('here', status);
       if (status === 200) {
         history.push('/');
       }
     } catch (err) {
-      console.log(err);
+      console.error(err);
       setErrMsg('아이디와 비밀번호를 확인해주세요');
     }
   };
@@ -86,9 +87,16 @@ export default function LocalBox() {
     <LoginForm onSubmit={handleSubmit}>
       <InputBox>
         <Label htmlFor="id">아이디</Label>
-        <Input name="id" type="text" onChange={handleInputChange} value={id} />
+        <Input name="id" type="text" onChange={handleInputChange} value={id} required />
         <Label htmlFor="pw">비밀번호</Label>
-        <Input name="pw" type="password" onChange={handleInputChange} value={pw} />
+        <Input
+          name="pw"
+          type="password"
+          onChange={handleInputChange}
+          value={pw}
+          required
+          autoComplete={true}
+        />
         <ErrMsgSpan>{errMsg}</ErrMsgSpan>
       </InputBox>
       <ButtonBox>
