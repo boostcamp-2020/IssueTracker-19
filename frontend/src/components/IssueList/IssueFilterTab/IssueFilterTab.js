@@ -5,14 +5,13 @@ const Container = styled.div`
   border: 1px solid gray;
 `;
 
-export default function IssueFilterTab({ setIssues, issues, setCheckAll, checkAll }) {
+export default function IssueFilterTab({ setIssues, issues, allChecked }) {
   const handleCheck = ({ target: { checked } }) => {
     setIssues(issues.map(issue => ({ ...issue, checked })));
-    setCheckAll(checked);
   };
   return (
     <Container>
-      <input type="checkbox" checked={checkAll} onChange={handleCheck} />
+      <input type="checkbox" onChange={handleCheck} checked={allChecked} />
       Filter Tab
     </Container>
   );

@@ -10,9 +10,6 @@ export default function IssueItem({ checked, issues, title, setCheckAll, setIssu
     setIssues(
       issues.map(issue => (issue.title === title ? { ...issue, checked: target.checked } : issue)),
     );
-    if (!target.checked) {
-      setCheckAll(false);
-    }
   };
   return (
     <Container>
