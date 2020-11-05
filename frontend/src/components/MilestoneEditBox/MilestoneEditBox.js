@@ -1,8 +1,14 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { API } from '@api';
-import { flexColumn } from '@styles/utils';
+import { flexColumn, flexCenter } from '@styles/utils';
 
+const Form = styled.form`
+  width: 100%;
+  ${flexColumn}
+  align-items: center;
+`;
+const Container = styled.form``;
 const InputBox = styled.label`
   ${flexColumn}
   margin:10px;
@@ -33,7 +39,7 @@ const Textarea = styled.textarea`
 export default function MilestoneEditBox() {
   return (
     <>
-      <form>
+      <Form>
         <InputBox>
           <Label htmlFor="milestone_title">Title</Label>
           <Input type="text" id="milestone_title" placeholder="Title" />
@@ -46,7 +52,7 @@ export default function MilestoneEditBox() {
           <Label htmlFor="milestone_description">Description</Label>
           <Textarea cols="40" rows="20" />
         </InputBox>
-      </form>
+      </Form>
     </>
   );
 }
