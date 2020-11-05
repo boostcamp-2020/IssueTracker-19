@@ -85,7 +85,7 @@ const ClearButton = styled.button`
   cursor: pointer;
 `;
 
-export default function IssueSearchBar() {
+export default function IssueSearchBox() {
   return (
     <SearchContainer>
       <SearchBox>
