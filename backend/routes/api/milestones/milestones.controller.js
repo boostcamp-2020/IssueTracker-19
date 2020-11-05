@@ -1,11 +1,14 @@
 import { milestoneModel } from '@models';
+import { verify } from '@lib/utils';
+import { errorMessage } from '@lib/constants';
+
 /**
  * GET /api/milestones
  */
 export const getMilestoneList = async (req, res, next) => {
   try {
-    const [row] = await milestoneModel.getMilestoneList();
-    res.json({ milestones: row });
+    const [milestones] = await milestoneModel.getMilestoneList();
+    res.json({ milestones });
   } catch (err) {
     next(err);
   }
@@ -17,8 +20,8 @@ export const getMilestoneList = async (req, res, next) => {
 export const getMilestone = async (req, res, next) => {
   try {
     const { no } = req.params;
-    const [row] = await milestoneModel.getMilestone({ no });
-    res.json({ milestones: row });
+    const [[milestone]] = await milestoneModel.getMilestoneDetail({ no });
+    res.json({ milestone });
   } catch (err) {
     next(err);
   }
@@ -30,8 +33,12 @@ export const getMilestone = async (req, res, next) => {
 export const addMilestone = async (req, res, next) => {
   try {
     const { title, description, dueDate } = req.body;
-    await milestoneModel.addMilestone({ title, description, dueDate });
-    res.status(201).end();
+    if (verify([title])) {
+      await milestoneModel.addMilestone({ title, description, dueDate });
+      res.status(201).end();
+      return;
+    }
+    res.status(400).json({ message: errorMessage.MISSING_REQUIRED_VALUE });
   } catch (err) {
     next(err);
   }
@@ -44,8 +51,12 @@ export const changeMilestone = async (req, res, next) => {
   try {
     const { no } = req.params;
     const { title, description, dueDate } = req.body;
-    await milestoneModel.changeMilestone({ title, description, dueDate, no });
-    res.status(200).end();
+    if (verify([title])) {
+      await milestoneModel.changeMilestone({ title, description, dueDate, no });
+      res.status(200).end();
+      return;
+    }
+    res.status(400).json({ message: errorMessage.MISSING_REQUIRED_VALUE });
   } catch (err) {
     next(err);
   }

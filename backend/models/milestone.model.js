@@ -12,6 +12,12 @@ export const milestoneModel = {
     return pool.query(sql);
   },
   getMilestone({ no }) {
+    const sql = `SELECT no, title, is_closed as isClosed, is_deleted as isDeleted, due_date as dueDate, description 
+    FROM milestone 
+    WHERE no = ?;`;
+    return pool.execute(sql, [no]);
+  },
+  getMilestoneDetail({ no }) {
     const sql = `SELECT M.no, M.title, M.is_closed AS isClosed, M.is_deleted AS isDeleted, M.due_date AS dueDate, M.description, 
       (SELECT COUNT(*) FROM issue WHERE milestone_no = ? AND is_opened=0 ) AS closedTasks,
       (SELECT COUNT(*) FROM issue WHERE milestone_no = ?) AS totalTasks 
@@ -22,14 +28,12 @@ export const milestoneModel = {
       HAVING M.no=?;`;
     return pool.execute(sql, [no, no, no]);
   },
-  addMilestone({ title, description, dueDate }) {
-    const sql =
-      'INSERT INTO milestone (title, description, due_date) VALUES (?, ?, ?);';
+  addMilestone({ title, description = null, dueDate = null }) {
+    const sql = 'INSERT INTO milestone (title, description, due_date) VALUES (?, ?, ?);';
     return pool.execute(sql, [title, description, dueDate]);
   },
-  changeMilestone({ title, description, dueDate, no }) {
-    const sql =
-      'UPDATE milestone SET title=?, description=?, due_date=? WHERE no=?;';
+  changeMilestone({ title, description = null, dueDate = null, no }) {
+    const sql = 'UPDATE milestone SET title=?, description=?, due_date=? WHERE no=?;';
     return pool.execute(sql, [title, description, dueDate, no]);
   },
   deleteMilestone({ no }) {
