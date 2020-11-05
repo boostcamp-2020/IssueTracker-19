@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const jsonHeader = { 'Content-Type': 'application/json;charset=utf-8' };
-const instance = axios.create({ baseURL: 'http://localhost:3000' });
+const instance = axios.create();
 
 instance.interceptors.request.use(
   config => {
