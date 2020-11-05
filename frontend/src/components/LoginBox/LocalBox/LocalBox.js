@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { API } from '@api';
-import { useHistory } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
+import { userService } from '@services';
 
 const LoginForm = styled.form`
   display: flex;
@@ -59,13 +59,14 @@ const ErrMsgSpan = styled.span`
 export default function LocalBox() {
   const [errMsg, setErrMsg] = useState('');
   const [form, setForm] = useState({ id: '', pw: '' });
+  const { id, pw } = form;
 
   const history = useHistory();
 
   const handleSubmit = async e => {
     e.preventDefault();
     try {
-      const { status } = await API.post('/api/auth/login', { id, pw });
+      const { status } = await userService.login({ id, pw });
       if (status === 200) {
         history.push('/');
       }
@@ -81,13 +82,6 @@ export default function LocalBox() {
     setErrMsg('');
   };
 
-  const handleSignup = e => {
-    e.preventDefault();
-    // TODO : 회원가입 처리 구현
-  };
-
-  const { id, pw } = form;
-
   return (
     <LoginForm onSubmit={handleSubmit}>
       <InputBox>
@@ -99,7 +93,9 @@ export default function LocalBox() {
       </InputBox>
       <ButtonBox>
         <LoginButton>로그인</LoginButton>
-        <SignupButton onClick={handleSignup}>회원 가입</SignupButton>
+        <Link to="/signup">
+          <SignupButton>회원 가입</SignupButton>
+        </Link>
       </ButtonBox>
     </LoginForm>
   );
