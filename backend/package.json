@@ -5,6 +5,7 @@
   "scripts": {
     "start:dev": "cross-env MODE=dev nodemon --exec babel-node app.js",
     "start": "pm2 start app.js --interpreter node_modules/.bin/babel-node",
+    "local": "nodemon --exec babel-node app.js",
     "test": "jest"
   },
   "_moduleAliases": {
