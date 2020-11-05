@@ -14,4 +14,6 @@ export const colors = {
   semiWhite: '#fafbfc',
 
   submitColor: '#2c974b',
+
+  marginHorizontal: '60px',
 };
