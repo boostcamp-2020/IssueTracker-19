@@ -33,7 +33,7 @@ const Input = styled.input`
 `;
 const Textarea = styled.textarea`
   height: 200px;
-  width: 600px;
+  width: 700px;
   padding: 8px;
   overflow: auto;
   background-color: #fafbfc;
@@ -42,7 +42,7 @@ const Textarea = styled.textarea`
   font-size: 14px;
 `;
 const SubmitBox = styled.div`
-  margin: 0 60px;
+  margin: 5px 60px;
   display: flex;
   justify-content: flex-end;
 `;
