@@ -43,7 +43,8 @@ extension LabelViewController {
         
         collectionView.delegate = self
         collectionView.allowsMultipleSelection = true
-        collectionView.register(UINib(nibName: "LabelCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "LabelCollectionViewCell")
+        collectionView.register(UINib(nibName: "LabelCollectionViewCell", bundle: nil),
+                                forCellWithReuseIdentifier: "LabelCollectionViewCell")
     }
     
     func configureDataSource() {
