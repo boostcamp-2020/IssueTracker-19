@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { API } from '@api';
+import { useHistory } from 'react-router-dom';
 
 const LoginForm = styled.form`
   display: flex;
@@ -56,16 +57,20 @@ const ErrMsgSpan = styled.span`
 `;
 
 export default function LocalBox() {
-  const [errMsg, setErrMsg] = useState(' ');
+  const [errMsg, setErrMsg] = useState('');
   const [form, setForm] = useState({ id: '', pw: '' });
+
+  const history = useHistory();
 
   const handleSubmit = async e => {
     e.preventDefault();
     try {
       const { status } = await API.post('/api/auth/login', { id, pw });
-      console.log(status);
-      // TODO : Redirect to issue list page
+      if (status === 200) {
+        history.push('/');
+      }
     } catch (err) {
+      console.log(err);
       setErrMsg('아이디와 비밀번호를 확인해주세요');
     }
   };
@@ -73,6 +78,7 @@ export default function LocalBox() {
   const handleInputChange = ({ target }) => {
     const { name, value } = target;
     setForm({ ...form, [name]: value });
+    setErrMsg('');
   };
 
   const handleSignup = e => {
