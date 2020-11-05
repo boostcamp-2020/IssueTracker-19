@@ -32,11 +32,21 @@ class MilestoneViewController: UIViewController, ListCollectionViewProtocol {
 			Milestone(no: 2, title: "스프린트3", totalTasks: 0, closedTasks: 0, isClosed: false, isDeleted: false, dueDate: Date(), description: "다음 배포를 위한 스프린트")
 		]
 	}
+	
+	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+		if let text = sender as? String,
+		   text == "edit",
+		   let editVC = segue.destination as? MilestoneEditViewController,
+		   let indexPath = collectionView.indexPathsForSelectedItems?.first {
+			editVC.milestone = list[indexPath.row]
+		}
+	}
 }
 
 extension MilestoneViewController {
 	func configureHierarchy() {
 		collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: createLayout())
+		collectionView.delegate = self
 		collectionView.backgroundColor = .clear
 		collectionView.register(UINib(nibName: "MilestoneViewCell", bundle: nil),
 								forCellWithReuseIdentifier: MilestoneViewCell.identifier)
@@ -82,5 +92,7 @@ extension MilestoneViewController {
 }
 
 extension MilestoneViewController: UICollectionViewDelegate {
-	
+	func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+		performSegue(withIdentifier: "milestoneEditSegue", sender: "edit")
+	}
 }
