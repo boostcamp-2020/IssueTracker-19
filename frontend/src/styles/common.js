@@ -1,18 +1,64 @@
 const { css, createGlobalStyle } = require('styled-components');
 
-export const GlobalStyle = createGlobalStyle`
-  body {
-    --black1 : #111;
-    --black2 : #222;
-    --black3 : #333;
-    --black4 : #444;
-    --black5 : #555;
-    --black6 : #666;
-
-    --light-gray: #d0d0d0;
-    --lighter-gray: #e0e0e0;
-    --lightest-gray: #f0f0f0;
-
-    --lighter-gray-bg: #eee;
+export const resetCss = css`
+  /* prettier-ignore */
+  html, body, div, span, applet, object, iframe,
+  h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+  a, abbr, acronym, address, big, cite, code,
+  del, dfn, em, img, ins, kbd, q, s, samp,
+  small, strike, strong, sub, sup, tt, var,
+  b, u, i, center,
+  dl, dt, dd, ol, ul, li,
+  fieldset, form, label, legend,
+  table, caption, tbody, tfoot, thead, tr, th, td,
+  article, aside, canvas, details, embed, 
+  figure, figcaption, footer, header, hgroup, 
+  menu, nav, output, ruby, section, summary,
+  time, mark, audio, video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    vertical-align: baseline;
   }
+  /* prettier-ignore */
+  article, aside, details, figcaption, figure, 
+  footer, header, hgroup, menu, nav, section {
+    display: block;
+  }
+  ol,
+  ul {
+    list-style: none;
+  }
+  blockquote,
+  q {
+    quotes: none;
+  }
+  /* prettier-ignore */
+  blockquote:before, blockquote:after,
+  q:before, q:after {
+    content: '';
+    content: none;
+  }
+  table {
+    border-collapse: collapse;
+    border-spacing: 0;
+  }
+  a {
+    text-decoration: none;
+    color: inherit;
+  }
+  a:link {
+    text-decoration: none;
+  }
+  a:visited {
+    text-decoration: none;
+  }
+  a:hover {
+    text-decoration: none;
+  }
+`;
+
+export const GlobalStyle = createGlobalStyle`
+  ${resetCss}
 `;

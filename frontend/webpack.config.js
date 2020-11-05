@@ -18,6 +18,7 @@ module.exports = {
       '@api': path.resolve(__dirname, './src/api'),
       '@imgs': path.resolve(__dirname, './src/imgs'),
       '@styles': path.resolve(__dirname, './src/styles'),
+      '@shared': path.resolve(__dirname, './src/styles/shared'),
       '@': path.resolve(__dirname, './src'),
     },
   },
