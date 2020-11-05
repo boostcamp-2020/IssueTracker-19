@@ -18,8 +18,10 @@ export default function IssueList() {
       if (status === 200) {
         setIssues(issues.map(issue => ({ ...issue, checked: false })));
       }
-    } catch (err) {
-      history.push('/login');
+    } catch ({ response: { status } }) {
+      if (status === 401) {
+        history.push('/login');
+      }
     }
   };
 
