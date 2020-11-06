@@ -558,7 +558,6 @@
             <objects>
                 <viewController hidesBottomBarWhenPushed="YES" id="oiX-ag-8Nt" customClass="IssueDetailViewController" customModule="IssueTracker" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Hr8-1g-leQ">
-                        <rect key="frame" x="0.0" y="0.0" width="390" height="790"/>
                         <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <viewLayoutGuide key="safeArea" id="oyJ-gc-mJa"/>
@@ -581,15 +580,12 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Lh5-Dg-XeN" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3788" y="-574"/>
-            <point key="canvasLocation" x="4609" y="116"/>
         </scene>
         <!--Issue Detail Bottom View Controller-->
         <scene sceneID="Eu2-0p-PZB">
             <objects>
                 <viewController storyboardIdentifier="issueDetailBottomVC" id="Fly-Wc-ZSU" customClass="IssueDetailBottomViewController" customModule="IssueTracker" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="dWf-My-YGf" customClass="CornerRoundedFloatingView" customModule="IssueTracker" customModuleProvider="target">
-                        <rect key="frame" x="0.0" y="0.0" width="390" height="790"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
@@ -607,7 +603,6 @@
                                 </userDefinedRuntimeAttributes>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sJZ-Go-YBs" customClass="CornerRoundedFloatingView" customModule="IssueTracker" customModuleProvider="target">
-                                <rect key="frame" x="270" y="26" width="100" height="50"/>
                                 <rect key="frame" x="294" y="26" width="100" height="50"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yi8-js-74W">
@@ -650,7 +645,6 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ewl-yj-YiC" customClass="CornerRoundedFloatingView" customModule="IssueTracker" customModuleProvider="target">
-                                <rect key="frame" x="20" y="26" width="230" height="50"/>
                                 <rect key="frame" x="20" y="26" width="254" height="50"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9IH-Gh-YFE">
@@ -700,7 +694,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="goC-le-QKn" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="4538" y="-582"/>
-            <point key="canvasLocation" x="4608" y="802"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="JrQ-xi-R2Y">
@@ -726,7 +719,7 @@
         <!--이슈-->
         <scene sceneID="Hi8-ZF-Hcj">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="wM5-2z-LiZ" sceneMemberID="viewController">
+                <navigationController extendedLayoutIncludesOpaqueBars="YES" automaticallyAdjustsScrollViewInsets="NO" id="wM5-2z-LiZ" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="이슈" image="1.circle.fill" catalog="system" id="0XE-YW-Cdo"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" largeTitles="YES" id="974-nL-UCP">
@@ -788,12 +781,11 @@
             <objects>
                 <viewController storyboardIdentifier="milestoneEditViewController" id="1m3-1x-TNp" customClass="MilestoneEditViewController" customModule="IssueTracker" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="mWh-H4-BBK">
-                        <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nGw-p7-3Ki" customClass="CornerRoundedFloatingView" customModule="IssueTracker" customModuleProvider="target">
-                                <rect key="frame" x="20" y="247" width="350" height="350"/>
+                                <rect key="frame" x="20" y="261" width="374" height="374"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="by8-am-hLx">
                                         <rect key="frame" x="20" y="10" width="18" height="30"/>
@@ -805,29 +797,29 @@
                                         </connections>
                                     </button>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0sv-3j-b0z">
-                                        <rect key="frame" x="0.0" y="50" width="350" height="1"/>
+                                        <rect key="frame" x="0.0" y="50" width="374" height="1"/>
                                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="1" id="V1K-CF-FGD"/>
                                         </constraints>
                                     </view>
                                     <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oWq-qe-ofQ">
-                                        <rect key="frame" x="20" y="51" width="310" height="241"/>
+                                        <rect key="frame" x="20" y="51" width="334" height="265"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vl5-oe-JLZ">
-                                                <rect key="frame" x="0.0" y="0.0" width="310" height="180"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="334" height="180"/>
                                                 <subviews>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pHG-ZY-Lpv" customClass="BottomBorderView" customModule="IssueTracker" customModuleProvider="target">
-                                                        <rect key="frame" x="0.0" y="0.0" width="310" height="60"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="334" height="60"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="제목" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KLR-zB-ihl">
-                                                                <rect key="frame" x="20" y="29" width="29.666666666666671" height="21"/>
+                                                                <rect key="frame" x="20" y="29" width="29.5" height="21"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                 <nil key="textColor"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="gCk-Ow-JsM">
-                                                                <rect key="frame" x="69.666666666666671" y="31.333333333333314" width="220.33333333333331" height="18.666666666666671"/>
+                                                                <rect key="frame" x="69.5" y="31.5" width="244.5" height="18.5"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                                 <textInputTraits key="textInputTraits"/>
                                                             </textField>
@@ -848,16 +840,16 @@
                                                         </userDefinedRuntimeAttributes>
                                                     </view>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cvt-Ln-EmV" customClass="BottomBorderView" customModule="IssueTracker" customModuleProvider="target">
-                                                        <rect key="frame" x="0.0" y="60" width="310" height="60"/>
+                                                        <rect key="frame" x="0.0" y="60" width="334" height="60"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="완료 날짜" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HgB-HH-KNS">
-                                                                <rect key="frame" x="20" y="9.3333333333333144" width="29.666666666666671" height="40.666666666666664"/>
+                                                                <rect key="frame" x="20" y="9" width="29.5" height="41"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                 <nil key="textColor"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="yyyy-mm-dd(선택)" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="QSF-Cd-kK0">
-                                                                <rect key="frame" x="69.666666666666671" y="20.333333333333314" width="220.33333333333331" height="18.666666666666671"/>
+                                                                <rect key="frame" x="69.5" y="20" width="244.5" height="19"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                                 <textInputTraits key="textInputTraits"/>
                                                             </textField>
@@ -875,16 +867,16 @@
                                                         </userDefinedRuntimeAttributes>
                                                     </view>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ffl-Uw-38x" customClass="BottomBorderView" customModule="IssueTracker" customModuleProvider="target">
-                                                        <rect key="frame" x="0.0" y="120" width="310" height="60"/>
+                                                        <rect key="frame" x="0.0" y="120" width="334" height="60"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="설명" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0Ai-nM-Qq8">
-                                                                <rect key="frame" x="20" y="29" width="29.666666666666671" height="21"/>
+                                                                <rect key="frame" x="20" y="29" width="29.5" height="21"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                 <nil key="textColor"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="v3k-TA-smI">
-                                                                <rect key="frame" x="69.666666666666671" y="31.333333333333314" width="220.33333333333331" height="18.666666666666671"/>
+                                                                <rect key="frame" x="69.5" y="31.5" width="244.5" height="18.5"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                                 <textInputTraits key="textInputTraits"/>
                                                             </textField>
@@ -936,7 +928,7 @@
                                         <viewLayoutGuide key="frameLayoutGuide" id="uSZ-xt-yis"/>
                                     </scrollView>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lw3-tT-nOT">
-                                        <rect key="frame" x="20" y="310" width="39" height="30"/>
+                                        <rect key="frame" x="20" y="334" width="39" height="30"/>
                                         <state key="normal" title="초기화">
                                             <color key="titleColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </state>
@@ -945,7 +937,7 @@
                                         </connections>
                                     </button>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NuW-hu-64G" customClass="CornerRoundedFloatingView" customModule="IssueTracker" customModuleProvider="target">
-                                        <rect key="frame" x="250" y="300" width="80" height="40"/>
+                                        <rect key="frame" x="274" y="324" width="80" height="40"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RXC-FB-Kux">
                                                 <rect key="frame" x="0.0" y="0.0" width="80" height="40"/>

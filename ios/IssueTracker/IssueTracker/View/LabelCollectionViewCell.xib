@@ -19,7 +19,7 @@
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="기능에 대한 레이블입니다." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wci-xK-FYZ">
-                        <rect key="frame" x="20" y="82" width="284" height="93"/>
+                        <rect key="frame" x="20" y="82" width="334" height="93"/>
                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                         <color key="textColor" systemColor="systemGray2Color"/>
                         <nil key="highlightedColor"/>
@@ -27,7 +27,7 @@
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="feature" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xQn-xw-em0">
                         <rect key="frame" x="20" y="56" width="54" height="21"/>
                         <constraints>
-                            <constraint firstAttribute="height" priority="991" constant="21" id="QD8-CG-cGI"/>
+                            <constraint firstAttribute="height" priority="980" constant="21" id="QD8-CG-cGI"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <nil key="textColor"/>
@@ -48,7 +48,7 @@
             <constraints>
                 <constraint firstItem="ZTg-uK-7eu" firstAttribute="bottom" secondItem="wci-xK-FYZ" secondAttribute="bottom" constant="12" id="2pW-e8-uUb"/>
                 <constraint firstItem="wci-xK-FYZ" firstAttribute="leading" secondItem="ZTg-uK-7eu" secondAttribute="leading" constant="20" id="31r-74-aOO"/>
-                <constraint firstItem="ZTg-uK-7eu" firstAttribute="trailing" secondItem="wci-xK-FYZ" secondAttribute="trailing" constant="150" id="Fpf-Zw-mkZ"/>
+                <constraint firstItem="ZTg-uK-7eu" firstAttribute="trailing" secondItem="wci-xK-FYZ" secondAttribute="trailing" constant="100" id="Fpf-Zw-mkZ"/>
                 <constraint firstItem="xQn-xw-em0" firstAttribute="leading" secondItem="ZTg-uK-7eu" secondAttribute="leading" constant="20" id="S7S-SY-qzq"/>
                 <constraint firstItem="wci-xK-FYZ" firstAttribute="top" secondItem="xQn-xw-em0" secondAttribute="bottom" constant="5" id="SJW-Z9-iXn"/>
                 <constraint firstItem="xQn-xw-em0" firstAttribute="top" secondItem="ZTg-uK-7eu" secondAttribute="top" constant="12" id="W8B-kD-Shj"/>
@@ -59,6 +59,7 @@
             <connections>
                 <outlet property="label" destination="xQn-xw-em0" id="JS2-lM-tWe"/>
                 <outlet property="labelDescription" destination="wci-xK-FYZ" id="8Zb-36-vIv"/>
+                <outlet property="labelHeightContraint" destination="QD8-CG-cGI" id="sBG-We-g5e"/>
             </connections>
             <point key="canvasLocation" x="171.01449275362319" y="129.57589285714286"/>
         </collectionViewCell>

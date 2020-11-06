@@ -14,7 +14,12 @@ class IssueComment: SectionItem {
 	init(author: String, content: String) {
 		self.author = author
 		self.content = content
+        super.init()
 	}
+    
+    required init(from decoder: Decoder) throws {
+        fatalError("init(from:) has not been implemented")
+    }
 }
 
 class IssueDetailViewController: UIViewController, ListCollectionViewProtocol {

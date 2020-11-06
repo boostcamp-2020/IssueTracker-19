@@ -16,6 +16,8 @@ class MilestoneViewController: UIViewController, ListCollectionViewProtocol {
 	
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.view.addSubview(UIView(frame: .zero))
 		configureHierarchy()
 		configureDataSource()
 		updateData()
