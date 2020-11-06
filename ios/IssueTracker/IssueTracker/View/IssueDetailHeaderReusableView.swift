@@ -46,11 +46,16 @@ class IssueDetailHeaderReusableView: UICollectionReusableView {
 	
 	var issue: Issue! {
 		didSet {
-			authorLabel.text = issue.author
-			titleLabel.text = issue.title
-			noLabel.text = "#\(issue.no)"
-            setLabel(statusLabel, component: (issue.isOpened != 0) ? IssueOpen() : IssueClosed())
-			setLabel(tmpLabel, component: IssueClosed())
+			authorLabel.text = "godrm"
+			titleLabel.text = "이슈 생성 기능"
+			noLabel.text = "#11"
+			setLabel(statusLabel, component: IssueOpen())
+
+//			authorLabel.text = issue.author
+//			titleLabel.text = issue.title
+//			noLabel.text = "#\(issue.no)"
+//            setLabel(statusLabel, component: (issue.isOpened != 0) ? IssueOpen() : IssueClosed())
+//			setLabel(tmpLabel, component: IssueClosed())
 		}
 	}
 	

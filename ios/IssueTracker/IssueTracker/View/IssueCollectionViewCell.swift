@@ -49,18 +49,23 @@ class IssueCollectionViewCell: UICollectionViewListCell {
     
     var issue: Issue? {
         didSet {
+			
+			
             issueTitle.text = issue?.title
 //            issueDescription.text = issue?.
             milestone.text = issue?.milestoneTitle ?? ""
-            milestone.isHidden = milestone.text == ""
+            milestone.isHidden = (milestone.text == "")
             label.text = issue?.labels.first?.name ?? ""
-            label.isHidden = label.text == ""
-            milestoneWidthConstraint?.isActive = false
-            milestoneWidthConstraint?.constant = milestone.intrinsicContentSize.width + 20
-            milestoneWidthConstraint?.isActive = true
-            labelWidthContraint?.isActive = false
-            labelWidthContraint?.constant = label.intrinsicContentSize.width + 20
-            labelWidthContraint?.isActive = true
+            label.isHidden = (label.text == "")
+			
+			milestoneWidthConstraint?.isActive = false
+			milestoneWidthConstraint?.constant = milestone.intrinsicContentSize.width + 20
+			milestoneWidthConstraint?.isActive = !milestone.isHidden
+			labelWidthContraint?.isActive = false
+			labelWidthContraint?.constant = label.intrinsicContentSize.width + 20
+			labelWidthContraint?.isActive = !label.isHidden
+			
+			print(#function)
         }
     }
         

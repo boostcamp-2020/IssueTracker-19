@@ -32,24 +32,36 @@ class LabelViewController: UIViewController, ListCollectionViewProtocol {
     func updateData() {
         let data = try? JSONEncoder().encode(["id":"a","pw":"123"])
         
-        HTTPAgent.shared.sendRequest(from: "http://localhost:300/api/auth/login", method: .POST, body: data) { (result) in
-            switch result {
-            case .success(_):
-                HTTPAgent.shared.sendRequest(from: "http://localhost:300/api/labels", method: .GET) { [weak self] (result) in
-                    switch result {
-                    case .success(let data):
-                        let sample = try? JSONSerialization.jsonObject(with: data) as? [String: Any]
-                        let labels = try? JSONDecoder().decode(Labels.self, from: data)
-                        self?.list = labels!.labels
-                        self?.updateList()
-                    case .failure(let error):
-                        print(error)
-                    }
-                }
-            case .failure(let error):
-                print(error)
-            }
-        }
+		HTTPAgent.shared.sendRequest(from: "http://49.50.163.23:3000/api/labels", method: .GET) { [weak self] (result) in
+			switch result {
+			case .success(let data):
+				let sample = try? JSONSerialization.jsonObject(with: data) as? [String: Any]
+				let labels = try? JSONDecoder().decode(Labels.self, from: data)
+				self?.list = labels!.labels
+				self?.updateList()
+			case .failure(let error):
+				print(error)
+			}
+		}
+//		
+//        HTTPAgent.shared.sendRequest(from: "http://localhost:300/api/auth/login", method: .POST, body: data) { (result) in
+//            switch result {
+//            case .success(_):
+//                HTTPAgent.shared.sendRequest(from: "http://49.50.163.23:3000/api/labels", method: .GET) { [weak self] (result) in
+//                    switch result {
+//                    case .success(let data):
+//                        let sample = try? JSONSerialization.jsonObject(with: data) as? [String: Any]
+//                        let labels = try? JSONDecoder().decode(Labels.self, from: data)
+//                        self?.list = labels!.labels
+//                        self?.updateList()
+//                    case .failure(let error):
+//                        print(error)
+//                    }
+//                }
+//            case .failure(let error):
+//                print(error)
+//            }
+//        }
     }
 }
 extension LabelViewController {

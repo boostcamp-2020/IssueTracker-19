@@ -14,7 +14,8 @@ class IssueViewController: UIViewController, ListCollectionViewProtocol{
     }
     
     typealias Registration = UICollectionView.CellRegistration<IssueCollectionViewCell, Issue>
-    var list = [Issue]()
+	var allList = [Issue]()
+	var list = [Issue]()
     var dataSource: DataSource?
     var collectionView: UICollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewLayout())
     var cellRegistration: Registration?
@@ -24,11 +25,15 @@ class IssueViewController: UIViewController, ListCollectionViewProtocol{
     var collectionViewBottomConstraint: NSLayoutConstraint?
     var floatingButton = UIButton()
     
+	var searchController = UISearchController(searchResultsController: nil)
+
+	
     override func viewDidLoad() {
         super.viewDidLoad()
         
         configureHierarchy()
         configureDataSource()
+		configureSearchController()
 		addFloatingButton(view: view)
         
         navigationItem.rightBarButtonItem = editButtonItem
@@ -45,42 +50,44 @@ class IssueViewController: UIViewController, ListCollectionViewProtocol{
         updateData()
     }
     
-    func updateDataUser() {
-        let data = try? JSONEncoder().encode(["id":"a","pw":"123"])
-        
-        HTTPAgent.shared.sendRequest(from: "http://localhost:3000/api/auth/login", method: .POST, body: data) { (result) in
-            switch result {
-            case .success(let data):
-                HTTPAgent.shared.sendRequest(from: "http://localhost:3000/api/issues", method: .GET) { [weak self] (result) in
-                    switch result {
-                    case .success(let data):
-                        let sample = try? JSONSerialization.jsonObject(with: data) as? [String: Any]
-                        print(sample)
-                        let issue = try? JSONDecoder().decode(Issues.self, from: data)
-                        self?.list = issue!.issues
-                        self?.updateList()
-                    case .failure(let error):
-                        print(error)
-                    }
-                }
-            case .failure(let error):
-                print(error)
-            }
-        }
-    }
+//    func updateDataUser() {
+//        let data = try? JSONEncoder().encode(["id":"a","pw":"123"])
+//
+//        HTTPAgent.shared.sendRequest(from: "http://localhost:3000/api/auth/login", method: .POST, body: data) { (result) in
+//            switch result {
+//            case .success(let data):
+//                HTTPAgent.shared.sendRequest(from: "http://localhost:3000/api/issues", method: .GET) { [weak self] (result) in
+//                    switch result {
+//                    case .success(let data):
+//                        let sample = try? JSONSerialization.jsonObject(with: data) as? [String: Any]
+//                        print(sample)
+//                        let issue = try? JSONDecoder().decode(Issues.self, from: data)
+//                        self?.list = issue!.issues
+//
+//                        self?.updateList()
+//                    case .failure(let error):
+//                        print(error)
+//                    }
+//                }
+//            case .failure(let error):
+//                print(error)
+//            }
+//        }
+//    }
     
     func updateData() {
         let data = try? JSONEncoder().encode(["id":"a","pw":"123"])
         
-        HTTPAgent.shared.sendRequest(from: "http://localhost:3000/api/auth/login", method: .POST, body: data) { (result) in
+        HTTPAgent.shared.sendRequest(from: "http://49.50.163.23:3000/api/auth/login", method: .POST, body: data) { (result) in
             switch result {
             case .success(let data):
-                HTTPAgent.shared.sendRequest(from: "http://localhost:3000/api/issues", method: .GET) { [weak self] (result) in
+                HTTPAgent.shared.sendRequest(from: "http://49.50.163.23:3000/api/issues", method: .GET) { [weak self] (result) in
                     switch result {
                     case .success(let data):
                         let sample = try? JSONSerialization.jsonObject(with: data) as? [String: Any]
                         let issue = try? JSONDecoder().decode(Issues.self, from: data)
                         self?.list = issue!.issues
+						self?.allList = self?.list ?? []
                         self?.updateList()
                     case .failure(let error):
                         print(error)
@@ -207,6 +214,7 @@ extension IssueViewController {
 	
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 		if let issueDetailVC = segue.destination as? IssueDetailViewController {
+			
 //			issueDetailVC.issue = Issue(no: 11,
 //										title: "이슈 생성 기능",
 //										author: "godrm",
@@ -215,7 +223,8 @@ extension IssueViewController {
 //										isOpened: true,
 //										createdAt: Date(),
 //										closedAt: nil,
-//										milestone: nil,
+//										milestoneNo: nil,
+//										milestoneTitle: nil,
 //										commentCount: 2)
 		}
 	}
@@ -227,4 +236,27 @@ extension IssueViewController: UICollectionViewDelegate {
 			performSegue(withIdentifier: "issueDetailSegue", sender: nil)
 		}
 	}
+}
+
+// MARK: - UISearchResultsUpdating Delegate
+extension IssueViewController: UISearchResultsUpdating {
+  func updateSearchResults(for searchController: UISearchController) {
+	list = filteredList(for: searchController.searchBar.text)
+	updateList()
+  }
+  
+  func filteredList(for queryOrNil: String?) -> [Issue] {
+	guard let query = queryOrNil, !query.isEmpty else {
+		return allList
+	}
+	return allList.filter { $0.title.lowercased().contains(query.lowercased()) }
+  }
+  
+  func configureSearchController() {
+	searchController.searchResultsUpdater = self
+	searchController.obscuresBackgroundDuringPresentation = false
+	searchController.searchBar.placeholder = "Search Videos"
+	navigationItem.searchController = searchController
+	definesPresentationContext = true
+  }
 }
