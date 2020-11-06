@@ -84,7 +84,7 @@ export default function IssueFilterTab({ setIssues, issues, allChecked, markMode
               ))}
             </FilterBox>
             <FilterBox name="Label" title="Filter by label">
-              {[<ListItem>{'Unlabeled'}</ListItem>].concat(
+              {[<ListItem key={'Unlabeled'}>{'Unlabeled'}</ListItem>].concat(
                 labels.map(({ no, name, color }) => (
                   <ListItem key={no}>
                     <LabelIcon color={color} />
@@ -94,12 +94,12 @@ export default function IssueFilterTab({ setIssues, issues, allChecked, markMode
               )}
             </FilterBox>
             <FilterBox name="Milestones" title="Filter by milestone">
-              {[<ListItem>{'Issues with no milestone'}</ListItem>].concat(
+              {[<ListItem key={'no-milestone'}>{'Issues with no milestone'}</ListItem>].concat(
                 milestones.map(({ no, title }) => <ListItem key={no}>{title}</ListItem>),
               )}
             </FilterBox>
             <FilterBox name="Assignees" title={`Filter by who's assigned`}>
-              {[<ListItem>{'Assigned to nobody'}</ListItem>].concat(
+              {[<ListItem key={'nobody'}>{'Assigned to nobody'}</ListItem>].concat(
                 users.map(({ nickname }, idx) => (
                   <ListItem key={idx + nickname}>{nickname}</ListItem>
                 )),
