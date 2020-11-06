@@ -35,7 +35,7 @@ const Modal = styled.div`
   z-index: 2;
 `;
 
-export default function FilterBox({ items, name, title }) {
+export default function FilterBox({ name, title, children }) {
   const modal = useRef();
 
   const [visiable, setVisiable] = useState(false);
@@ -54,12 +54,9 @@ export default function FilterBox({ items, name, title }) {
         <ArrowImg src={downArrowIcon} />
       </FilterButton>
       <Modal tabIndex={0} ref={modal} onBlur={closeAuthorModal}>
-        <OptionSelectModal
-          visiable={visiable}
-          setVisiable={setVisiable}
-          title={title}
-          items={items}
-        />
+        <OptionSelectModal visiable={visiable} setVisiable={setVisiable} title={title}>
+          {children}
+        </OptionSelectModal>
       </Modal>
     </FilterContainer>
   );
