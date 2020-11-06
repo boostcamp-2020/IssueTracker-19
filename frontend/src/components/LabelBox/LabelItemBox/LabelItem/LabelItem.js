@@ -1,8 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import { flex, calFontColor } from '@styles/utils';
+import { flex } from '@styles/utils';
 import { colors } from '@styles/variables';
+import { LabelTag } from '@components';
 
 const Box = styled.div`
   ${flex('flex-start', 'center')};
@@ -32,18 +33,13 @@ const CustomLink = styled(Link)`
   color: ${colors.black6};
 `;
 
-// const Name = styled.span`
-//   background-color: ${color};
-//   color: ${calFontColor(color)};
-// `;
-
 const Name = styled.span``;
 
 export default function LabelItem({ no, name, description, color }) {
   return (
     <Box>
       <NameBox>
-        <Name style={{ backgroundColor: color, color: calFontColor(color) }}>{name}</Name>
+        <LabelTag {...{ name, color }} />
       </NameBox>
       <DescBox>{description}</DescBox>
       <ButtonBox>
