@@ -52,7 +52,11 @@ export default function IssueFilterTab({ setIssues, issues, allChecked, markMode
       <input type="checkbox" onChange={handleCheck} checked={allChecked} />
       <FilterList>
         {markMode ? (
-          <FilterBox name="Mark as" title="Actions"></FilterBox>
+          <FilterBox name="Mark as" title="Actions">
+            {['Open', 'Closed'].map((item, idx) => (
+              <ListItem key={idx + item}>{item}</ListItem>
+            ))}
+          </FilterBox>
         ) : (
           <>
             <FilterBox name="Author" title="Filter by author">

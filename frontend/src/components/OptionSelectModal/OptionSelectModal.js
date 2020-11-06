@@ -29,7 +29,7 @@ const CloseImg = styled.img`
 
 const ListBox = styled.div`
   max-height: 20rem;
-  overflow-y: scroll;
+  overflow-y: auto;
 `;
 
 export const ListItem = styled.div`
