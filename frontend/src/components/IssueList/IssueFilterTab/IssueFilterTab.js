@@ -54,7 +54,6 @@ export default function IssueFilterTab({ setIssues, issues, allChecked, markMode
         milestoneService.getMilestones(),
       ]);
       setFilterList({ users, labels, milestones });
-      console.log('a', milestones);
     } catch (err) {
       if (err?.response?.status === 401) {
         history.push('/login');
