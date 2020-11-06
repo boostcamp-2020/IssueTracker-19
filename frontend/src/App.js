@@ -19,7 +19,7 @@ const App = () => {
         <Route path="/login" component={Login} />
         <Route path="/signup" component={SignUp} />
         <Route path="/labels" component={Label} />
-        <Route path="/milestones" exact componet={Milestone} />
+        <Route path="/milestones" exact component={Milestone} />
         <Route path="/milestones/new" component={MilestoneNew} />
         <Route path="/milestones/:no" component={MilestoneEdit} />
         <Route component={NotFound} />
