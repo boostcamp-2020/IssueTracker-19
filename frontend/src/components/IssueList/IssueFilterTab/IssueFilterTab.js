@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { flex } from '@styles/utils';
-import { userService } from '@services';
+import { userService, labelService, milestoneService } from '@services';
 import FilterBox from './FilterBox/FilterBox';
-import { ListBox, ListItem } from '@components';
+import { ListItem } from '@components';
 
 const Container = styled.div`
   border: 1px solid gray;
@@ -12,6 +12,14 @@ const Container = styled.div`
 
 const FilterList = styled.div`
   ${flex()}
+`;
+
+const LabelIcon = styled.div`
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  margin-right: 0.5rem;
+  background-color: ${props => props.color};
 `;
 
 const filterState = {
@@ -34,12 +42,24 @@ export default function IssueFilterTab({ setIssues, issues, allChecked, markMode
         {
           data: { users },
         },
-      ] = await Promise.all([userService.getUsers()]);
-      setFilterList({ ...filterList, users });
-    } catch ({ response: { status } }) {
-      if (status === 401) {
+        {
+          data: { labels },
+        },
+        {
+          data: { milestones },
+        },
+      ] = await Promise.all([
+        userService.getUsers(),
+        labelService.getLabels(),
+        milestoneService.getMilestones(),
+      ]);
+      setFilterList({ users, labels, milestones });
+      console.log('a', milestones);
+    } catch (err) {
+      if (err?.response?.status === 401) {
         history.push('/login');
       }
+      console.error(err);
     }
   };
 
@@ -64,12 +84,27 @@ export default function IssueFilterTab({ setIssues, issues, allChecked, markMode
                 <ListItem key={idx + nickname}>{nickname}</ListItem>
               ))}
             </FilterBox>
-            <FilterBox name="Label" title="Filter by label"></FilterBox>
-            <FilterBox name="Milestones" title="Filter by milestone"></FilterBox>
+            <FilterBox name="Label" title="Filter by label">
+              {[<ListItem>{'Unlabeled'}</ListItem>].concat(
+                labels.map(({ no, name, color }) => (
+                  <ListItem key={no}>
+                    <LabelIcon color={color} />
+                    {name}
+                  </ListItem>
+                )),
+              )}
+            </FilterBox>
+            <FilterBox name="Milestones" title="Filter by milestone">
+              {[<ListItem>{'Issues with no milestone'}</ListItem>].concat(
+                milestones.map(({ no, title }) => <ListItem key={no}>{title}</ListItem>),
+              )}
+            </FilterBox>
             <FilterBox name="Assignees" title={`Filter by who's assigned`}>
-              {users.map(({ nickname }, idx) => (
-                <ListItem key={idx + nickname}>{nickname}</ListItem>
-              ))}
+              {[<ListItem>{'Assigned to nobody'}</ListItem>].concat(
+                users.map(({ nickname }, idx) => (
+                  <ListItem key={idx + nickname}>{nickname}</ListItem>
+                )),
+              )}
             </FilterBox>
           </>
         )}
