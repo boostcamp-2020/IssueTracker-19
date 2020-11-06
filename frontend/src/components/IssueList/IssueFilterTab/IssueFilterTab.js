@@ -4,6 +4,7 @@ import { flex } from '@styles/utils';
 import { userService, labelService, milestoneService } from '@services';
 import FilterBox from './FilterBox/FilterBox';
 import { ListItem } from '@components';
+import { useHistory } from 'react-router-dom';
 
 const Container = styled.div`
   border: 1px solid gray;
@@ -33,6 +34,7 @@ export default function IssueFilterTab({ setIssues, issues, allChecked, markMode
     setIssues(issues.map(issue => ({ ...issue, checked })));
   };
 
+  const history = useHistory();
   const [filterList, setFilterList] = useState(filterState);
   const { users, labels, milestones } = filterList;
 
