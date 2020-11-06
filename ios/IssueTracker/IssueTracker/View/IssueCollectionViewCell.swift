@@ -8,7 +8,9 @@
 
 import UIKit
 
-class IssueCollectionViewCell: UICollectionViewListCell {    
+class IssueCollectionViewCell: UICollectionViewListCell {
+    var milestoneWidthConstraint: NSLayoutConstraint?
+    var labelWidthContraint: NSLayoutConstraint?
     let issueTitle: UILabel = {
         let label = UILabel()
         label.text = "레이블 목록 보기 구현"
@@ -44,6 +46,23 @@ class IssueCollectionViewCell: UICollectionViewListCell {
         label.textAlignment = .center
         return label
     }()
+    
+    var issue: Issue? {
+        didSet {
+            issueTitle.text = issue?.title
+//            issueDescription.text = issue?.
+            milestone.text = issue?.milestoneTitle ?? ""
+            milestone.isHidden = milestone.text == ""
+            label.text = issue?.labels.first?.name ?? ""
+            label.isHidden = label.text == ""
+            milestoneWidthConstraint?.isActive = false
+            milestoneWidthConstraint?.constant = milestone.intrinsicContentSize.width + 20
+            milestoneWidthConstraint?.isActive = true
+            labelWidthContraint?.isActive = false
+            labelWidthContraint?.constant = label.intrinsicContentSize.width + 20
+            labelWidthContraint?.isActive = true
+        }
+    }
         
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -86,11 +105,12 @@ class IssueCollectionViewCell: UICollectionViewListCell {
     private func setupMilestone() {
         contentView.addSubview(milestone)
         milestone.translatesAutoresizingMaskIntoConstraints = false
+        milestoneWidthConstraint = milestone.widthAnchor.constraint(equalToConstant: milestone.intrinsicContentSize.width + 20)
         NSLayoutConstraint.activate([
             milestone.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10),
-            milestone.heightAnchor.constraint(equalToConstant: milestone.intrinsicContentSize.height + 5),
+            milestone.heightAnchor.constraint(equalToConstant: 23),
             milestone.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -10),
-            milestone.widthAnchor.constraint(equalToConstant: milestone.intrinsicContentSize.width + 20),
+            milestoneWidthConstraint!,
             milestone.leadingAnchor.constraint(greaterThanOrEqualTo: issueTitle.trailingAnchor, constant: 1)
         ])
         milestone.layer.borderWidth = 1
@@ -101,11 +121,12 @@ class IssueCollectionViewCell: UICollectionViewListCell {
     private func setupLabel() {
         contentView.addSubview(label)
         label.translatesAutoresizingMaskIntoConstraints = false
+        labelWidthContraint = label.widthAnchor.constraint(equalToConstant: label.intrinsicContentSize.width + 20)
         NSLayoutConstraint.activate([
             label.topAnchor.constraint(equalTo: milestone.bottomAnchor, constant: 3),
-            label.heightAnchor.constraint(equalToConstant: label.intrinsicContentSize.height + 5),
+            label.heightAnchor.constraint(equalToConstant: 23),
             label.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -10),
-            label.widthAnchor.constraint(equalToConstant: label.intrinsicContentSize.width + 20)
+            labelWidthContraint!
         ])
         label.backgroundColor = .systemPink
         label.layer.cornerRadius = 5

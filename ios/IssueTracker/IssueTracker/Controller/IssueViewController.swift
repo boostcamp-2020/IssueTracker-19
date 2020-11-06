@@ -48,10 +48,10 @@ class IssueViewController: UIViewController, ListCollectionViewProtocol{
     func updateDataUser() {
         let data = try? JSONEncoder().encode(["id":"a","pw":"123"])
         
-        HTTPAgent.shared.sendRequest(from: "http://localhost:300/api/auth/login", method: .POST, body: data) { (result) in
+        HTTPAgent.shared.sendRequest(from: "http://localhost:3000/api/auth/login", method: .POST, body: data) { (result) in
             switch result {
             case .success(let data):
-                HTTPAgent.shared.sendRequest(from: "http://localhost:300/api/issues", method: .GET) { [weak self] (result) in
+                HTTPAgent.shared.sendRequest(from: "http://localhost:3000/api/issues", method: .GET) { [weak self] (result) in
                     switch result {
                     case .success(let data):
                         let sample = try? JSONSerialization.jsonObject(with: data) as? [String: Any]
@@ -72,10 +72,10 @@ class IssueViewController: UIViewController, ListCollectionViewProtocol{
     func updateData() {
         let data = try? JSONEncoder().encode(["id":"a","pw":"123"])
         
-        HTTPAgent.shared.sendRequest(from: "http://localhost:300/api/auth/login", method: .POST, body: data) { (result) in
+        HTTPAgent.shared.sendRequest(from: "http://localhost:3000/api/auth/login", method: .POST, body: data) { (result) in
             switch result {
             case .success(let data):
-                HTTPAgent.shared.sendRequest(from: "http://localhost:300/api/issues", method: .GET) { [weak self] (result) in
+                HTTPAgent.shared.sendRequest(from: "http://localhost:3000/api/issues", method: .GET) { [weak self] (result) in
                     switch result {
                     case .success(let data):
                         let sample = try? JSONSerialization.jsonObject(with: data) as? [String: Any]
@@ -102,7 +102,7 @@ class IssueViewController: UIViewController, ListCollectionViewProtocol{
 		let guide = view.safeAreaLayoutGuide
 		NSLayoutConstraint.activate([
 			floatingButton.trailingAnchor.constraint(equalTo: guide.trailingAnchor, constant: -10),
-			floatingButton.bottomAnchor.constraint(equalTo: guide.bottomAnchor, constant: -10),
+            floatingButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -(10+tabBarController!.tabBar.frame.height)),
 			floatingButton.widthAnchor.constraint(equalToConstant: 50),
 			floatingButton.heightAnchor.constraint(equalTo: floatingButton.widthAnchor)
 		])
@@ -188,9 +188,10 @@ extension IssueViewController {
     }
     func configureDataSource() {
         
-        cellRegistration = Registration { (cell, _, _) in
+        cellRegistration = Registration { (cell, _, item) in
             cell.setupViewsIfNeeded()
             cell.setupViews(inset: 0)
+            cell.issue = item
             cell.accessories = [.multiselect()]
             cell.backgroundConfiguration?.backgroundColor = .systemBackground
         }
