@@ -9,7 +9,8 @@ const Form = styled.form`
   ${flexColumn}
 `;
 const Container = styled.div`
-  margin: 0px 60px 10px;
+  margin-bottom: 10px;
+  margin-top: 16px;
   padding-bottom: 5px;
   border-top: 1px solid #e1e4e8;
   border-bottom: 1px solid #e1e4e8;

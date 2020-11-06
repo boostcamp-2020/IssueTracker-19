@@ -1,11 +1,20 @@
 import React from 'react';
-import { Header, MilestoneEditBox } from '@components';
+import styled from 'styled-components';
+import { Header, MilestoneEditBox, LabelMilestoneTab } from '@components';
+import { numerics } from '@styles/variables';
+
+const Container = styled.div`
+  margin: 32px ${numerics.marginHorizontal};
+`;
 
 export default function MilestoneEdit() {
   return (
     <>
       <Header />
-      <MilestoneEditBox isNew={false} />
+      <Container>
+        <LabelMilestoneTab Submit={false} ButtonName={''} />
+        <MilestoneEditBox isNew={false} />
+      </Container>
     </>
   );
 }
