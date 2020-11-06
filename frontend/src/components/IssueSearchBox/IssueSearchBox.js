@@ -9,13 +9,13 @@ import downArrowIcon from '@imgs/down-arrow.svg';
 import mGlass from '@imgs/m-glass.svg';
 
 const SearchContainer = styled.div`
-  margin: 1.2rem 0;
+  margin-bottom: 1.4rem;
 `;
 
 const SearchBox = styled.div`
   width: 100%;
   height: 3rem;
-  padding: 0.5rem 0;
+  margin-bottom: 0.5rem;
   ${flex('space-between', 'center')}
 `;
 
