@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { flex } from '@styles/utils';
 import { userService } from '@services';
 import FilterBox from './FilterBox/FilterBox';
+import { ListBox, ListItem } from '@components';
 
 const Container = styled.div`
   border: 1px solid gray;
@@ -19,7 +20,7 @@ const filterState = {
   milestones: [],
 };
 
-export default function IssueFilterTab({ setIssues, issues, allChecked }) {
+export default function IssueFilterTab({ setIssues, issues, allChecked, markMode }) {
   const handleCheck = ({ target: { checked } }) => {
     setIssues(issues.map(issue => ({ ...issue, checked })));
   };
@@ -50,10 +51,24 @@ export default function IssueFilterTab({ setIssues, issues, allChecked }) {
     <Container>
       <input type="checkbox" onChange={handleCheck} checked={allChecked} />
       <FilterList>
-        <FilterBox name="Author" title="Filter by author" items={users} />
-        <FilterBox name="Label" title="Filter by label" items={labels} />
-        <FilterBox name="Milestones" title="Filter by milestone" items={milestones} />
-        <FilterBox name="Assignees" title={`Filter by who's assigned`} items={users} />
+        {markMode ? (
+          <FilterBox name="Mark as" title="Actions"></FilterBox>
+        ) : (
+          <>
+            <FilterBox name="Author" title="Filter by author">
+              {users.map(({ nickname }, idx) => (
+                <ListItem key={idx + nickname}>{nickname}</ListItem>
+              ))}
+            </FilterBox>
+            <FilterBox name="Label" title="Filter by label"></FilterBox>
+            <FilterBox name="Milestones" title="Filter by milestone"></FilterBox>
+            <FilterBox name="Assignees" title={`Filter by who's assigned`}>
+              {users.map(({ nickname }, idx) => (
+                <ListItem key={idx + nickname}>{nickname}</ListItem>
+              ))}
+            </FilterBox>
+          </>
+        )}
       </FilterList>
     </Container>
   );

@@ -5,9 +5,11 @@ import IssueItem from './IssueItem/IssueItem';
 import { useHistory } from 'react-router-dom';
 
 export default function IssueList() {
-  const [issues, setIssues] = useState([]);
   const history = useHistory();
+
+  const [issues, setIssues] = useState([]);
   const allChecked = issues.every(i => i.checked);
+  const markMode = issues.some(i => i.checked);
 
   const setFilterdIssues = async options => {
     try {
@@ -31,7 +33,12 @@ export default function IssueList() {
 
   return (
     <>
-      <IssueFilterTab issues={issues} setIssues={setIssues} allChecked={allChecked} />
+      <IssueFilterTab
+        issues={issues}
+        setIssues={setIssues}
+        allChecked={allChecked}
+        markMode={markMode}
+      />
       {issues.map(({ title, checked }, idx) => (
         <IssueItem
           key={idx}
