@@ -6,7 +6,7 @@ export default function MilestoneNew() {
     <>
       <Header />
       <MilestoneNewHeader />
-      <MilestoneEditBox />
+      <MilestoneEditBox isNew={true} />
     </>
   );
 }

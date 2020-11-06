@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { API } from '@api';
-import { flexColumn, flexCenter } from '@styles/utils';
-import { SubmitButton } from '@shared';
+import { flexColumn, flexCenter, flex } from '@styles/utils';
+import { SubmitButton, CancelButton } from '@shared';
 
 const Form = styled.form`
   width: 100%;
@@ -33,7 +33,7 @@ const Input = styled.input`
 `;
 const Textarea = styled.textarea`
   height: 200px;
-  width: 600px;
+  width: 700px;
   padding: 8px;
   overflow: auto;
   background-color: #fafbfc;
@@ -42,11 +42,17 @@ const Textarea = styled.textarea`
   font-size: 14px;
 `;
 const SubmitBox = styled.div`
-  margin: 0 60px;
+  margin: 5px 60px;
   display: flex;
   justify-content: flex-end;
 `;
-export default function MilestoneEditBox() {
+const CancelDiv = styled.div`
+  ${flexCenter}
+`;
+const ButtonSpace = styled.div`
+  margin-left: 7px;
+`;
+export default function MilestoneEditBox({ isNew }) {
   return (
     <Form>
       <Container>
@@ -64,7 +70,21 @@ export default function MilestoneEditBox() {
         </InputBox>
       </Container>
       <SubmitBox>
-        <SubmitButton>Create milestone</SubmitButton>
+        {isNew ? (
+          <SubmitButton>Create milestone</SubmitButton>
+        ) : (
+          <CancelDiv>
+            <ButtonSpace>
+              <CancelButton>Cancel</CancelButton>
+            </ButtonSpace>
+            <ButtonSpace>
+              <CancelButton>Close milestone</CancelButton>
+            </ButtonSpace>
+            <ButtonSpace>
+              <SubmitButton>Save changes</SubmitButton>
+            </ButtonSpace>
+          </CancelDiv>
+        )}
       </SubmitBox>
     </Form>
   );
