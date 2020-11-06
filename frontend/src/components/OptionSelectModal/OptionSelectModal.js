@@ -32,14 +32,14 @@ const ListBox = styled.div`
   overflow-y: scroll;
 `;
 
-const ListItem = styled.div`
+export const ListItem = styled.div`
   font-size: 0.8rem;
   padding: 0.5rem 0 0.5rem 0.7rem;
   border-bottom: 1px solid ${colors.lightGray};
   cursor: pointer;
 `;
 
-export default function OptionSelectModal({ visiable, setVisiable, title, items }) {
+export default function OptionSelectModal({ visiable, setVisiable, title, items, children }) {
   const handleClose = () => {
     setVisiable(false);
   };
@@ -52,12 +52,7 @@ export default function OptionSelectModal({ visiable, setVisiable, title, items 
             <span>{title}</span>
             <CloseImg src={closeDarkIcon} onClick={handleClose} />
           </Header>
-          {/* TODO 여기서 ListBox를 외부에서 주입받아야 함. Author, Label,.. 등등 각각의 값이 다름 */}
-          <ListBox>
-            {items.map(({ nickname }, idx) => (
-              <ListItem key={idx}>{nickname}</ListItem>
-            ))}
-          </ListBox>
+          <ListBox>{children}</ListBox>
         </Container>
       ) : null}
     </>
