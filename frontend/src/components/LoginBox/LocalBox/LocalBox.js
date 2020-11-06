@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { API } from '@api';
-import { useHistory } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
+import { userService } from '@services';
 
 const LoginForm = styled.form`
   display: flex;
@@ -59,19 +59,21 @@ const ErrMsgSpan = styled.span`
 export default function LocalBox() {
   const [errMsg, setErrMsg] = useState('');
   const [form, setForm] = useState({ id: '', pw: '' });
+  const { id, pw } = form;
 
   const history = useHistory();
 
   const handleSubmit = async e => {
     e.preventDefault();
     try {
-      const { status } = await API.post('/api/auth/login', { id, pw });
+      const { status } = await userService.login({ id, pw });
       if (status === 200) {
         history.push('/');
       }
-    } catch (err) {
-      console.log(err);
-      setErrMsg('아이디와 비밀번호를 확인해주세요');
+    } catch ({ response: { status } }) {
+      if (status === 401) {
+        setErrMsg('아이디와 비밀번호를 확인해주세요');
+      }
     }
   };
 
@@ -81,25 +83,27 @@ export default function LocalBox() {
     setErrMsg('');
   };
 
-  const handleSignup = e => {
-    e.preventDefault();
-    // TODO : 회원가입 처리 구현
-  };
-
-  const { id, pw } = form;
-
   return (
     <LoginForm onSubmit={handleSubmit}>
       <InputBox>
         <Label htmlFor="id">아이디</Label>
-        <Input name="id" type="text" onChange={handleInputChange} value={id} />
+        <Input name="id" type="text" onChange={handleInputChange} value={id} required />
         <Label htmlFor="pw">비밀번호</Label>
-        <Input name="pw" type="password" onChange={handleInputChange} value={pw} />
+        <Input
+          name="pw"
+          type="password"
+          onChange={handleInputChange}
+          value={pw}
+          required
+          autoComplete="true"
+        />
         <ErrMsgSpan>{errMsg}</ErrMsgSpan>
       </InputBox>
       <ButtonBox>
         <LoginButton>로그인</LoginButton>
-        <SignupButton onClick={handleSignup}>회원 가입</SignupButton>
+        <Link to="/signup">
+          <SignupButton>회원 가입</SignupButton>
+        </Link>
       </ButtonBox>
     </LoginForm>
   );

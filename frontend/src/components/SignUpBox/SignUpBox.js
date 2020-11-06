@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { API } from '@api';
 import { flexColumn } from '@styles/utils';
 import { useHistory } from 'react-router-dom';
 import { AUTH } from '@constants/index';
+import { userService } from '@services';
 
 const SignUpContainer = styled.div`
   background-color: #ecf0f1;
@@ -64,15 +64,17 @@ export default function SignUpBox() {
 
   const handleSubmit = async e => {
     e.preventDefault();
-    const data = { id, nickname, pw, auth: AUTH.DEFAULT };
     try {
-      const { status } = await API.post('/api/auth/signup', data);
+      const { data, status } = await userService.signup({ id, nickname, pw, auth: AUTH.DEFAULT });
       if (status === 200) {
         history.push('/login');
+        return;
       }
       // TODO 200 이외의 코드 에러 처리
     } catch (err) {
       console.error(err);
+      // TODO : 아이디 닉네임 중복 처리 구현하고 아래 alert 삭제
+      alert('중복된 아이디 또는 닉네임입니다.');
     }
   };
 

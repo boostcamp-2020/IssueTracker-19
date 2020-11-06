@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Header, IssueList } from '@components';
+import { Header, IssueList, IssueSearchBox } from '@components';
 
 const IssueContainer = styled.div`
   width: calc(100% - 160px);
@@ -12,6 +12,7 @@ export default function Issue() {
     <>
       <Header />
       <IssueContainer>
+        <IssueSearchBox />
         <IssueList />
       </IssueContainer>
     </>

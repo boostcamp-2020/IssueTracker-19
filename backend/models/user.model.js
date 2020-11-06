@@ -10,4 +10,8 @@ export const userModel = {
     const sql = 'INSERT INTO user (id, nickname, pw, auth) VALUES (?, ?, ?, ?);';
     return pool.execute(sql, [id, nickname, pw, auth ? auth : AUTH.DEFAULT]);
   },
+  getUsers() {
+    const sql = 'SELECT no, id, nickname, image FROM user;';
+    return pool.query(sql);
+  },
 };
