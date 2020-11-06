@@ -17,14 +17,17 @@ const Box = styled.div`
 
 const NameBox = styled.div`
   flex-grow: 2;
+  width: 100%;
 `;
 
 const DescBox = styled.div`
   flex-grow: 5;
+  width: 100%;
 `;
 
 const ButtonBox = styled.div`
   flex-grow: 1;
+  width: 100%;
   ${flex()};
   justify-content: space-around;
 `;
