@@ -23,7 +23,6 @@ class LabelViewController: UIViewController, ListCollectionViewProtocol {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.view.addSubview(UIView(frame: .zero))
         configureHierarchy()
         configureDataSource()
         updateData()
@@ -84,25 +83,25 @@ extension LabelViewController {
     }
     
     func configureDataSource() {
-        dataSource = UICollectionViewDiffableDataSource<Section, Label>(collectionView: collectionView) { (collectionView: UICollectionView, indexPath: IndexPath, _: Label) -> UICollectionViewCell? in
+        dataSource = UICollectionViewDiffableDataSource<Section, Label>(collectionView: collectionView) { (collectionView: UICollectionView, indexPath: IndexPath, item: Label) -> UICollectionViewCell? in
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "LabelCollectionViewCell", for: indexPath) as? LabelCollectionViewCell else {
                 return UICollectionViewCell()
             }
-            cell.label.text = "feature"
+			cell.label = item
             
             NSLayoutConstraint.activate([
-                cell.label.widthAnchor.constraint(equalToConstant: cell.label.intrinsicContentSize.width + 20)
+                cell.titleLabel.widthAnchor.constraint(equalToConstant: cell.titleLabel.intrinsicContentSize.width + 20)
             ])
-            cell.labelHeightContraint.constant = cell.label.intrinsicContentSize.height + 5
-            cell.label.layoutIfNeeded()
-            cell.contentView.backgroundColor = .systemBackground
+            cell.labelHeightContraint.constant = cell.titleLabel.intrinsicContentSize.height + 5
+            cell.titleLabel.layoutIfNeeded()
+            cell.contentView.backgroundColor = .tertiarySystemBackground
             return cell
         }
     }
     
     func createLayout() -> UICollectionViewLayout {
         var config = UICollectionLayoutListConfiguration(appearance: .plain)
-        config.backgroundColor = .systemGray5
+		config.backgroundColor = .systemGroupedBackground
         return UICollectionViewCompositionalLayout.list(using: config)
     }
 }

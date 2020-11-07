@@ -17,7 +17,7 @@ class MilestoneViewController: UIViewController, ListCollectionViewProtocol {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.view.addSubview(UIView(frame: .zero))
+//        self.view.addSubview(UIView(frame: .zero))
 		configureHierarchy()
 		configureDataSource()
 		updateData()
@@ -49,14 +49,12 @@ extension MilestoneViewController {
 	func configureHierarchy() {
 		collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: createLayout())
 		collectionView.delegate = self
-		collectionView.backgroundColor = .clear
 		collectionView.register(UINib(nibName: "MilestoneViewCell", bundle: nil),
 								forCellWithReuseIdentifier: MilestoneViewCell.identifier)
-		
 		view.addSubview(collectionView)
 		collectionView.translatesAutoresizingMaskIntoConstraints = false
 		NSLayoutConstraint.activate([
-			collectionView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
+			collectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
 			collectionView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor),
 			collectionView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor),
 			collectionView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor)
@@ -80,7 +78,7 @@ extension MilestoneViewController {
 		let layout = UICollectionViewCompositionalLayout { (_, layoutEnvironment) -> NSCollectionLayoutSection? in
 			var configuration = UICollectionLayoutListConfiguration(appearance: .plain)
 			configuration.backgroundColor = .systemGroupedBackground
-			
+
 			let section = NSCollectionLayoutSection.list(
 				using: configuration,
 				layoutEnvironment: layoutEnvironment

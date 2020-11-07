@@ -17,7 +17,7 @@ class CornerRoundedFloatingView: UIView {
 		}
 	}
 	
-	@IBInspectable var shadowColor: UIColor = UIColor.lightGray {
+	@IBInspectable var shadowColor: UIColor = .systemFill {
 		didSet {
 			layer.shadowColor = shadowColor.cgColor
 		}

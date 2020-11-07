@@ -21,7 +21,7 @@
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="기능에 대한 레이블입니다." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wci-xK-FYZ">
                         <rect key="frame" x="20" y="82" width="334" height="93"/>
                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                        <color key="textColor" systemColor="systemGray2Color"/>
+                        <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="feature" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xQn-xw-em0">
@@ -57,18 +57,15 @@
             </constraints>
             <size key="customSize" width="454" height="221"/>
             <connections>
-                <outlet property="label" destination="xQn-xw-em0" id="JS2-lM-tWe"/>
-                <outlet property="labelDescription" destination="wci-xK-FYZ" id="8Zb-36-vIv"/>
+                <outlet property="descriptionLabel" destination="wci-xK-FYZ" id="8Zb-36-vIv"/>
                 <outlet property="labelHeightContraint" destination="QD8-CG-cGI" id="sBG-We-g5e"/>
+                <outlet property="titleLabel" destination="xQn-xw-em0" id="JS2-lM-tWe"/>
             </connections>
             <point key="canvasLocation" x="171.01449275362319" y="129.57589285714286"/>
         </collectionViewCell>
     </objects>
     <resources>
         <image name="chevron.right" catalog="system" width="96" height="128"/>
-        <systemColor name="systemGray2Color">
-            <color red="0.68235294117647061" green="0.68235294117647061" blue="0.69803921568627447" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </systemColor>
         <systemColor name="systemGrayColor">
             <color red="0.55686274509803924" green="0.55686274509803924" blue="0.57647058823529407" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>

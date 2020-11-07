@@ -8,7 +8,7 @@
 
 import UIKit
 
-class IssueComment: SectionItem {
+class IssueComment: HashableObject {
 	let author: String
 	let content: String
 	init(author: String, content: String) {
@@ -60,6 +60,11 @@ class IssueDetailViewController: UIViewController, ListCollectionViewProtocol {
 	
 	override func viewWillDisappear(_ animated: Bool) {
 		bottomViewController?.view.removeFromSuperview()
+	}
+	
+	override func viewDidLayoutSubviews() {
+		super.viewDidLayoutSubviews()
+		collectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 96, right: 0)
 	}
 	
 	func updateIssueDetail() {

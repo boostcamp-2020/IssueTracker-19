@@ -84,6 +84,6 @@ class IssueDetailHeaderReusableView: UICollectionReusableView {
 	
 	override func awakeFromNib() {
 		super.awakeFromNib()
-		backgroundColor = .white
+		backgroundColor = .tertiarySystemBackground
 	}
 }

@@ -6,6 +6,7 @@
         <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -589,9 +590,24 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="V8q-6I-vMD">
+                                <rect key="frame" x="0.0" y="76" width="414" height="732"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <collectionViewLayout key="collectionViewLayout" id="5jT-i0-P9D"/>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="dUk-4d-Keo">
+                                        <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="ID2-Lq-bnx">
+                                            <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </collectionViewCellContentView>
+                                    </collectionViewCell>
+                                </cells>
+                            </collectionView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="L14-b5-iZc">
                                 <rect key="frame" x="187" y="10" width="40" height="6"/>
-                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="backgroundColor" systemColor="separatorColor"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="6" id="BCF-2C-BJi"/>
                                     <constraint firstAttribute="width" constant="40" id="RBz-7n-TyT"/>
@@ -607,7 +623,7 @@
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yi8-js-74W">
                                         <rect key="frame" x="49.5" y="0.0" width="1" height="50"/>
-                                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <color key="backgroundColor" systemColor="opaqueSeparatorColor"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="1" id="3G7-eZ-ahx"/>
                                         </constraints>
@@ -627,7 +643,7 @@
                                         </connections>
                                     </button>
                                 </subviews>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <color key="backgroundColor" systemColor="tertiarySystemBackgroundColor"/>
                                 <constraints>
                                     <constraint firstItem="yi8-js-74W" firstAttribute="centerY" secondItem="sJZ-Go-YBs" secondAttribute="centerY" id="COi-gm-swY"/>
                                     <constraint firstAttribute="trailing" secondItem="IEv-dD-ZFu" secondAttribute="trailing" id="JBG-6Q-4pD"/>
@@ -643,6 +659,14 @@
                                     <constraint firstAttribute="bottom" secondItem="IEv-dD-ZFu" secondAttribute="bottom" id="rFG-eH-qTW"/>
                                     <constraint firstItem="yi8-js-74W" firstAttribute="leading" secondItem="mYp-fI-C25" secondAttribute="trailing" id="y2r-ad-wUP"/>
                                 </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="shadowColor">
+                                        <color key="value" systemColor="systemFillColor"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="shadowOpacity">
+                                        <real key="value" value="1"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ewl-yj-YiC" customClass="CornerRoundedFloatingView" customModule="IssueTracker" customModuleProvider="target">
                                 <rect key="frame" x="20" y="26" width="254" height="50"/>
@@ -656,24 +680,36 @@
                                         </connections>
                                     </button>
                                 </subviews>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="backgroundColor" systemColor="tertiarySystemBackgroundColor"/>
                                 <constraints>
                                     <constraint firstItem="9IH-Gh-YFE" firstAttribute="top" secondItem="Ewl-yj-YiC" secondAttribute="top" id="EUE-pj-GZI"/>
                                     <constraint firstAttribute="trailing" secondItem="9IH-Gh-YFE" secondAttribute="trailing" id="J7o-2E-S3p"/>
                                     <constraint firstAttribute="bottom" secondItem="9IH-Gh-YFE" secondAttribute="bottom" id="QK6-Fp-QTf"/>
                                     <constraint firstItem="9IH-Gh-YFE" firstAttribute="leading" secondItem="Ewl-yj-YiC" secondAttribute="leading" id="WaN-gH-fLR"/>
                                 </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="shadowColor">
+                                        <color key="value" systemColor="systemFillColor"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="shadowOpacity">
+                                        <real key="value" value="1"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
                             </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="bFq-zj-anu"/>
                         <color key="backgroundColor" systemColor="systemGroupedBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="L14-b5-iZc" firstAttribute="top" secondItem="dWf-My-YGf" secondAttribute="top" constant="10" id="4WY-LV-XBi"/>
+                            <constraint firstItem="V8q-6I-vMD" firstAttribute="leading" secondItem="bFq-zj-anu" secondAttribute="leading" id="7hZ-mn-CXq"/>
+                            <constraint firstItem="bFq-zj-anu" firstAttribute="bottom" secondItem="V8q-6I-vMD" secondAttribute="bottom" id="Icb-y2-L86"/>
                             <constraint firstItem="Ewl-yj-YiC" firstAttribute="top" secondItem="sJZ-Go-YBs" secondAttribute="top" id="JRq-k0-pDa"/>
                             <constraint firstItem="L14-b5-iZc" firstAttribute="centerX" secondItem="bFq-zj-anu" secondAttribute="centerX" id="KJA-66-0RQ"/>
                             <constraint firstItem="Ewl-yj-YiC" firstAttribute="leading" secondItem="bFq-zj-anu" secondAttribute="leading" constant="20" id="Mh3-JF-D0v"/>
                             <constraint firstItem="Ewl-yj-YiC" firstAttribute="height" secondItem="sJZ-Go-YBs" secondAttribute="height" id="SCg-Sg-xTi"/>
                             <constraint firstItem="bFq-zj-anu" firstAttribute="trailing" secondItem="sJZ-Go-YBs" secondAttribute="trailing" constant="20" id="cfC-Mf-KfD"/>
+                            <constraint firstItem="bFq-zj-anu" firstAttribute="trailing" secondItem="V8q-6I-vMD" secondAttribute="trailing" id="fbY-RL-Jle"/>
+                            <constraint firstItem="V8q-6I-vMD" firstAttribute="top" secondItem="sJZ-Go-YBs" secondAttribute="bottom" id="tbh-gR-Sg4"/>
                             <constraint firstItem="sJZ-Go-YBs" firstAttribute="top" secondItem="L14-b5-iZc" secondAttribute="bottom" constant="10" id="xg6-SE-5JX"/>
                             <constraint firstItem="sJZ-Go-YBs" firstAttribute="leading" secondItem="Ewl-yj-YiC" secondAttribute="trailing" constant="20" id="zs9-1o-60a"/>
                         </constraints>
@@ -684,16 +720,20 @@
                             <userDefinedRuntimeAttribute type="number" keyPath="cornerRounding">
                                 <real key="value" value="10"/>
                             </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="color" keyPath="shadowColor">
+                                <color key="value" systemColor="secondarySystemFillColor"/>
+                            </userDefinedRuntimeAttribute>
                         </userDefinedRuntimeAttributes>
                     </view>
                     <modalPageSheetSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <connections>
+                        <outlet property="collectionView" destination="V8q-6I-vMD" id="5SV-XI-Xma"/>
                         <outlet property="commentButtonView" destination="Ewl-yj-YiC" id="rxL-Kh-261"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="goC-le-QKn" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4538" y="-582"/>
+            <point key="canvasLocation" x="4537.68115942029" y="-582.58928571428567"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="JrQ-xi-R2Y">
@@ -744,6 +784,7 @@
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" largeTitles="YES" id="P02-OH-w9P">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="108"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
@@ -1037,6 +1078,7 @@
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" largeTitles="YES" id="CKH-p4-Lci">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="108"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
@@ -1066,8 +1108,20 @@
         <systemColor name="labelColor">
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
+        <systemColor name="opaqueSeparatorColor">
+            <color red="0.77647058823529413" green="0.77647058823529413" blue="0.78431372549019607" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="secondarySystemFillColor">
+            <color red="0.47058823529411764" green="0.47058823529411764" blue="0.50196078431372548" alpha="0.16" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="separatorColor">
+            <color red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.28999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemFillColor">
+            <color red="0.47058823529411764" green="0.47058823529411764" blue="0.50196078431372548" alpha="0.20000000000000001" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemGray2Color">
             <color red="0.68235294117647061" green="0.68235294117647061" blue="0.69803921568627447" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -1086,6 +1140,9 @@
         </systemColor>
         <systemColor name="systemPinkColor">
             <color red="1" green="0.17647058823529413" blue="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="tertiarySystemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
     </resources>
 </document>

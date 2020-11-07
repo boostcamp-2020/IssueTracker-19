@@ -39,7 +39,7 @@ class MilestoneViewCell: UICollectionViewCell {
 	
     override func awakeFromNib() {
         super.awakeFromNib()
-		backgroundColor = .white
+		backgroundColor = .tertiarySystemBackground
     }
 
 }

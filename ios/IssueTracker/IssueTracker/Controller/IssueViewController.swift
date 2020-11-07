@@ -254,7 +254,7 @@ extension IssueViewController: UISearchResultsUpdating {
   func configureSearchController() {
 	searchController.searchResultsUpdater = self
 	searchController.obscuresBackgroundDuringPresentation = false
-	searchController.searchBar.placeholder = "Search Videos"
+	searchController.searchBar.placeholder = "Search Issues"
 	navigationItem.searchController = searchController
 	definesPresentationContext = true
   }

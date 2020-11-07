@@ -27,7 +27,7 @@ class IssueDetailCommentViewCell: UICollectionViewCell {
 	
     override func awakeFromNib() {
         super.awakeFromNib()
-		contentView.backgroundColor = .white
+		contentView.backgroundColor = .tertiarySystemBackground
     }
 	
 	@IBAction func editButtonAction(_ sender: UIButton) {

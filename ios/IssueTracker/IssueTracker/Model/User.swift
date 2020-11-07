@@ -8,25 +8,32 @@
 
 import Foundation
 
-struct User: Hashable, Codable {
-    let identifier: UUID
-    static func == (lhs: User, rhs: User) -> Bool {
-        return lhs.identifier == rhs.identifier
-    }
-    func hash(into hasher: inout Hasher) {
-        hasher.combine(identifier)
-    }
+class User: HashableObject, Codable {
     enum CodingKeys: String, CodingKey {
         case no, nickname, image
     }
-    init(from decoder: Decoder) throws {
-        identifier = UUID()
+	
+    required init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
         no = try values.decode(Int.self, forKey: .no)
         nickname = try values.decode(String.self, forKey: .nickname)
         image = try values.decode(String?.self, forKey: .image)
     }
+	
     var no: Int
     var nickname: String
     var image: String?
+	
+	init(no: Int, nickname: String, image: String?) {
+		self.no = no
+		self.nickname = nickname
+		self.image = image
+	}
+	
+	static let all = ["whrlgus", "NamKiBeom"]
+		.map {
+			User(no: 0,
+				 nickname: $0,
+				 image: "")
+		}
 }

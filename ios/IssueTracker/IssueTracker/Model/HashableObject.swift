@@ -1,17 +1,17 @@
 //
-//  SectionItem.swift
+//  HashableObject.swift
 //  IssueTracker
 //
-//  Created by 조기현 on 2020/11/02.
+//  Created by 조기현 on 2020/11/08.
 //  Copyright © 2020 남기범. All rights reserved.
 //
 
 import Foundation
 
-class SectionItem: Hashable {
+class HashableObject: Hashable {
 	let identifier = UUID()
 	
-	static func == (lhs: SectionItem, rhs: SectionItem) -> Bool {
+	static func == (lhs: HashableObject, rhs: HashableObject) -> Bool {
 		return lhs.identifier == rhs.identifier
 	}
 	

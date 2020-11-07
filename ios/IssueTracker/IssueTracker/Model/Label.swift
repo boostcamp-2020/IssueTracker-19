@@ -8,28 +8,32 @@
 
 import Foundation
 
-struct Label: Hashable, Codable {
-    let identifier: UUID
-    
-    static func == (lhs: Label, rhs: Label) -> Bool {
-        return lhs.identifier == rhs.identifier
-    }
-    func hash(into hasher: inout Hasher) {
-        hasher.combine(identifier)
-    }
+class Label: HashableObject, Codable {
+	let name: String
+	let description: String?
+	let color: String
     
     enum CodingKeys: String, CodingKey {
         case name, description, color
     }
     
-    init(from decoder: Decoder) throws {
-        identifier = UUID()
+    required init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
         name = try values.decode(String.self, forKey: .name)
         description = try values.decode(String.self, forKey: .description)
         color = try values.decode(String.self, forKey: .color)
     }
-    var name: String
-    var description: String?
-    var color: String
+	
+	init(name: String, description: String?, color: String) {
+		self.name = name
+		self.description = description
+		self.color = color
+	}
+	static let all = ["bug","documentation", "duplicacte", "enhancement", "good first issue", "help wanted", "invalid", "question", "wontfix"]
+		.map {
+			Label(name: $0,
+				  description: nil,
+				  color: String(format: "#%06X",
+								(Int.random(in: 1...255) << 16) + (Int.random(in: 1...255) << 8) + Int.random(in: 1...255)))
+		}
 }

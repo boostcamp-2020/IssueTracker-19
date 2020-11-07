@@ -138,10 +138,10 @@ class IssueCollectionViewCell: UICollectionViewListCell {
     }
     
     func setupBaseView(inset: CGFloat) {
-        contentView.backgroundColor = UIColor.systemBackground
+		contentView.backgroundColor = .tertiarySystemBackground
     }
     
     func setupViewsIfNeeded() {
-        contentView.backgroundColor = .systemBackground
+        contentView.backgroundColor = .tertiarySystemBackground
     }
 }
