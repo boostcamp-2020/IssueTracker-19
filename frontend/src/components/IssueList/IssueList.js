@@ -39,14 +39,8 @@ export default function IssueList() {
         allChecked={allChecked}
         markMode={markMode}
       />
-      {issues.map(({ title, checked }, idx) => (
-        <IssueItem
-          key={idx}
-          title={title}
-          checked={checked}
-          issues={issues}
-          setIssues={setIssues}
-        />
+      {issues.map(({ no, title, checked }) => (
+        <IssueItem key={no} title={title} checked={checked} issues={issues} setIssues={setIssues} />
       ))}
     </>
   );
