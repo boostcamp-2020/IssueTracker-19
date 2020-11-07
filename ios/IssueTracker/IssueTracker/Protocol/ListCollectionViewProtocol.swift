@@ -32,6 +32,9 @@ extension ListCollectionViewProtocol {
 		var snapshot = Snapshot()
 		snapshot.appendSections([.main])
 		snapshot.appendItems(list)
-		dataSource?.apply(snapshot, animatingDifferences: animatingDifferences)
+        
+        DispatchQueue.main.async {
+            dataSource?.apply(snapshot, animatingDifferences: animatingDifferences)
+        }
 	}
 }

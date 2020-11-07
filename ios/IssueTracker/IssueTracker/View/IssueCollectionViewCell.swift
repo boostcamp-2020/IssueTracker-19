@@ -49,28 +49,25 @@ class IssueCollectionViewCell: UICollectionViewListCell {
     
     var issue: Issue? {
         didSet {
-			
-			
             issueTitle.text = issue?.title
-//            issueDescription.text = issue?.
+//            issueDescription.text = issue?.description 정보 없음
             milestone.text = issue?.milestoneTitle ?? ""
             milestone.isHidden = (milestone.text == "")
             label.text = issue?.labels.first?.name ?? ""
             label.isHidden = (label.text == "")
 			
 			milestoneWidthConstraint?.isActive = false
-			milestoneWidthConstraint?.constant = milestone.intrinsicContentSize.width + 20
+			milestoneWidthConstraint?.constant = milestone.intrinsicContentSize.width + 10
 			milestoneWidthConstraint?.isActive = !milestone.isHidden
 			labelWidthContraint?.isActive = false
-			labelWidthContraint?.constant = label.intrinsicContentSize.width + 20
+			labelWidthContraint?.constant = label.intrinsicContentSize.width + 10
 			labelWidthContraint?.isActive = !label.isHidden
-			
-			print(#function)
         }
     }
         
     override init(frame: CGRect) {
         super.init(frame: frame)
+        setupViews(inset: 0)
     }
     
     required init?(coder: NSCoder) {
@@ -88,11 +85,13 @@ class IssueCollectionViewCell: UICollectionViewListCell {
     private func setupIssueTitle() {
         contentView.addSubview(issueTitle)
         issueTitle.translatesAutoresizingMaskIntoConstraints = false
+        let issueTitleWidthConstraint = issueTitle.widthAnchor.constraint(equalTo: contentView.widthAnchor, multiplier: 0.6)
+        issueTitleWidthConstraint.priority = UILayoutPriority(999)
         NSLayoutConstraint.activate([
             issueTitle.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10),
             issueTitle.heightAnchor.constraint(equalTo: contentView.heightAnchor, multiplier: 0.25),
             issueTitle.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 15),
-            issueTitle.widthAnchor.constraint(equalTo: contentView.widthAnchor, multiplier: 0.6)
+            issueTitleWidthConstraint
         ])
     }
     

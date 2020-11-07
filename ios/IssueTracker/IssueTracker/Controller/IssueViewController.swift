@@ -27,7 +27,6 @@ class IssueViewController: UIViewController, ListCollectionViewProtocol{
     
 	var searchController = UISearchController(searchResultsController: nil)
 
-	
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -197,14 +196,14 @@ extension IssueViewController {
         
         cellRegistration = Registration { (cell, _, item) in
             cell.setupViewsIfNeeded()
-            cell.setupViews(inset: 0)
             cell.issue = item
             cell.accessories = [.multiselect()]
             cell.backgroundConfiguration?.backgroundColor = .systemBackground
         }
         
         dataSource = DataSource(collectionView: collectionView) { (collectionView: UICollectionView, indexPath: IndexPath, item: Issue) -> UICollectionViewCell? in
-            return collectionView.dequeueConfiguredReusableCell(using: self.cellRegistration!, for: indexPath, item: item)
+            let cell = collectionView.dequeueConfiguredReusableCell(using: self.cellRegistration!, for: indexPath, item: item)
+            return cell
         }
     }
     
