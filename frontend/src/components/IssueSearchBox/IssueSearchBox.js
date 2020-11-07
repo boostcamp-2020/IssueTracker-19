@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { flex, flexCenter, borderNoneBox, skyblueBoxShadow } from '@styles/utils';
@@ -41,30 +41,33 @@ const SelectBox = styled.div`
   cursor: pointer;
 `;
 
+const InputBox = styled.div`
+  width: 100%;
+  height: 100%;
+  ${flexCenter}
+  ${props => (props?.focused ? `${skyblueBoxShadow}; border-radius: 5px;` : null)}
+`;
+
 const FilterInput = styled.input`
   width: calc(100% - 16px);
   height: calc(100% - 16px);
-  padding: 8px;
   border-radius: 6px;
   border: none;
   outline: unset;
   background-color: ${colors.grayInputBg};
   color: ${colors.black3};
-  &:focus {
-    ${skyblueBoxShadow}
-  }
-`;
-
-const SelectImg = styled.img`
-  width: 8px;
-  height: 8px;
-  margin-top: 5px;
-  margin-left: 7px;
 `;
 
 const MGlassImg = styled.img`
   width: 35px;
   height: 20px;
+`;
+
+const DownArrowImg = styled.img`
+  width: 8px;
+  height: 8px;
+  margin-top: 5px;
+  margin-left: 7px;
 `;
 
 const ControlBox = styled.div`
@@ -86,16 +89,28 @@ const ClearButton = styled.button`
 `;
 
 export default function IssueSearchBox() {
+  const [focused, setFocused] = useState(false);
+
+  const handleFocus = () => {
+    setFocused(true);
+  };
+
+  const handleBlur = () => {
+    setFocused(false);
+  };
+
   return (
     <SearchContainer>
       <SearchBox>
         <FilterBox>
           <SelectBox>
             Filters
-            <SelectImg src={downArrowIcon} />
+            <DownArrowImg src={downArrowIcon} />
           </SelectBox>
-          <MGlassImg src={mGlass} />
-          <FilterInput type="text" />
+          <InputBox focused={focused}>
+            <MGlassImg src={mGlass} />
+            <FilterInput type="text" onFocus={handleFocus} onBlur={handleBlur} tabIndex={0} />
+          </InputBox>
         </FilterBox>
         <ControlBox>
           <LabelMilestoneControls />
