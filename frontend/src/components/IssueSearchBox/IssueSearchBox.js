@@ -109,7 +109,13 @@ export default function IssueSearchBox() {
           </SelectBox>
           <InputBox focused={focused}>
             <MGlassImg src={mGlass} />
-            <FilterInput type="text" onFocus={handleFocus} onBlur={handleBlur} tabIndex={0} />
+            <FilterInput
+              type="text"
+              onFocus={handleFocus}
+              onBlur={handleBlur}
+              tabIndex={0}
+              placeholder={'Search all issues'}
+            />
           </InputBox>
         </FilterBox>
         <ControlBox>
