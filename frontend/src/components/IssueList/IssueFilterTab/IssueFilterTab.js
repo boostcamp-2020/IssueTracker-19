@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useContext } from 'react';
 import styled from 'styled-components';
 import { flex } from '@styles/utils';
+import { colors } from '@styles/variables';
 import { userService, labelService, milestoneService } from '@services';
 import FilterBox from './FilterBox/FilterBox';
 import { ListItem } from '@components';
@@ -8,7 +9,8 @@ import { IssueContext } from '@pages';
 import { useHistory } from 'react-router-dom';
 
 const Container = styled.div`
-  border: 1px solid gray;
+  border: 1px solid ${colors.lighterGray};
+  background-color: ${colors.filterTabColor};
   ${flex('space-between', 'center')}
 `;
 
@@ -24,13 +26,21 @@ const LabelIcon = styled.div`
   background-color: ${props => props.color};
 `;
 
+const CheckBox = styled.input`
+  margin: 1rem;
+`;
+
+const CheckCount = styled.span`
+  font-size: 0.9rem;
+`;
+
 const filterState = {
   users: [],
   labels: [],
   milestones: [],
 };
 
-export default function IssueFilterTab({ setIssues, issues, allChecked, markMode }) {
+export default function IssueFilterTab({ setIssues, issues, allChecked, selectedCount }) {
   const history = useHistory();
   const [filterList, setFilterList] = useState(filterState);
   const { users, labels, milestones } = filterList;
@@ -107,9 +117,12 @@ export default function IssueFilterTab({ setIssues, issues, allChecked, markMode
 
   return (
     <Container>
-      <input type="checkbox" onChange={handleCheck} checked={allChecked} />
+      <div>
+        <CheckBox type="checkbox" onChange={handleCheck} checked={allChecked} />
+        <CheckCount>{selectedCount ? `${selectedCount} selected` : ''}</CheckCount>
+      </div>
       <FilterList>
-        {markMode ? (
+        {selectedCount ? (
           <FilterBox name="Mark as" title="Actions">
             {['Open', 'Closed'].map(item => (
               <ListItem key={item}>{item}</ListItem>

@@ -14,7 +14,7 @@ export const colors = {
   grayInputBg: '#f9f9f9',
 
   semiWhite: '#fafbfc',
-
+  filterTabColor: '#f6f8fa',
   submitColor: '#2c974b',
 };
 

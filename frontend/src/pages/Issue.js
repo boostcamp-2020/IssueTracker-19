@@ -24,7 +24,7 @@ export default function Issue() {
   const [filterOptions, setFilterOptions] = useState(initialFilterOptions);
   const [issues, setIssues] = useState([]);
   const allChecked = issues.every(i => i.checked) && issues.length;
-  const markMode = issues.some(i => i.checked);
+  const selectedCount = issues.reduce((acc, cur) => acc + cur.checked, 0);
 
   const setFilterdIssues = async options => {
     try {
@@ -56,7 +56,7 @@ export default function Issue() {
           issues={issues}
           setIssues={setIssues}
           allChecked={allChecked}
-          markMode={markMode}
+          selectedCount={selectedCount}
         />
       </IssueContainer>
     </IssueContext.Provider>

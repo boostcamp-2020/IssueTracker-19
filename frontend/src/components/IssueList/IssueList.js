@@ -17,14 +17,14 @@ const NoReultIcon = styled.div`
   margin-bottom: 1rem;
 `;
 
-export default function IssueList({ issues, setIssues, allChecked, markMode }) {
+export default function IssueList({ issues, setIssues, allChecked, selectedCount }) {
   return (
     <>
       <IssueFilterTab
         issues={issues}
         setIssues={setIssues}
         allChecked={allChecked}
-        markMode={markMode}
+        selectedCount={selectedCount}
       />
       {issues.length ? (
         issues.map(({ no, title, checked }) => (
