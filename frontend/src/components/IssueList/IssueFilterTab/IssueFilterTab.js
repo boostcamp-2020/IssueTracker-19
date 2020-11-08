@@ -67,6 +67,7 @@ export default function IssueFilterTab({ setIssues, issues, allChecked, markMode
   }, []);
 
   const handleCheck = ({ target: { checked } }) => {
+    if (!issues.length) return;
     setIssues(issues.map(issue => ({ ...issue, checked })));
   };
 

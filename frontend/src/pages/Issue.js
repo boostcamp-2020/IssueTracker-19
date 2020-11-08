@@ -23,7 +23,7 @@ export const IssueContext = createContext();
 export default function Issue() {
   const [filterOptions, setFilterOptions] = useState(initialFilterOptions);
   const [issues, setIssues] = useState([]);
-  const allChecked = issues.every(i => i.checked);
+  const allChecked = issues.every(i => i.checked) && issues.length;
   const markMode = issues.some(i => i.checked);
 
   const setFilterdIssues = async options => {
