@@ -3,7 +3,8 @@ import styled from 'styled-components';
 import { flex } from '@styles/utils';
 import { userService, labelService, milestoneService } from '@services';
 import FilterBox from './FilterBox/FilterBox';
-import { ListItem, IssueContext } from '@components';
+import { ListItem } from '@components';
+import { IssueContext } from '@pages';
 import { useHistory } from 'react-router-dom';
 
 const Container = styled.div`
@@ -100,6 +101,8 @@ export default function IssueFilterTab({ setIssues, issues, allChecked, markMode
     }
     setFilterOptions({ ...filterOptions, label: [...new Set([...filterOptions.label, label])] });
   };
+
+  // TODO : open/close mark하는 기능 구현
 
   return (
     <Container>
