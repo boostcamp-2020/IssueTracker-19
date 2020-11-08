@@ -74,15 +74,15 @@ export default function IssueFilterTab({ setIssues, issues, allChecked, markMode
       <FilterList>
         {markMode ? (
           <FilterBox name="Mark as" title="Actions">
-            {['Open', 'Closed'].map((item, idx) => (
-              <ListItem key={idx + item}>{item}</ListItem>
+            {['Open', 'Closed'].map(item => (
+              <ListItem key={item}>{item}</ListItem>
             ))}
           </FilterBox>
         ) : (
           <>
             <FilterBox name="Author" title="Filter by author">
-              {users.map(({ nickname }, idx) => (
-                <ListItem key={idx + nickname}>{nickname}</ListItem>
+              {users.map(({ nickname }) => (
+                <ListItem key={nickname}>{nickname}</ListItem>
               ))}
             </FilterBox>
             <FilterBox name="Label" title="Filter by label">
@@ -102,9 +102,7 @@ export default function IssueFilterTab({ setIssues, issues, allChecked, markMode
             </FilterBox>
             <FilterBox name="Assignees" title={`Filter by who's assigned`}>
               {[<ListItem key={'nobody'}>{'Assigned to nobody'}</ListItem>].concat(
-                users.map(({ nickname }, idx) => (
-                  <ListItem key={idx + nickname}>{nickname}</ListItem>
-                )),
+                users.map(({ nickname }) => <ListItem key={nickname}>{nickname}</ListItem>),
               )}
             </FilterBox>
           </>

@@ -114,7 +114,7 @@ export default function IssueSearchBox() {
         </FilterBox>
         <ControlBox>
           <LabelMilestoneControls />
-          <Link to="issues/new">
+          <Link to="/issues/new">
             <IssueSubmitButton>New issue</IssueSubmitButton>
           </Link>
         </ControlBox>

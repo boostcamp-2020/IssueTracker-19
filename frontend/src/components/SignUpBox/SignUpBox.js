@@ -70,10 +70,8 @@ export default function SignUpBox() {
         history.push('/login');
         return;
       }
-      // TODO 200 이외의 코드 에러 처리
     } catch (err) {
       console.error(err);
-      // TODO : 아이디 닉네임 중복 처리 구현하고 아래 alert 삭제
       alert('중복된 아이디 또는 닉네임입니다.');
     }
   };

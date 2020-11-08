@@ -16,6 +16,7 @@ import passportConfig from './lib/passport';
 const app = express();
 const port = process.env.PORT || 3000;
 
+app.set('port', port);
 app.use(cors());
 app.use(logger('dev'));
 app.use(express.json());
