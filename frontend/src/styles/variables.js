@@ -17,6 +17,7 @@ export const colors = {
   filterTabColor: '#f6f8fa',
   submitColor: '#2c974b',
   checkedColor: '#0366D6',
+  borderColor: '#e1e4e8',
 };
 
 export const numerics = {

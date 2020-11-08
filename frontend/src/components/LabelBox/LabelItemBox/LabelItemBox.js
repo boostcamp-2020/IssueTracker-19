@@ -22,10 +22,6 @@ const LabelHeader = styled.div`
   }
 `;
 
-const tempLabels = JSON.parse(
-  '{"labels":[{"no":1,"name":"backend","description":"backend 작업","color":"#FFFFFF"},{"no":2,"name":"frontend","description":"frontend 작업","color":"#333333"}]}',
-);
-
 export default function LabelItemBox() {
   const [labels, setLabels] = useState([]);
 

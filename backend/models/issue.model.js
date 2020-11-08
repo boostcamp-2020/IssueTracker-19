@@ -50,7 +50,7 @@ export const issueModel = {
     return pool.execute(sql, [no]);
   },
   closeIssue({ no }) {
-    const sql = 'UPDATE issue SET is_opened=0 WHERE no=?;';
+    const sql = 'UPDATE issue SET is_opened=0, closed_at=current_timestamp() WHERE no=?;';
     return pool.execute(sql, [no]);
   },
 };
