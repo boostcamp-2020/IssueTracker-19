@@ -7,5 +7,6 @@ export { default as LabelMilestoneControls } from './LabelMilestoneControls/Labe
 export { default as LabelBox } from './LabelBox/LabelBox';
 export { default as MilestoneEditBox } from './MilestoneEditBox/MilestoneEditBox';
 export { default as MilestoneNewHeader } from './MilestoneNewHeader/MilestoneNewHeader';
+export { default as LabelMilestoneTab } from './LabelMilestoneTab/LabelMilestoneTab';
 export { default as OptionSelectModal, ListItem } from './OptionSelectModal/OptionSelectModal';
 export { default as LabelTag } from './LabelTag/LabelTag';

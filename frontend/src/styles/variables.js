@@ -16,6 +16,8 @@ export const colors = {
   semiWhite: '#fafbfc',
 
   submitColor: '#2c974b',
+
+  borderColor: '#e1e4e8',
 };
 
 export const numerics = {
