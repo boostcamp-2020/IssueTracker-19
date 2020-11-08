@@ -16,6 +16,7 @@ export const colors = {
   semiWhite: '#fafbfc',
   filterTabColor: '#f6f8fa',
   submitColor: '#2c974b',
+  checkedColor: '#0366D6',
 };
 
 export const numerics = {

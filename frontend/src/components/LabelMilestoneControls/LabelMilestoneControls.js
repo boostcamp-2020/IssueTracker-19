@@ -4,7 +4,9 @@ import { darken } from 'polished';
 import { flex, flexCenter } from '@styles/utils';
 import { colors } from '@styles/variables';
 import labelIcon from '@imgs/label.svg';
-import MilestoneIcon from '@imgs/milestone.svg';
+import milestoneIcon from '@imgs/milestone.svg';
+import labelWhiteIcon from '@imgs/label-white.svg';
+import milestoneWhiteIcon from '@imgs/milestone-white.svg';
 import { Link } from 'react-router-dom';
 
 const Container = styled.div`
@@ -28,12 +30,27 @@ const ItemBox = styled.div`
 
 const LabelBox = styled(ItemBox)`
   border-right: 0.5px solid ${colors.lighterGray};
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+  ${props => (props.labelChecked ? `background-color:${colors.checkedColor}; color:white;` : '')}
+  &:hover {
+    ${props => (props.labelChecked ? `background-color:${colors.checkedColor};` : '')}
+  }
 `;
-const MilestoneBox = styled(ItemBox)``;
+const MilestoneBox = styled(ItemBox)`
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  ${props =>
+    props.milestoneChecked ? `background-color:${colors.checkedColor}; color:white;` : ''}
+  &:hover {
+    ${props => (props.milestoneChecked ? `background-color:${colors.checkedColor};` : '')}
+  }
+`;
 
 const ImgIcon = styled.img`
   width: 22px;
   height: 22px;
+  margin-right: 0.15rem;
 `;
 
 const CountBox = styled.div`
@@ -50,25 +67,34 @@ const Count = styled.div`
   font-size: 0.75rem;
 `;
 
-export default function LabelMilestoneControls() {
+export default function LabelMilestoneControls({
+  labelCount,
+  milestoneCount,
+  labelChecked,
+  milestoneChecked,
+}) {
   return (
     <Container>
       <Link to="labels">
-        <LabelBox>
-          <ImgIcon src={labelIcon} />
+        <LabelBox labelChecked={labelChecked}>
+          <ImgIcon src={labelChecked ? labelWhiteIcon : labelIcon} />
           <div>Labels</div>
-          <CountBox>
-            <Count>15</Count>
-          </CountBox>
+          {labelCount ? (
+            <CountBox>
+              <Count>15</Count>
+            </CountBox>
+          ) : null}
         </LabelBox>
       </Link>
       <Link to="milestones">
-        <MilestoneBox>
-          <ImgIcon src={MilestoneIcon} />
+        <MilestoneBox milestoneChecked={milestoneChecked}>
+          <ImgIcon src={milestoneChecked ? milestoneWhiteIcon : milestoneIcon} />
           <div>Milestones</div>
-          <CountBox>
-            <Count>20</Count>
-          </CountBox>
+          {milestoneCount ? (
+            <CountBox>
+              <Count>20</Count>
+            </CountBox>
+          ) : null}
         </MilestoneBox>
       </Link>
     </Container>
