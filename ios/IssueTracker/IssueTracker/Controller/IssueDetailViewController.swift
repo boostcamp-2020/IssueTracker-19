@@ -49,6 +49,7 @@ class IssueDetailViewController: UIViewController, ListCollectionViewProtocol {
 		bottomViewController = bottomVC
 		let window = UIApplication.shared.windows.filter { $0.isKeyWindow }.last
 		window?.addSubview(bottomVC.view)
+		window?.rootViewController?.addChild(bottomVC)
 	}
 	
 	override func viewDidAppear(_ animated: Bool) {

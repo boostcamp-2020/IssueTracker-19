@@ -29,7 +29,7 @@ class Label: HashableObject, Codable {
 		self.description = description
 		self.color = color
 	}
-	static let all = ["bug","documentation", "duplicacte", "enhancement", "good first issue", "help wanted", "invalid", "question", "wontfix"]
+	static let all = ["bug","documentation", "duplicacte", "enhancement", "good first issue", "help wanted", "invalid", "question", "wontfix", "dddddddddddddddd"]
 		.map {
 			Label(name: $0,
 				  description: nil,

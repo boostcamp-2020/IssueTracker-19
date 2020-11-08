@@ -50,7 +50,6 @@ class IssueDetailBottomViewController: UIViewController {
 	// MARK: - life cycle
 	override func viewDidLoad() {
         super.viewDidLoad()
-	
 		view.frame.size.height = screenHeight - maxTop
 		view.frame.origin.y = screenHeight
 		
@@ -73,11 +72,27 @@ class IssueDetailBottomViewController: UIViewController {
 		})
 	}
 	
+	// MARK: - User Event Handler
 	@IBAction func addCommentAction(_ sender: UIButton) {
+		
 	}
+	
 	@IBAction func upButtonAction(_ sender: UIButton) {
 	}
+	
 	@IBAction func downButtonAction(_ sender: UIButton) {
+	}
+	
+	func sectionHeaderEditButtonAction(idx: Int?) {
+		guard let editSectionItemVC = storyboard?.instantiateViewController(identifier: "editSectionItemVC") as? SectionItemEditViewController else { return }
+		
+		addChild(editSectionItemVC)
+		view.addSubview(editSectionItemVC.view)
+		editSectionItemVC.didMove(toParent: self)
+	}
+	
+	func closeButtonAction() {
+		print("close issue")
 	}
 }
 
@@ -168,14 +183,18 @@ extension IssueDetailBottomViewController {
 					withReuseIdentifier: BottomViewHeaderView.identifier,
 					for: indexPath) as? BottomViewHeaderView
 				else { return nil }
-				
+				headerView.sectionIdx = indexPath.section
+				headerView.closure = self.sectionHeaderEditButtonAction
 				headerView.titleLabel.text = SectionType(rawValue: indexPath.section)?.text
 				return headerView
 			} else {
-				return collectionView.dequeueReusableSupplementaryView(
+				guard let footerView = collectionView.dequeueReusableSupplementaryView(
 					ofKind: kind,
 					withReuseIdentifier: BottomViewFooterView.identifier,
 					for: indexPath) as? BottomViewFooterView
+				else { return nil }
+				footerView.closure = self.closeButtonAction
+				return footerView
 			}
 		}
 		

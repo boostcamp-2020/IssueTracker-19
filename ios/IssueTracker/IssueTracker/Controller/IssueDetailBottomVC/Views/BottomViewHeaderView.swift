@@ -13,10 +13,13 @@ class BottomViewHeaderView: UICollectionReusableView {
 		Self.self.description()
 	}
 	
+	var sectionIdx: Int?
+	var closure: ((Int?) -> Void)?
+	
 	@IBOutlet weak var titleLabel: UILabel!
 	
 	@IBAction func editButtonAction(_ sender: UIButton) {
-		print("clicked")
+		closure?(sectionIdx)
 	}
 	
 }
