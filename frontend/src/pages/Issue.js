@@ -2,7 +2,8 @@ import React, { useState, useEffect, createContext } from 'react';
 import styled from 'styled-components';
 import { Header, IssueList, IssueSearchBox } from '@components';
 import { numerics } from '@styles/variables';
-import { issueService } from '@services';
+import { issueService, userService, labelService, milestoneService } from '@services';
+import { useHistory } from 'react-router-dom';
 
 const IssueContainer = styled.div`
   ${`width: calc(100% - ${numerics.marginHorizontal} * 2)`};
@@ -21,8 +22,15 @@ export const initialFilterOptions = {
 export const IssueContext = createContext();
 
 export default function Issue() {
+  const history = useHistory();
   const [filterOptions, setFilterOptions] = useState(initialFilterOptions);
   const [issues, setIssues] = useState([]);
+  const [filterOptionDatas, setFilterOptionDatas] = useState({
+    users: [],
+    labels: [],
+    milestones: [],
+  });
+
   const allChecked = issues.every(i => i.checked) && issues.length;
   const selectedCount = issues.reduce((acc, cur) => acc + cur.checked, 0);
 
@@ -47,8 +55,38 @@ export default function Issue() {
     setFilterdIssues(filterOptions);
   }, [filterOptions]);
 
+  const fetchFilterOptionDatas = async () => {
+    try {
+      const [
+        {
+          data: { users },
+        },
+        {
+          data: { labels },
+        },
+        {
+          data: { milestones },
+        },
+      ] = await Promise.all([
+        userService.getUsers(),
+        labelService.getLabels(),
+        milestoneService.getMilestones(),
+      ]);
+      setFilterOptionDatas({ users, labels, milestones });
+    } catch (err) {
+      if (err?.response?.status === 401) {
+        history.push('/login');
+      }
+      console.error(err);
+    }
+  };
+
+  useEffect(() => {
+    fetchFilterOptionDatas();
+  }, []);
+
   return (
-    <IssueContext.Provider value={{ filterOptions, setFilterOptions }}>
+    <IssueContext.Provider value={{ filterOptions, setFilterOptions, filterOptionDatas }}>
       <Header />
       <IssueContainer>
         <IssueSearchBox />

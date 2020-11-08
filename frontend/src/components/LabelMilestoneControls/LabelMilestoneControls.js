@@ -81,7 +81,7 @@ export default function LabelMilestoneControls({
           <div>Labels</div>
           {labelCount ? (
             <CountBox>
-              <Count>15</Count>
+              <Count>{labelCount}</Count>
             </CountBox>
           ) : null}
         </LabelBox>
@@ -92,7 +92,7 @@ export default function LabelMilestoneControls({
           <div>Milestones</div>
           {milestoneCount ? (
             <CountBox>
-              <Count>20</Count>
+              <Count>{milestoneCount}</Count>
             </CountBox>
           ) : null}
         </MilestoneBox>

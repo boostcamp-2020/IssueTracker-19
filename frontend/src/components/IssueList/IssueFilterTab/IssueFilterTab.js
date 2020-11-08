@@ -1,12 +1,10 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { flex } from '@styles/utils';
 import { colors } from '@styles/variables';
-import { userService, labelService, milestoneService } from '@services';
 import FilterBox from './FilterBox/FilterBox';
 import { ListItem } from '@components';
 import { IssueContext } from '@pages';
-import { useHistory } from 'react-router-dom';
 
 const Container = styled.div`
   border: 1px solid ${colors.lighterGray};
@@ -34,47 +32,9 @@ const CheckCount = styled.span`
   font-size: 0.9rem;
 `;
 
-const filterState = {
-  users: [],
-  labels: [],
-  milestones: [],
-};
-
 export default function IssueFilterTab({ setIssues, issues, allChecked, selectedCount }) {
-  const history = useHistory();
-  const [filterList, setFilterList] = useState(filterState);
-  const { users, labels, milestones } = filterList;
-  const { filterOptions, setFilterOptions } = useContext(IssueContext);
-
-  const fetchAllDatas = async () => {
-    try {
-      const [
-        {
-          data: { users },
-        },
-        {
-          data: { labels },
-        },
-        {
-          data: { milestones },
-        },
-      ] = await Promise.all([
-        userService.getUsers(),
-        labelService.getLabels(),
-        milestoneService.getMilestones(),
-      ]);
-      setFilterList({ users, labels, milestones });
-    } catch (err) {
-      if (err?.response?.status === 401) {
-        history.push('/login');
-      }
-      console.error(err);
-    }
-  };
-
-  useEffect(() => {
-    fetchAllDatas();
-  }, []);
+  const { filterOptions, setFilterOptions, filterOptionDatas } = useContext(IssueContext);
+  const { users, labels, milestones } = filterOptionDatas;
 
   const handleCheck = ({ target: { checked } }) => {
     if (!issues.length) return;

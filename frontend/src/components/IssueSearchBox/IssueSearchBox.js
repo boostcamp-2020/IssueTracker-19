@@ -102,7 +102,8 @@ const OptionBox = styled.div`
 
 export default function IssueSearchBox() {
   const [focused, setFocused] = useState(false);
-  const { filterOptions, setFilterOptions } = useContext(IssueContext);
+  const { filterOptions, setFilterOptions, filterOptionDatas } = useContext(IssueContext);
+  const { users, labels, milestones } = filterOptionDatas;
   const optionBoxRef = useRef();
 
   const handleFocus = () => {
@@ -174,7 +175,7 @@ export default function IssueSearchBox() {
           </InputBox>
         </FilterBox>
         <ControlBox>
-          <LabelMilestoneControls />
+          <LabelMilestoneControls labelCount={labels.length} milestoneCount={milestones.length} />
           <Link to="/issues/new">
             <IssueSubmitButton>New issue</IssueSubmitButton>
           </Link>
