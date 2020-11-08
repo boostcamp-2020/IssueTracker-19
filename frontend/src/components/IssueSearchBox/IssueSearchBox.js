@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useRef, useEffect } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { IssueContext, initialFilterOptions } from '@pages';
@@ -52,6 +52,7 @@ const InputBox = styled.div`
 const FilterInput = styled.input`
   width: calc(100% - 16px);
   height: calc(100% - 16px);
+  margin-left: 0.5rem;
   border-radius: 6px;
   border: none;
   outline: unset;
@@ -90,9 +91,19 @@ const ClearButton = styled.button`
   cursor: pointer;
 `;
 
+const OptionBox = styled.div`
+  font-size: 0.8rem;
+
+  color: ${colors.black3};
+  box-sizing: border-box;
+  white-space: nowrap;
+  ${flex('flex-start', 'center')}
+`;
+
 export default function IssueSearchBox() {
   const [focused, setFocused] = useState(false);
   const { filterOptions, setFilterOptions } = useContext(IssueContext);
+  const optionBoxRef = useRef();
 
   const handleFocus = () => {
     setFocused(true);
@@ -110,11 +121,36 @@ export default function IssueSearchBox() {
 
   const handleEnter = e => {
     if (e.key === 'Enter') {
-      // TODO : 검색 구현
+      const keyword = e.target.value ?? null;
+      setFilterOptions({ ...filterOptions, keyword: keyword === '' ? null : keyword });
     }
   };
 
-  console.log(isSame());
+  const handleSearchView = () => {
+    const options = Object.entries(filterOptions).reduce((acc, [key, val]) => {
+      if (key === 'isOpened' && val) {
+        return acc + ' is:open';
+      }
+      if (key === 'author' && val) {
+        return acc + ` author:${val}`;
+      }
+      if (key === 'label' && val.length) {
+        return acc + val.reduce((acc, cur) => acc + ` label:${cur}`, '');
+      }
+      if (key === 'milestone' && val) {
+        return acc + ` milestone:${val}`;
+      }
+      if (key === 'assignee' && val) {
+        return acc + ` assignee:${val}`;
+      }
+      return acc;
+    }, '');
+    optionBoxRef.current.textContent = options;
+  };
+
+  useEffect(() => {
+    handleSearchView();
+  }, [filterOptions]);
 
   return (
     <SearchContainer>
@@ -124,14 +160,16 @@ export default function IssueSearchBox() {
             Filters
             <DownArrowImg src={downArrowIcon} />
           </SelectBox>
-          <InputBox focused={focused} onKeyPress={handleEnter}>
+          <InputBox focused={focused}>
             <MGlassImg src={mGlass} />
+            <OptionBox ref={optionBoxRef}></OptionBox>
             <FilterInput
               type="text"
               onFocus={handleFocus}
               onBlur={handleBlur}
               tabIndex={0}
               placeholder={'Search all issues'}
+              onKeyPress={handleEnter}
             />
           </InputBox>
         </FilterBox>
