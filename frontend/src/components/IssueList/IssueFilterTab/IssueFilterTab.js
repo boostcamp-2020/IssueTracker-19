@@ -30,10 +30,6 @@ const filterState = {
 };
 
 export default function IssueFilterTab({ setIssues, issues, allChecked, markMode }) {
-  const handleCheck = ({ target: { checked } }) => {
-    setIssues(issues.map(issue => ({ ...issue, checked })));
-  };
-
   const history = useHistory();
   const [filterList, setFilterList] = useState(filterState);
   const { users, labels, milestones } = filterList;
@@ -68,6 +64,10 @@ export default function IssueFilterTab({ setIssues, issues, allChecked, markMode
   useEffect(() => {
     fetchAllDatas();
   }, []);
+
+  const handleCheck = ({ target: { checked } }) => {
+    setIssues(issues.map(issue => ({ ...issue, checked })));
+  };
 
   const handleAuthorFilter = e => {
     const author = e?.target?.textContent;
