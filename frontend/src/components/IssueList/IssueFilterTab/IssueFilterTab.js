@@ -83,6 +83,15 @@ export default function IssueFilterTab({ setIssues, issues, allChecked, markMode
     setFilterOptions({ ...filterOptions, milestone });
   };
 
+  const handleAssigneeFilter = e => {
+    const assignee = e?.target?.textContent;
+    if (assignee === 'Assigned to nobody') {
+      setFilterOptions({ ...filterOptions, assignee: null });
+      return;
+    }
+    setFilterOptions({ ...filterOptions, assignee });
+  };
+
   return (
     <Container>
       <input type="checkbox" onChange={handleCheck} checked={allChecked} />
@@ -122,9 +131,11 @@ export default function IssueFilterTab({ setIssues, issues, allChecked, markMode
                 ))}
             </FilterBox>
             <FilterBox name="Assignees" title={`Filter by who's assigned`}>
-              {[<ListItem key={'nobody'}>{'Assigned to nobody'}</ListItem>].concat(
-                users.map(({ nickname }) => <ListItem key={nickname}>{nickname}</ListItem>),
-              )}
+              {[{ nickname: 'Assigned to nobody' }].concat(users).map(({ nickname }) => (
+                <ListItem key={nickname} onClick={handleAssigneeFilter}>
+                  {nickname}
+                </ListItem>
+              ))}
             </FilterBox>
           </>
         )}
