@@ -7,7 +7,7 @@ import formidable from 'formidable';
 export const uploadImage = (req, res, next) => {
   try {
     const form = formidable({
-      multiples: false, // file 여러개 옵션
+      multiples: true, // file 여러개 옵션
       uploadDir: './public/imgs/',
       keepExtensions: true, // 확장자 표시
     });
@@ -22,10 +22,14 @@ export const uploadImage = (req, res, next) => {
     form.parse(req, async (err, fields, files) => {
       if (err) {
         next(err);
+        return;
       }
-      const fileList = Object.values(files).reduce((acc, { path }) => {
-        return acc.concat(prefix + path.match(/.imgs.*/i)[0]);
-      }, []);
+
+      const fileList =
+        files?.imgs?.reduce((acc, { path }) => {
+          return acc.concat(prefix + path.match(/.imgs.*/i)[0]);
+        }, []) ?? [];
+
       res.json({ fileList });
     });
   } catch (err) {
