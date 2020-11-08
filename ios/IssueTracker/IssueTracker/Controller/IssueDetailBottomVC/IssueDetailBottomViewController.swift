@@ -29,35 +29,57 @@ class IssueDetailBottomViewController: UIViewController {
 	@IBOutlet weak var collectionView: UICollectionView!
 	var dataSource: DataSource!
 	
+	
 	// MARK: Variables for determining view frame
 	var statusBarHeight: CGFloat {
+		let height: CGFloat
 		if #available(iOS 13.0, *) {
 			let window = UIApplication.shared.windows.filter {$0.isKeyWindow}.first
-			return  window?.windowScene?.statusBarManager?.statusBarFrame.height ?? 20
+			height = window?.windowScene?.statusBarManager?.statusBarFrame.height ?? 20
 		} else {
-			return UIApplication.shared.statusBarFrame.height
+			height = UIApplication.shared.statusBarFrame.height
 		}
+		return height == 0 ? 20 : height
 	}
-	let screenHeight = UIScreen.main.bounds.height
-	lazy var minTop = screenHeight - (commentButtonView.frame.maxY + 20)
-	lazy var maxTop = statusBarHeight * 2
+	var screenHeight: CGFloat { UIScreen.main.bounds.height }
+	var minTop: CGFloat { screenHeight - (commentButtonView.frame.maxY + 20) }
+	var maxTop: CGFloat { statusBarHeight + 20 }
+	var topConstraint: NSLayoutConstraint?
+	var heightConstraint: NSLayoutConstraint?
+	var isBelow = true
+	
 	
 	// MARK: Collection view's section items
 	var assignees = [User]()
 	var labels = [Label]()
 	var milestones = [Milestone]()
 	
+	
 	// MARK: - life cycle
 	override func viewDidLoad() {
         super.viewDidLoad()
-		view.frame.size.height = screenHeight - maxTop
-		view.frame.origin.y = screenHeight
-		
 		loadData()
-		configurePanGesture()
+		configureScrollAction()
 		configureHierarchy()
 		configureDataSource()
     }
+	
+	override func viewDidAppear(_ animated: Bool) {
+		super.viewDidAppear(animated)
+		showViewWithAnimation()
+	}
+	
+	func setupView(superView: UIView) {
+		view.translatesAutoresizingMaskIntoConstraints = false
+		topConstraint = view.topAnchor.constraint(equalTo: superView.topAnchor, constant: screenHeight)
+		heightConstraint = view.heightAnchor.constraint(equalTo: superView.heightAnchor, constant: -maxTop)
+		NSLayoutConstraint.activate([
+			view.leadingAnchor.constraint(equalTo: superView.safeAreaLayoutGuide.leadingAnchor),
+			view.trailingAnchor.constraint(equalTo: superView.safeAreaLayoutGuide.trailingAnchor),
+			topConstraint!,
+			heightConstraint!
+		])
+	}
 	
 	func loadData() {
 		assignees = User.all
@@ -66,10 +88,13 @@ class IssueDetailBottomViewController: UIViewController {
 	}
 	
 	func showViewWithAnimation() {
-		UIView.animate(withDuration: 0.4, animations: { [weak self] in
-			guard let viewController = self else { return }
-			viewController.view.frame.origin.y = viewController.minTop
-		})
+		UIView.animate(withDuration: 1) { [weak self] in
+			guard let controller = self else { return }
+			controller.view.frame.origin.y = controller.minTop
+		} completion: { [weak self] (_) in
+			guard let controller = self else { return }
+			controller.topConstraint?.constant = controller.minTop
+		}
 	}
 	
 	// MARK: - User Event Handler
@@ -100,6 +125,7 @@ class IssueDetailBottomViewController: UIViewController {
 extension IssueDetailBottomViewController {
 	func configureHierarchy() {
 		collectionView.collectionViewLayout = createLayout()
+		
 		collectionView.register(UINib(nibName: "BottomViewHeaderView", bundle: nil),
 								forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
 								withReuseIdentifier: BottomViewHeaderView.identifier)
@@ -142,6 +168,7 @@ extension IssueDetailBottomViewController {
 		section.interGroupSpacing = 5
 		section.contentInsets.leading = 20
 		section.boundarySupplementaryItems.append(sectionHeader)
+		section.contentInsetsReference = .none
 		
 		if type == .milestone {
 			let footer = NSCollectionLayoutBoundarySupplementaryItem(
@@ -212,9 +239,13 @@ extension IssueDetailBottomViewController {
 
 // MARK: - Configure Bottom View's PanGesture
 extension IssueDetailBottomViewController {
-	func configurePanGesture() {
+	func configureScrollAction() {
 		let gesture = UIPanGestureRecognizer(target: self, action: #selector(panGesture))
 		view.addGestureRecognizer(gesture)
+		NotificationCenter.default.addObserver(self,
+											   selector: #selector(rotated),
+											   name: UIDevice.orientationDidChangeNotification,
+											   object: nil)
 	}
 	
 	@objc func panGesture(_ recognizer: UIPanGestureRecognizer) {
@@ -228,17 +259,26 @@ extension IssueDetailBottomViewController {
 		
 		let velocity = recognizer.velocity(in: view)
 		if recognizer.state == .ended {
-			UIView.animate(withDuration: 0.4) {
+			UIView.animate(withDuration: 0.4) { [weak self] in
+				guard let controller = self else { return }
 				if velocity.y < -400 {
-					self.view.frame.origin.y = self.maxTop
+					controller.view.frame.origin.y = controller.maxTop
 				} else if velocity.y > 400 {
-					self.view.frame.origin.y = self.minTop
+					controller.view.frame.origin.y = controller.minTop
 				} else {
-					self.view.frame.origin.y = nPosY < self.screenHeight / 2 ? self.maxTop : self.minTop
+					controller.view.frame.origin.y = nPosY < controller.screenHeight / 2 ?
+						controller.maxTop : controller.minTop
 				}
-			} completion: { _ in
-				
+			} completion: { [weak self] _ in
+				guard let controller = self else { return }
+				controller.isBelow = controller.view.frame.origin.y == controller.minTop
+				controller.topConstraint?.constant = controller.view.frame.origin.y
 			}
 		}
+	}
+	
+	@objc func rotated() {
+		topConstraint?.constant = isBelow ? minTop : maxTop
+		heightConstraint?.constant = -maxTop
 	}
 }

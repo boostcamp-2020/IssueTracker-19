@@ -47,16 +47,17 @@ class IssueDetailViewController: UIViewController, ListCollectionViewProtocol {
 		else { return }
 		
 		bottomViewController = bottomVC
-		let window = UIApplication.shared.windows.filter { $0.isKeyWindow }.last
-		window?.addSubview(bottomVC.view)
-		window?.rootViewController?.addChild(bottomVC)
+		guard let window = UIApplication.shared.windows.filter { $0.isKeyWindow }.last else { return }
+		window.addSubview(bottomVC.view)
+		bottomVC.setupView(superView: window)
+		window.rootViewController?.addChild(bottomVC)
 	}
 	
 	override func viewDidAppear(_ animated: Bool) {
 		super.viewDidAppear(animated)
 		// TODO: 서버 API 통신 구현 후 viewDidLoad로 이동
 		updateIssueDetail()
-		bottomViewController?.showViewWithAnimation()
+//		bottomViewController?.showViewWithAnimation()
 	}
 	
 	override func viewWillDisappear(_ animated: Bool) {
@@ -86,6 +87,7 @@ class IssueDetailViewController: UIViewController, ListCollectionViewProtocol {
 	}
 	
 	@IBAction func editButton(_ sender: UIBarButtonItem) {
+		
 	}
 }
 
