@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { API } from '@api';
 import { flexColumn, flexCenter, flex } from '@styles/utils';
 import { SubmitButton, CancelButton } from '@shared';
+import { colors } from '@styles/variables';
 
 const Form = styled.form`
   width: 100%;
@@ -12,8 +13,8 @@ const Container = styled.div`
   margin-bottom: 10px;
   margin-top: 16px;
   padding-bottom: 5px;
-  border-top: 1px solid #e1e4e8;
-  border-bottom: 1px solid #e1e4e8;
+  border-top: 1px solid ${colors.borderColor};
+  border-bottom: 1px solid ${colors.borderColor};
 `;
 const InputBox = styled.label`
   ${flexColumn}
@@ -29,7 +30,7 @@ const Input = styled.input`
   padding: 5px 12px;
   background-color: #fafbfc;
   border-radius: 6px;
-  border: 1px solid #e1e4e8;
+  border: 1px solid ${colors.borderColor};
   font-size: 16px;
 `;
 const Textarea = styled.textarea`
@@ -39,7 +40,7 @@ const Textarea = styled.textarea`
   overflow: auto;
   background-color: #fafbfc;
   border-radius: 6px;
-  border: 1px solid #e1e4e8;
+  border: 1px solid ${colors.borderColor};
   font-size: 14px;
 `;
 const SubmitBox = styled.div`
