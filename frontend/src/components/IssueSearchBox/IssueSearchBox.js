@@ -106,10 +106,15 @@ export default function IssueSearchBox() {
     setFilterOptions(initialFilterOptions);
   };
 
-  const isSame = () =>
-    Object.keys(initialFilterOptions ?? {}).every(
-      key => filterOptions[key] === initialFilterOptions[key],
-    );
+  const isSame = () => JSON.stringify(filterOptions) === JSON.stringify(initialFilterOptions);
+
+  const handleEnter = e => {
+    if (e.key === 'Enter') {
+      // TODO : 검색 구현
+    }
+  };
+
+  console.log(isSame());
 
   return (
     <SearchContainer>
@@ -119,7 +124,7 @@ export default function IssueSearchBox() {
             Filters
             <DownArrowImg src={downArrowIcon} />
           </SelectBox>
-          <InputBox focused={focused}>
+          <InputBox focused={focused} onKeyPress={handleEnter}>
             <MGlassImg src={mGlass} />
             <FilterInput
               type="text"
