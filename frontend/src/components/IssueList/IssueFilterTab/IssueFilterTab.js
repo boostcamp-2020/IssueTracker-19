@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import styled from 'styled-components';
 import { flex } from '@styles/utils';
 import { userService, labelService, milestoneService } from '@services';
 import FilterBox from './FilterBox/FilterBox';
-import { ListItem } from '@components';
+import { ListItem, IssueContext } from '@components';
 import { useHistory } from 'react-router-dom';
 
 const Container = styled.div`
@@ -37,6 +37,7 @@ export default function IssueFilterTab({ setIssues, issues, allChecked, markMode
   const history = useHistory();
   const [filterList, setFilterList] = useState(filterState);
   const { users, labels, milestones } = filterList;
+  const { filterOptions, setFilterOptions } = useContext(IssueContext);
 
   const fetchAllDatas = async () => {
     try {
@@ -68,6 +69,11 @@ export default function IssueFilterTab({ setIssues, issues, allChecked, markMode
     fetchAllDatas();
   }, []);
 
+  const handleAuthorFilter = e => {
+    const author = e?.target?.textContent;
+    setFilterOptions({ ...filterOptions, author });
+  };
+
   return (
     <Container>
       <input type="checkbox" onChange={handleCheck} checked={allChecked} />
@@ -82,7 +88,9 @@ export default function IssueFilterTab({ setIssues, issues, allChecked, markMode
           <>
             <FilterBox name="Author" title="Filter by author">
               {users.map(({ nickname }) => (
-                <ListItem key={nickname}>{nickname}</ListItem>
+                <ListItem key={nickname} onClick={handleAuthorFilter}>
+                  {nickname}
+                </ListItem>
               ))}
             </FilterBox>
             <FilterBox name="Label" title="Filter by label">

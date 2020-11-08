@@ -53,7 +53,7 @@ export default function OptionSelectModal({ visiable, setVisiable, title, childr
             <span>{title}</span>
             <CloseImg src={closeDarkIcon} onClick={handleClose} />
           </Header>
-          <ListBox>{children}</ListBox>
+          <ListBox onClick={handleClose}>{children}</ListBox>
         </Container>
       ) : null}
     </>
