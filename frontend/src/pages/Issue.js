@@ -11,7 +11,7 @@ const IssueContainer = styled.div`
 `;
 
 export const initialFilterOptions = {
-  isOpened: 1,
+  isOpened: null,
   author: null,
   label: [],
   milestone: null,
@@ -23,7 +23,7 @@ export const IssueContext = createContext();
 
 export default function Issue() {
   const history = useHistory();
-  const [filterOptions, setFilterOptions] = useState(initialFilterOptions);
+  const [filterOptions, setFilterOptions] = useState({ ...initialFilterOptions, isOpened: 1 });
   const [issues, setIssues] = useState([]);
   const [filterOptionDatas, setFilterOptionDatas] = useState({
     users: [],

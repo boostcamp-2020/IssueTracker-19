@@ -42,7 +42,7 @@ const SelectBox = styled.div`
   cursor: pointer;
 `;
 
-const InputBox = styled.div`
+const InputContainer = styled.div`
   width: 100%;
   height: 100%;
   ${flexCenter}
@@ -105,6 +105,7 @@ export default function IssueSearchBox() {
   const { filterOptions, setFilterOptions, filterOptionDatas } = useContext(IssueContext);
   const { users, labels, milestones } = filterOptionDatas;
   const optionBoxRef = useRef();
+  const inputRef = useRef();
 
   const handleFocus = () => {
     setFocused(true);
@@ -116,6 +117,7 @@ export default function IssueSearchBox() {
 
   const handleClear = () => {
     setFilterOptions(initialFilterOptions);
+    inputRef.current.value = '';
   };
 
   const isSame = () => JSON.stringify(filterOptions) === JSON.stringify(initialFilterOptions);
@@ -161,7 +163,7 @@ export default function IssueSearchBox() {
             Filters
             <DownArrowImg src={downArrowIcon} />
           </SelectBox>
-          <InputBox focused={focused}>
+          <InputContainer focused={focused}>
             <MGlassImg src={mGlass} />
             <OptionBox ref={optionBoxRef}></OptionBox>
             <FilterInput
@@ -169,10 +171,11 @@ export default function IssueSearchBox() {
               onFocus={handleFocus}
               onBlur={handleBlur}
               tabIndex={0}
-              placeholder={'Search all issues'}
+              placeholder={isSame() ? 'Search all issues' : ''}
               onKeyPress={handleEnter}
+              ref={inputRef}
             />
-          </InputBox>
+          </InputContainer>
         </FilterBox>
         <ControlBox>
           <LabelMilestoneControls labelCount={labels.length} milestoneCount={milestones.length} />
