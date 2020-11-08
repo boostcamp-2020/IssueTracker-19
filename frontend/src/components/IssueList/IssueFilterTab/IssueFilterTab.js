@@ -92,6 +92,15 @@ export default function IssueFilterTab({ setIssues, issues, allChecked, markMode
     setFilterOptions({ ...filterOptions, assignee });
   };
 
+  const handleLabelFilter = e => {
+    const label = e?.target?.textContent;
+    if (label === 'Unlabeled') {
+      setFilterOptions({ ...filterOptions, label: [] });
+      return;
+    }
+    setFilterOptions({ ...filterOptions, label: [...new Set([...filterOptions.label, label])] });
+  };
+
   return (
     <Container>
       <input type="checkbox" onChange={handleCheck} checked={allChecked} />
@@ -112,14 +121,12 @@ export default function IssueFilterTab({ setIssues, issues, allChecked, markMode
               ))}
             </FilterBox>
             <FilterBox name="Label" title="Filter by label">
-              {[<ListItem key={'Unlabeled'}>{'Unlabeled'}</ListItem>].concat(
-                labels.map(({ no, name, color }) => (
-                  <ListItem key={no}>
-                    <LabelIcon color={color} />
-                    {name}
-                  </ListItem>
-                )),
-              )}
+              {[{ name: 'Unlabeled' }].concat(labels).map(({ no, name, color }) => (
+                <ListItem key={no ?? name} onClick={handleLabelFilter}>
+                  <LabelIcon color={color} />
+                  {name}
+                </ListItem>
+              ))}
             </FilterBox>
             <FilterBox name="Milestones" title="Filter by milestone">
               {[{ no: 'no-milestone', title: 'Issues with no milestone' }]
