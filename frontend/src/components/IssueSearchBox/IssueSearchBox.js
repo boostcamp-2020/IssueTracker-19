@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import { IssueContext, initialFilterOptions } from '@pages';
 import { flex, flexCenter, borderNoneBox, skyblueBoxShadow } from '@styles/utils';
 import { colors } from '@styles/variables';
 import { SubmitButton } from '@shared';
@@ -80,6 +81,7 @@ const IssueSubmitButton = styled(SubmitButton)`
 
 const ClearBox = styled.div`
   margin-left: 0.2rem;
+  cursor: pointer;
 `;
 
 const ClearButton = styled.button`
@@ -90,6 +92,7 @@ const ClearButton = styled.button`
 
 export default function IssueSearchBox() {
   const [focused, setFocused] = useState(false);
+  const { filterOptions, setFilterOptions } = useContext(IssueContext);
 
   const handleFocus = () => {
     setFocused(true);
@@ -98,6 +101,15 @@ export default function IssueSearchBox() {
   const handleBlur = () => {
     setFocused(false);
   };
+
+  const handleClear = () => {
+    setFilterOptions(initialFilterOptions);
+  };
+
+  const isSame = () =>
+    Object.keys(initialFilterOptions ?? {}).every(
+      key => filterOptions[key] === initialFilterOptions[key],
+    );
 
   return (
     <SearchContainer>
@@ -125,9 +137,11 @@ export default function IssueSearchBox() {
           </Link>
         </ControlBox>
       </SearchBox>
-      <ClearBox>
-        ❎<ClearButton>Clear current search query, filters, and sorts</ClearButton>
-      </ClearBox>
+      {isSame() ? null : (
+        <ClearBox onClick={handleClear}>
+          ❎<ClearButton>Clear current search query, filters, and sorts</ClearButton>
+        </ClearBox>
+      )}
     </SearchContainer>
   );
 }

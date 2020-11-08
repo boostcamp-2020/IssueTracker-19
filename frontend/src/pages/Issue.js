@@ -8,7 +8,7 @@ const IssueContainer = styled.div`
   margin: ${numerics.marginHorizontal};
 `;
 
-const initialFilterOptions = {
+export const initialFilterOptions = {
   isOpened: 1,
   author: null,
   label: [],
