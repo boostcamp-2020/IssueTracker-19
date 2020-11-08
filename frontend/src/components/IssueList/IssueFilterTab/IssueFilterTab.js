@@ -74,6 +74,15 @@ export default function IssueFilterTab({ setIssues, issues, allChecked, markMode
     setFilterOptions({ ...filterOptions, author });
   };
 
+  const handleMilestoneFilter = e => {
+    const milestone = e?.target?.textContent ?? null;
+    if (milestone === 'Issues with no milestone') {
+      setFilterOptions({ ...filterOptions, milestone: null });
+      return;
+    }
+    setFilterOptions({ ...filterOptions, milestone });
+  };
+
   return (
     <Container>
       <input type="checkbox" onChange={handleCheck} checked={allChecked} />
@@ -104,9 +113,13 @@ export default function IssueFilterTab({ setIssues, issues, allChecked, markMode
               )}
             </FilterBox>
             <FilterBox name="Milestones" title="Filter by milestone">
-              {[<ListItem key={'no-milestone'}>{'Issues with no milestone'}</ListItem>].concat(
-                milestones.map(({ no, title }) => <ListItem key={no}>{title}</ListItem>),
-              )}
+              {[{ no: 'no-milestone', title: 'Issues with no milestone' }]
+                .concat(milestones)
+                .map(({ no, title }) => (
+                  <ListItem key={no} onClick={handleMilestoneFilter}>
+                    {title}
+                  </ListItem>
+                ))}
             </FilterBox>
             <FilterBox name="Assignees" title={`Filter by who's assigned`}>
               {[<ListItem key={'nobody'}>{'Assigned to nobody'}</ListItem>].concat(
