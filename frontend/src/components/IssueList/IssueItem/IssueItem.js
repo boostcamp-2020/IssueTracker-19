@@ -88,8 +88,6 @@ export default function IssueItem(props) {
     );
   };
 
-  console.log(props, isOpened);
-
   return (
     <Container>
       <CheckBox type="checkbox" checked={checked} onChange={handleCheck} />
@@ -113,7 +111,6 @@ export default function IssueItem(props) {
           <Title>{title}</Title>
           <TagBox>
             {labels.map(({ no, name, color, description }) => {
-              console.log(no, name);
               return (
                 <Label key={no}>
                   <LabelTag name={name} color={color} size={'0.7rem'}></LabelTag>

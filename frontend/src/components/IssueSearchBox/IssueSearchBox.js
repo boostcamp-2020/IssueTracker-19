@@ -5,7 +5,7 @@ import { IssueContext, initialFilterOptions } from '@pages';
 import { flex, flexCenter, borderNoneBox, skyblueBoxShadow } from '@styles/utils';
 import { colors } from '@styles/variables';
 import { SubmitButton } from '@shared';
-import { LabelMilestoneControls } from '@components';
+import { LabelMilestoneControls, OptionSelectModal, ListItem } from '@components';
 import downArrowIcon from '@imgs/down-arrow.svg';
 import mGlass from '@imgs/m-glass.svg';
 
@@ -21,6 +21,7 @@ const SearchBox = styled.div`
 `;
 
 const FilterBox = styled.div`
+  position: relative;
   ${flexCenter}
   flex: 1;
   height: 2.2rem;
@@ -99,12 +100,32 @@ const OptionBox = styled.div`
   ${flex('flex-start', 'center')}
 `;
 
+const Modal = styled.div`
+  position: absolute;
+  top: 2.7rem;
+  left: 0;
+  outline: 0;
+  z-index: 2;
+`;
+
+const FilterOptionItem = styled.div``;
+
 export default function IssueSearchBox() {
   const [focused, setFocused] = useState(false);
+  const [visiable, setVisiable] = useState(false);
+
   const { filterOptions, setFilterOptions, filterOptionDatas } = useContext(IssueContext);
   const { users, labels, milestones } = filterOptionDatas;
   const optionBoxRef = useRef();
   const inputRef = useRef();
+  const modal = useRef();
+
+  const openModal = () => {
+    setVisiable(true);
+    modal.current.focus();
+  };
+
+  const closeFilterModal = () => setVisiable(false);
 
   const handleFocus = () => {
     setFocused(true);
@@ -130,8 +151,13 @@ export default function IssueSearchBox() {
 
   const handleSearchView = () => {
     const options = Object.entries(filterOptions).reduce((acc, [key, val]) => {
-      if (key === 'isOpened' && val) {
-        return acc + ' is:open';
+      if (key === 'isOpened') {
+        if (val === 1) {
+          return acc + ' is:open';
+        }
+        if (val === 0) {
+          return acc + ' is:closed';
+        }
       }
       if (key === 'author' && val) {
         return acc + ` author:${val}`;
@@ -145,6 +171,9 @@ export default function IssueSearchBox() {
       if (key === 'assignee' && val) {
         return acc + ` assignee:${val}`;
       }
+      if (key === 'comment' && val) {
+        return acc + ` comment:@me`;
+      }
       return acc;
     }, '');
     optionBoxRef.current.textContent = options;
@@ -154,14 +183,47 @@ export default function IssueSearchBox() {
     handleSearchView();
   }, [filterOptions]);
 
+  const handleOpenFilter = () => {
+    setFilterOptions({ ...filterOptions, isOpened: 1 });
+  };
+
+  const handleMyIssuesFilter = () => {
+    setFilterOptions({ ...filterOptions, author: '@me' });
+  };
+
+  const handleAssignedToMeFilter = () => {
+    setFilterOptions({ ...filterOptions, assignee: '@me' });
+  };
+
+  const handleMyCommentIssuesFilter = () => {
+    setFilterOptions({ ...filterOptions, comment: 1 });
+  };
+
+  const handleClosedFilter = () => {
+    setFilterOptions({ ...filterOptions, isOpened: 0 });
+  };
+
   return (
     <SearchContainer>
       <SearchBox>
         <FilterBox>
-          <SelectBox>
+          <SelectBox onClick={openModal}>
             Filters
             <DownArrowImg src={downArrowIcon} />
           </SelectBox>
+          <Modal tabIndex={0} ref={modal} onBlur={closeFilterModal}>
+            <OptionSelectModal
+              visiable={visiable}
+              setVisiable={setVisiable}
+              title={'Filter issues'}
+            >
+              <ListItem onClick={handleOpenFilter}>열린 이슈들</ListItem>
+              <ListItem onClick={handleMyIssuesFilter}>내가 작성한 이슈들</ListItem>
+              <ListItem onClick={handleAssignedToMeFilter}>나한테 할당된 이슈들</ListItem>
+              <ListItem onClick={handleMyCommentIssuesFilter}>내가 댓글을 남긴 이슈들</ListItem>
+              <ListItem onClick={handleClosedFilter}>닫힌 이슈들</ListItem>
+            </OptionSelectModal>
+          </Modal>
           <InputContainer focused={focused}>
             <MGlassImg src={mGlass} />
             <OptionBox ref={optionBoxRef}></OptionBox>

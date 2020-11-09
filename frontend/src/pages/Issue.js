@@ -17,6 +17,7 @@ export const initialFilterOptions = {
   milestone: null,
   assignee: null,
   keyword: null,
+  comment: null,
 };
 
 export const IssueContext = createContext();
