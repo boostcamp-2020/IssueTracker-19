@@ -3,7 +3,8 @@ import styled from 'styled-components';
 import { colors } from '@styles/variables';
 import { flex, skyblueBoxShadow } from '@styles/utils';
 import { SubmitButton, CancelButton } from '@shared';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
+import { issueService } from '@services';
 
 const MainContainer = styled.div`
   width: calc(70% - 10rem);
@@ -113,8 +114,13 @@ const ControlBox = styled.div`
 const Form = styled.form``;
 
 export default function IssueInputBox() {
+  const history = useHistory();
+
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
+  const [milestoneNo, setMilestoneNo] = useState(undefined);
+  const [issueNos, setIssueNos] = useState([]);
+  const [labelNos, setLabelNos] = useState([]);
 
   const handleTitleChange = ({ target: { value } }) => {
     setTitle(value);
@@ -143,8 +149,32 @@ export default function IssueInputBox() {
     }, 1200);
   };
 
-  const handleSubmit = e => {
+  const handleSubmit = async e => {
     e.preventDefault();
+    if (!title.trim()) {
+      alert('제목을 입력해주세요.');
+      return;
+    }
+
+    if (!content.trim()) {
+      alert('내용을 입력해주세요.');
+      return;
+    }
+    try {
+      const { status } = await issueService.addIssue({
+        title,
+        content,
+        milestoneNo,
+        issueNos,
+        labelNos,
+      });
+      if (status === 200) {
+        history.push('/');
+      }
+    } catch (err) {
+      alert('이슈 생성 실패', err.message);
+      console.error(err);
+    }
   };
 
   return (
@@ -157,6 +187,7 @@ export default function IssueInputBox() {
             onChange={handleTitleChange}
             value={title}
             autoComplete={'off'}
+            required
           />
         </TitleContainer>
         <TagContainer>
@@ -169,6 +200,7 @@ export default function IssueInputBox() {
             onChange={handleContentChange}
             value={content}
             autoComplete={'off'}
+            required
           ></TextArea>
           <FileLabel>
             Attach file by selecting here

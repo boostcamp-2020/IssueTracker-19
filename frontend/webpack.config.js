@@ -19,6 +19,7 @@ module.exports = {
       '@imgs': path.resolve(__dirname, './src/imgs'),
       '@styles': path.resolve(__dirname, './src/styles'),
       '@shared': path.resolve(__dirname, './src/styles/shared'),
+      '@hoc': path.resolve(__dirname, './src/hoc'),
       '@': path.resolve(__dirname, './src'),
     },
   },

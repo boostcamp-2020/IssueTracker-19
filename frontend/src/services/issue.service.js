@@ -11,4 +11,7 @@ export const issueService = {
   closeIssues({ issueNos }) {
     return API.patch('/api/issues/close', { issueNos });
   },
+  addIssue({ title, content, assigneeNos, milestoneNo, labelNos }) {
+    return API.post('/api/issues', { title, content, assigneeNos, milestoneNo, labelNos });
+  },
 };

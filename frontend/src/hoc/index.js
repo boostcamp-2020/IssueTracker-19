@@ -1,1 +1,1 @@
-export { default as withAuth } from './auth';
+export { default as withAuth } from './withAuth';

@@ -1,5 +1,6 @@
 import React from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { withAuth } from '@hoc';
 import {
   NotFound,
   Issue,
@@ -16,14 +17,14 @@ const App = () => {
   return (
     <BrowserRouter>
       <Switch>
-        <Route path="/" exact component={Issue} />
-        <Route path="/issues/new" exact component={IssueNew} />
+        <Route path="/" exact render={() => withAuth(Issue)} />
+        <Route path="/issues/new" exact render={() => withAuth(IssueNew)} />
         <Route path="/login" component={Login} />
         <Route path="/signup" component={SignUp} />
-        <Route path="/labels" component={Label} />
-        <Route path="/milestones" exact component={Milestone} />
-        <Route path="/milestones/new" component={MilestoneNew} />
-        <Route path="/milestones/:no" component={MilestoneEdit} />
+        <Route path="/labels" render={() => withAuth(Label)} />
+        <Route path="/milestones" exact render={() => withAuth(Milestone)} />
+        <Route path="/milestones/new" render={() => withAuth(MilestoneNew)} />
+        <Route path="/milestones/:no" render={() => withAuth(MilestoneEdit)} />
         <Route component={NotFound} />
       </Switch>
     </BrowserRouter>
