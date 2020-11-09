@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import styled from 'styled-components';
 import { colors } from '@styles/variables';
 import { flex, skyblueBoxShadow } from '@styles/utils';
@@ -124,7 +124,7 @@ const ControlBox = styled.div`
   margin:0.5rem;
 `;
 
-const debouce = callback => setTimeout(callback, 1200);
+const debounce = callback => setTimeout(callback, 1200);
 
 export default function IssueInputBox() {
   const history = useHistory();
@@ -136,12 +136,15 @@ export default function IssueInputBox() {
   const [labelNos, setLabelNos] = useState([]);
   const [debouceClear, setDebouceClear] = useState(undefined);
 
+  const countRef = useRef();
+
   const [visiable, setVisable] = useState(false);
 
   const showTextCount = () => {
     setVisable(true);
+    countRef.current.textContent = `${content.length} characters`;
     setDebouceClear(undefined);
-    setDebouceClear(debouce(() => setVisable(false)));
+    setDebouceClear(debounce(() => setVisable(false)));
   };
 
   const handleTitleChange = ({ target: { value } }) => {
@@ -153,7 +156,7 @@ export default function IssueInputBox() {
     if (debouceClear) {
       clearTimeout(debouceClear);
     }
-    setDebouceClear(debouce(showTextCount));
+    setDebouceClear(debounce(showTextCount));
   };
 
   const handleImageChange = e => {
@@ -228,7 +231,7 @@ export default function IssueInputBox() {
             autoComplete={'off'}
             required
           ></TextArea>
-          <TextCountBox visiable={visiable}>{content.length} characters</TextCountBox>
+          <TextCountBox visiable={visiable} ref={countRef}></TextCountBox>
           <FileLabel>
             Attach file by selecting here
             <FileSelectInput name="image" type={'file'} onChange={handleImageChange} />
