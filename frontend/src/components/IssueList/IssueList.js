@@ -27,15 +27,7 @@ export default function IssueList({ issues, setIssues, allChecked, selectedCount
         selectedCount={selectedCount}
       />
       {issues.length ? (
-        issues.map(({ no, title, checked }) => (
-          <IssueItem
-            key={no}
-            title={title}
-            checked={checked}
-            issues={issues}
-            setIssues={setIssues}
-          />
-        ))
+        issues.map(props => <IssueItem key={props.no} {...props} />)
       ) : (
         <NoResultBox>
           <NoReultIcon>
