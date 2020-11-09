@@ -42,7 +42,7 @@ const SelectBox = styled.div`
   cursor: pointer;
 `;
 
-const InputBox = styled.div`
+const InputContainer = styled.div`
   width: 100%;
   height: 100%;
   ${flexCenter}
@@ -82,7 +82,6 @@ const IssueSubmitButton = styled(SubmitButton)`
 
 const ClearBox = styled.div`
   margin-left: 0.2rem;
-  cursor: pointer;
 `;
 
 const ClearButton = styled.button`
@@ -102,8 +101,10 @@ const OptionBox = styled.div`
 
 export default function IssueSearchBox() {
   const [focused, setFocused] = useState(false);
-  const { filterOptions, setFilterOptions } = useContext(IssueContext);
+  const { filterOptions, setFilterOptions, filterOptionDatas } = useContext(IssueContext);
+  const { users, labels, milestones } = filterOptionDatas;
   const optionBoxRef = useRef();
+  const inputRef = useRef();
 
   const handleFocus = () => {
     setFocused(true);
@@ -115,6 +116,7 @@ export default function IssueSearchBox() {
 
   const handleClear = () => {
     setFilterOptions(initialFilterOptions);
+    inputRef.current.value = '';
   };
 
   const isSame = () => JSON.stringify(filterOptions) === JSON.stringify(initialFilterOptions);
@@ -160,7 +162,7 @@ export default function IssueSearchBox() {
             Filters
             <DownArrowImg src={downArrowIcon} />
           </SelectBox>
-          <InputBox focused={focused}>
+          <InputContainer focused={focused}>
             <MGlassImg src={mGlass} />
             <OptionBox ref={optionBoxRef}></OptionBox>
             <FilterInput
@@ -168,21 +170,24 @@ export default function IssueSearchBox() {
               onFocus={handleFocus}
               onBlur={handleBlur}
               tabIndex={0}
-              placeholder={'Search all issues'}
+              placeholder={isSame() ? 'Search all issues' : ''}
               onKeyPress={handleEnter}
+              ref={inputRef}
             />
-          </InputBox>
+          </InputContainer>
         </FilterBox>
         <ControlBox>
-          <LabelMilestoneControls />
+          <LabelMilestoneControls labelCount={labels.length} milestoneCount={milestones.length} />
           <Link to="/issues/new">
             <IssueSubmitButton>New issue</IssueSubmitButton>
           </Link>
         </ControlBox>
       </SearchBox>
       {isSame() ? null : (
-        <ClearBox onClick={handleClear}>
-          ❎<ClearButton>Clear current search query, filters, and sorts</ClearButton>
+        <ClearBox>
+          <ClearButton onClick={handleClear}>
+            ❎ Clear current search query, filters, and sorts
+          </ClearButton>
         </ClearBox>
       )}
     </SearchContainer>
