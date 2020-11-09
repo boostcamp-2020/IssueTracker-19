@@ -17,17 +17,12 @@ const NoReultIcon = styled.div`
   margin-bottom: 1rem;
 `;
 
-export default function IssueList({ issues, setIssues, allChecked, selectedCount }) {
+export default function IssueList({ issues, setIssues }) {
   return (
     <>
-      <IssueFilterTab
-        issues={issues}
-        setIssues={setIssues}
-        allChecked={allChecked}
-        selectedCount={selectedCount}
-      />
+      <IssueFilterTab issues={issues} setIssues={setIssues} />
       {issues.length ? (
-        issues.map(props => <IssueItem key={props.no} {...props} />)
+        issues.map(props => <IssueItem key={props.no} {...{ ...props, issues, setIssues }} />)
       ) : (
         <NoResultBox>
           <NoReultIcon>

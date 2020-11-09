@@ -33,7 +33,7 @@ export default function Issue() {
   });
 
   const allChecked = issues.every(i => i.checked) && issues.length;
-  const selectedCount = issues.reduce((acc, cur) => acc + cur.checked, 0);
+  const selectedIssues = issues.filter(i => i.checked);
 
   const setFilterdIssues = async options => {
     try {
@@ -42,7 +42,7 @@ export default function Issue() {
         status,
       } = await issueService.getIssues(options);
       if (status === 200) {
-        setIssues(issues.map(issue => ({ ...issue, checked: false })));
+        setIssues(issues.map(issue => ({ ...issue, checked: 0 })));
       }
     } catch (err) {
       if (err?.response?.status === 401) {
@@ -87,16 +87,20 @@ export default function Issue() {
   }, []);
 
   return (
-    <IssueContext.Provider value={{ filterOptions, setFilterOptions, filterOptionDatas }}>
+    <IssueContext.Provider
+      value={{
+        filterOptions,
+        setFilterOptions,
+        filterOptionDatas,
+        selectedIssues,
+        selectedCount: selectedIssues.length,
+        allChecked,
+      }}
+    >
       <Header />
       <IssueContainer>
         <IssueSearchBox />
-        <IssueList
-          issues={issues}
-          setIssues={setIssues}
-          allChecked={allChecked}
-          selectedCount={selectedCount}
-        />
+        <IssueList issues={issues} setIssues={setIssues} />
       </IssueContainer>
     </IssueContext.Provider>
   );

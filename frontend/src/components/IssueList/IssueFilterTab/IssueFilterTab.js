@@ -5,6 +5,7 @@ import { colors } from '@styles/variables';
 import FilterBox from './FilterBox/FilterBox';
 import { ListItem } from '@components';
 import { IssueContext } from '@pages';
+import { issueService } from '@services';
 
 const Container = styled.div`
   border: 1px solid ${colors.lighterGray};
@@ -32,8 +33,15 @@ const CheckCount = styled.span`
   font-size: 0.9rem;
 `;
 
-export default function IssueFilterTab({ setIssues, issues, allChecked, selectedCount }) {
-  const { filterOptions, setFilterOptions, filterOptionDatas } = useContext(IssueContext);
+export default function IssueFilterTab({ setIssues, issues }) {
+  const {
+    filterOptions,
+    setFilterOptions,
+    filterOptionDatas,
+    allChecked,
+    selectedCount,
+    selectedIssues,
+  } = useContext(IssueContext);
   const { users, labels, milestones } = filterOptionDatas;
 
   const handleCheck = ({ target: { checked } }) => {
@@ -73,7 +81,29 @@ export default function IssueFilterTab({ setIssues, issues, allChecked, selected
     setFilterOptions({ ...filterOptions, label: [...new Set([...filterOptions.label, label])] });
   };
 
-  // TODO : open/close mark하는 기능 구현
+  const handleOpenIssues = async () => {
+    try {
+      const issueNos = selectedIssues.map(i => i.no);
+      const { status } = await issueService.openIssues({ issueNos });
+      if (status === 200) {
+        setFilterOptions({ ...filterOptions });
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const handleCloseIssues = async () => {
+    try {
+      const issueNos = selectedIssues.map(i => i.no);
+      const { status } = await issueService.closeIssues({ issueNos });
+      if (status === 200) {
+        setFilterOptions({ ...filterOptions });
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
   return (
     <Container>
@@ -84,9 +114,12 @@ export default function IssueFilterTab({ setIssues, issues, allChecked, selected
       <FilterList>
         {selectedCount ? (
           <FilterBox name="Mark as" title="Actions">
-            {['Open', 'Closed'].map(item => (
-              <ListItem key={item}>{item}</ListItem>
-            ))}
+            <ListItem key={'Open'} onClick={handleOpenIssues}>
+              {'Open'}
+            </ListItem>
+            <ListItem key={'Closed'} onClick={handleCloseIssues}>
+              {'Closed'}
+            </ListItem>
           </FilterBox>
         ) : (
           <>
