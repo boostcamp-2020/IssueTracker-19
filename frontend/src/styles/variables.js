@@ -18,6 +18,8 @@ export const colors = {
   submitColor: '#2c974b',
   checkedColor: '#0366D6',
   borderColor: '#e1e4e8',
+  openedIssueColor: '#22863a',
+  closedIssueColor: '#cb2431',
 };
 
 export const numerics = {
