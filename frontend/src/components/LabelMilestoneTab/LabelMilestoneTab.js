@@ -10,11 +10,11 @@ const Box = styled.div`
   justify-content: space-between;
 `;
 
-export default function LabelMilestoneTab({ Submit, ButtonName }) {
+export default function LabelMilestoneTab({ submit, buttonName }) {
   return (
     <Box>
       <LabelMilestoneControls />
-      {Submit ? <SubmitButton>{ButtonName}</SubmitButton> : null}
+      {submit ? <SubmitButton>{buttonName}</SubmitButton> : null}
     </Box>
   );
 }
