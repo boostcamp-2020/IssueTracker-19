@@ -22,6 +22,7 @@ export const colors = {
   closedIssueColor: '#cb2431',
   resetFilterColor: '#0366d9',
   resetDefaultColor: '#586069',
+  headerColor: '#24292E',
 };
 
 export const numerics = {

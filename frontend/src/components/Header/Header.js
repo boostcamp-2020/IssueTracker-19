@@ -8,7 +8,7 @@ const HeaderBox = styled.header`
   width: 100%;
   height: 4rem;
   color: white;
-  background-color: ${colors.black3};
+  background-color: ${colors.headerColor};
   ${flexCenter}
   flex-shrink:0;
 `;

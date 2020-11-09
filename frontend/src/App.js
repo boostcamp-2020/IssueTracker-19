@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import {
   NotFound,
   Issue,
+  IssueNew,
   Login,
   SignUp,
   Label,
@@ -16,6 +17,7 @@ const App = () => {
     <BrowserRouter>
       <Switch>
         <Route path="/" exact component={Issue} />
+        <Route path="/issues/new" exact component={IssueNew} />
         <Route path="/login" component={Login} />
         <Route path="/signup" component={SignUp} />
         <Route path="/labels" component={Label} />
