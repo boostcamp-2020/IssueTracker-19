@@ -12,7 +12,7 @@ export const getIssues = async (req, res, next) => {
     const { nickname } = req.user;
 
     const filterdIssues = await issueService.getFilterdIssues(options, nickname);
-    res.json({ issues: filterdIssues });
+    res.json({ issues: filterdIssues.reverse() });
   } catch (err) {
     next(err);
   }
