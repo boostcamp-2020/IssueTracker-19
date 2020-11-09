@@ -6,8 +6,9 @@ import { colors } from '@styles/variables';
 import CalenderIcon from '@imgs/milestone-calendar.svg';
 import ClockIcon from '@imgs/milestone-clock.svg';
 const Container = styled.div`
-  display: table-row;
-  list-style: none;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
 `;
 const Title = styled.div`
   width: 500px;
@@ -45,33 +46,37 @@ const Description = styled.div`
   font-size: 16px;
   color: '${colors.metaColor}';
 `;
-const Progress = styled.div`
+const ProgressBox = styled.div`
   display: table-cell;
   font-size: 12px;
   vertical-align: top;
   border-right: 1px solid ${colors.borderColorSecondary};
   border-top: 1px solid ${colors.borderColorSecondary};
   padding: 15px 20px;
-  width: 20px;
+  width: 420px;
+`;
+const ProgressBar = styled.progress`
+  height: 20px;
+  width: 420px;
 `;
 export default function MilestoneItem() {
   return (
-    <div>
-      <Container>
-        <Title>
-          <TitleHeader>test</TitleHeader>
-          <Meta>
-            <MetaItem>
-              <Img src={CalenderIcon} />
-              Due by November 18, 2020
-            </MetaItem>
-            <Description>
-              <p>Descirption</p>
-            </Description>
-          </Meta>
-        </Title>
-        <Progress></Progress>
-      </Container>
-    </div>
+    <Container>
+      <Title>
+        <TitleHeader>test</TitleHeader>
+        <Meta>
+          <MetaItem>
+            <Img src={CalenderIcon} />
+            Due by November 18, 2020
+          </MetaItem>
+          <Description>
+            <p>Descirption</p>
+          </Description>
+        </Meta>
+      </Title>
+      <ProgressBox>
+        <ProgressBar max="100" value="70"></ProgressBar>
+      </ProgressBox>
+    </Container>
   );
 }
