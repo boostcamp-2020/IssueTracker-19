@@ -2,7 +2,6 @@ import React from 'react';
 import styled from 'styled-components';
 import { API } from '@api';
 import { flexColumn, flexCenter, flex } from '@styles/utils';
-import { SubmitButton, CancelButton } from '@shared';
 import { colors } from '@styles/variables';
 import MilestoneIcon from '@imgs/milestone.svg';
 import CheckIcon from '@imgs/check.svg';
@@ -25,6 +24,7 @@ const ButtonBox = styled.div`
   font-weight: 600;
   font-size: 14px;
   padding: 13px 10px;
+  cursor: pointer;
 `;
 const Img = styled.img`
   width: 20px;

@@ -18,6 +18,9 @@ export const colors = {
   submitColor: '#2c974b',
   checkedColor: '#0366D6',
   borderColor: '#e1e4e8',
+  borderColorSecondary: '#eaecef',
+
+  metaColor: '#6a737d',
 };
 
 export const numerics = {
