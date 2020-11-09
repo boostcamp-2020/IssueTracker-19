@@ -8,6 +8,7 @@
 
 import UIKit
 import Combine
+import AuthenticationServices
 
 enum Notification {
     static let googleLoginSuccess = Foundation.Notification.Name("googleLoginSuccess")
@@ -38,13 +39,20 @@ class ViewController: UIViewController {
 //            })
 //        }
     }
+    
 
     @IBAction func githubLogin(_ sender: UIButton) {
         HTTPAgent.shared.githubLoginAction()
     }
     
 	@IBAction func appleLogin(_ sender: UIButton) {
-		
+//        performSegue(withIdentifier: "loginSuccessSegue", sender: nil)
+        let request = ASAuthorizationAppleIDProvider().createRequest()
+        request.requestedScopes = [.fullName, .email]
+        let controller = ASAuthorizationController(authorizationRequests: [request])
+        controller.delegate = self
+        controller.presentationContextProvider = self
+        controller.performRequests()
 	}
     
 	@IBAction func loginButton(_ sender: Any) {
@@ -77,5 +85,61 @@ class ViewController: UIViewController {
                     self?.presentIssueList(statusCode: notification.userInfo?["statusCode"] as? Int ?? 0)
                 }
         }
+    }
+}
+
+extension ViewController: ASAuthorizationControllerDelegate {
+    func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
+        switch authorization.credential {
+        case let appleIDCredential as ASAuthorizationAppleIDCredential:
+            let userIdentifier = appleIDCredential.user
+            let fullName = appleIDCredential.fullName
+            let email = appleIDCredential.email
+            self.showResultViewController(userIdentifier: userIdentifier, fullName: fullName, email: email)
+        case let passwordCredential as ASPasswordCredential:
+            let username = passwordCredential.user
+            let password = passwordCredential.password
+            DispatchQueue.main.async {
+                self.showPasswordCredentialAlert(username: username, password: password)
+            }
+        default:
+            break
+        }
+    }
+    private func saveUserInKeychain(_ userIdentifier: String) {
+
+    }
+    private func showResultViewController(userIdentifier: String, fullName: PersonNameComponents?, email: String?) {
+        DispatchQueue.main.async {
+//            viewController.userIdentifierLabel.text = userIdentifier
+//            if let givenName = fullName?.givenName {
+//                viewController.givenNameLabel.text = givenName
+//            }
+//            if let familyName = fullName?.familyName {
+//                viewController.familyNameLabel.text = familyName
+//            }
+//            if let email = email {
+//                viewController.emailLabel.text = email
+//            }
+            self.performSegue(withIdentifier: "loginSuccessSegue", sender: nil)
+        }
+    }
+    private func showPasswordCredentialAlert(username: String, password: String) {
+        let message = "The app has received your selected credential from the keychain. \n\n Username: \(username)\n Password: \(password)"
+        let alertController = UIAlertController(title: "Keychain Credential Received",
+                                                message: message,
+                                                preferredStyle: .alert)
+        alertController.addAction(UIAlertAction(title: "Dismiss", style: .cancel, handler: nil))
+        self.present(alertController, animated: true, completion: nil)
+    }
+    /// - Tag: did_complete_error
+    func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {
+        // Handle error.
+    }
+}
+
+extension ViewController: ASAuthorizationControllerPresentationContextProviding {
+    func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
+        return self.view.window!
     }
 }

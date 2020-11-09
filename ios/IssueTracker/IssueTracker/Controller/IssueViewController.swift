@@ -189,6 +189,7 @@ extension IssueViewController {
             collectionView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor)
         ])
         
+        collectionView.backgroundColor = .systemBackground
         collectionView.delegate = self
         collectionView.allowsMultipleSelection = true
     }
