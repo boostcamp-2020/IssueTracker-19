@@ -12,7 +12,7 @@ export default function MilestoneEdit() {
     <>
       <Header />
       <Container>
-        <LabelMilestoneTab Submit={false} ButtonName={''} />
+        <LabelMilestoneTab submit={false} buttonName={''} />
         <MilestoneEditBox isNew={false} />
       </Container>
     </>

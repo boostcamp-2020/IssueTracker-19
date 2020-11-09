@@ -12,7 +12,7 @@ export default function Milestone() {
     <>
       <Header />
       <Container>
-        <LabelMilestoneTab Submit={true} ButtonName={'New milestone'} />
+        <LabelMilestoneTab submit={true} buttonName={'New milestone'} />
       </Container>
     </>
   );
