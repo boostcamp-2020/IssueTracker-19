@@ -11,18 +11,30 @@ import UIKit
 // MARK: - UISearchResultsUpdating Delegate
 extension SectionItemEditViewController: UISearchResultsUpdating {
 	func updateSearchResults(for searchController: UISearchController) {
-		
+		if let text = searchController.searchBar.text, !text.isEmpty {
+			
+			searchMode = true
+			var snapshot = Snapshot()
+			snapshot.appendSections([.deSelected])
+			searched = filteredList(for: text)
+			snapshot.appendItems(searched)
+			dataSource.apply(snapshot, animatingDifferences: true)
+		} else {
+			searchMode = false
+			// 한번만 하면 왜 레이아웃이 제대로 안나올까...
+			applySnapshot(animatingDifferences: true)
+			applySnapshot(animatingDifferences: true)
+		}
 	}
 	
-//	func filteredList(for queryOrNil: String?) -> [] {
-//		guard let query = queryOrNil, !query.isEmpty else {
-//			return allList
-//		}
-//		return allList.filter { $0.title.lowercased().contains(query.lowercased()) }
-//	}
+	func filteredList(for queryOrNil: String?) -> [GitIssueObject] {
+		guard let query = queryOrNil, !query.isEmpty else {
+			return deSelected
+		}
+		return deSelected.filter { $0.searchText.lowercased().contains(query.lowercased()) }
+	}
 	
 	func configureSearchController() {
-		let searchController = UISearchController(searchResultsController: nil)
 		searchController.searchResultsUpdater = self
 		searchController.obscuresBackgroundDuringPresentation = false
 		searchController.searchBar.placeholder = "Search"

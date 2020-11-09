@@ -20,6 +20,12 @@
 		4C44042C2551B07E0075AD9B /* Milestone.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C44042B2551B07E0075AD9B /* Milestone.swift */; };
 		4C4404342551BCBE0075AD9B /* MilestoneViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C4404322551BCBE0075AD9B /* MilestoneViewCell.swift */; };
 		4C4404352551BCBE0075AD9B /* MilestoneViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C4404332551BCBE0075AD9B /* MilestoneViewCell.xib */; };
+		4C6DFED22559B6DB00D665B4 /* BVUserViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C6DFED02559B6DB00D665B4 /* BVUserViewCell.swift */; };
+		4C6DFED32559B6DB00D665B4 /* BVUserViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C6DFED12559B6DB00D665B4 /* BVUserViewCell.xib */; };
+		4C6DFED72559B6EF00D665B4 /* BVLabelViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C6DFED52559B6EF00D665B4 /* BVLabelViewCell.swift */; };
+		4C6DFED82559B6EF00D665B4 /* BVLabelViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C6DFED62559B6EF00D665B4 /* BVLabelViewCell.xib */; };
+		4C6DFEDC2559B70400D665B4 /* BVMilestoneViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C6DFEDA2559B70400D665B4 /* BVMilestoneViewCell.swift */; };
+		4C6DFEDD2559B70400D665B4 /* BVMilestoneViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C6DFEDB2559B70400D665B4 /* BVMilestoneViewCell.xib */; };
 		4C7C11B8254E87CC008FA858 /* IssueDetailCommentViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C7C11B6254E87CC008FA858 /* IssueDetailCommentViewCell.swift */; };
 		4C7C11B9254E87CC008FA858 /* IssueDetailCommentViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C7C11B7254E87CC008FA858 /* IssueDetailCommentViewCell.xib */; };
 		4C7C11C3254EC6B9008FA858 /* IssueDetailHeaderReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C7C11C1254EC6B8008FA858 /* IssueDetailHeaderReusableView.swift */; };
@@ -79,6 +85,12 @@
 		4C44042B2551B07E0075AD9B /* Milestone.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Milestone.swift; sourceTree = "<group>"; };
 		4C4404322551BCBE0075AD9B /* MilestoneViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MilestoneViewCell.swift; sourceTree = "<group>"; };
 		4C4404332551BCBE0075AD9B /* MilestoneViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MilestoneViewCell.xib; sourceTree = "<group>"; };
+		4C6DFED02559B6DB00D665B4 /* BVUserViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BVUserViewCell.swift; sourceTree = "<group>"; };
+		4C6DFED12559B6DB00D665B4 /* BVUserViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BVUserViewCell.xib; sourceTree = "<group>"; };
+		4C6DFED52559B6EF00D665B4 /* BVLabelViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BVLabelViewCell.swift; sourceTree = "<group>"; };
+		4C6DFED62559B6EF00D665B4 /* BVLabelViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BVLabelViewCell.xib; sourceTree = "<group>"; };
+		4C6DFEDA2559B70400D665B4 /* BVMilestoneViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BVMilestoneViewCell.swift; sourceTree = "<group>"; };
+		4C6DFEDB2559B70400D665B4 /* BVMilestoneViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BVMilestoneViewCell.xib; sourceTree = "<group>"; };
 		4C7C11B6254E87CC008FA858 /* IssueDetailCommentViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueDetailCommentViewCell.swift; sourceTree = "<group>"; };
 		4C7C11B7254E87CC008FA858 /* IssueDetailCommentViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = IssueDetailCommentViewCell.xib; sourceTree = "<group>"; };
 		4C7C11C1254EC6B8008FA858 /* IssueDetailHeaderReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueDetailHeaderReusableView.swift; sourceTree = "<group>"; };
@@ -194,6 +206,12 @@
 				4CE0213E2556FEDB0066BCA0 /* BottomViewMilestoneCell.swift */,
 				4CE0213F2556FEDB0066BCA0 /* BottomViewMilestoneCell.xib */,
 				4C0DFB2E25599E65009760B7 /* TitleSupplementaryView.swift */,
+				4C6DFED02559B6DB00D665B4 /* BVUserViewCell.swift */,
+				4C6DFED12559B6DB00D665B4 /* BVUserViewCell.xib */,
+				4C6DFED52559B6EF00D665B4 /* BVLabelViewCell.swift */,
+				4C6DFED62559B6EF00D665B4 /* BVLabelViewCell.xib */,
+				4C6DFEDA2559B70400D665B4 /* BVMilestoneViewCell.swift */,
+				4C6DFEDB2559B70400D665B4 /* BVMilestoneViewCell.xib */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -366,13 +384,16 @@
 				4CE0215825571C460066BCA0 /* BottomViewAssigneeCell.xib in Resources */,
 				4CE02149255708310066BCA0 /* BottomViewLabelCell.xib in Resources */,
 				4C4404352551BCBE0075AD9B /* MilestoneViewCell.xib in Resources */,
+				4C6DFED82559B6EF00D665B4 /* BVLabelViewCell.xib in Resources */,
 				C19656542546B9B9007DD55A /* LaunchScreen.storyboard in Resources */,
 				C19656512546B9B9007DD55A /* Assets.xcassets in Resources */,
 				C196564F2546B9B6007DD55A /* Main.storyboard in Resources */,
 				4CDC3D402556B54500FC672B /* BottomViewHeaderView.xib in Resources */,
 				4CE021412556FEDB0066BCA0 /* BottomViewMilestoneCell.xib in Resources */,
 				4C7C11B9254E87CC008FA858 /* IssueDetailCommentViewCell.xib in Resources */,
+				4C6DFEDD2559B70400D665B4 /* BVMilestoneViewCell.xib in Resources */,
 				4C7C11C4254EC6B9008FA858 /* IssueDetailHeaderReusableView.xib in Resources */,
+				4C6DFED32559B6DB00D665B4 /* BVUserViewCell.xib in Resources */,
 				C104897025518EC50091668C /* LabelCollectionViewCell.xib in Resources */,
 				4CE0215125570EE50066BCA0 /* BottomViewFooterView.xib in Resources */,
 			);
@@ -442,6 +463,7 @@
 				C196564C2546B9B6007DD55A /* ViewController.swift in Sources */,
 				C173761D2553F69E00E192C0 /* User.swift in Sources */,
 				C19656602546CC4F007DD55A /* HTTPAgent.swift in Sources */,
+				4C6DFEDC2559B70400D665B4 /* BVMilestoneViewCell.swift in Sources */,
 				C104895E25515CA50091668C /* LabelViewController.swift in Sources */,
 				4C3B3F092552ABC800231F67 /* BottomBorderView.swift in Sources */,
 				4C44042C2551B07E0075AD9B /* Milestone.swift in Sources */,
@@ -449,6 +471,7 @@
 				4CB6F8FD254D639300901E9D /* IssueDetailViewController.swift in Sources */,
 				4C7C11B8254E87CC008FA858 /* IssueDetailCommentViewCell.swift in Sources */,
 				4CD2047925514E4C0001B987 /* CornerRoundedFloatingView.swift in Sources */,
+				4C6DFED72559B6EF00D665B4 /* BVLabelViewCell.swift in Sources */,
 				4C7C11C3254EC6B9008FA858 /* IssueDetailHeaderReusableView.swift in Sources */,
 				C196564A2546B9B6007DD55A /* SceneDelegate.swift in Sources */,
 				C1140D8325527C6F0096C11E /* DesignableClass.swift in Sources */,
@@ -460,6 +483,7 @@
 				4CE0215025570EE50066BCA0 /* BottomViewFooterView.swift in Sources */,
 				C104895B2551280C0091668C /* FilterViewController.swift in Sources */,
 				4C0DFACF255844B7009760B7 /* SectionItemEditVC+SearchBar.swift in Sources */,
+				4C6DFED22559B6DB00D665B4 /* BVUserViewCell.swift in Sources */,
 				C173761A2553F68100E192C0 /* Label.swift in Sources */,
 				4CE0213B2556FA3F0066BCA0 /* GitIssueObject.swift in Sources */,
 				C10489732551986B0091668C /* LabelDetailAndAddViewController.swift in Sources */,

@@ -29,12 +29,12 @@ extension IssueDetailBottomViewController {
 	
 	func createLayout() -> UICollectionViewLayout {
 		return UICollectionViewCompositionalLayout { [weak self] sectionIdx, _ in
-			guard let type = HashableObjectType(rawValue: sectionIdx) else { return nil }
+			guard let type = BottomViewSection(rawValue: sectionIdx) else { return nil }
 			return self?.createLayoutSection(type: type)
 		}
 	}
 	
-	func createLayoutSection(type: HashableObjectType) -> NSCollectionLayoutSection {
+	func createLayoutSection(type: BottomViewSection) -> NSCollectionLayoutSection {
 		let itemSize = NSCollectionLayoutSize(widthDimension: type == .label ? .estimated(44) : .fractionalWidth(1),
 											  heightDimension: .estimated(44))
 		let item = NSCollectionLayoutItem(layoutSize: itemSize)
@@ -71,7 +71,7 @@ extension IssueDetailBottomViewController {
 	func createDataSource() -> DataSource {
 		DataSource(collectionView: collectionView) { collectionView, indexPath, item in
 			var identifier = ""
-			switch HashableObjectType(rawValue: indexPath.section) {
+			switch BottomViewSection(rawValue: indexPath.section) {
 			case .assignee:
 				identifier = BottomViewAssigneeCell.identifier
 			case .label:
@@ -103,7 +103,7 @@ extension IssueDetailBottomViewController {
 				else { return nil }
 				headerView.sectionIdx = indexPath.section
 				headerView.closure = self?.sectionHeaderEditButtonAction
-				headerView.titleLabel.text = HashableObjectType(rawValue: indexPath.section)?.text
+				headerView.titleLabel.text = BottomViewSection(rawValue: indexPath.section)?.text
 				return headerView
 			} else {
 				guard let footerView = collectionView.dequeueReusableSupplementaryView(
@@ -120,7 +120,7 @@ extension IssueDetailBottomViewController {
 	}
 	
 	func applySnapshot() {
-		var snapshot = NSDiffableDataSourceSnapshot<HashableObjectType, GitIssueObject>()
+		var snapshot = NSDiffableDataSourceSnapshot<BottomViewSection, GitIssueObject>()
 		snapshot.appendSections([.assignee])
 		snapshot.appendItems(assignees)
 		snapshot.appendSections([.label])

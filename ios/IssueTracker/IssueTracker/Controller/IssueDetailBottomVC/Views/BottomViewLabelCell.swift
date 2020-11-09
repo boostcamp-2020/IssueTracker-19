@@ -27,7 +27,7 @@ class BottomViewLabelCell: SectionCell {
 	
 	override func awakeFromNib() {
         super.awakeFromNib()
-		layer.cornerRadius = 5
+		layer.cornerRadius = 3
 		clipsToBounds = true
     }
 

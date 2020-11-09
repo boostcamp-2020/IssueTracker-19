@@ -27,18 +27,20 @@ class SectionItemEditViewController: UIViewController {
 	lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: createLayout())
 	lazy var dataSource: DataSource = createDataSource()
 	var currentSnapshot: Snapshot! = nil
+	let searchController = UISearchController(searchResultsController: nil)
 	
-	let hashableObjectType: HashableObjectType
+	let bottomViewSection: BottomViewSection
 	
 	let topSpace = CGFloat(10)
 	var height: CGFloat { view.frame.height }
-	
+	var searchMode = false
 	
 	var selected = [GitIssueObject]()
 	var deSelected = [GitIssueObject]()
+	var searched = [GitIssueObject]()
 	
-	init(hashableObjectType: HashableObjectType) {
-		self.hashableObjectType = hashableObjectType
+	init(bottomViewSection: BottomViewSection) {
+		self.bottomViewSection = bottomViewSection
 		super.init(nibName: nil, bundle: nil)
 	}
 	
@@ -51,8 +53,10 @@ class SectionItemEditViewController: UIViewController {
 		loadData()
 		configureContentView()
 		configureScrollAction()
+		
 		configureCollectionView()
 		configureDataSource()
+		
 		configureSearchController()
 		configureNavigationBar()
     }
@@ -99,10 +103,11 @@ class SectionItemEditViewController: UIViewController {
 
 extension SectionItemEditViewController {
 	func configureCollectionView() {
-		collectionView.register(UINib(nibName: "MilestoneViewCell", bundle: nil),
-								forCellWithReuseIdentifier: MilestoneViewCell.identifier)
+		collectionView.register(UINib(nibName: "BVLabelViewCell", bundle: nil),
+								forCellWithReuseIdentifier: BVLabelViewCell.identifier)
 		collectionView.delegate = self
 		collectionView.translatesAutoresizingMaskIntoConstraints = false
+		collectionView.keyboardDismissMode = .onDrag
 		NSLayoutConstraint.activate([
 			collectionView.topAnchor.constraint(equalTo: navBar.safeAreaLayoutGuide.bottomAnchor),
 			collectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
@@ -114,15 +119,21 @@ extension SectionItemEditViewController {
 	}
 	
 	func createDataSource() -> DataSource {
-		return DataSource(collectionView: collectionView) { collectionView, indexPath, item in
+		return DataSource(collectionView: collectionView) {[weak self] collectionView, indexPath, item in
 			guard let cell = collectionView
-					.dequeueReusableCell(withReuseIdentifier: MilestoneViewCell.identifier,
-										 for: indexPath) as? MilestoneViewCell
+					.dequeueReusableCell(withReuseIdentifier: BVLabelViewCell.identifier,
+										 for: indexPath) as? BVLabelViewCell
 			else { return nil }
-		
-			if let item = item as? Label {
-				cell.titleLabel.text = item.color
+			cell.label = item as? Label
+			let buttonImage: UIImage?
+			if indexPath.section == 0 && self?.searchMode == false {
+				buttonImage = UIImage(systemName: "plus.circle")
+			} else {
+				let image = UIImage(systemName: "xmark.circle.fill")?.withRenderingMode(.alwaysTemplate)
+				buttonImage = image?.withTintColor(.lightGray)
 			}
+				
+			cell.button.setImage(buttonImage, for: .normal)
 			return cell
 		}
 	}
@@ -132,10 +143,12 @@ extension SectionItemEditViewController {
 		<TitleSupplementaryView>(elementKind: "header") { supplementaryView, _, indexPath in
 			supplementaryView.label.text = indexPath.section == 0 ? "SELECTED" : ""
 		}
+		
 		dataSource.supplementaryViewProvider = { (view, kind, index) in
 			return self.collectionView.dequeueConfiguredReusableSupplementary(
 				using: supplementaryRegistration, for: index)
 		}
+		
 		applySnapshot(animatingDifferences: true)
 	}
 	
@@ -149,39 +162,41 @@ extension SectionItemEditViewController {
 	}
 	
 	func createLayout() -> UICollectionViewLayout {
-		let layout = UICollectionViewCompositionalLayout { sectionIndex, layoutEnvironment in
-			var configuration = UICollectionLayoutListConfiguration(appearance: .grouped)
-			configuration.backgroundColor = .systemGroupedBackground
-			configuration.headerMode = .supplementary
+		return UICollectionViewCompositionalLayout { [weak self] _, layoutEnvironment in
+			var configuration: UICollectionLayoutListConfiguration
+			
+			if self?.searchMode == true {
+				configuration = UICollectionLayoutListConfiguration(appearance: .plain)
+				configuration.backgroundColor = .systemGroupedBackground
+			} else {
+				configuration = UICollectionLayoutListConfiguration(appearance: .grouped)
+				configuration.backgroundColor = .systemGroupedBackground
+				configuration.headerMode = .supplementary
+			}
 			
 			let section = NSCollectionLayoutSection.list(
 				using: configuration,
 				layoutEnvironment: layoutEnvironment
 			)
-			
-			if sectionIndex == 0 {
-				let titleSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
-													   heightDimension: .estimated(44))
-				let titleSupplementary = NSCollectionLayoutBoundarySupplementaryItem(
-					layoutSize: titleSize,
-					elementKind: "header",
-					alignment: .top)
-				section.boundarySupplementaryItems = [titleSupplementary]
-			}
 			return section
 		}
-		return layout
 	}
 }
 
 extension SectionItemEditViewController: UICollectionViewDelegate {
 	func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-		if indexPath.section == 0 {
+		if searchMode {
+			guard let idx = deSelected.firstIndex(where: { $0 == searched[indexPath.row] })
+			else { return }
+			selected.append(deSelected.remove(at: idx))
+			searchMode.toggle()
+			searchController.isActive = false
+		} else if indexPath.section == 0 {
 			deSelected.insert(selected.remove(at: indexPath.row), at: 0)
 		} else {
 			selected.append(deSelected.remove(at: indexPath.row))
 		}
-		applySnapshot(animatingDifferences: true)
+		applySnapshot()
 	}
 }
 

@@ -8,7 +8,7 @@
 
 import UIKit
 
-enum HashableObjectType: Int, CaseIterable {
+enum BottomViewSection: Int, CaseIterable {
 	case assignee, label, milestone
 	var text: String {
 		switch self {
@@ -23,7 +23,7 @@ enum HashableObjectType: Int, CaseIterable {
 }
 
 class IssueDetailBottomViewController: UIViewController {
-	typealias DataSource = UICollectionViewDiffableDataSource<HashableObjectType, GitIssueObject>
+	typealias DataSource = UICollectionViewDiffableDataSource<BottomViewSection, GitIssueObject>
 	
 	@IBOutlet weak var mainView: UIView!
 	@IBOutlet weak var subView: UIView!

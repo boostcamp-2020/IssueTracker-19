@@ -24,10 +24,10 @@ extension IssueDetailBottomViewController {
 	func sectionHeaderEditButtonAction(idx: Int?) {
 		
 		guard let idx = idx,
-			  let type = HashableObjectType(rawValue: idx)
+			  let type = BottomViewSection(rawValue: idx)
 		else { return }
 		
-		let editSectionItemVC = SectionItemEditViewController(hashableObjectType: type)
+		let editSectionItemVC = SectionItemEditViewController(bottomViewSection: type)
 		
 		addChild(editSectionItemVC)
 		editSectionItemVC.view.frame = view.bounds
