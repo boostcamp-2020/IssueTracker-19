@@ -82,7 +82,6 @@ const IssueSubmitButton = styled(SubmitButton)`
 
 const ClearBox = styled.div`
   margin-left: 0.2rem;
-  cursor: pointer;
 `;
 
 const ClearButton = styled.button`
@@ -185,8 +184,10 @@ export default function IssueSearchBox() {
         </ControlBox>
       </SearchBox>
       {isSame() ? null : (
-        <ClearBox onClick={handleClear}>
-          ❎<ClearButton>Clear current search query, filters, and sorts</ClearButton>
+        <ClearBox>
+          <ClearButton onClick={handleClear}>
+            ❎ Clear current search query, filters, and sorts
+          </ClearButton>
         </ClearBox>
       )}
     </SearchContainer>
