@@ -56,6 +56,7 @@ const TagBox = styled.button`
 `;
 
 const ContentContainer = styled.div`
+  position: relative;
   padding: 0.5rem;
 `;
 
@@ -66,10 +67,10 @@ const TextArea = styled.textarea`
   max-width: 100%;
   height: 12rem;
   min-height: 13rem;
-  max-height: 20rem;
+  max-height: 18rem;
   padding: 0.5rem;
   border: 1px solid ${colors.lighterGray};
-  border-bottom: 1px dashed ${colors.lighterGray};
+  border-bottom: 0;
   border-top-left-radius: 5px;
   border-top-right-radius: 5px;
   box-sizing: border-box;
@@ -80,6 +81,18 @@ const TextArea = styled.textarea`
   }
 `;
 
+const TextCountBox = styled.div`
+  opacity: ${props => (props.visiable ? 1 : 0)};
+  transition: 0.4s;
+  position: absolute;
+  bottom: 2.7rem;
+  right: 0.5rem;
+  ${flex('flex-end', 'center')};
+  font-size: 0.8rem;
+  color: ${colors.black7};
+  padding: 0.5rem 0.8rem;
+`;
+
 const FileLabel = styled.label`
   width: 100%;
   padding: 0.4rem;
@@ -88,7 +101,7 @@ const FileLabel = styled.label`
   color: ${colors.black6};
   background-color: ${colors.semiWhite};
   border: 1px solid ${colors.lighterGray};
-  border-top: 0;
+  border-top: 1px dashed ${colors.lighterGray};
   box-sizing: border-box;
   border-bottom-left-radius: 5px;
   border-bottom-right-radius: 5px;
@@ -111,7 +124,7 @@ const ControlBox = styled.div`
   margin:0.5rem;
 `;
 
-const Form = styled.form``;
+const debouce = callback => setTimeout(callback, 1200);
 
 export default function IssueInputBox() {
   const history = useHistory();
@@ -121,6 +134,15 @@ export default function IssueInputBox() {
   const [milestoneNo, setMilestoneNo] = useState(undefined);
   const [issueNos, setIssueNos] = useState([]);
   const [labelNos, setLabelNos] = useState([]);
+  const [debouceClear, setDebouceClear] = useState(undefined);
+
+  const [visiable, setVisable] = useState(false);
+
+  const showTextCount = () => {
+    setVisable(true);
+    setDebouceClear(undefined);
+    setDebouceClear(debouce(() => setVisable(false)));
+  };
 
   const handleTitleChange = ({ target: { value } }) => {
     setTitle(value);
@@ -128,6 +150,10 @@ export default function IssueInputBox() {
 
   const handleContentChange = ({ target: { value } }) => {
     setContent(value);
+    if (debouceClear) {
+      clearTimeout(debouceClear);
+    }
+    setDebouceClear(debouce(showTextCount));
   };
 
   const handleImageChange = e => {
@@ -179,7 +205,7 @@ export default function IssueInputBox() {
 
   return (
     <MainContainer>
-      <Form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit}>
         <TitleContainer>
           <TitleInput
             name="title"
@@ -202,6 +228,7 @@ export default function IssueInputBox() {
             autoComplete={'off'}
             required
           ></TextArea>
+          <TextCountBox visiable={visiable}>{content.length} characters</TextCountBox>
           <FileLabel>
             Attach file by selecting here
             <FileSelectInput name="image" type={'file'} onChange={handleImageChange} />
@@ -213,7 +240,7 @@ export default function IssueInputBox() {
           </Link>
           <SubmitButton>Submit new issue</SubmitButton>
         </ControlBox>
-      </Form>
+      </form>
     </MainContainer>
   );
 }
