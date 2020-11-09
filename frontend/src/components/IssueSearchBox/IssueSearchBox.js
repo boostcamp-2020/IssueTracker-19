@@ -81,14 +81,31 @@ const IssueSubmitButton = styled(SubmitButton)`
   margin-left: 1.5rem;
 `;
 
-const ClearBox = styled.div`
+const ClearContainer = styled.div`
   margin-left: 0.2rem;
+  &:hover {
+    span {
+      color: ${colors.resetFilterColor};
+    }
+    svg {
+      background-color: ${colors.resetFilterColor};
+    }
+  }
 `;
 
-const ClearButton = styled.button`
+const ClearBox = styled.div`
   background-color: white;
   ${borderNoneBox}
   cursor: pointer;
+  font-size: 0.9rem;
+  ${flex('flex-start', 'center')}
+`;
+
+const ClearIcon = styled.svg`
+  border-radius: 5px;
+  margin-right: 5px;
+  background-color: ${colors.resetDefaultColor};
+  fill: white;
 `;
 
 const OptionBox = styled.div`
@@ -244,11 +261,17 @@ export default function IssueSearchBox() {
         </ControlBox>
       </SearchBox>
       {isSame() ? null : (
-        <ClearBox>
-          <ClearButton onClick={handleClear}>
-            ❎ Clear current search query, filters, and sorts
-          </ClearButton>
-        </ClearBox>
+        <ClearContainer>
+          <ClearBox onClick={handleClear}>
+            <ClearIcon viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true">
+              <path
+                fillRule="evenodd"
+                d="M3.72 3.72a.75.75 0 011.06 0L8 6.94l3.22-3.22a.75.75 0 111.06 1.06L9.06 8l3.22 3.22a.75.75 0 11-1.06 1.06L8 9.06l-3.22 3.22a.75.75 0 01-1.06-1.06L6.94 8 3.72 4.78a.75.75 0 010-1.06z"
+              ></path>
+            </ClearIcon>
+            <span>Clear current search query, filters, and sorts</span>
+          </ClearBox>
+        </ClearContainer>
       )}
     </SearchContainer>
   );

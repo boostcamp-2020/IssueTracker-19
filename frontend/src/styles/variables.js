@@ -20,6 +20,8 @@ export const colors = {
   borderColor: '#e1e4e8',
   openedIssueColor: '#22863a',
   closedIssueColor: '#cb2431',
+  resetFilterColor: '#0366d9',
+  resetDefaultColor: '#586069',
 };
 
 export const numerics = {
