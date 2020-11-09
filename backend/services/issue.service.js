@@ -90,7 +90,7 @@ const getFilterdIssuesByOptions = (issues, nickname, options = {}) => {
     if (label) {
       if (Array.isArray(label)) {
         // label 조건이 여러 조건일 때(배열로 올 때)
-        if (!label.some(l => issue.labels.some(issueLabel => issueLabel.name === l))) {
+        if (!label.every(l => issue.labels.some(issueLabel => issueLabel.name === l))) {
           return false;
         }
       } else if (!issue.labels.some(issueLabel => issueLabel.name === label)) {
