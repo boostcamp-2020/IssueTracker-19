@@ -50,3 +50,33 @@ export const addIssue = async (req, res, next) => {
     next(err);
   }
 };
+
+/**
+ * PATCH /api/issues/open
+ */
+export const openMultipleIssues = async (req, res, next) => {
+  try {
+    const { issueNos } = req.body;
+    if (verify([issueNos]) && issueNos.length) {
+      await issueModel.openIssues({ issueNos });
+      res.status(200).end();
+    }
+  } catch (err) {
+    next(err);
+  }
+};
+
+/**
+ * PATCH /api/issues/close
+ */
+export const closeMultipleIssues = async (req, res, next) => {
+  try {
+    const { issueNos } = req.body;
+    if (verify([issueNos]) && issueNos.length) {
+      await issueModel.closeIssues({ issueNos });
+      res.status(200).end();
+    }
+  } catch (err) {
+    next(err);
+  }
+};

@@ -108,8 +108,6 @@ const Modal = styled.div`
   z-index: 2;
 `;
 
-const FilterOptionItem = styled.div``;
-
 export default function IssueSearchBox() {
   const [focused, setFocused] = useState(false);
   const [visiable, setVisiable] = useState(false);
