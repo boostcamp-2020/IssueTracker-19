@@ -38,6 +38,7 @@
     "axios": "^0.21.0",
     "core-js": "^3.6.5",
     "polished": "^4.0.3",
+    "qs": "^6.9.4",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-router-dom": "^5.2.0",

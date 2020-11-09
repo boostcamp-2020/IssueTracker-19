@@ -72,7 +72,7 @@ const getFilterdIssuesByOptions = (issues, nickname, options = {}) => {
         return false;
       }
     }
-    if (milestone && issue.milestone !== milestone) {
+    if (milestone && issue.milestoneTitle !== milestone) {
       return false;
     }
     if (+comment) {

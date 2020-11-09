@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useContext, useRef, useEffect } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import { IssueContext, initialFilterOptions } from '@pages';
 import { flex, flexCenter, borderNoneBox, skyblueBoxShadow } from '@styles/utils';
 import { colors } from '@styles/variables';
 import { SubmitButton } from '@shared';
@@ -51,6 +52,7 @@ const InputBox = styled.div`
 const FilterInput = styled.input`
   width: calc(100% - 16px);
   height: calc(100% - 16px);
+  margin-left: 0.5rem;
   border-radius: 6px;
   border: none;
   outline: unset;
@@ -80,6 +82,7 @@ const IssueSubmitButton = styled(SubmitButton)`
 
 const ClearBox = styled.div`
   margin-left: 0.2rem;
+  cursor: pointer;
 `;
 
 const ClearButton = styled.button`
@@ -88,8 +91,19 @@ const ClearButton = styled.button`
   cursor: pointer;
 `;
 
+const OptionBox = styled.div`
+  font-size: 0.8rem;
+
+  color: ${colors.black3};
+  box-sizing: border-box;
+  white-space: nowrap;
+  ${flex('flex-start', 'center')}
+`;
+
 export default function IssueSearchBox() {
   const [focused, setFocused] = useState(false);
+  const { filterOptions, setFilterOptions } = useContext(IssueContext);
+  const optionBoxRef = useRef();
 
   const handleFocus = () => {
     setFocused(true);
@@ -98,6 +112,45 @@ export default function IssueSearchBox() {
   const handleBlur = () => {
     setFocused(false);
   };
+
+  const handleClear = () => {
+    setFilterOptions(initialFilterOptions);
+  };
+
+  const isSame = () => JSON.stringify(filterOptions) === JSON.stringify(initialFilterOptions);
+
+  const handleEnter = e => {
+    if (e.key === 'Enter') {
+      const keyword = e.target.value ?? null;
+      setFilterOptions({ ...filterOptions, keyword: keyword === '' ? null : keyword });
+    }
+  };
+
+  const handleSearchView = () => {
+    const options = Object.entries(filterOptions).reduce((acc, [key, val]) => {
+      if (key === 'isOpened' && val) {
+        return acc + ' is:open';
+      }
+      if (key === 'author' && val) {
+        return acc + ` author:${val}`;
+      }
+      if (key === 'label' && val.length) {
+        return acc + val.reduce((acc, cur) => acc + ` label:${cur}`, '');
+      }
+      if (key === 'milestone' && val) {
+        return acc + ` milestone:${val}`;
+      }
+      if (key === 'assignee' && val) {
+        return acc + ` assignee:${val}`;
+      }
+      return acc;
+    }, '');
+    optionBoxRef.current.textContent = options;
+  };
+
+  useEffect(() => {
+    handleSearchView();
+  }, [filterOptions]);
 
   return (
     <SearchContainer>
@@ -109,7 +162,15 @@ export default function IssueSearchBox() {
           </SelectBox>
           <InputBox focused={focused}>
             <MGlassImg src={mGlass} />
-            <FilterInput type="text" onFocus={handleFocus} onBlur={handleBlur} tabIndex={0} />
+            <OptionBox ref={optionBoxRef}></OptionBox>
+            <FilterInput
+              type="text"
+              onFocus={handleFocus}
+              onBlur={handleBlur}
+              tabIndex={0}
+              placeholder={'Search all issues'}
+              onKeyPress={handleEnter}
+            />
           </InputBox>
         </FilterBox>
         <ControlBox>
@@ -119,9 +180,11 @@ export default function IssueSearchBox() {
           </Link>
         </ControlBox>
       </SearchBox>
-      <ClearBox>
-        ❎<ClearButton>Clear current search query, filters, and sorts</ClearButton>
-      </ClearBox>
+      {isSame() ? null : (
+        <ClearBox onClick={handleClear}>
+          ❎<ClearButton>Clear current search query, filters, and sorts</ClearButton>
+        </ClearBox>
+      )}
     </SearchContainer>
   );
 }

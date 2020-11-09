@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import styled from 'styled-components';
 import { flex } from '@styles/utils';
 import { userService, labelService, milestoneService } from '@services';
 import FilterBox from './FilterBox/FilterBox';
 import { ListItem } from '@components';
+import { IssueContext } from '@pages';
 import { useHistory } from 'react-router-dom';
 
 const Container = styled.div`
@@ -30,13 +31,10 @@ const filterState = {
 };
 
 export default function IssueFilterTab({ setIssues, issues, allChecked, markMode }) {
-  const handleCheck = ({ target: { checked } }) => {
-    setIssues(issues.map(issue => ({ ...issue, checked })));
-  };
-
   const history = useHistory();
   const [filterList, setFilterList] = useState(filterState);
   const { users, labels, milestones } = filterList;
+  const { filterOptions, setFilterOptions } = useContext(IssueContext);
 
   const fetchAllDatas = async () => {
     try {
@@ -68,6 +66,44 @@ export default function IssueFilterTab({ setIssues, issues, allChecked, markMode
     fetchAllDatas();
   }, []);
 
+  const handleCheck = ({ target: { checked } }) => {
+    setIssues(issues.map(issue => ({ ...issue, checked })));
+  };
+
+  const handleAuthorFilter = e => {
+    const author = e?.target?.textContent;
+    setFilterOptions({ ...filterOptions, author });
+  };
+
+  const handleMilestoneFilter = e => {
+    const milestone = e?.target?.textContent ?? null;
+    if (milestone === 'Issues with no milestone') {
+      setFilterOptions({ ...filterOptions, milestone: null });
+      return;
+    }
+    setFilterOptions({ ...filterOptions, milestone });
+  };
+
+  const handleAssigneeFilter = e => {
+    const assignee = e?.target?.textContent;
+    if (assignee === 'Assigned to nobody') {
+      setFilterOptions({ ...filterOptions, assignee: null });
+      return;
+    }
+    setFilterOptions({ ...filterOptions, assignee });
+  };
+
+  const handleLabelFilter = e => {
+    const label = e?.target?.textContent;
+    if (label === 'Unlabeled') {
+      setFilterOptions({ ...filterOptions, label: [] });
+      return;
+    }
+    setFilterOptions({ ...filterOptions, label: [...new Set([...filterOptions.label, label])] });
+  };
+
+  // TODO : open/close mark하는 기능 구현
+
   return (
     <Container>
       <input type="checkbox" onChange={handleCheck} checked={allChecked} />
@@ -82,28 +118,34 @@ export default function IssueFilterTab({ setIssues, issues, allChecked, markMode
           <>
             <FilterBox name="Author" title="Filter by author">
               {users.map(({ nickname }) => (
-                <ListItem key={nickname}>{nickname}</ListItem>
+                <ListItem key={nickname} onClick={handleAuthorFilter}>
+                  {nickname}
+                </ListItem>
               ))}
             </FilterBox>
             <FilterBox name="Label" title="Filter by label">
-              {[<ListItem key={'Unlabeled'}>{'Unlabeled'}</ListItem>].concat(
-                labels.map(({ no, name, color }) => (
-                  <ListItem key={no}>
-                    <LabelIcon color={color} />
-                    {name}
-                  </ListItem>
-                )),
-              )}
+              {[{ name: 'Unlabeled' }].concat(labels).map(({ no, name, color }) => (
+                <ListItem key={no ?? name} onClick={handleLabelFilter}>
+                  <LabelIcon color={color} />
+                  {name}
+                </ListItem>
+              ))}
             </FilterBox>
             <FilterBox name="Milestones" title="Filter by milestone">
-              {[<ListItem key={'no-milestone'}>{'Issues with no milestone'}</ListItem>].concat(
-                milestones.map(({ no, title }) => <ListItem key={no}>{title}</ListItem>),
-              )}
+              {[{ no: 'no-milestone', title: 'Issues with no milestone' }]
+                .concat(milestones)
+                .map(({ no, title }) => (
+                  <ListItem key={no} onClick={handleMilestoneFilter}>
+                    {title}
+                  </ListItem>
+                ))}
             </FilterBox>
             <FilterBox name="Assignees" title={`Filter by who's assigned`}>
-              {[<ListItem key={'nobody'}>{'Assigned to nobody'}</ListItem>].concat(
-                users.map(({ nickname }) => <ListItem key={nickname}>{nickname}</ListItem>),
-              )}
+              {[{ nickname: 'Assigned to nobody' }].concat(users).map(({ nickname }) => (
+                <ListItem key={nickname} onClick={handleAssigneeFilter}>
+                  {nickname}
+                </ListItem>
+              ))}
             </FilterBox>
           </>
         )}
