@@ -9,17 +9,31 @@ import LabelEditBox from './LabelEditBox/LabelEditBox';
 const Box = styled.div`
   ${flexColumn};
   margin-top: 2rem;
+`;
+
+const TopBox = styled.div`
   border: 2px solid ${colors.lightGray};
   border-radius: 0.25rem;
 `;
 
-const LabelHeader = styled.div`
-  padding: 1rem;
-  border-bottom: 2px solid ${colors.lightGray};
+const BottomBox = styled.div`
+  margin-top: 2rem;
+  ${flexColumn};
+  border: 2px solid ${colors.lightGray};
+  border-radius: 0.25rem;
 
-  &:last-child {
+  & > * {
+    border-bottom: 2px solid ${colors.lightGray};
+  }
+
+  & > *:last-child {
     border-bottom: none;
   }
+`;
+
+const LabelHeader = styled.div`
+  padding: 1rem;
+  background-color: ${colors.lightestGray};
 `;
 
 export default function LabelItemBox() {
@@ -41,11 +55,17 @@ export default function LabelItemBox() {
 
   return (
     <Box>
-      <LabelHeader>8 Labels</LabelHeader>
-      <LabelEditBox />
-      {labels.map(label => (
-        <LabelItem key={label.no} {...label} />
-      ))}
+      <TopBox>
+        <LabelEditBox />
+      </TopBox>
+
+      <BottomBox>
+        <LabelHeader>8 Labels</LabelHeader>
+
+        {labels.map(label => (
+          <LabelItem key={label.no} {...label} />
+        ))}
+      </BottomBox>
     </Box>
   );
 }
