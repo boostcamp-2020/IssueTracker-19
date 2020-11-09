@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { colors } from '@styles/variables';
 import { flex, skyblueBoxShadow } from '@styles/utils';
@@ -140,10 +140,20 @@ export default function IssueInputBox() {
 
   const [visiable, setVisable] = useState(false);
 
+  useEffect(() => {
+    return () => {
+      if (debouceClear) {
+        clearTimeout(debouceClear);
+      }
+    };
+  });
+
   const showTextCount = () => {
     setVisable(true);
     countRef.current.textContent = `${content.length} characters`;
-    setDebouceClear(undefined);
+    if (debouceClear) {
+      clearTimeout(debouceClear);
+    }
     setDebouceClear(debounce(() => setVisable(false)));
   };
 
@@ -197,10 +207,14 @@ export default function IssueInputBox() {
         issueNos,
         labelNos,
       });
-      if (status === 200) {
+      if (status === 201) {
         history.push('/');
       }
     } catch (err) {
+      if (err.response.status === 401) {
+        history.push('/login');
+        return;
+      }
       alert('이슈 생성 실패', err.message);
       console.error(err);
     }
