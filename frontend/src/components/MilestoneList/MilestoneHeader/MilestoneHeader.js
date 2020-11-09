@@ -11,6 +11,7 @@ const Container = styled.div`
   width: 100%;
   background-color: #f6f8fa;
   border: 1px solid ${colors.borderColor};
+  box-sizing: border-box;
   border-radius: 6px 6px 0 0;
 `;
 const ToggleBox = styled.div`
@@ -31,19 +32,19 @@ const Img = styled.img`
   height: 20px;
   margin-right: 5px;
 `;
-export default function MilestoneHeader() {
+export default function MilestoneHeader({ openCount, closeCount }) {
   return (
-    <div>
-      <Container>
-        <ToggleBox>
-          <ButtonBox>
-            <Img src={MilestoneIcon} />3 Open
-          </ButtonBox>
-          <ButtonBox>
-            <Img src={CheckIcon} />1 Closed
-          </ButtonBox>
-        </ToggleBox>
-      </Container>
-    </div>
+    <Container>
+      <ToggleBox>
+        <ButtonBox>
+          <Img src={MilestoneIcon} />
+          {openCount} Open
+        </ButtonBox>
+        <ButtonBox>
+          <Img src={CheckIcon} />
+          {closeCount} Closed
+        </ButtonBox>
+      </ToggleBox>
+    </Container>
   );
 }

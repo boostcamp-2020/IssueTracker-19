@@ -75,7 +75,7 @@ export default function LabelMilestoneControls({
 }) {
   return (
     <Container>
-      <Link to="labels">
+      <Link to="/labels">
         <LabelBox labelChecked={labelChecked}>
           <ImgIcon src={labelChecked ? labelWhiteIcon : labelIcon} />
           <div>Labels</div>
@@ -86,7 +86,7 @@ export default function LabelMilestoneControls({
           ) : null}
         </LabelBox>
       </Link>
-      <Link to="milestones">
+      <Link to="/milestones">
         <MilestoneBox milestoneChecked={milestoneChecked}>
           <ImgIcon src={milestoneChecked ? milestoneWhiteIcon : milestoneIcon} />
           <div>Milestones</div>
