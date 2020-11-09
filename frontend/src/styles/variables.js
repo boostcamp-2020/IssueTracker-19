@@ -23,7 +23,7 @@ export const colors = {
   borderColor: '#e1e4e8',
   openedIssueColor: '#22863a',
   closedIssueColor: '#cb2431',
-  resetFilterColor: '#0366d9',
+  resetFilterColor: '#0366d6',
   resetDefaultColor: '#586069',
   headerColor: '#24292E',
 };

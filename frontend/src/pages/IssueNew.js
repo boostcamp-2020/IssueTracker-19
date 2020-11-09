@@ -1,5 +1,5 @@
 import React from 'react';
-import { Header, IssueInputBox } from '@components';
+import { Header, IssueInputBox, IssueSidebar } from '@components';
 import styled from 'styled-components';
 import { numerics } from '@styles/variables';
 
@@ -15,6 +15,7 @@ export default function IssueNew() {
       <Header />
       <IssueContainer>
         <IssueInputBox />
+        <IssueSidebar />
       </IssueContainer>
     </>
   );
