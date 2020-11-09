@@ -9,7 +9,7 @@
 import UIKit
 
 class SectionCell: UICollectionViewCell {
-	var item: HashableObject?
+	var item: GitIssueObject?
 }
 
 class BottomViewMilestoneCell: SectionCell {
@@ -22,7 +22,7 @@ class BottomViewMilestoneCell: SectionCell {
 	@IBOutlet weak var dueDateLabel: UILabel!
 	@IBOutlet weak var bottomConstraint: NSLayoutConstraint!
 	
-	override var item: HashableObject? {
+	override var item: GitIssueObject? {
 		didSet {
 			guard let milestone = item as? Milestone else { return }
 			titleLabel.text = milestone.title

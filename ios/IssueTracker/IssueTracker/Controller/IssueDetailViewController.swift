@@ -8,7 +8,7 @@
 
 import UIKit
 
-class IssueComment: HashableObject {
+class IssueComment: GitIssueObject {
 	let author: String
 	let content: String
 	init(author: String, content: String) {

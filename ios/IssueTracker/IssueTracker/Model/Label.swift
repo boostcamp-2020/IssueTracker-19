@@ -8,10 +8,11 @@
 
 import Foundation
 
-class Label: HashableObject, Codable {
+class Label: GitIssueObject, Codable {
 	let name: String
 	let description: String?
 	let color: String
+	override var searchText: String { name }
     
     enum CodingKeys: String, CodingKey {
         case name, description, color

@@ -8,10 +8,13 @@
 
 import Foundation
 
-class HashableObject: Hashable {
+class GitIssueObject: Hashable {
 	let identifier = UUID()
+	var searchText: String {
+		""
+	}
 	
-	static func == (lhs: HashableObject, rhs: HashableObject) -> Bool {
+	static func == (lhs: GitIssueObject, rhs: GitIssueObject) -> Bool {
 		return lhs.identifier == rhs.identifier
 	}
 	
