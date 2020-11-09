@@ -8,16 +8,30 @@ const MainContainer = styled.div`
   flex-direction: column;
   flex: 1;
   margin-right: 5rem;
-  border: 1px solid ${colors.lighterGray};
-  border-radius: 5px;
+  padding-left: 0.5rem;
 `;
 
 const Box = styled.div`
-  ${flex('space-between', 'center')}
-  padding:1rem;
+  padding: 1.5rem 1rem 0 1rem;
   font-size: 0.8rem;
   font-weight: bold;
-  color: ${colors.black8};
+  color: ${colors.black5};
+`;
+
+const Line = styled.div`
+  height: 0.5px;
+  width: 100%;
+  margin-top: 1rem;
+  background-color: ${colors.lighterGray};
+`;
+
+const AssigneeBox = styled(Box)``;
+const LabelBox = styled(Box)``;
+const MilestoneBox = styled(Box)``;
+
+const Header = styled.div`
+  ${flex('space-between', 'center')}
+  cursor: pointer;
   &:hover {
     color: ${colors.resetFilterColor};
     svg {
@@ -26,24 +40,43 @@ const Box = styled.div`
   }
 `;
 
-const AssigneeBox = styled(Box)``;
-const LabelBox = styled(Box)``;
-const MilestoneBox = styled(Box)``;
+const Content = styled.div`
+  font-weight: 300;
+  font-size: 0.75rem;
+  padding: 0.8rem 0 0 0;
+`;
+
+const AssigneeButton = styled.span``;
 
 export default function IssueSidebar() {
   return (
     <MainContainer>
       <AssigneeBox>
-        Assignees
-        <GearIcon fillColor={colors.black8} />
+        <Header>
+          Assignees
+          <GearIcon fillColor={colors.black8} />
+        </Header>
+        <Content>
+          No one—<AssigneeButton>assign yourself</AssigneeButton>
+          <Line />
+        </Content>
       </AssigneeBox>
       <LabelBox>
-        Labels
-        <GearIcon fillColor={colors.black8} />
+        <Header>
+          Labels
+          <GearIcon fillColor={colors.black8} />
+        </Header>
+        <Content>None yet</Content>
+        <Line />
       </LabelBox>
+
       <MilestoneBox>
-        Milestone
-        <GearIcon fillColor={colors.black8} />
+        <Header>
+          Milestone
+          <GearIcon fillColor={colors.black8} />
+        </Header>
+        <Content>None yet</Content>
+        <Line />
       </MilestoneBox>
     </MainContainer>
   );
