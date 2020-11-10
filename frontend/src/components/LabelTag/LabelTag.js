@@ -14,7 +14,7 @@ const Tag = styled.span`
 export default function LabelTag({ name, color, size = '1rem' }) {
   return (
     <Tag color={color} size={size}>
-      {name}
+      {name ? name : 'Label preview'}
     </Tag>
   );
 }
