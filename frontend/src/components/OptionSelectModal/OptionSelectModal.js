@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { colors } from '@styles/variables';
 import closeDarkIcon from '@imgs/close-dark.svg';
 import { flex } from '@styles/utils';
+import { ListItem } from '@shared';
 
 const Container = styled.div`
   width: ${props => (props.width ? props.width : '18.5rem')};
@@ -30,14 +31,6 @@ const CloseImg = styled.img`
 const ListBox = styled.div`
   max-height: 20rem;
   overflow-y: auto;
-`;
-
-export const ListItem = styled.div`
-  ${flex('flex-start', 'center')}
-  font-size: 0.8rem;
-  padding: 0.5rem 0 0.5rem 0.7rem;
-  border-bottom: 1px solid ${colors.lightGray};
-  cursor: pointer;
 `;
 
 export default function OptionSelectModal({ visiable, setVisiable, title, children, width }) {
