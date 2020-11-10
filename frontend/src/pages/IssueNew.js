@@ -18,11 +18,19 @@ export default function IssueNew({ user }) {
     const { no, nickname } = user;
     setAssignees([{ no, nickname }]);
   };
+
   const handleClickAssignee = (e, user) => {
     setAssignees([...assignees, user]);
   };
-  const handleClickLabel = () => {};
-  const handleClickMilestone = () => {};
+
+  const handleClickLabel = (e, label) => {
+    setLabels([...labels, label]);
+  };
+
+  const handleClickMilestone = (e, newMilestone) => {
+    setMilestone(newMilestone);
+  };
+
   return (
     <>
       <Header />

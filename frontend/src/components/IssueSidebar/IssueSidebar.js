@@ -217,19 +217,28 @@ export default function IssueSidebar(props) {
               title={'Apply labels to this issue'}
               width={'19rem'}
             >
-              {modalItems.labels.map(({ no, name, color, description }) => (
-                <MyListItem key={no} onClick={handleClickLabel}>
-                  <IconBox>
-                    <LabelIcon color={color} />
-                    <IconTitle>{name}</IconTitle>
-                  </IconBox>
-                  <IconDesc>{description}</IconDesc>
-                </MyListItem>
-              ))}
+              {modalItems.labels
+                .filter(labelItems => !labels.some(l => l.no === labelItems.no))
+                .map(({ no, name, color, description }) => (
+                  <MyListItem
+                    key={no}
+                    onClick={e => handleClickLabel(e, { no, name, color, description })}
+                  >
+                    <IconBox>
+                      <LabelIcon color={color} />
+                      <IconTitle>{name}</IconTitle>
+                    </IconBox>
+                    <IconDesc>{description}</IconDesc>
+                  </MyListItem>
+                ))}
             </OptionSelectModal>
           </Modal>
         </Header>
-        <Content>{labels && labels.length ? <div></div> : 'None yet'}</Content>
+        <Content>
+          {labels && labels.length
+            ? labels.map(({ no, name }) => <div key={no}>{name}</div>)
+            : 'None yet'}
+        </Content>
         <Line />
       </LabelBox>
 
@@ -244,15 +253,17 @@ export default function IssueSidebar(props) {
               title={'Set milestone'}
               width={'19rem'}
             >
-              {modalItems.milestones.map(({ no, title }) => (
-                <ListItem key={no} onClick={handleClickMilestone}>
-                  <IconTitle>{title}</IconTitle>
-                </ListItem>
-              ))}
+              {modalItems.milestones
+                .filter(m => m.no !== milestone?.no)
+                .map(({ no, title }) => (
+                  <ListItem key={no} onClick={e => handleClickMilestone(e, { no, title })}>
+                    <IconTitle>{title}</IconTitle>
+                  </ListItem>
+                ))}
             </OptionSelectModal>
           </Modal>
         </Header>
-        <Content>{milestone ? <div></div> : 'None yet'}</Content>
+        <Content>{milestone ? <div>{milestone.title}</div> : 'None yet'}</Content>
         <Line />
       </MilestoneBox>
     </MainContainer>
