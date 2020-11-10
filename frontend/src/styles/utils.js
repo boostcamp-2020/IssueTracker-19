@@ -30,6 +30,10 @@ export const skyblueBoxShadow = css`
 export const calcFontColor = backgroundColor => {
   const d = document.createElement('div');
   d.style.color = backgroundColor;
+
+  // Invalid value
+  if (d.style.color === '') return 'black';
+
   const [R, G, B] = d.style.color.match(/\d+/g).map(color => parseInt(color));
 
   // https://stackoverflow.com/a/36888120
