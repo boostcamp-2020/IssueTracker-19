@@ -41,7 +41,8 @@ export const ListItem = styled.div`
 `;
 
 export default function OptionSelectModal({ visiable, setVisiable, title, children }) {
-  const handleClose = () => {
+  const handleClose = e => {
+    e.stopPropagation();
     setVisiable(false);
   };
 
