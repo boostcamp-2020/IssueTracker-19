@@ -8,7 +8,11 @@
 
 import UIKit
 
-class IssueViewController: UIViewController, ListCollectionViewProtocol{
+protocol IssueInsertProtocol {
+    func issueInsertAction(issueTitle: String, issueComment: String)
+}
+
+class IssueViewController: UIViewController, ListCollectionViewProtocol {
     struct Issues: Decodable {
         var issues: [Issue]
     }
@@ -189,6 +193,7 @@ extension IssueViewController {
             collectionView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor)
         ])
         
+        collectionView.backgroundColor = .systemBackground
         collectionView.delegate = self
         collectionView.allowsMultipleSelection = true
     }
@@ -226,6 +231,10 @@ extension IssueViewController {
 //										milestoneTitle: nil,
 //										commentCount: 2)
 		}
+        
+        if let issueAddVC = segue.destination as? IssueAddViewController {
+            issueAddVC.issueInsertDelegate = self
+        }
 	}
 }
 
@@ -258,4 +267,15 @@ extension IssueViewController: UISearchResultsUpdating {
 	navigationItem.searchController = searchController
 	definesPresentationContext = true
   }
+}
+
+extension IssueViewController: IssueInsertProtocol {
+    func issueInsertAction(issueTitle: String, issueComment: String) {
+        /*
+         이슈 생성시 첫 comment 정보를 입력받게 생성자 수정 필요
+         */
+        let issue = Issue(title: issueTitle, author: issueComment)
+        list.append(issue)
+        updateList()
+    }
 }

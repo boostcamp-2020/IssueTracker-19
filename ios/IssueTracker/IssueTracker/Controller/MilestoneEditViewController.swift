@@ -19,7 +19,6 @@ class MilestoneEditViewController: UIViewController {
 	var milestone: Milestone?
 	var constraintInEditMode: NSLayoutConstraint?
 	
-	
     override func viewDidLoad() {
         super.viewDidLoad()
 		setupViews(milestone)

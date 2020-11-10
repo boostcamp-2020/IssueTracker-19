@@ -8,6 +8,11 @@
 
 import UIKit
 
+protocol LabelInsertOrEditProtocol {
+    func labelInsertAction(labelName: String, labelDescription: String, colorCode: String)
+    func labelEditAction(labelName: String, labelDescription: String, colorCode: String, index: Int)
+}
+
 class LabelViewController: UIViewController, ListCollectionViewProtocol {
     typealias Registration = UICollectionView.CellRegistration<LabelCollectionViewCell, Label>
     var list = [Label]()
@@ -36,7 +41,17 @@ class LabelViewController: UIViewController, ListCollectionViewProtocol {
 			case .success(let data):
 				let sample = try? JSONSerialization.jsonObject(with: data) as? [String: Any]
 				let labels = try? JSONDecoder().decode(Labels.self, from: data)
-				self?.list = labels!.labels
+                
+                if let result = labels?.labels {
+                    self?.list = result
+                } else {
+                    self?.list = [
+                        Label(name: "iOS", description: "so good", color: "#ECECEC"),
+                        Label(name: "iOS", description: "so good", color: "#ECECEC"),
+                        Label(name: "iOS", description: "so good", color: "#ECECEC")
+                    ]
+                }
+                
 				self?.updateList()
 			case .failure(let error):
 				print(error)
@@ -62,6 +77,11 @@ class LabelViewController: UIViewController, ListCollectionViewProtocol {
 //            }
 //        }
     }
+    
+    @IBAction func labelAddAction(_ sender: UIBarButtonItem) {
+        performSegue(withIdentifier: "labelEditSegue", sender: nil)
+    }
+    
 }
 extension LabelViewController {
     func configureHierarchy() {
@@ -88,11 +108,6 @@ extension LabelViewController {
                 return UICollectionViewCell()
             }
 			cell.label = item
-            
-            NSLayoutConstraint.activate([
-                cell.titleLabel.widthAnchor.constraint(equalToConstant: cell.titleLabel.intrinsicContentSize.width + 20)
-            ])
-            cell.labelHeightContraint.constant = cell.titleLabel.intrinsicContentSize.height + 5
             cell.titleLabel.layoutIfNeeded()
             cell.contentView.backgroundColor = .tertiarySystemBackground
             return cell
@@ -105,8 +120,36 @@ extension LabelViewController {
         return UICollectionViewCompositionalLayout.list(using: config)
     }
 }
+
 extension LabelViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        performSegue(withIdentifier: "labelEditSegue", sender: nil)
+        performSegue(withIdentifier: "labelEditSegue", sender: indexPath)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let labelDetailAndAddVC = segue.destination as? LabelDetailAndAddViewController {
+            labelDetailAndAddVC.insertDelegate = self
+            guard let indexPath = sender as? IndexPath else {
+                return
+            }
+            labelDetailAndAddVC.labelName = list[indexPath.item].name
+            labelDetailAndAddVC.labelDescription = list[indexPath.item].description ?? ""
+            labelDetailAndAddVC.labelColor = list[indexPath.item].color
+            labelDetailAndAddVC.labelEditIndex = indexPath.item
+        }
+    }
+}
+
+extension LabelViewController: LabelInsertOrEditProtocol {
+    func labelEditAction(labelName: String, labelDescription: String, colorCode: String, index: Int) {
+        self.list[index].name = labelName
+        self.list[index].description = labelDescription
+        self.list[index].color = colorCode
+        updateList()
+    }
+    
+    func labelInsertAction(labelName: String, labelDescription: String, colorCode: String) {
+        self.list.append(Label(name: labelName, description: labelDescription, color: colorCode))
+        updateList()
     }
 }

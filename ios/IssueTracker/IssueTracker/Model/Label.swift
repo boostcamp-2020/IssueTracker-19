@@ -9,9 +9,9 @@
 import Foundation
 
 class Label: HashableObject, Codable {
-	let name: String
-	let description: String?
-	let color: String
+	var name: String
+	var description: String?
+	var color: String
     
     enum CodingKeys: String, CodingKey {
         case name, description, color
