@@ -40,3 +40,8 @@ export const calcFontColor = backgroundColor => {
   const luma = (0.299 * R + 0.587 * G + 0.114 * B) / 255;
   return luma > 0.5 ? 'black' : 'white';
 };
+
+export const pickRandomColor = () => {
+  const hexString = Math.floor(Math.random() * 0xffffff).toString(16);
+  return ('#000000'.substr(0, 7 - hexString.length) + hexString).toUpperCase();
+};
