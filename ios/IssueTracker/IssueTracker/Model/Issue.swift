@@ -29,6 +29,22 @@ struct Issue: Hashable, Codable {
     let milestoneNo: Int?
     let milestoneTitle: String?
     let commentCount: Int
+    
+    init(title: String, author: String) {
+        no = 0
+        self.title = title
+        self.author = author
+        assignees = []
+        labels = []
+        isOpened = 1
+        createdAt = "\(Date())"
+        commentCount = 1
+        closedAt = nil
+        milestoneNo = nil
+        milestoneTitle = nil
+        uuid = UUID()
+    }
+    
     enum CodingKeys: String, CodingKey {
         case no, title, author, assignees, labels, isOpened, createdAt, closedAt, milestoneNo, milestoneTitle, commentCount
     }
