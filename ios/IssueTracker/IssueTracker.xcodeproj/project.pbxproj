@@ -46,6 +46,7 @@
 		C12542602547F44C00DE2BB8 /* IssueCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C125425F2547F44C00DE2BB8 /* IssueCollectionViewCell.swift */; };
 		C12542632548007500DE2BB8 /* UIExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C12542622548007500DE2BB8 /* UIExtension.swift */; };
 		C136F60C25495F93007A09F8 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = C136F60B25495F93007A09F8 /* .swiftlint.yml */; };
+		C162A851255A8A1C0075B296 /* UIColor+toHexString.swift in Sources */ = {isa = PBXBuildFile; fileRef = C162A850255A8A1C0075B296 /* UIColor+toHexString.swift */; };
 		C170B359254A9DEC0052FE3D /* Issue.swift in Sources */ = {isa = PBXBuildFile; fileRef = C170B358254A9DEC0052FE3D /* Issue.swift */; };
 		C173761A2553F68100E192C0 /* Label.swift in Sources */ = {isa = PBXBuildFile; fileRef = C17376192553F68100E192C0 /* Label.swift */; };
 		C173761D2553F69E00E192C0 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = C173761C2553F69E00E192C0 /* User.swift */; };
@@ -100,6 +101,7 @@
 		C125425F2547F44C00DE2BB8 /* IssueCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueCollectionViewCell.swift; sourceTree = "<group>"; };
 		C12542622548007500DE2BB8 /* UIExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIExtension.swift; sourceTree = "<group>"; };
 		C136F60B25495F93007A09F8 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
+		C162A850255A8A1C0075B296 /* UIColor+toHexString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+toHexString.swift"; sourceTree = "<group>"; };
 		C170B358254A9DEC0052FE3D /* Issue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Issue.swift; sourceTree = "<group>"; };
 		C17376192553F68100E192C0 /* Label.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Label.swift; sourceTree = "<group>"; };
 		C173761C2553F69E00E192C0 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
@@ -140,6 +142,7 @@
 			children = (
 				4CDC3CAA2552F6E500FC672B /* NSLayoutConstraint+description.swift */,
 				4CDC3D2E2556ABD200FC672B /* String+toUIColorPair.swift */,
+				C162A850255A8A1C0075B296 /* UIColor+toHexString.swift */,
 			);
 			path = extension;
 			sourceTree = "<group>";
@@ -220,8 +223,8 @@
 				C1048957255112230091668C /* IssueAddViewController.swift */,
 				4CB6F8FC254D639300901E9D /* IssueDetailViewController.swift */,
 				C117D89D2547C7CF0081DCD7 /* IssueViewController.swift */,
-				C10489722551986B0091668C /* LabelDetailAndAddViewController.swift */,
 				C104895D25515CA50091668C /* LabelViewController.swift */,
+				C10489722551986B0091668C /* LabelDetailAndAddViewController.swift */,
 				4CDFDEA6255291F30084A19E /* MilestoneEditViewController.swift */,
 				4CD204872551A5230001B987 /* MilestoneViewController.swift */,
 				C196564B2546B9B6007DD55A /* ViewController.swift */,
@@ -426,6 +429,7 @@
 				4CDC3CAB2552F6E500FC672B /* NSLayoutConstraint+description.swift in Sources */,
 				C12542602547F44C00DE2BB8 /* IssueCollectionViewCell.swift in Sources */,
 				4C4404342551BCBE0075AD9B /* MilestoneViewCell.swift in Sources */,
+				C162A851255A8A1C0075B296 /* UIColor+toHexString.swift in Sources */,
 				4CDC3D2F2556ABD200FC672B /* String+toUIColorPair.swift in Sources */,
 				C196564C2546B9B6007DD55A /* ViewController.swift in Sources */,
 				C173761D2553F69E00E192C0 /* User.swift in Sources */,

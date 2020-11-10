@@ -90,7 +90,7 @@ class IssueViewController: UIViewController, ListCollectionViewProtocol {
                         let sample = try? JSONSerialization.jsonObject(with: data) as? [String: Any]
                         let issue = try? JSONDecoder().decode(Issues.self, from: data)
                         self?.list = issue!.issues
-//						self?.allList = self?.list ?? []
+						self?.allList = self?.list ?? []
                         self?.updateList()
                     case .failure(let error):
                         print(error)
