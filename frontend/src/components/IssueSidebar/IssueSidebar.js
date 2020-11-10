@@ -1,9 +1,11 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { OptionSelectModal } from '@components';
 import { colors } from '@styles/variables';
 import { flex } from '@styles/utils';
 import GearIcon from './GearIcon/GearIcon';
+import { userService, labelService, milestoneService } from '@services';
+import { LabelIcon, ListItem } from '@shared';
 
 const MainContainer = styled.div`
   flex-direction: column;
@@ -15,8 +17,11 @@ const MainContainer = styled.div`
 const Box = styled.div`
   padding: 1.5rem 1rem 0 1rem;
   font-size: 0.8rem;
-  font-weight: bold;
   color: ${colors.black5};
+`;
+
+const BoxTitle = styled.span`
+  font-weight: bold;
 `;
 
 const Line = styled.div`
@@ -58,8 +63,37 @@ const Modal = styled.div`
   z-index: 2;
 `;
 
+const MyListItem = styled(ListItem)`
+  display: block;
+`;
+
+const IconBox = styled.div`
+  ${flex('flex-start', 'center')}
+  display: inline-flex;
+`;
+
+const EllipsisDiv = styled.div`
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+`;
+
+const IconTitle = styled(EllipsisDiv)`
+  width: 12rem;
+`;
+
+const IconDesc = styled(EllipsisDiv)`
+  width: 12rem;
+  padding: 0.2rem 0;
+  font-size: 0.7rem;
+  color: ${colors.black7};
+`;
+
 export default function IssueSidebar(props) {
   const { handleAssignToMe } = props;
+
+  const [modalItems, setModalItems] = useState({ users: [], labels: [], milestones: [] });
+  const { users, labels, milestones } = modalItems;
 
   const assigneeModalRef = useRef();
   const labelModalRef = useRef();
@@ -90,11 +124,45 @@ export default function IssueSidebar(props) {
 
   const closeMilestoneModal = () => setVisiableMilestoneModal(false);
 
+  const fetchAllModalItems = async () => {
+    try {
+      const [
+        {
+          data: { users },
+        },
+        {
+          data: { labels },
+        },
+        {
+          data: { milestones },
+        },
+      ] = await Promise.all([
+        userService.getUsers(),
+        labelService.getLabels(),
+        milestoneService.getMilestones(),
+      ]);
+      setModalItems({ users, labels, milestones });
+    } catch (err) {
+      if (err?.response?.status === 401) {
+        history.push('/login');
+      }
+      console.error(err);
+    }
+  };
+
+  useEffect(() => {
+    fetchAllModalItems();
+  }, []);
+
+  const handleClickAssignee = () => {};
+  const handleClickLabel = () => {};
+  const handleClickMilestone = () => {};
+
   return (
     <MainContainer>
       <AssigneeBox>
         <Header onClick={openAssigneeModal}>
-          Assignees
+          <BoxTitle>Assignees</BoxTitle>
           <GearIcon fillColor={colors.black8} />
           <Modal tabIndex={0} ref={assigneeModalRef} onBlur={closeAssigneeModal}>
             <OptionSelectModal
@@ -102,7 +170,11 @@ export default function IssueSidebar(props) {
               setVisiable={setVisiableAssigneeModal}
               title={'Assign up to 10 people to this issue'}
               width={'19rem'}
-            ></OptionSelectModal>
+            >
+              {users.map(({ no, nickname }) => (
+                <ListItem key={no}>{nickname}</ListItem>
+              ))}
+            </OptionSelectModal>
           </Modal>
         </Header>
         <Content>
@@ -113,7 +185,7 @@ export default function IssueSidebar(props) {
 
       <LabelBox>
         <Header onClick={openLabelModal}>
-          Labels
+          <BoxTitle>Labels</BoxTitle>
           <GearIcon fillColor={colors.black8} />
           <Modal tabIndex={0} ref={labelModalRef} onBlur={closeLabelModal}>
             <OptionSelectModal
@@ -121,7 +193,17 @@ export default function IssueSidebar(props) {
               setVisiable={setVisiableLabelModal}
               title={'Apply labels to this issue'}
               width={'19rem'}
-            ></OptionSelectModal>
+            >
+              {labels.map(({ no, name, color, description }) => (
+                <MyListItem key={no}>
+                  <IconBox>
+                    <LabelIcon color={color} />
+                    <IconTitle>{name}</IconTitle>
+                  </IconBox>
+                  <IconDesc>{description}</IconDesc>
+                </MyListItem>
+              ))}
+            </OptionSelectModal>
           </Modal>
         </Header>
         <Content>None yet</Content>
@@ -130,7 +212,7 @@ export default function IssueSidebar(props) {
 
       <MilestoneBox>
         <Header onClick={openMilestoneModal}>
-          Milestone
+          <BoxTitle>Milestone</BoxTitle>
           <GearIcon fillColor={colors.black8} />
           <Modal tabIndex={0} ref={milestoneModalRef} onBlur={closeMilestoneModal}>
             <OptionSelectModal
@@ -138,7 +220,14 @@ export default function IssueSidebar(props) {
               setVisiable={setVisiableMilestoneModal}
               title={'Set milestone'}
               width={'19rem'}
-            ></OptionSelectModal>
+            >
+              {console.log(milestones)}
+              {milestones.map(({ no, title }) => (
+                <ListItem key={no}>
+                  <IconTitle>{title}</IconTitle>
+                </ListItem>
+              ))}
+            </OptionSelectModal>
           </Modal>
         </Header>
         <Content>None yet</Content>
