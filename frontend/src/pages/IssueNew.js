@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Header, IssueInputBox, IssueSidebar } from '@components';
 import styled from 'styled-components';
 import { numerics } from '@styles/variables';
@@ -9,9 +9,18 @@ const IssueContainer = styled.div`
   display: flex;
 `;
 
-export default function IssueNew() {
-  const handleAssignToMe = () => {};
-  const handleClickAssignee = () => {};
+export default function IssueNew({ user }) {
+  const [assignees, setAssignees] = useState([]);
+  const [labels, setLabels] = useState([]);
+  const [milestone, setMilestone] = useState(undefined);
+
+  const handleAssignToMe = () => {
+    const { no, nickname } = user;
+    setAssignees([{ no, nickname }]);
+  };
+  const handleClickAssignee = (e, user) => {
+    setAssignees([...assignees, user]);
+  };
   const handleClickLabel = () => {};
   const handleClickMilestone = () => {};
   return (
@@ -20,6 +29,9 @@ export default function IssueNew() {
       <IssueContainer>
         <IssueInputBox />
         <IssueSidebar
+          assignees={assignees}
+          labels={labels}
+          milestone={milestone}
           handleAssignToMe={handleAssignToMe}
           handleClickAssignee={handleClickAssignee}
           handleClickLabel={handleClickLabel}

@@ -53,7 +53,12 @@ const Content = styled.div`
   padding: 0.8rem 0 0 0;
 `;
 
-const AssignMySelfButton = styled.span``;
+const AssignMySelfButton = styled.span`
+  cursor: pointer;
+  &:hover {
+    color: ${colors.resetFilterColor};
+  }
+`;
 
 const Modal = styled.div`
   position: absolute;
@@ -90,10 +95,17 @@ const IconDesc = styled(EllipsisDiv)`
 `;
 
 export default function IssueSidebar(props) {
-  const { handleAssignToMe, handleClickAssignee, handleClickLabel, handleClickMilestone } = props;
+  const {
+    assignees,
+    labels,
+    milestone,
+    handleAssignToMe,
+    handleClickAssignee,
+    handleClickLabel,
+    handleClickMilestone,
+  } = props;
 
   const [modalItems, setModalItems] = useState({ users: [], labels: [], milestones: [] });
-  const { users, labels, milestones } = modalItems;
 
   const assigneeModalRef = useRef();
   const labelModalRef = useRef();
@@ -104,6 +116,10 @@ export default function IssueSidebar(props) {
   const [visiableMilestoneModal, setVisiableMilestoneModal] = useState(false);
 
   const openAssigneeModal = () => {
+    if (assignees.length === 10) {
+      alert('assignee는 최대 10명까지만 할당할 수 있습니다.');
+      return;
+    }
     setVisiableAssigneeModal(true);
     assigneeModalRef.current.focus();
   };
@@ -167,16 +183,25 @@ export default function IssueSidebar(props) {
               title={'Assign up to 10 people to this issue'}
               width={'19rem'}
             >
-              {users.map(({ no, nickname }) => (
-                <ListItem key={no} onClick={handleClickAssignee}>
-                  {nickname}
-                </ListItem>
-              ))}
+              {modalItems.users
+                .filter(u => !assignees.some(a => a.no === u.no))
+                .map(({ no, nickname }) => (
+                  <ListItem key={no} onClick={e => handleClickAssignee(e, { no, nickname })}>
+                    {nickname}
+                  </ListItem>
+                ))}
             </OptionSelectModal>
           </Modal>
         </Header>
         <Content>
-          No one—<AssignMySelfButton onClick={handleAssignToMe}>assign yourself</AssignMySelfButton>
+          {assignees && assignees.length ? (
+            assignees.map(({ no, nickname }) => <div key={no}>{nickname}</div>)
+          ) : (
+            <div>
+              No one—
+              <AssignMySelfButton onClick={handleAssignToMe}>assign yourself</AssignMySelfButton>
+            </div>
+          )}
           <Line />
         </Content>
       </AssigneeBox>
@@ -192,7 +217,7 @@ export default function IssueSidebar(props) {
               title={'Apply labels to this issue'}
               width={'19rem'}
             >
-              {labels.map(({ no, name, color, description }) => (
+              {modalItems.labels.map(({ no, name, color, description }) => (
                 <MyListItem key={no} onClick={handleClickLabel}>
                   <IconBox>
                     <LabelIcon color={color} />
@@ -204,7 +229,7 @@ export default function IssueSidebar(props) {
             </OptionSelectModal>
           </Modal>
         </Header>
-        <Content>None yet</Content>
+        <Content>{labels && labels.length ? <div></div> : 'None yet'}</Content>
         <Line />
       </LabelBox>
 
@@ -219,8 +244,7 @@ export default function IssueSidebar(props) {
               title={'Set milestone'}
               width={'19rem'}
             >
-              {console.log(milestones)}
-              {milestones.map(({ no, title }) => (
+              {modalItems.milestones.map(({ no, title }) => (
                 <ListItem key={no} onClick={handleClickMilestone}>
                   <IconTitle>{title}</IconTitle>
                 </ListItem>
@@ -228,7 +252,7 @@ export default function IssueSidebar(props) {
             </OptionSelectModal>
           </Modal>
         </Header>
-        <Content>None yet</Content>
+        <Content>{milestone ? <div></div> : 'None yet'}</Content>
         <Line />
       </MilestoneBox>
     </MainContainer>
