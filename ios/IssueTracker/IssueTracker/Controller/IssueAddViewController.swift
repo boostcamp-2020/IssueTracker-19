@@ -80,11 +80,19 @@ class IssueAddViewController: UIViewController {
          issueTitleTextField.text <- 이슈 제목
          markdownResult <- 마크다운 형식으로 작성한 String
          */
-        guard let title = issueTitleTextField.text else {
+        guard let title = issueTitleTextField.text, title != "" else {
+            presentAlert(title: "이슈 제목", message: "이슈 제목을 입력하지 않았어요!")
             return
         }
         issueInsertDelegate?.issueInsertAction(issueTitle: title, issueComment: markdownResult)
         dismiss(animated: true, completion: nil)
+    }
+    
+    func presentAlert(title: String, message: String) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let defaultAction = UIAlertAction(title: "OK", style: .destructive)
+        alert.addAction(defaultAction)
+        present(alert, animated: false, completion: nil)
     }
 }
 
@@ -108,7 +116,7 @@ extension IssueAddViewController: UITextViewDelegate {
 }
 
 extension IssueAddViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
         guard let image = info[.originalImage] as? UIImage else {
             return
         }
