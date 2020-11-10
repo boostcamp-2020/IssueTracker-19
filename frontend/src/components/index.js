@@ -10,3 +10,4 @@ export { default as MilestoneNewHeader } from './MilestoneNewHeader/MilestoneNew
 export { default as LabelMilestoneTab } from './LabelMilestoneTab/LabelMilestoneTab';
 export { default as OptionSelectModal, ListItem } from './OptionSelectModal/OptionSelectModal';
 export { default as LabelTag } from './LabelTag/LabelTag';
+export { default as MilestoneList } from './MilestoneList/MilestoneList';

@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Header, LabelMilestoneTab } from '@components';
+import { Header, LabelMilestoneTab, MilestoneList } from '@components';
 import { numerics } from '@styles/variables';
 
 const Container = styled.div`
@@ -12,7 +12,8 @@ export default function Milestone() {
     <>
       <Header />
       <Container>
-        <LabelMilestoneTab submit={true} buttonName={'New milestone'} />
+        <LabelMilestoneTab Submit={true} ButtonName={'New milestone'} />
+        <MilestoneList />
       </Container>
     </>
   );
