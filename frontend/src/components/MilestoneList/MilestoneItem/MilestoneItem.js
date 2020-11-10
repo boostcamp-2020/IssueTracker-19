@@ -133,7 +133,7 @@ export default function MilestoneItem({
   ];
   const date = new Date(dueDate);
   const handleClose = async () => {
-    milestoneService.closeMilestones(no);
+    await milestoneService.closeMilestones(no);
     setClosed(true);
   };
   const handleOpen = async () => {
@@ -150,9 +150,16 @@ export default function MilestoneItem({
     const editLink = `/milestones/${no}/edit`;
     history.push({
       pathname: editLink,
-      state: { no, title, dueDate, description },
+      state: {
+        no,
+        isClosed,
+        title,
+        dueDate: dueDate ? dueDate : '',
+        description: description ? description : '',
+      },
     });
   };
+  let showDesription = description ? description.split('\n')[0] : ' ';
   if (!isDeleted)
     return (
       <Container>
@@ -170,7 +177,7 @@ export default function MilestoneItem({
               )}
             </MetaItem>
             <Description>
-              <p>{description ? description : ' '}</p>
+              <p>{showDesription}</p>
             </Description>
           </Meta>
         </Title>

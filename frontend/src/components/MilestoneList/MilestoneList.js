@@ -36,7 +36,6 @@ export default function MilestoneList() {
   useEffect(() => {
     fetchMilestones();
   }, []);
-  console.log(milestoneList);
   return (
     <MilestoneListBox>
       <MilestoneHeader openCount={count.open} closeCount={count.closed} />

@@ -16,4 +16,7 @@ export const milestoneService = {
   addMilestones({ title, dueDate, description }) {
     return API.post('/api/milestones', { title, dueDate, description });
   },
+  editMilestones({ no, title, dueDate, description }) {
+    return API.put(`/api/milestones/${no}`, { title, description, dueDate });
+  },
 };

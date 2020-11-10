@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { flexColumn, flexCenter, flex } from '@styles/utils';
 import { SubmitButton, CancelButton } from '@shared';
@@ -56,7 +56,8 @@ const ButtonSpace = styled.div`
   margin-left: 7px;
 `;
 export default function MilestoneEditBox({ isNew }) {
-  const [form, setForm] = useState({ title: ' ', dueDate: null, description: '' });
+  const [form, setForm] = useState({ title: ' ', dueDate: '', description: '' });
+  const [isClosed, setIsClosed] = useState(false);
   const { title, dueDate, description } = form;
 
   const history = useHistory();
@@ -65,6 +66,17 @@ export default function MilestoneEditBox({ isNew }) {
     const { name, value } = target;
     setForm({ ...form, [name]: value });
   };
+  useEffect(() => {
+    if (location.state) {
+      setForm({
+        ...form,
+        title: location.state.title,
+        dueDate: location.state.dueDate,
+        description: location.state.description,
+      });
+      setIsClosed(location.state.isClosed);
+    }
+  }, []);
 
   const handleSubmit = async e => {
     e.preventDefault();
@@ -83,7 +95,26 @@ export default function MilestoneEditBox({ isNew }) {
       console.error(err);
     }
   };
-
+  const handleClose = async () => {
+    await milestoneService.closeMilestones(location.state.no);
+    setIsClosed(true);
+  };
+  const handleOpen = async () => {
+    await milestoneService.openMilestones(location.state.no);
+    setIsClosed(false);
+  };
+  const handleCancel = () => {
+    history.goBack();
+  };
+  const handleSaveChange = async () => {
+    await milestoneService.editMilestones({
+      no: location.state.no,
+      title,
+      dueDate: dueDate === '' ? null : dueDate,
+      description,
+    });
+    history.push('/milestones');
+  };
   return (
     <Form onSubmit={handleSubmit}>
       <Container>
@@ -95,7 +126,7 @@ export default function MilestoneEditBox({ isNew }) {
             onChange={handleChange}
             id="milestone_title"
             placeholder="Title"
-            value={location.state ? location.state.title : ''}
+            value={title}
             required
           />
         </InputBox>
@@ -107,7 +138,7 @@ export default function MilestoneEditBox({ isNew }) {
             onChange={handleChange}
             id="milestone_date"
             placeholder="yyyy-mm-dd"
-            value={location.state ? location.state.dueDate : ''}
+            value={dueDate}
           />
         </InputBox>
         <InputBox>
@@ -117,7 +148,7 @@ export default function MilestoneEditBox({ isNew }) {
             onChange={handleChange}
             cols="40"
             rows="20"
-            value={location.state ? location.state.description : ''}
+            value={description}
           />
         </InputBox>
       </Container>
@@ -127,13 +158,25 @@ export default function MilestoneEditBox({ isNew }) {
         ) : (
           <CancelDiv>
             <ButtonSpace>
-              <CancelButton>Cancel</CancelButton>
+              <CancelButton type="button" onClick={handleCancel}>
+                Cancel
+              </CancelButton>
             </ButtonSpace>
             <ButtonSpace>
-              <CancelButton>Close milestone</CancelButton>
+              {!isClosed ? (
+                <CancelButton type="button" onClick={handleClose}>
+                  Close milestone
+                </CancelButton>
+              ) : (
+                <CancelButton type="button" onClick={handleOpen}>
+                  Open milestone
+                </CancelButton>
+              )}
             </ButtonSpace>
             <ButtonSpace>
-              <SubmitButton>Save changes</SubmitButton>
+              <SubmitButton type="button" onClick={handleSaveChange}>
+                Save changes
+              </SubmitButton>
             </ButtonSpace>
           </CancelDiv>
         )}
