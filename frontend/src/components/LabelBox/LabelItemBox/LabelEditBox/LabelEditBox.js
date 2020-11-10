@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import styled from 'styled-components';
 import { labelService } from '@services';
 import { flex, flexColumn, calFontColor } from '@styles/utils';
@@ -6,6 +6,7 @@ import { colors } from '@styles/variables';
 import { LabelTag } from '@components';
 import { SubmitButton, CancelButton } from '@shared';
 import { calcFontColor, pickRandomColor } from '@styles/utils';
+import { LabelBoxContext } from '@components/LabelBox/LabelBoxContext';
 
 const Box = styled.form`
   ${flexColumn};
@@ -100,6 +101,7 @@ export default function LabelEditBox({
   editingLabels,
 }) {
   const [label, setLabel] = useState({ no, name, description, color });
+  const { toggleIsAdding } = useContext(LabelBoxContext);
 
   const handleLabel = ({ target }) => {
     const { name, value } = target;
@@ -159,7 +161,7 @@ export default function LabelEditBox({
 
         // Success
         if (status === 201) {
-          handleCancel();
+          toggleIsAdding();
           reloadLabels();
         }
       } catch ({ response: { status } }) {
@@ -180,6 +182,7 @@ export default function LabelEditBox({
       setEditingLabels(new Set([...editingLabels].filter(labelID => labelID !== label.no)));
     } else {
       // Adding
+      toggleIsAdding();
     }
   };
 

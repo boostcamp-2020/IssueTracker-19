@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { API } from '@api';
 import styled from 'styled-components';
 import { colors } from '@styles/variables';
 import { flexColumn } from '@styles/utils';
 import LabelItem from './LabelItem/LabelItem';
 import LabelEditBox from './LabelEditBox/LabelEditBox';
+import { LabelBoxContext } from '@components/LabelBox/LabelBoxContext';
 
 const Box = styled.div`
   ${flexColumn};
@@ -38,8 +39,8 @@ const LabelHeader = styled.div`
 
 export default function LabelItemBox() {
   const [labels, setLabels] = useState([]);
-  const [newOpened, setNewOpened] = useState(true);
   const [editingLabels, setEditingLabels] = useState(new Set());
+  const { isAdding } = useContext(LabelBoxContext);
 
   const getLabels = async () => {
     try {
@@ -51,17 +52,13 @@ export default function LabelItemBox() {
     }
   };
 
-  const handleNewOpened = () => {
-    setNewOpened(!newOpened);
-  };
-
   useEffect(() => {
     getLabels();
   }, []);
 
   return (
     <Box>
-      {newOpened ? (
+      {isAdding ? (
         <TopBox>
           <LabelEditBox reloadLabels={getLabels} />
         </TopBox>
