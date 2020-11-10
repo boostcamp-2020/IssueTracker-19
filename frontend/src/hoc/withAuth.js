@@ -3,7 +3,7 @@ import { userService } from '@services';
 import { useHistory } from 'react-router-dom';
 
 export default function withAuth(InnerComponent) {
-  function WrapperComponent() {
+  return function WrapperComponent() {
     const history = useHistory();
 
     const checkLogin = async () => {
@@ -19,6 +19,5 @@ export default function withAuth(InnerComponent) {
     }, []);
 
     return <InnerComponent />;
-  }
-  return <WrapperComponent />;
+  };
 }
