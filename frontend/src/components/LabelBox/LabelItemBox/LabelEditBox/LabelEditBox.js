@@ -96,6 +96,8 @@ export default function LabelEditBox({
   description = '',
   color = pickRandomColor(),
   reloadLabels,
+  setEditingLabels,
+  editingLabels,
 }) {
   const [label, setLabel] = useState({ no, name, description, color });
 
@@ -108,11 +110,44 @@ export default function LabelEditBox({
     setLabel({ ...label, color: pickRandomColor() });
   };
 
+  const handleDelete = async () => {
+    if (!confirm(`${label.name} 레이블을 삭제 하시겠습니까?`)) return;
+
+    try {
+      const { status } = await labelService.deleteLabel({
+        no,
+      });
+      reloadLabels();
+    } catch ({ response: { status } }) {}
+  };
+
   const handleSubmit = async e => {
     e.preventDefault();
 
     if (label.no) {
       // Edit label
+      try {
+        const { status } = await labelService.editLabel({
+          no: label.no,
+          name: label.name,
+          description: label.description ? label.description : null,
+          color: label.color,
+        });
+
+        // Success
+        if (status === 200) {
+          handleCancel();
+          reloadLabels();
+        }
+      } catch ({ response: { status } }) {
+        if (status === 500) {
+          alert('중복된 레이블 이름입니다');
+        }
+
+        if (status === 400) {
+          alert('올바르지 않은 입력 값 입니다');
+        }
+      }
     } else {
       // Add label
       try {
@@ -124,6 +159,7 @@ export default function LabelEditBox({
 
         // Success
         if (status === 201) {
+          handleCancel();
           reloadLabels();
         }
       } catch ({ response: { status } }) {
@@ -138,7 +174,14 @@ export default function LabelEditBox({
     }
   };
 
-  const handleCancel = () => {};
+  const handleCancel = () => {
+    if (label.no) {
+      // Editing
+      setEditingLabels(new Set([...editingLabels].filter(labelID => labelID !== label.no)));
+    } else {
+      // Adding
+    }
+  };
 
   return (
     <Box onSubmit={handleSubmit}>
@@ -146,16 +189,27 @@ export default function LabelEditBox({
         <ItemBox>
           <LabelTag name={label.name} color={label.color} />
         </ItemBox>
-        <ItemBox>{label.no ? <DeleteButton>Delete</DeleteButton> : null}</ItemBox>
+        <ItemBox>
+          {label.no ? (
+            <DeleteButton trpe="button" onClick={handleDelete}>
+              Delete
+            </DeleteButton>
+          ) : null}
+        </ItemBox>
       </EditHeader>
       <EditBody>
         <ItemBox flexGrow={1}>
           <InputLabel>Label Name</InputLabel>
-          <InputBox name="name" type="text" onChange={handleLabel} required />
+          <InputBox name="name" type="text" onChange={handleLabel} value={label.name} required />
         </ItemBox>
         <ItemBox flexGrow={4}>
           <InputLabel>Description</InputLabel>
-          <InputBox name="description" type="text" onChange={handleLabel} />
+          <InputBox
+            name="description"
+            type="text"
+            onChange={handleLabel}
+            value={label.description ? label.description : ''}
+          />
         </ItemBox>
         <ItemBox>
           <InputLabel>Color</InputLabel>

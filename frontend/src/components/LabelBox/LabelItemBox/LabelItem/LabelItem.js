@@ -32,8 +32,16 @@ const Button = styled.button`
   cursor: pointer;
 `;
 
-export default function LabelItem({ no, name, description, color, reloadLabels }) {
-  const handleDelete = async e => {
+export default function LabelItem({
+  no,
+  name,
+  description,
+  color,
+  reloadLabels,
+  setEditingLabels,
+  editingLabels,
+}) {
+  const handleDelete = async () => {
     if (!confirm(`${name} 레이블을 삭제 하시겠습니까?`)) return;
 
     try {
@@ -44,6 +52,10 @@ export default function LabelItem({ no, name, description, color, reloadLabels }
     } catch ({ response: { status } }) {}
   };
 
+  const handleSetEditing = () => {
+    setEditingLabels(new Set([...editingLabels, no]));
+  };
+
   return (
     <Box>
       <NameBox>
@@ -51,7 +63,7 @@ export default function LabelItem({ no, name, description, color, reloadLabels }
       </NameBox>
       <DescBox>{description}</DescBox>
       <ButtonBox>
-        <Button>Edit</Button>
+        <Button onClick={handleSetEditing}>Edit</Button>
         <Button onClick={handleDelete}>Delete</Button>
       </ButtonBox>
     </Box>

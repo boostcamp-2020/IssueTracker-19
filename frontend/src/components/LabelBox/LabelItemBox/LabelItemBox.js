@@ -38,6 +38,8 @@ const LabelHeader = styled.div`
 
 export default function LabelItemBox() {
   const [labels, setLabels] = useState([]);
+  const [newOpened, setNewOpened] = useState(true);
+  const [editingLabels, setEditingLabels] = useState(new Set());
 
   const getLabels = async () => {
     try {
@@ -49,22 +51,47 @@ export default function LabelItemBox() {
     }
   };
 
+  const handleNewOpened = () => {
+    setNewOpened(!newOpened);
+  };
+
   useEffect(() => {
     getLabels();
   }, []);
 
   return (
     <Box>
-      <TopBox>
-        <LabelEditBox reloadLabels={getLabels} />
-      </TopBox>
+      {newOpened ? (
+        <TopBox>
+          <LabelEditBox reloadLabels={getLabels} />
+        </TopBox>
+      ) : null}
 
       <BottomBox>
         <LabelHeader>8 Labels</LabelHeader>
 
-        {labels.map(label => (
-          <LabelItem key={label.no} {...label} reloadLabels={getLabels} />
-        ))}
+        {labels.map(label => {
+          if (editingLabels.has(label.no))
+            return (
+              <LabelEditBox
+                key={label.no}
+                reloadLabels={getLabels}
+                {...label}
+                setEditingLabels={setEditingLabels}
+                editingLabels={editingLabels}
+              />
+            );
+          else
+            return (
+              <LabelItem
+                key={label.no}
+                {...label}
+                reloadLabels={getLabels}
+                setEditingLabels={setEditingLabels}
+                editingLabels={editingLabels}
+              />
+            );
+        })}
       </BottomBox>
     </Box>
   );
