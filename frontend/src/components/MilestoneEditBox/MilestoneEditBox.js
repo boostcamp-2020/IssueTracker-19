@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { API } from '@api';
 import { flexColumn, flexCenter, flex } from '@styles/utils';
 import { SubmitButton, CancelButton } from '@shared';
 import { colors } from '@styles/variables';
+import { milestoneService } from '../../services/milestone.service';
+import { useHistory, useLocation } from 'react-router-dom';
 
 const Form = styled.form`
   width: 100%;
@@ -55,20 +56,69 @@ const ButtonSpace = styled.div`
   margin-left: 7px;
 `;
 export default function MilestoneEditBox({ isNew }) {
+  const [form, setForm] = useState({ title: ' ', dueDate: null, description: '' });
+  const { title, dueDate, description } = form;
+
+  const history = useHistory();
+  const location = useLocation();
+  const handleChange = ({ target }) => {
+    const { name, value } = target;
+    setForm({ ...form, [name]: value });
+  };
+
+  const handleSubmit = async e => {
+    e.preventDefault();
+    try {
+      if (dueDate === '') setForm({ ...form, dueDate: null });
+      const { data, status } = await milestoneService.addMilestones({
+        title,
+        dueDate,
+        description,
+      });
+      if (status === 201) {
+        history.push('/milestones');
+        return;
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   return (
-    <Form>
+    <Form onSubmit={handleSubmit}>
       <Container>
         <InputBox>
           <Label htmlFor="milestone_title">Title</Label>
-          <Input type="text" id="milestone_title" placeholder="Title" />
+          <Input
+            type="text"
+            name="title"
+            onChange={handleChange}
+            id="milestone_title"
+            placeholder="Title"
+            value={location.state ? location.state.title : ''}
+            required
+          />
         </InputBox>
         <InputBox>
           <Label htmlFor="milestone_date">Due date (Optional)</Label>
-          <Input type="date" id="milestone_date" placeholder="yyyy-mm-dd" />
+          <Input
+            type="date"
+            name="dueDate"
+            onChange={handleChange}
+            id="milestone_date"
+            placeholder="yyyy-mm-dd"
+            value={location.state ? location.state.dueDate : ''}
+          />
         </InputBox>
         <InputBox>
           <Label htmlFor="milestone_description">Description</Label>
-          <Textarea cols="40" rows="20" />
+          <Textarea
+            name="description"
+            onChange={handleChange}
+            cols="40"
+            rows="20"
+            value={location.state ? location.state.description : ''}
+          />
         </InputBox>
       </Container>
       <SubmitBox>
