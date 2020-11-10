@@ -132,10 +132,6 @@ extension ViewController: ASAuthorizationControllerDelegate {
         alertController.addAction(UIAlertAction(title: "Dismiss", style: .cancel, handler: nil))
         self.present(alertController, animated: true, completion: nil)
     }
-    /// - Tag: did_complete_error
-    func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {
-        // Handle error.
-    }
 }
 
 extension ViewController: ASAuthorizationControllerPresentationContextProviding {
