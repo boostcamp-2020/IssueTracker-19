@@ -32,7 +32,7 @@ const Button = styled.button`
   cursor: pointer;
 `;
 
-export default function LabelItem({ no, name, description, color }) {
+export default function LabelItem({ no, name, description, color, reloadLabels }) {
   const handleDelete = async e => {
     if (!confirm(`${name} 레이블을 삭제 하시겠습니까?`)) return;
 
@@ -40,6 +40,7 @@ export default function LabelItem({ no, name, description, color }) {
       const { status } = await labelService.deleteLabel({
         no,
       });
+      reloadLabels();
     } catch ({ response: { status } }) {}
   };
 

@@ -56,14 +56,14 @@ export default function LabelItemBox() {
   return (
     <Box>
       <TopBox>
-        <LabelEditBox />
+        <LabelEditBox reloadLabels={getLabels} />
       </TopBox>
 
       <BottomBox>
         <LabelHeader>8 Labels</LabelHeader>
 
         {labels.map(label => (
-          <LabelItem key={label.no} {...label} />
+          <LabelItem key={label.no} {...label} reloadLabels={getLabels} />
         ))}
       </BottomBox>
     </Box>

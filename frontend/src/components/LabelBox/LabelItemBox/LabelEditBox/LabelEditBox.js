@@ -95,6 +95,7 @@ export default function LabelEditBox({
   name = '',
   description = '',
   color = pickRandomColor(),
+  reloadLabels,
 }) {
   const [label, setLabel] = useState({ no, name, description, color });
 
@@ -123,6 +124,7 @@ export default function LabelEditBox({
 
         // Success
         if (status === 201) {
+          reloadLabels();
         }
       } catch ({ response: { status } }) {
         if (status === 500) {
