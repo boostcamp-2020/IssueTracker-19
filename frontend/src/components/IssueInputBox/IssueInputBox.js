@@ -225,8 +225,6 @@ export default function IssueInputBox() {
     }
   };
 
-  console.log('content', content);
-
   return (
     <MainContainer>
       <form onSubmit={handleSubmit}>
