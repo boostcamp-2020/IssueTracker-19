@@ -90,7 +90,7 @@ const IconDesc = styled(EllipsisDiv)`
 `;
 
 export default function IssueSidebar(props) {
-  const { handleAssignToMe } = props;
+  const { handleAssignToMe, handleClickAssignee, handleClickLabel, handleClickMilestone } = props;
 
   const [modalItems, setModalItems] = useState({ users: [], labels: [], milestones: [] });
   const { users, labels, milestones } = modalItems;
@@ -154,10 +154,6 @@ export default function IssueSidebar(props) {
     fetchAllModalItems();
   }, []);
 
-  const handleClickAssignee = () => {};
-  const handleClickLabel = () => {};
-  const handleClickMilestone = () => {};
-
   return (
     <MainContainer>
       <AssigneeBox>
@@ -172,7 +168,9 @@ export default function IssueSidebar(props) {
               width={'19rem'}
             >
               {users.map(({ no, nickname }) => (
-                <ListItem key={no}>{nickname}</ListItem>
+                <ListItem key={no} onClick={handleClickAssignee}>
+                  {nickname}
+                </ListItem>
               ))}
             </OptionSelectModal>
           </Modal>
@@ -195,7 +193,7 @@ export default function IssueSidebar(props) {
               width={'19rem'}
             >
               {labels.map(({ no, name, color, description }) => (
-                <MyListItem key={no}>
+                <MyListItem key={no} onClick={handleClickLabel}>
                   <IconBox>
                     <LabelIcon color={color} />
                     <IconTitle>{name}</IconTitle>
@@ -223,7 +221,7 @@ export default function IssueSidebar(props) {
             >
               {console.log(milestones)}
               {milestones.map(({ no, title }) => (
-                <ListItem key={no}>
+                <ListItem key={no} onClick={handleClickMilestone}>
                   <IconTitle>{title}</IconTitle>
                 </ListItem>
               ))}

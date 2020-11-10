@@ -10,12 +10,21 @@ const IssueContainer = styled.div`
 `;
 
 export default function IssueNew() {
+  const handleAssignToMe = () => {};
+  const handleClickAssignee = () => {};
+  const handleClickLabel = () => {};
+  const handleClickMilestone = () => {};
   return (
     <>
       <Header />
       <IssueContainer>
         <IssueInputBox />
-        <IssueSidebar />
+        <IssueSidebar
+          handleAssignToMe={handleAssignToMe}
+          handleClickAssignee={handleClickAssignee}
+          handleClickLabel={handleClickLabel}
+          handleClickMilestone={handleClickMilestone}
+        />
       </IssueContainer>
     </>
   );
