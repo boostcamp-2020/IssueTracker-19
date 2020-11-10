@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { colors } from '@styles/variables';
 import CalenderIcon from '@imgs/milestone-calendar.svg';
 import { Link } from 'react-router-dom';
+import { milestoneService } from '@services';
 const Container = styled.div`
   width: 100%;
   display: flex;
@@ -87,6 +88,7 @@ const StatusButton = styled.div`
   display: inline-block;
   margin-right: 1rem;
   text-decoration: none;
+  cursor: pointer;
 `;
 const CloseButton = styled(StatusButton)`
   color: ${colors.checkedColor};
@@ -94,7 +96,14 @@ const CloseButton = styled(StatusButton)`
 const DeleteButton = styled(StatusButton)`
   color: #cb2431;
 `;
-export default function MilestoneItem({ title, dueDate, description, totalTasks, closedTasks }) {
+export default function MilestoneItem({
+  no,
+  title,
+  dueDate,
+  description,
+  totalTasks,
+  closedTasks,
+}) {
   const percentage = totalTasks === 0 ? 0 : Math.floor((closedTasks / totalTasks) * 100);
   const monthNames = [
     'January',
@@ -111,6 +120,10 @@ export default function MilestoneItem({ title, dueDate, description, totalTasks,
     'December',
   ];
   const date = new Date(dueDate);
+  const handleClose = async () => {
+    console.log(no);
+    milestoneService.closeMilestones(no);
+  };
   return (
     <Container>
       <Title>
@@ -142,11 +155,11 @@ export default function MilestoneItem({ title, dueDate, description, totalTasks,
           </Status>
         </div>
         <StatusButtonBox>
-          <Link to="/milestones/edit">
+          <Link to="/milestones/:no">
             <StatusEdit>Edit</StatusEdit>
           </Link>
           <StatusForm>
-            <CloseButton>Close</CloseButton>
+            <CloseButton onClick={handleClose}>Close</CloseButton>
           </StatusForm>
           <StatusForm>
             <DeleteButton>Delete</DeleteButton>

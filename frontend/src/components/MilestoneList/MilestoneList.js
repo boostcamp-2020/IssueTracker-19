@@ -46,6 +46,7 @@ export default function MilestoneList() {
           return (
             <MilestoneItem
               key={no}
+              no={no}
               title={title}
               dueDate={dueDate}
               description={description}
