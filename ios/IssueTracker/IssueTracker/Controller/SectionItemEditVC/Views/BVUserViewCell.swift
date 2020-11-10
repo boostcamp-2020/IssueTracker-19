@@ -8,7 +8,7 @@
 
 import UIKit
 
-class BVUserViewCell: UICollectionViewCell {
+class BVUserViewCell: BVLabelViewCell {
 
     override func awakeFromNib() {
         super.awakeFromNib()

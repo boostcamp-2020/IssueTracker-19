@@ -22,7 +22,7 @@ extension SectionItemEditViewController: UISearchResultsUpdating {
 		} else {
 			searchMode = false
 			// 한번만 하면 왜 레이아웃이 제대로 안나올까...
-			applySnapshot(animatingDifferences: true)
+//			applySnapshot(animatingDifferences: true)
 			applySnapshot(animatingDifferences: true)
 		}
 	}
