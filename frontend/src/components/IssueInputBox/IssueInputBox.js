@@ -137,6 +137,7 @@ export default function IssueInputBox() {
   const [debouceClear, setDebouceClear] = useState(undefined);
 
   const countRef = useRef();
+  const contentRef = useRef();
 
   const [visiable, setVisable] = useState(false);
 
@@ -169,7 +170,7 @@ export default function IssueInputBox() {
     setDebouceClear(debounce(showTextCount));
   };
 
-  const handleImageChange = e => {
+  const handleImageChange = async e => {
     const { files } = e.target;
     const [file] = files;
     e.target.value = null;
@@ -177,15 +178,19 @@ export default function IssueInputBox() {
     const temp = file.name.split('.');
     temp.pop();
     const fileNameWithoutExt = temp.join('');
+    const timestamp = new Date().getTime();
 
     const prefex = content.slice(-1) !== '\n' && content.length ? '\n' : '';
-    const loadingText = `![Uploading ${file.name}...]()`;
-
+    const loadingText = `![Uploading ${timestamp}_${file.name}...]()`;
     setContent(content + prefex + loadingText);
+
+    // TODO 이미지 전송 구현
+
     setTimeout(() => {
       const fileUrl = `![${fileNameWithoutExt}](http://~~)`;
-      setContent(content + prefex + fileUrl);
-    }, 1200);
+      const rep = contentRef.current.textContent.replace(loadingText, fileUrl);
+      setContent(rep);
+    }, 8000);
   };
 
   const handleSubmit = async e => {
@@ -243,6 +248,7 @@ export default function IssueInputBox() {
             onChange={handleContentChange}
             value={content}
             autoComplete={'off'}
+            ref={contentRef}
             required
           ></TextArea>
           <TextCountBox visiable={visiable} ref={countRef}></TextCountBox>
