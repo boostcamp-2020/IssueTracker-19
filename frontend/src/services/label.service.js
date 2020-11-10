@@ -12,4 +12,8 @@ export const labelService = {
   editLabel({ no, name, description, color }) {
     return API.put(`/api/labels/${no}`, { name, description, color });
   },
+
+  deleteLabel({ no }) {
+    return API.delete(`/api/labels/${no}`);
+  },
 };
