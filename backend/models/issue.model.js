@@ -53,4 +53,14 @@ export const issueModel = {
     const sql = 'UPDATE issue SET is_opened=0, closed_at=current_timestamp() WHERE no=?;';
     return pool.execute(sql, [no]);
   },
+  openIssues({ issueNos }) {
+    const sql = `UPDATE issue SET is_opened=1 WHERE no IN (${issueNos.join(',')});`;
+    return pool.query(sql);
+  },
+  closeIssues({ issueNos }) {
+    const sql = `UPDATE issue SET is_opened=0, closed_at=current_timestamp() WHERE no IN (${issueNos.join(
+      ',',
+    )});`;
+    return pool.query(sql);
+  },
 };

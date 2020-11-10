@@ -5,15 +5,15 @@ import styled from 'styled-components';
 const calcFontColor = backgroundColor => {
   const d = document.createElement('div');
   d.style.color = backgroundColor;
-  const colors = d.style.color.match(/\d+/g).map(color => parseInt(color));
+  const [R, G, B] = d.style.color.match(/\d+/g).map(color => parseInt(color));
 
   // https://stackoverflow.com/a/36888120
-  const luma = (0.299 * colors[0] + 0.587 * colors[1] + 0.114 * colors[2]) / 255;
+  const luma = (0.299 * R + 0.587 * G + 0.114 * B) / 255;
   return luma > 0.5 ? 'black' : 'white';
 };
 
 const Tag = styled.span`
-  padding: 0.25em 0.5em;
+  padding: 0.25em 0.7em;
   border-radius: 999em;
 `;
 

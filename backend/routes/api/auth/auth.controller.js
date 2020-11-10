@@ -54,3 +54,10 @@ export const signup = async (req, res, next) => {
     next(err);
   }
 };
+
+/**
+ * GET /api/auth/check
+ */
+export const checkLogin = async (req, res) => {
+  res.json({ user: req.user });
+};

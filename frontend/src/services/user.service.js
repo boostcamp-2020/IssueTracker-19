@@ -13,4 +13,7 @@ export const userService = {
   getUsers() {
     return API.get('/api/users');
   },
+  checkLogin() {
+    return API.get('/api/auth/check');
+  },
 };

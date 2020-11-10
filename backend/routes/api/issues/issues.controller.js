@@ -12,7 +12,7 @@ export const getIssues = async (req, res, next) => {
     const { nickname } = req.user;
 
     const filterdIssues = await issueService.getFilterdIssues(options, nickname);
-    res.json({ issues: filterdIssues });
+    res.json({ issues: filterdIssues.reverse() });
   } catch (err) {
     next(err);
   }
@@ -46,6 +46,36 @@ export const addIssue = async (req, res, next) => {
       return;
     }
     res.status(400).json({ message: errorMessage.MISSING_REQUIRED_VALUE });
+  } catch (err) {
+    next(err);
+  }
+};
+
+/**
+ * PATCH /api/issues/open
+ */
+export const openMultipleIssues = async (req, res, next) => {
+  try {
+    const { issueNos } = req.body;
+    if (verify([issueNos]) && issueNos.length) {
+      await issueModel.openIssues({ issueNos });
+      res.status(200).end();
+    }
+  } catch (err) {
+    next(err);
+  }
+};
+
+/**
+ * PATCH /api/issues/close
+ */
+export const closeMultipleIssues = async (req, res, next) => {
+  try {
+    const { issueNos } = req.body;
+    if (verify([issueNos]) && issueNos.length) {
+      await issueModel.closeIssues({ issueNos });
+      res.status(200).end();
+    }
   } catch (err) {
     next(err);
   }

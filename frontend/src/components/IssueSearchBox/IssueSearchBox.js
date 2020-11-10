@@ -5,7 +5,7 @@ import { IssueContext, initialFilterOptions } from '@pages';
 import { flex, flexCenter, borderNoneBox, skyblueBoxShadow } from '@styles/utils';
 import { colors } from '@styles/variables';
 import { SubmitButton } from '@shared';
-import { LabelMilestoneControls } from '@components';
+import { LabelMilestoneControls, OptionSelectModal, ListItem } from '@components';
 import downArrowIcon from '@imgs/down-arrow.svg';
 import mGlass from '@imgs/m-glass.svg';
 
@@ -21,6 +21,7 @@ const SearchBox = styled.div`
 `;
 
 const FilterBox = styled.div`
+  position: relative;
   ${flexCenter}
   flex: 1;
   height: 2.2rem;
@@ -80,14 +81,31 @@ const IssueSubmitButton = styled(SubmitButton)`
   margin-left: 1.5rem;
 `;
 
-const ClearBox = styled.div`
+const ClearContainer = styled.div`
   margin-left: 0.2rem;
+  &:hover {
+    span {
+      color: ${colors.resetFilterColor};
+    }
+    svg {
+      background-color: ${colors.resetFilterColor};
+    }
+  }
 `;
 
-const ClearButton = styled.button`
+const ClearBox = styled.div`
   background-color: white;
   ${borderNoneBox}
   cursor: pointer;
+  font-size: 0.9rem;
+  ${flex('flex-start', 'center')}
+`;
+
+const ClearIcon = styled.svg`
+  border-radius: 5px;
+  margin-right: 5px;
+  background-color: ${colors.resetDefaultColor};
+  fill: white;
 `;
 
 const OptionBox = styled.div`
@@ -99,12 +117,30 @@ const OptionBox = styled.div`
   ${flex('flex-start', 'center')}
 `;
 
+const Modal = styled.div`
+  position: absolute;
+  top: 2.7rem;
+  left: 0;
+  outline: 0;
+  z-index: 2;
+`;
+
 export default function IssueSearchBox() {
   const [focused, setFocused] = useState(false);
+  const [visiable, setVisiable] = useState(false);
+
   const { filterOptions, setFilterOptions, filterOptionDatas } = useContext(IssueContext);
   const { users, labels, milestones } = filterOptionDatas;
   const optionBoxRef = useRef();
   const inputRef = useRef();
+  const modal = useRef();
+
+  const openModal = () => {
+    setVisiable(true);
+    modal.current.focus();
+  };
+
+  const closeFilterModal = () => setVisiable(false);
 
   const handleFocus = () => {
     setFocused(true);
@@ -130,8 +166,13 @@ export default function IssueSearchBox() {
 
   const handleSearchView = () => {
     const options = Object.entries(filterOptions).reduce((acc, [key, val]) => {
-      if (key === 'isOpened' && val) {
-        return acc + ' is:open';
+      if (key === 'isOpened') {
+        if (val === 1) {
+          return acc + ' is:open';
+        }
+        if (val === 0) {
+          return acc + ' is:closed';
+        }
       }
       if (key === 'author' && val) {
         return acc + ` author:${val}`;
@@ -145,6 +186,9 @@ export default function IssueSearchBox() {
       if (key === 'assignee' && val) {
         return acc + ` assignee:${val}`;
       }
+      if (key === 'comment' && val) {
+        return acc + ` comment:@me`;
+      }
       return acc;
     }, '');
     optionBoxRef.current.textContent = options;
@@ -154,14 +198,47 @@ export default function IssueSearchBox() {
     handleSearchView();
   }, [filterOptions]);
 
+  const handleOpenFilter = () => {
+    setFilterOptions({ ...filterOptions, isOpened: 1 });
+  };
+
+  const handleMyIssuesFilter = () => {
+    setFilterOptions({ ...filterOptions, author: '@me' });
+  };
+
+  const handleAssignedToMeFilter = () => {
+    setFilterOptions({ ...filterOptions, assignee: '@me' });
+  };
+
+  const handleMyCommentIssuesFilter = () => {
+    setFilterOptions({ ...filterOptions, comment: 1 });
+  };
+
+  const handleClosedFilter = () => {
+    setFilterOptions({ ...filterOptions, isOpened: 0 });
+  };
+
   return (
     <SearchContainer>
       <SearchBox>
         <FilterBox>
-          <SelectBox>
+          <SelectBox onClick={openModal}>
             Filters
             <DownArrowImg src={downArrowIcon} />
           </SelectBox>
+          <Modal tabIndex={0} ref={modal} onBlur={closeFilterModal}>
+            <OptionSelectModal
+              visiable={visiable}
+              setVisiable={setVisiable}
+              title={'Filter issues'}
+            >
+              <ListItem onClick={handleOpenFilter}>열린 이슈들</ListItem>
+              <ListItem onClick={handleMyIssuesFilter}>내가 작성한 이슈들</ListItem>
+              <ListItem onClick={handleAssignedToMeFilter}>나한테 할당된 이슈들</ListItem>
+              <ListItem onClick={handleMyCommentIssuesFilter}>내가 댓글을 남긴 이슈들</ListItem>
+              <ListItem onClick={handleClosedFilter}>닫힌 이슈들</ListItem>
+            </OptionSelectModal>
+          </Modal>
           <InputContainer focused={focused}>
             <MGlassImg src={mGlass} />
             <OptionBox ref={optionBoxRef}></OptionBox>
@@ -184,11 +261,17 @@ export default function IssueSearchBox() {
         </ControlBox>
       </SearchBox>
       {isSame() ? null : (
-        <ClearBox>
-          <ClearButton onClick={handleClear}>
-            ❎ Clear current search query, filters, and sorts
-          </ClearButton>
-        </ClearBox>
+        <ClearContainer>
+          <ClearBox onClick={handleClear}>
+            <ClearIcon viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true">
+              <path
+                fillRule="evenodd"
+                d="M3.72 3.72a.75.75 0 011.06 0L8 6.94l3.22-3.22a.75.75 0 111.06 1.06L9.06 8l3.22 3.22a.75.75 0 11-1.06 1.06L8 9.06l-3.22 3.22a.75.75 0 01-1.06-1.06L6.94 8 3.72 4.78a.75.75 0 010-1.06z"
+              ></path>
+            </ClearIcon>
+            <span>Clear current search query, filters, and sorts</span>
+          </ClearBox>
+        </ClearContainer>
       )}
     </SearchContainer>
   );
