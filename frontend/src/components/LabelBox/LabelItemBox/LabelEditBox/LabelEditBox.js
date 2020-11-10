@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import { labelService } from '@services';
 import { flex, flexColumn, calFontColor } from '@styles/utils';
 import { colors } from '@styles/variables';
 import { LabelTag } from '@components';
 import { SubmitButton, CancelButton } from '@shared';
 import { calcFontColor, pickRandomColor } from '@styles/utils';
 
-const Box = styled.div`
+const Box = styled.form`
   ${flexColumn};
   background-color: ${colors.lightestGray};
   padding: 1.5rem;
@@ -89,7 +90,12 @@ const ColorIcon = styled(svgConfig)`
   height: 16px;
 `;
 
-export default function LabelEditBox({ no = null, name = '', description = '', color = '#246' }) {
+export default function LabelEditBox({
+  no = null,
+  name = '',
+  description = '',
+  color = pickRandomColor(),
+}) {
   const [label, setLabel] = useState({ no, name, description, color });
 
   const handleLabel = ({ target }) => {
@@ -101,8 +107,39 @@ export default function LabelEditBox({ no = null, name = '', description = '', c
     setLabel({ ...label, color: pickRandomColor() });
   };
 
+  const handleSubmit = async e => {
+    e.preventDefault();
+
+    if (label.no) {
+      // Edit label
+    } else {
+      // Add label
+      try {
+        const { status } = await labelService.addLabel({
+          name: label.name,
+          description: label.description ? label.description : null,
+          color: label.color,
+        });
+
+        // Success
+        if (status === 201) {
+        }
+      } catch ({ response: { status } }) {
+        if (status === 500) {
+          alert('중복된 레이블 이름입니다');
+        }
+
+        if (status === 400) {
+          alert('올바르지 않은 입력 값 입니다');
+        }
+      }
+    }
+  };
+
+  const handleCancel = () => {};
+
   return (
-    <Box>
+    <Box onSubmit={handleSubmit}>
       <EditHeader>
         <ItemBox>
           <LabelTag name={label.name} color={label.color} />
@@ -112,7 +149,7 @@ export default function LabelEditBox({ no = null, name = '', description = '', c
       <EditBody>
         <ItemBox flexGrow={1}>
           <InputLabel>Label Name</InputLabel>
-          <InputBox name="name" type="text" onChange={handleLabel} />
+          <InputBox name="name" type="text" onChange={handleLabel} required />
         </ItemBox>
         <ItemBox flexGrow={4}>
           <InputLabel>Description</InputLabel>
@@ -121,7 +158,7 @@ export default function LabelEditBox({ no = null, name = '', description = '', c
         <ItemBox>
           <InputLabel>Color</InputLabel>
           <ItemBoxRow>
-            <ColorButton backgroundColor={label.color} onClick={handleColorButton}>
+            <ColorButton type="button" backgroundColor={label.color} onClick={handleColorButton}>
               <ColorIcon backgroundColor={label.color}>
                 <path
                   fillRule="evenodd"
@@ -139,7 +176,9 @@ export default function LabelEditBox({ no = null, name = '', description = '', c
           </ItemBoxRow>
         </ItemBox>
         <ItemBoxRow marginTop={true}>
-          <CancelButton>Cancel</CancelButton>
+          <CancelButton type="button" onClick={handleCancel}>
+            Cancel
+          </CancelButton>
           <SubmitButton>{label.no ? 'Save changes' : 'Create Label'}</SubmitButton>
         </ItemBoxRow>
       </EditBody>
