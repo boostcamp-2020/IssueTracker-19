@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useRef, useState } from 'react';
 import styled from 'styled-components';
+import { OptionSelectModal } from '@components';
 import { colors } from '@styles/variables';
 import { flex } from '@styles/utils';
 import GearIcon from './GearIcon/GearIcon';
@@ -30,6 +31,7 @@ const LabelBox = styled(Box)``;
 const MilestoneBox = styled(Box)``;
 
 const Header = styled.div`
+  position: relative;
   ${flex('space-between', 'center')}
   cursor: pointer;
   &:hover {
@@ -46,34 +48,98 @@ const Content = styled.div`
   padding: 0.8rem 0 0 0;
 `;
 
-const AssigneeButton = styled.span``;
+const AssignMySelfButton = styled.span``;
 
-export default function IssueSidebar() {
+const Modal = styled.div`
+  position: absolute;
+  top: 1.8rem;
+  right: 0;
+  outline: 0;
+  z-index: 2;
+`;
+
+export default function IssueSidebar(props) {
+  const { handleAssignToMe } = props;
+
+  const assigneeModalRef = useRef();
+  const labelModalRef = useRef();
+  const milestoneModalRef = useRef();
+
+  const [visiableAssigneeModal, setVisiableAssigneeModal] = useState(false);
+  const [visiableLabelModal, setVisiableLabelModal] = useState(false);
+  const [visiableMilestoneModal, setVisiableMilestoneModal] = useState(false);
+
+  const openAssigneeModal = () => {
+    setVisiableAssigneeModal(true);
+    assigneeModalRef.current.focus();
+  };
+
+  const closeAssigneeModal = () => setVisiableAssigneeModal(false);
+
+  const openLabelModal = () => {
+    setVisiableLabelModal(true);
+    labelModalRef.current.focus();
+  };
+
+  const closeLabelModal = () => setVisiableLabelModal(false);
+
+  const openMilestoneModal = () => {
+    setVisiableMilestoneModal(true);
+    milestoneModalRef.current.focus();
+  };
+
+  const closeMilestoneModal = () => setVisiableMilestoneModal(false);
+
   return (
     <MainContainer>
       <AssigneeBox>
-        <Header>
+        <Header onClick={openAssigneeModal}>
           Assignees
           <GearIcon fillColor={colors.black8} />
+          <Modal tabIndex={0} ref={assigneeModalRef} onBlur={closeAssigneeModal}>
+            <OptionSelectModal
+              visiable={visiableAssigneeModal}
+              setVisiable={setVisiableAssigneeModal}
+              title={'Assign up to 10 people to this issue'}
+              width={'19rem'}
+            ></OptionSelectModal>
+          </Modal>
         </Header>
         <Content>
-          No one—<AssigneeButton>assign yourself</AssigneeButton>
+          No one—<AssignMySelfButton onClick={handleAssignToMe}>assign yourself</AssignMySelfButton>
           <Line />
         </Content>
       </AssigneeBox>
+
       <LabelBox>
-        <Header>
+        <Header onClick={openLabelModal}>
           Labels
           <GearIcon fillColor={colors.black8} />
+          <Modal tabIndex={0} ref={labelModalRef} onBlur={closeLabelModal}>
+            <OptionSelectModal
+              visiable={visiableLabelModal}
+              setVisiable={setVisiableLabelModal}
+              title={'Apply labels to this issue'}
+              width={'19rem'}
+            ></OptionSelectModal>
+          </Modal>
         </Header>
         <Content>None yet</Content>
         <Line />
       </LabelBox>
 
       <MilestoneBox>
-        <Header>
+        <Header onClick={openMilestoneModal}>
           Milestone
           <GearIcon fillColor={colors.black8} />
+          <Modal tabIndex={0} ref={milestoneModalRef} onBlur={closeMilestoneModal}>
+            <OptionSelectModal
+              visiable={visiableMilestoneModal}
+              setVisiable={setVisiableMilestoneModal}
+              title={'Set milestone'}
+              width={'19rem'}
+            ></OptionSelectModal>
+          </Modal>
         </Header>
         <Content>None yet</Content>
         <Line />

@@ -5,7 +5,7 @@ import closeDarkIcon from '@imgs/close-dark.svg';
 import { flex } from '@styles/utils';
 
 const Container = styled.div`
-  width: 18.5rem;
+  width: ${props => (props.width ? props.width : '18.5rem')};
   border: 1px solid ${colors.lightGray};
   border-radius: 5px;
   background-color: white;
@@ -40,7 +40,7 @@ export const ListItem = styled.div`
   cursor: pointer;
 `;
 
-export default function OptionSelectModal({ visiable, setVisiable, title, children }) {
+export default function OptionSelectModal({ visiable, setVisiable, title, children, width }) {
   const handleClose = e => {
     e.stopPropagation();
     setVisiable(false);
@@ -49,7 +49,7 @@ export default function OptionSelectModal({ visiable, setVisiable, title, childr
   return (
     <>
       {visiable ? (
-        <Container>
+        <Container width={width}>
           <Header>
             <span>{title}</span>
             <CloseImg src={closeDarkIcon} onClick={handleClose} />
