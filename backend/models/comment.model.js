@@ -11,9 +11,11 @@ export const commentModel = {
     return pool.query(sql);
   },
   getCommentsByIssueNo({ issueNo }) {
-    const sql = `SELECT no, issue_no as issueNo, author_no as authorNo, content, is_head as isHead,
+    const sql = `SELECT u.no, issue_no as issueNo, author_no as authorNo, content, u.nickname as author, is_head as isHead,
     created_at as createdAt, updated_at as updatedAt
-    from comment 
+    from comment c 
+    LEFT JOIN user u
+    ON u.no = c.author_no
     WHERE issue_no = ?;`;
     return pool.execute(sql, [issueNo]);
   },
