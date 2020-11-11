@@ -9,12 +9,13 @@
 import Foundation
 
 class Label: HashableObject, Codable {
-	var name: String
 	var description: String?
 	var color: String
+    var no: Int
+    var name: String
     
     enum CodingKeys: String, CodingKey {
-        case name, description, color
+        case color, description, name, no
     }
     
     required init(from decoder: Decoder) throws {
@@ -22,18 +23,20 @@ class Label: HashableObject, Codable {
         name = try values.decode(String.self, forKey: .name)
         description = try values.decode(String.self, forKey: .description)
         color = try values.decode(String.self, forKey: .color)
+        no = try values.decode(Int.self, forKey: .no)
     }
 	
-	init(name: String, description: String?, color: String) {
+    init(name: String, description: String?, color: String, no: Int) {
 		self.name = name
 		self.description = description
 		self.color = color
+        self.no = no
 	}
 	static let all = ["bug","documentation", "duplicacte", "enhancement", "good first issue", "help wanted", "invalid", "question", "wontfix"]
 		.map {
 			Label(name: $0,
 				  description: nil,
 				  color: String(format: "#%06X",
-								(Int.random(in: 1...255) << 16) + (Int.random(in: 1...255) << 8) + Int.random(in: 1...255)))
+								(Int.random(in: 1...255) << 16) + (Int.random(in: 1...255) << 8) + Int.random(in: 1...255)), no: 0)
 		}
 }

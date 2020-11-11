@@ -36,19 +36,19 @@ class LabelViewController: UIViewController, ListCollectionViewProtocol {
     func updateData() {
         let data = try? JSONEncoder().encode(["id":"a","pw":"123"])
         
-		HTTPAgent.shared.sendRequest(from: "http://49.50.163.23:3000/api/labels", method: .GET) { [weak self] (result) in
+		HTTPAgent.shared.sendRequest(from: "http://49.50.163.23/api/labels", method: .GET) { [weak self] (result) in
 			switch result {
 			case .success(let data):
 				let sample = try? JSONSerialization.jsonObject(with: data) as? [String: Any]
 				let labels = try? JSONDecoder().decode(Labels.self, from: data)
-                
+                print(sample)
                 if let result = labels?.labels {
                     self?.list = result
                 } else {
                     self?.list = [
-                        Label(name: "iOS", description: "so good", color: "#ECECEC"),
-                        Label(name: "iOS", description: "so good", color: "#ECECEC"),
-                        Label(name: "iOS", description: "so good", color: "#ECECEC")
+                        Label(name: "iOS", description: "so good", color: "#ECECEC", no: 0),
+                        Label(name: "iOS", description: "so good", color: "#ECECEC", no: 1),
+                        Label(name: "iOS", description: "so good", color: "#ECECEC", no: 2)
                     ]
                 }
                 
@@ -149,7 +149,7 @@ extension LabelViewController: LabelInsertOrEditProtocol {
     }
     
     func labelInsertAction(labelName: String, labelDescription: String, colorCode: String) {
-        self.list.append(Label(name: labelName, description: labelDescription, color: colorCode))
+        self.list.append(Label(name: labelName, description: labelDescription, color: colorCode, no: 1))
         updateList()
     }
 }
