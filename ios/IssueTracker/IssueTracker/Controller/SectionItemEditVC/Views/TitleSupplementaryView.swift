@@ -8,8 +8,13 @@
 
 import UIKit
 
-class TitleSupplementaryView: UICollectionReusableView {
-	let label = UILabel()
+class SIEHeaderView: UICollectionReusableView {
+	let label: UILabel = {
+		let label = UILabel()
+		label.font = UIFont.preferredFont(forTextStyle: .footnote)
+		label.textColor = .systemGray
+		return label
+	}()
 
 	override init(frame: CGRect) {
 		super.init(frame: frame)
@@ -23,13 +28,14 @@ class TitleSupplementaryView: UICollectionReusableView {
 	func configure() {
 		addSubview(label)
 		label.translatesAutoresizingMaskIntoConstraints = false
-		label.adjustsFontForContentSizeCategory = true
+		let bottomConstraint = label.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -4)
+		bottomConstraint.priority = .defaultLow
 		NSLayoutConstraint.activate([
 			label.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
 			label.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20),
-			label.topAnchor.constraint(equalTo: topAnchor, constant: 10),
-			label.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -4)
+			label.topAnchor.constraint(equalTo: topAnchor, constant: 20),
+			bottomConstraint
 		])
-		label.font = UIFont.preferredFont(forTextStyle: .footnote)
 	}
 }
+

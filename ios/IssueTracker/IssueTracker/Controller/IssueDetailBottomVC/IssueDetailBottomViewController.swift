@@ -63,6 +63,7 @@ class IssueDetailBottomViewController: UIViewController {
 		configureScrollAction()
 		configureHierarchy()
 		configureDataSource()
+		configureNotification()
     }
 	
 	override func viewDidAppear(_ animated: Bool) {

@@ -8,9 +8,6 @@
 
 import UIKit
 
-protocol SectionItemSelectViewDelegate {
-	
-}
 
 class SectionItemEditViewController: UIViewController {
 	enum Section {
@@ -19,16 +16,13 @@ class SectionItemEditViewController: UIViewController {
 	
 	typealias DataSource = UICollectionViewDiffableDataSource<Section, GitIssueObject>
 	typealias Snapshot = NSDiffableDataSourceSnapshot<Section, GitIssueObject>
-	typealias CellRegistration = UICollectionView.CellRegistration<SIELabelViewCell, GitIssueObject>
-	
 	
 	var navItem = UINavigationItem()
 	var navBar = UINavigationBar()
 	
 	lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: createLayout())
-	lazy var dataSource: DataSource = createDataSource()
-	var cellRegistration: CellRegistration!
-	var currentSnapshot: Snapshot!
+	lazy var dataSource = createDataSource()
+
 	let searchController = UISearchController(searchResultsController: nil)
 	
 	let bottomViewSection: BottomViewSection
@@ -59,7 +53,9 @@ class SectionItemEditViewController: UIViewController {
 		configureCollectionView()
 		configureDataSource()
 		
-		configureSearchController()
+		if bottomViewSection != .milestone {
+			configureSearchController()
+		}
 		configureNavigationBar()
     }
 	
@@ -79,22 +75,25 @@ class SectionItemEditViewController: UIViewController {
 		view.backgroundColor = .systemGroupedBackground
 	}
 	
-	func configureNavigationBar() {
-		navBar.setItems([navItem], animated: false)
-		navBar.translatesAutoresizingMaskIntoConstraints = false
-		NSLayoutConstraint.activate([
-			navBar.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-			navBar.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor),
-			navBar.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor)
-		])
-	}
+	
 	
 	func loadData() {
-		selected = [Label.all[0]]
-		deSelected = Label.all.suffix(Label.all.count - 1)
+		switch bottomViewSection {
+		case .assignee:
+			selected = [User.all[0]]
+			deSelected = User.all.suffix(User.all.count - 1)
+		case .label:
+			selected = [Label.all[0]]
+			deSelected = Label.all.suffix(Label.all.count - 1)
+		case .milestone:
+			selected = [Milestone.all[0]]
+			deSelected = Milestone.all.suffix(Milestone.all.count - 1)
+		}
 	}
 	
-	func remove() {
+	func remove(with data: [GitIssueObject]? = nil) {
+		NotificationCenter.default.post(name: .didIssueDetailEditFinish, object: data)
+		
 		willMove(toParent: nil)
 		view.removeFromSuperview()
 		removeFromParent()

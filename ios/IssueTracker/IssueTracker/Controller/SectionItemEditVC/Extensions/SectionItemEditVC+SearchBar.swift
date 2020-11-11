@@ -12,25 +12,20 @@ import UIKit
 extension SectionItemEditViewController: UISearchResultsUpdating {
 	func updateSearchResults(for searchController: UISearchController) {
 		if let text = searchController.searchBar.text, !text.isEmpty {
-			
 			searchMode = true
 			var snapshot = Snapshot()
 			snapshot.appendSections([.deSelected])
 			searched = filteredList(for: text)
 			snapshot.appendItems(searched)
-			dataSource.apply(snapshot, animatingDifferences: true)
+			dataSource.apply(snapshot, animatingDifferences: false)
 		} else {
 			searchMode = false
-			// 한번만 하면 왜 레이아웃이 제대로 안나올까...
-//			applySnapshot(animatingDifferences: true)
-			applySnapshot(animatingDifferences: true)
+			applySnapshot(animatingDifferences: false)
 		}
 	}
 	
 	func filteredList(for queryOrNil: String?) -> [GitIssueObject] {
-		guard let query = queryOrNil, !query.isEmpty else {
-			return deSelected
-		}
+		guard let query = queryOrNil, !query.isEmpty else { return deSelected }
 		return deSelected.filter { $0.searchText.lowercased().contains(query.lowercased()) }
 	}
 	
