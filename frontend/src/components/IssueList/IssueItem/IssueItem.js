@@ -73,24 +73,24 @@ const MilestoneImg = styled.img`
   margin-right: 0.2rem;
 `;
 
-const AssigneeBox = styled.div`
-  ${flex('space-around', 'center')}
-  margin-right: 5rem;
-`;
-
 const AssigneeIcon = styled.div`
   width: 1.25rem;
   height: 1.25rem;
-  margin-right: -0.5rem;
+  margin-right: -8px;
   background-color: #123;
   border-radius: 50%;
-  &:hover {
-    transition: margin-right ease 0.5s 0s;
-    ${props =>
-      props.move &&
-      css`
-        margin-right: ${props.move};
-      `}
+`;
+
+const AssigneeBox = styled.div`
+  ${flex('space-around', 'center')}
+  margin-right: 5rem;
+  &:hover div:not(:last-child) {
+    transition: margin-right ease 0.3s 0s;
+    margin-right: 3px;
+  }
+  div {
+    transition: margin-right ease 0.3s 0s;
+    margin-right: -8px;
   }
 `;
 
@@ -160,11 +160,8 @@ export default function IssueItem(props) {
         </TitleContainer>
       </IssueDiv>
       <AssigneeBox>
-        {assignees.map((assignee, idx) => (
-          <AssigneeIcon
-            key={assignee.no}
-            move={'' + 1 * (assignees.length - idx - 1) + 'px'}
-          ></AssigneeIcon>
+        {assignees.map(assignee => (
+          <AssigneeIcon key={assignee.no}></AssigneeIcon>
         ))}
       </AssigneeBox>
     </Container>
