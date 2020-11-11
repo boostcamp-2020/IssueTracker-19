@@ -37,7 +37,6 @@ class HTTPAgent: LoginProtocol {
         request.httpMethod = method.rawValue
         if let body = body {
             request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-//            request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
             request.httpBody = body
         }
         
@@ -57,7 +56,7 @@ class HTTPAgent: LoginProtocol {
     }
     
     func githubLoginAction() {
-        let urlString = "https://github.com/login/outh/authorize?client_id=e58f7514be065a86ab47&scope=user"
+        let urlString = "https://github.com/login/oauth/authorize?client_id=cdb63bb140a5645dbcfc&scope=user"
         if let url = URL(string: urlString), UIApplication.shared.canOpenURL(url) {
             UIApplication.shared.open(url)
         }
@@ -65,8 +64,8 @@ class HTTPAgent: LoginProtocol {
     
     func accessToken(with code: String) {
         let urlString = "https://github.com/login/oauth/access_token"
-        let parameters = ["client_id": "e58f7514be065a86ab47",
-                           "client_secret": "94991060a59ddc27967a0cdac850a39ff2cc37ab",
+        let parameters = ["client_id": "cdb63bb140a5645dbcfc",
+                           "client_secret": "1f4889ae44ee8717c76d681f5d20835e0382c61e",
                            "code": code]
         guard let url = URL(string: urlString) else {
             return
@@ -82,8 +81,8 @@ class HTTPAgent: LoginProtocol {
                 if let json = try? JSONSerialization.jsonObject(with: data!, options: [])
                     as? [String: Any] {
                     if let token = json["access_token"] as? String {
-                        self.getUser(token: token, completion: { statusCode in
-                            NotificationCenter.default.post(name: .googleLoginSuccess, object: self, userInfo: ["statusCode": statusCode])
+                        self.getUser(token: token, completion: { statusCode, id, token in
+                            NotificationCenter.default.post(name: .googleLoginSuccess, object: self, userInfo: ["statusCode": statusCode, "id": id, "pw": token])
                         })
                     }
                 }
@@ -94,7 +93,10 @@ class HTTPAgent: LoginProtocol {
         }
     }
     
-    func getUser(token: String, completion: ((Int) -> Void)? = nil) {
+    func getUser(token: String, completion: ((_ statusCode: Int, _ id: String, _ token: String) -> Void)? = nil) {
+        /*
+         수정 - 토큰을 서버에서 유지해야할듯
+         */
         let urlString = "https:api.github.com/user"
         UserDefaults.standard.set(token, forKey: "GoogleToken")        
         guard let url = URL(string: urlString) else {
@@ -104,10 +106,16 @@ class HTTPAgent: LoginProtocol {
         request.httpMethod = "GET"
         request.setValue("token \(token)", forHTTPHeaderField: "Authorization")
         request.setValue("application/vnd.github.v3+json", forHTTPHeaderField: "Accept")
-        let task = URLSession.shared.dataTask(with: request) { _, response, _ in
-            if let httpResponse = response as? HTTPURLResponse {
-                completion?(httpResponse.statusCode)
+        let task = URLSession.shared.dataTask(with: request) { data, response, _ in
+            guard let httpResponse = response as? HTTPURLResponse else {
+                return
             }
+            let userData = try? JSONSerialization.jsonObject(with: data!) as? [String: Any]
+            let id = userData?["id"] as? Int
+            
+            completion?(httpResponse.statusCode,
+                        String(id!),
+                        token)
         }
         task.resume()
     }
