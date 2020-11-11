@@ -35,9 +35,19 @@ class SIEAssigneeViewCell: SIEViewCell {
 	
 	override var item: GitIssueObject? {
 		didSet {
-			guard let item = item as? User else { return }
-			titleLabel.text = item.nickname
-			imageView.image = UIImage(systemName: "person.crop.rectangle.fill")
+			guard let user = item as? User else { return }
+			imageView.image = UIImage(systemName: "person")
+			HTTPAgent.shared.loadImage(urlString: user.image ?? "") { [weak self] (result) in
+				switch result {
+				case .success(let path):
+					DispatchQueue.main.async {
+						self!.imageView.image = UIImage(contentsOfFile: path)
+					}
+				case .failure(let error):
+					print(error)
+				}
+			}
+			titleLabel.text = user.nickname
 		}
 	}
 

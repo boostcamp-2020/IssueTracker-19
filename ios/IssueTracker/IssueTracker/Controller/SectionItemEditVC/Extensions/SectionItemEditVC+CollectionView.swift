@@ -138,12 +138,14 @@ extension SectionItemEditViewController {
 	}
 	
 	func applySnapshot(animatingDifferences: Bool = false) {
-		var snapshot = Snapshot()
-		snapshot.appendSections([.selected])
-		snapshot.appendItems(selected)
-		snapshot.appendSections([.deSelected])
-		snapshot.appendItems(deSelected)
-		dataSource.apply(snapshot, animatingDifferences: animatingDifferences)
+		DispatchQueue.main.async {
+			var snapshot = Snapshot()
+			snapshot.appendSections([.selected])
+			snapshot.appendItems(self.selected)
+			snapshot.appendSections([.deSelected])
+			snapshot.appendItems(self.deSelected)
+			self.dataSource.apply(snapshot, animatingDifferences: animatingDifferences)
+		}
 	}
 	
 	func createLayout() -> UICollectionViewLayout {

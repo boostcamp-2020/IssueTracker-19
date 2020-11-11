@@ -84,9 +84,9 @@ class IssueDetailBottomViewController: UIViewController {
 	}
 	
 	func loadData() {
-		assignees = User.all
-		labels = Label.all
-		milestones = [Milestone.all[0]]
+//		assignees = User.all
+//		labels = Label.all
+//		milestones = [Milestone.all[0]]
 	}
 	
 	func showViewWithAnimation() {

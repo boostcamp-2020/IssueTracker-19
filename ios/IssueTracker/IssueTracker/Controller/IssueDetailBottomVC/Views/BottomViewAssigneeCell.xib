@@ -18,7 +18,6 @@
                 <subviews>
                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="person.crop.rectangle.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="5Vr-Ju-2sq">
                         <rect key="frame" x="10" y="11" width="30" height="27.5"/>
-                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstAttribute="width" secondItem="5Vr-Ju-2sq" secondAttribute="height" id="Hah-KN-ICi"/>
                             <constraint firstAttribute="width" priority="999" constant="30" id="QUG-D3-2d3"/>

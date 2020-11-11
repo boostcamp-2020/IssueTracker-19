@@ -18,10 +18,23 @@ class IssueDetailCommentViewCell: UICollectionViewCell {
 	@IBOutlet weak var createdAtLabel: UILabel!
 	@IBOutlet weak var contentLabel: UILabel!
 	
-	var issueComment: IssueComment? {
+	var issueComment: Comment? {
 		didSet {
-			authorLabel.text = issueComment?.author
-			contentLabel.text = issueComment?.content
+			guard let comment = issueComment else { return }
+			authorLabel.text = comment.author
+			createdAtLabel.text = comment.updatedAt
+			contentLabel.text = comment.content
+			HTTPAgent.shared.loadImage(urlString: comment.image ?? "") { [weak self] (result) in
+				switch result {
+				case .success(let path):
+					DispatchQueue.main.async {
+						self!.imageView.image = UIImage(contentsOfFile: path)
+					}
+				case .failure(let error):
+					print(error)
+				}
+			}
+			
 		}
 	}
 	

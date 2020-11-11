@@ -25,6 +25,13 @@ class LabelViewController: UIViewController, ListCollectionViewProtocol {
         var labels: [Label]
     }
     
+	struct CustomLabel: Codable {
+		let color: String
+		let description: String?
+		let name: String
+//		let no: Int?
+	}
+	
     override func viewDidLoad() {
         super.viewDidLoad()
         

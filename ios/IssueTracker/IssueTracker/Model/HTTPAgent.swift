@@ -119,4 +119,44 @@ class HTTPAgent: LoginProtocol {
         }
         task.resume()
     }
+	
+	public func loadImage(urlString: String, reDownload: Bool = false, completion: @escaping (Result<String, NetworkError>) -> Void) {
+		guard let url = URL(string: urlString) else {
+			completion(.failure(.URLError))
+			return
+		}
+		
+		let path = localFilePath(for: url).path
+		
+		if !reDownload && FileManager.default.fileExists(atPath: path) {
+			completion(.success(path))
+			return
+		}
+			
+		session.downloadTask(with: url) { location, response, error in
+			if error != nil { fatalError() }
+			guard let response = response as? HTTPURLResponse,
+				  (200...299).contains(response.statusCode),
+				  let url = response.url,
+				  let location = location else {
+				fatalError()
+			}
+			
+			let destinationURL = self.localFilePath(for: url)
+			
+			try? FileManager.default.removeItem(at: destinationURL)
+			
+			do {
+				try FileManager.default.copyItem(at: location, to: destinationURL)
+				completion(.success(destinationURL.path))
+			} catch let error {
+				fatalError("Copy Error: \(error.localizedDescription)")
+			}
+		}.resume()
+	}
+	
+	func localFilePath(for url: URL) -> URL {
+		let documentsPath = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask)[0]
+		return documentsPath.appendingPathComponent(url.lastPathComponent)
+	}
 }
