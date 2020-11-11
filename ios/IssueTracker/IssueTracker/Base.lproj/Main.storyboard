@@ -93,6 +93,7 @@
                         <outlet property="idTextField" destination="Ybf-Sp-dFu" id="pkT-Cj-J4J"/>
                         <outlet property="pwdTextField" destination="gd7-8h-sNm" id="xLz-eY-Zwj"/>
                         <segue destination="18q-r0-Gun" kind="show" identifier="loginSuccessSegue" id="9Wb-uE-veS"/>
+                        <segue destination="elX-pc-DJq" kind="show" identifier="JoinSegue" id="iJB-dj-H6R"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -874,6 +875,62 @@
             </objects>
             <point key="canvasLocation" x="2242" y="-574"/>
         </scene>
+        <!--Join View Controller-->
+        <scene sceneID="wbw-2h-zCm">
+            <objects>
+                <viewController id="elX-pc-DJq" customClass="JoinViewController" customModule="IssueTracker" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Cel-yc-5YP">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="이슈 트래커" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KsL-An-3lC">
+                                <rect key="frame" x="139" y="65" width="136.5" height="36"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="30"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="닉네임" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="lvn-6c-TZD">
+                                <rect key="frame" x="59" y="167" width="296" height="34"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="USw-q1-Te2">
+                                <rect key="frame" x="59" y="244" width="296" height="50"/>
+                                <color key="backgroundColor" systemColor="systemGrayColor"/>
+                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="20"/>
+                                <color key="tintColor" systemColor="systemGroupedBackgroundColor"/>
+                                <state key="normal" title="회원 가입"/>
+                                <connections>
+                                    <action selector="joinButton:" destination="elX-pc-DJq" eventType="touchUpInside" id="OEm-oQ-nHj"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="7D6-XY-u36"/>
+                        <color key="backgroundColor" systemColor="systemGray4Color"/>
+                        <constraints>
+                            <constraint firstItem="USw-q1-Te2" firstAttribute="height" secondItem="Cel-yc-5YP" secondAttribute="height" multiplier="0.0593824" id="2bW-x3-y6Z"/>
+                            <constraint firstItem="KsL-An-3lC" firstAttribute="top" secondItem="7D6-XY-u36" secondAttribute="top" constant="65" id="NhK-LM-uLZ"/>
+                            <constraint firstItem="lvn-6c-TZD" firstAttribute="top" secondItem="KsL-An-3lC" secondAttribute="bottom" constant="66" id="OcF-kc-CzW"/>
+                            <constraint firstItem="lvn-6c-TZD" firstAttribute="width" secondItem="Cel-yc-5YP" secondAttribute="width" multiplier="0.714976" id="Pyn-4J-ZFG"/>
+                            <constraint firstItem="USw-q1-Te2" firstAttribute="trailing" secondItem="lvn-6c-TZD" secondAttribute="trailing" id="iS3-35-Qzt"/>
+                            <constraint firstItem="USw-q1-Te2" firstAttribute="top" secondItem="lvn-6c-TZD" secondAttribute="bottom" constant="43" id="j8T-p2-yc8"/>
+                            <constraint firstItem="lvn-6c-TZD" firstAttribute="centerX" secondItem="7D6-XY-u36" secondAttribute="centerX" id="oDB-rq-bYA"/>
+                            <constraint firstItem="KsL-An-3lC" firstAttribute="centerX" secondItem="7D6-XY-u36" secondAttribute="centerX" id="uXl-P9-ZJu"/>
+                            <constraint firstItem="USw-q1-Te2" firstAttribute="centerX" secondItem="lvn-6c-TZD" secondAttribute="centerX" id="vbB-P3-h7W"/>
+                            <constraint firstItem="USw-q1-Te2" firstAttribute="leading" secondItem="lvn-6c-TZD" secondAttribute="leading" id="xk5-K4-DYm"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="ACM-Ag-iO4"/>
+                    <connections>
+                        <outlet property="nickNameTextField" destination="lvn-6c-TZD" id="gzY-Rd-7cL"/>
+                        <segue destination="18q-r0-Gun" kind="show" identifier="JoinSuccessSegue" id="f3a-hd-yUc"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="1FL-Ql-6dO" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="213.04347826086959" y="-192.1875"/>
+        </scene>
         <!--레이블-->
         <scene sceneID="4Uz-VD-gbj">
             <objects>
@@ -1189,6 +1246,9 @@
             <point key="canvasLocation" x="2242" y="802"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="f3a-hd-yUc"/>
+    </inferredMetricsTieBreakers>
     <resources>
         <image name="1.circle.fill" catalog="system" width="128" height="121"/>
         <image name="2.circle.fill" catalog="system" width="128" height="121"/>

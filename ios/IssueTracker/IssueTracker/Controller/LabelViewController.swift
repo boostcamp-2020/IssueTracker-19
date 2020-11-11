@@ -21,7 +21,7 @@ class LabelViewController: UIViewController, ListCollectionViewProtocol {
                                                             collectionViewLayout: UICollectionViewLayout())
     var cellRegistration: Registration?
     
-    struct Labels: Codable {
+    struct Labels: Decodable {
         var labels: [Label]
     }
     
@@ -34,14 +34,16 @@ class LabelViewController: UIViewController, ListCollectionViewProtocol {
     }
     
     func updateData() {
-        let data = try? JSONEncoder().encode(["id":"a","pw":"123"])
+//        let data = try? JSONEncoder().encode(["id":"a","pw":"123"])
         
 		HTTPAgent.shared.sendRequest(from: "http://49.50.163.23/api/labels", method: .GET) { [weak self] (result) in
 			switch result {
 			case .success(let data):
-				let sample = try? JSONSerialization.jsonObject(with: data) as? [String: Any]
+                print(String(data: data, encoding: .utf8))
+                let sample = try? JSONSerialization.jsonObject(with: data) as? [String: [Any]]
+                let sampleLabels = sample!["labels"]
+                
 				let labels = try? JSONDecoder().decode(Labels.self, from: data)
-                print(sample)
                 if let result = labels?.labels {
                     self?.list = result
                 } else {
