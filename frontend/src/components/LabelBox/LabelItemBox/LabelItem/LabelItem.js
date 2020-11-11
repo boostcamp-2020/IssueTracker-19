@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+import { labelService } from '@services';
 import { flex } from '@styles/utils';
 import { colors } from '@styles/variables';
 import { LabelTag } from '@components';
@@ -24,11 +24,38 @@ const ButtonBox = styled.div`
   justify-content: space-around;
 `;
 
-const CustomLink = styled(Link)`
+const Button = styled.button`
+  background-color: inherit;
   color: ${colors.black6};
+  border: none;
+  outline: none;
+  cursor: pointer;
 `;
 
-export default function LabelItem({ no, name, description, color }) {
+export default function LabelItem({
+  no,
+  name,
+  description,
+  color,
+  reloadLabels,
+  setEditingLabels,
+  editingLabels,
+}) {
+  const handleDelete = async () => {
+    if (!confirm(`${name} 레이블을 삭제 하시겠습니까?`)) return;
+
+    try {
+      const { status } = await labelService.deleteLabel({
+        no,
+      });
+      reloadLabels();
+    } catch ({ response: { status } }) {}
+  };
+
+  const handleSetEditing = () => {
+    setEditingLabels(new Set([...editingLabels, no]));
+  };
+
   return (
     <Box>
       <NameBox>
@@ -36,8 +63,8 @@ export default function LabelItem({ no, name, description, color }) {
       </NameBox>
       <DescBox>{description}</DescBox>
       <ButtonBox>
-        <CustomLink to="/">Edit</CustomLink>
-        <CustomLink to="/">Delete</CustomLink>
+        <Button onClick={handleSetEditing}>Edit</Button>
+        <Button onClick={handleDelete}>Delete</Button>
       </ButtonBox>
     </Box>
   );
