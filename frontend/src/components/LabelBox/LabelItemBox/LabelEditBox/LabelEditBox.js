@@ -91,6 +91,11 @@ const ColorIcon = styled(svgConfig)`
   height: 16px;
 `;
 
+const PreventSubmitButton = styled(SubmitButton)`
+  opacity: 0.4;
+  cursor: default;
+`;
+
 export default function LabelEditBox({
   no = null,
   name = '',
@@ -203,7 +208,14 @@ export default function LabelEditBox({
       <EditBody>
         <ItemBox flexGrow={1}>
           <InputLabel>Label Name</InputLabel>
-          <InputBox name="name" type="text" onChange={handleLabel} value={label.name} required />
+          <InputBox
+            name="name"
+            type="text"
+            onChange={handleLabel}
+            value={label.name}
+            placeholder="Label name"
+            required
+          />
         </ItemBox>
         <ItemBox flexGrow={4}>
           <InputLabel>Description</InputLabel>
@@ -212,6 +224,7 @@ export default function LabelEditBox({
             type="text"
             onChange={handleLabel}
             value={label.description ? label.description : ''}
+            placeholder="Description (optional)"
           />
         </ItemBox>
         <ItemBox>
@@ -238,7 +251,13 @@ export default function LabelEditBox({
           <CancelButton type="button" onClick={handleCancel}>
             Cancel
           </CancelButton>
-          <SubmitButton>{label.no ? 'Save changes' : 'Create Label'}</SubmitButton>
+          {label.name.length !== 0 ? (
+            <SubmitButton>{label.no ? 'Save changes' : 'Create Label'}</SubmitButton>
+          ) : (
+            <PreventSubmitButton disabled>
+              {label.no ? 'Save changes' : 'Create Label'}
+            </PreventSubmitButton>
+          )}
         </ItemBoxRow>
       </EditBody>
     </Box>
