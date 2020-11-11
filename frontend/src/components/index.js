@@ -4,7 +4,7 @@ export { default as SignUpBox } from './SignUpBox/SignUpBox';
 export { default as IssueList } from './IssueList/IssueList';
 export { default as IssueSidebar } from './IssueSidebar/IssueSidebar';
 export { default as IssueInputBox } from './IssueInputBox/IssueInputBox';
-export { default as IssueTitleBox } from './IssueTitleBox/IssueTitleBox';
+export { default as IssueDetailHeader } from './IssueDetailHeader/IssueDetailHeader';
 export { default as IssueCommentBox } from './IssueCommentBox/IssueCommentBox';
 export { default as IssueSearchBox } from './IssueSearchBox/IssueSearchBox';
 export { default as LabelMilestoneControls } from './LabelMilestoneControls/LabelMilestoneControls';

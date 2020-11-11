@@ -1,6 +1,5 @@
-import { withAuth } from '@hoc';
 import React, { useEffect, useState } from 'react';
-import { Header, IssueTitleBox, IssueCommentBox, IssueSidebar } from '@components';
+import { Header, IssueDetailHeader, IssueCommentBox, IssueSidebar } from '@components';
 import { IssueDetailContext } from '@contexts/IssueDetailContext';
 import { issueService } from '@services';
 import styled from 'styled-components';
@@ -26,13 +25,15 @@ export default function IssueDetail({
   useEffect(async () => {
     try {
       const {
-        data: { issue: fetchedIsuue },
+        data: { issue: fetchedIssue },
         status,
       } = await issueService.getIssue({ issueNo });
       if (status === 200) {
-        setIssue(fetchedIsuue);
+        setIssue(fetchedIssue);
+        console.log(fetchedIssue);
       }
     } catch (err) {
+      console.log('error');
       if (err?.response?.status === 401) {
         history.push('/login');
       }
@@ -60,7 +61,7 @@ export default function IssueDetail({
   return (
     <IssueDetailContext.Provider value={{ issue }}>
       <Header />
-      <IssueTitleBox />
+      <IssueDetailHeader />
       <IssueContainer>
         <IssueCommentBox />
         {/* IssueInputBox */}

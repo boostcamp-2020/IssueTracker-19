@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { IssueDetailContext } from '@contexts/IssueDetailContext';
+import IssueCommentItem from './IssueCommentItem/IssueCommentItem';
 import { colors } from '@styles/variables';
 import { flexColumn } from '@styles/utils';
 
@@ -12,10 +13,23 @@ const MainContainer = styled.div`
 
 const CommentBox = styled.div``;
 
-const imageItem = styled.img``;
+const ImageItem = styled.img`
+  width: 30px;
+`;
 
 export default function IssueCommentBox() {
-  useContext(IssueDetailContext);
+  const {
+    issue: { comments },
+  } = useContext(IssueDetailContext);
 
-  return <MainContainer></MainContainer>;
+  return (
+    <MainContainer>
+      {comments?.map((comment, idx) => (
+        <CommentBox key={idx}>
+          <ImageItem src={comment.image} />
+          <IssueCommentItem />
+        </CommentBox>
+      ))}
+    </MainContainer>
+  );
 }
