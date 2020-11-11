@@ -8,11 +8,11 @@
 
 import Foundation
 
-class Label: HashableObject, Codable {
+class Label: GitIssueObject, Codable {
+	var name: String
 	var description: String?
 	var color: String
-    var no: Int
-    var name: String
+	override var searchText: String { name }
     
     enum CodingKeys: String, CodingKey {
         case color, description, name, no
@@ -21,7 +21,7 @@ class Label: HashableObject, Codable {
     required init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
         name = try values.decode(String.self, forKey: .name)
-        description = try values.decode(String.self, forKey: .description)
+        description = try values.decode(String?.self, forKey: .description)
         color = try values.decode(String.self, forKey: .color)
         no = try values.decode(Int.self, forKey: .no)
     }
@@ -32,7 +32,7 @@ class Label: HashableObject, Codable {
 		self.color = color
         self.no = no
 	}
-	static let all = ["bug","documentation", "duplicacte", "enhancement", "good first issue", "help wanted", "invalid", "question", "wontfix"]
+	static let all = ["bug","documentation", "duplicacte", "enhancement", "good first issue", "help wanted", "invalid", "question", "wontfix", "dddddddddddddddd"]
 		.map {
 			Label(name: $0,
 				  description: nil,

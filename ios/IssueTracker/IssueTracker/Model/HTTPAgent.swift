@@ -82,7 +82,7 @@ class HTTPAgent: LoginProtocol {
                     as? [String: Any] {
                     if let token = json["access_token"] as? String {
                         self.getUser(token: token, completion: { statusCode in
-                            NotificationCenter.default.post(name: Notification.googleLoginSuccess, object: self, userInfo: ["statusCode": statusCode])
+                            NotificationCenter.default.post(name: .googleLoginSuccess, object: self, userInfo: ["statusCode": statusCode])
                         })
                     }
                 }

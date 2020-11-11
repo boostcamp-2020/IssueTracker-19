@@ -40,6 +40,7 @@ class MilestoneViewCell: UICollectionViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
 		backgroundColor = .tertiarySystemBackground
+		dueDateLabel.widthAnchor.constraint(greaterThanOrEqualToConstant: dueDateLabel.intrinsicContentSize.width).isActive = true
     }
 
 }

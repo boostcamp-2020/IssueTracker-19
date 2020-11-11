@@ -8,7 +8,7 @@
 
 import Foundation
 
-class Milestone: HashableObject, Codable {
+class Milestone: GitIssueObject, Codable {
 	let no: Int
 	let title: String
 	let totalTasks: Int
@@ -17,6 +17,7 @@ class Milestone: HashableObject, Codable {
 	let isDeleted: Bool
 	let dueDate: Date?
 	let description: String?
+	override var searchText: String { title }
 	
 	init(no: Int, title: String, totalTasks: Int, closedTasks: Int, isClosed: Bool, isDeleted: Bool, dueDate: Date?, description: String?) {
 		self.no = no

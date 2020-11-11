@@ -13,7 +13,9 @@ class BottomViewFooterView: UICollectionReusableView {
 		Self.self.description()
 	}
 
+	var closure: (() -> Void)?
+	
 	@IBAction func closeButtonAction(_ sender: UIButton) {
-		print("close issue")
+		closure?()
 	}
 }

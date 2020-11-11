@@ -17,7 +17,7 @@
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="bug" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Mi0-7d-WeZ">
-                        <rect key="frame" x="8" y="4" width="143" height="62"/>
+                        <rect key="frame" x="10" y="8" width="139" height="54"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
@@ -26,10 +26,10 @@
             </view>
             <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
             <constraints>
-                <constraint firstItem="Mi0-7d-WeZ" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="4" id="LHm-2d-Bys"/>
-                <constraint firstAttribute="bottom" secondItem="Mi0-7d-WeZ" secondAttribute="bottom" constant="4" id="o4q-Rz-Egr"/>
-                <constraint firstItem="Mi0-7d-WeZ" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="8" id="pWR-sS-MiA"/>
-                <constraint firstAttribute="trailing" secondItem="Mi0-7d-WeZ" secondAttribute="trailing" constant="8" id="xCN-YL-l54"/>
+                <constraint firstItem="Mi0-7d-WeZ" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="8" id="LHm-2d-Bys"/>
+                <constraint firstAttribute="bottom" secondItem="Mi0-7d-WeZ" secondAttribute="bottom" constant="8" id="o4q-Rz-Egr"/>
+                <constraint firstItem="Mi0-7d-WeZ" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="10" id="pWR-sS-MiA"/>
+                <constraint firstAttribute="trailing" secondItem="Mi0-7d-WeZ" secondAttribute="trailing" constant="10" id="xCN-YL-l54"/>
             </constraints>
             <size key="customSize" width="159" height="70"/>
             <connections>
