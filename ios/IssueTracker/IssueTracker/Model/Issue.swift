@@ -8,15 +8,55 @@
 
 import Foundation
 
-struct Issue: Hashable, Codable {
-    let uuid: UUID
-    
-    static func == (lhs: Issue, rhs: Issue) -> Bool {
-        return lhs.uuid == rhs.uuid
-    }
-    func hash(into hasher: inout Hasher) {
-        hasher.combine(uuid)
-    }
+class Comment: GitIssueObject, Codable {
+	let no: Int
+	let author: String
+	let authorNo: Int
+	let content: String
+	let updatedAt: String
+	let image: String?
+	
+	enum CodingKeys: String, CodingKey {
+		case no, author, authorNo, content, updatedAt, image
+	}
+	
+	required init(from decoder: Decoder) throws {
+		let values = try decoder.container(keyedBy: CodingKeys.self)
+		no = try values.decode(Int.self, forKey: .no)
+		author = try values.decode(String.self, forKey: .author)
+		authorNo = try values.decode(Int.self, forKey: .authorNo)
+		content = try values.decode(String.self, forKey: .content)
+		updatedAt = try values.decode(String.self, forKey: .updatedAt)
+		image = try values.decode(String?.self, forKey: .image)
+	}
+}
+
+struct IssueUserNo: Codable {
+	let issueNo: Int
+	let userNo: Int
+}
+
+struct IssueLabelNo: Codable {
+	let issueNo: Int
+	let labelNo: Int
+}
+
+struct Issue2: Codable {
+	let no: Int
+	let title: String
+	let author: String
+	let assignees: [IssueUserNo]?
+	let labels: [IssueLabelNo]?
+	let isOpened: Int
+	let createdAt: String
+	let closedAt: String?
+	let milestone: Milestone?
+	let comments: [Comment]?
+}
+
+
+
+class Issue: GitIssueObject, Codable {
     
     let no: Int
     let title: String
@@ -42,14 +82,12 @@ struct Issue: Hashable, Codable {
         closedAt = nil
         milestoneNo = nil
         milestoneTitle = nil
-        uuid = UUID()
     }
     
     enum CodingKeys: String, CodingKey {
         case no, title, author, assignees, labels, isOpened, createdAt, closedAt, milestoneNo, milestoneTitle, commentCount
     }
-    init(from decoder: Decoder) throws {
-        uuid = UUID()
+	required init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
         no = try values.decode(Int.self, forKey: .no)
         title = try values.decode(String.self, forKey: .title)

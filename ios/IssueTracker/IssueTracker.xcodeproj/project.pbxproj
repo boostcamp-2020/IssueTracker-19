@@ -216,11 +216,8 @@
 			children = (
 				4CDC3CAA2552F6E500FC672B /* NSLayoutConstraint+description.swift */,
 				4CDC3D2E2556ABD200FC672B /* String+toUIColorPair.swift */,
-
 				4C7B90B9255BA0F200DF5312 /* NotificationName.swift */,
-
 				C162A850255A8A1C0075B296 /* UIColor+toHexString.swift */,
-
 			);
 			path = extension;
 			sourceTree = "<group>";
@@ -387,7 +384,7 @@
 		C196563C2546B9B6007DD55A /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 1160;
+				LastSwiftUpdateCheck = 1210;
 				LastUpgradeCheck = 1200;
 				ORGANIZATIONNAME = "남기범";
 				TargetAttributes = {

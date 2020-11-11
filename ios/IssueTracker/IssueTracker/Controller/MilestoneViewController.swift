@@ -29,10 +29,22 @@ class MilestoneViewController: UIViewController, ListCollectionViewProtocol {
 	}
 
 	func updateData() {
-		list = [
-			Milestone(no: 1, title: "스프린트2", totalTasks: 36, closedTasks: 23, isClosed: false, isDeleted: false, dueDate: Date(), description: "이번 배포를 위한 스프린트"),
-			Milestone(no: 2, title: "스프린트3", totalTasks: 0, closedTasks: 0, isClosed: false, isDeleted: false, dueDate: Date(), description: "다음 배포를 위한 스프린트")
-		]
+		
+		HTTPAgent.shared.sendRequest(from: "http://49.50.163.23:3000/api/milestones", method: .GET) { [weak self] (result) in
+			guard let vc = self else { return }
+			switch result {
+			case .success(let data):
+				guard let data = try? JSONDecoder().decode(MilestoneWrapper.self, from: data).milestones else { return }
+				vc.list = data
+				vc.updateList()
+			case .failure(let error):
+				print(error)
+			}
+		}
+//		list = [
+//			Milestone(no: 1, title: "스프린트2", totalTasks: 36, closedTasks: 23, isClosed: 0, isDeleted: 0, dueDate: "Date()", description: "이번 배포를 위한 스프린트"),
+//			Milestone(no: 2, title: "스프린트3", totalTasks: 0, closedTasks: 0, isClosed: 0, isDeleted: 0, dueDate: "Date()", description: "다음 배포를 위한 스프린트")
+//		]
 	}
 	
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

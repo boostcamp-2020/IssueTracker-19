@@ -21,7 +21,7 @@ class Label: GitIssueObject, Codable {
     required init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
         name = try values.decode(String.self, forKey: .name)
-        description = try values.decode(String.self, forKey: .description)
+        description = try values.decode(String?.self, forKey: .description)
         color = try values.decode(String.self, forKey: .color)
     }
 	

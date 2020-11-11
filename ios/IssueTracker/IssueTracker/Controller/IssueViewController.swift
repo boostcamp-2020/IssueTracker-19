@@ -89,6 +89,8 @@ class IssueViewController: UIViewController, ListCollectionViewProtocol {
                     case .success(let data):
                         let sample = try? JSONSerialization.jsonObject(with: data) as? [String: Any]
                         let issue = try? JSONDecoder().decode(Issues.self, from: data)
+						
+
                         self?.list = issue!.issues
 						self?.allList = self?.list ?? []
                         self?.updateList()
@@ -217,19 +219,9 @@ extension IssueViewController {
     }
 	
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-		if let issueDetailVC = segue.destination as? IssueDetailViewController {
-			
-//			issueDetailVC.issue = Issue(no: 11,
-//										title: "이슈 생성 기능",
-//										author: "godrm",
-//										assignees: [],
-//										labels: [],
-//										isOpened: true,
-//										createdAt: Date(),
-//										closedAt: nil,
-//										milestoneNo: nil,
-//										milestoneTitle: nil,
-//										commentCount: 2)
+		if let issueDetailVC = segue.destination as? IssueDetailViewController,
+		   let issue = sender as? Issue {
+			issueDetailVC.issue = issue
 		}
         
         if let issueAddVC = segue.destination as? IssueAddViewController {
@@ -241,7 +233,7 @@ extension IssueViewController {
 extension IssueViewController: UICollectionViewDelegate {
 	func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 		if !isEditing {
-			performSegue(withIdentifier: "issueDetailSegue", sender: nil)
+			performSegue(withIdentifier: "issueDetailSegue", sender: list[indexPath.row])
 		}
 	}
 }

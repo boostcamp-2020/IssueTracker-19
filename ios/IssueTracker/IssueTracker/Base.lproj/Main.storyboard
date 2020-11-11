@@ -643,7 +643,7 @@
         <!--Issue Detail View Controller-->
         <scene sceneID="gss-RP-GlC">
             <objects>
-                <viewController hidesBottomBarWhenPushed="YES" id="oiX-ag-8Nt" customClass="IssueDetailViewController" customModule="IssueTracker" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="issueDetailVC" hidesBottomBarWhenPushed="YES" id="oiX-ag-8Nt" customClass="IssueDetailViewController" customModule="IssueTracker" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Hr8-1g-leQ">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

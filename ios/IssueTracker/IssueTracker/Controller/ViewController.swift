@@ -38,7 +38,7 @@ class ViewController: UIViewController {
     
 
     @IBAction func githubLogin(_ sender: UIButton) {
-        HTTPAgent.shared.githubLoginAction()
+//        HTTPAgent.shared.githubLoginAction()
     }
     
 	@IBAction func appleLogin(_ sender: UIButton) {

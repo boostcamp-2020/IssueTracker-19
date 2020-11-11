@@ -31,6 +31,7 @@ class SectionItemEditViewController: UIViewController {
 	var height: CGFloat { view.frame.height }
 	var searchMode = false
 	
+	var original = [GitIssueObject]()
 	var selected = [GitIssueObject]()
 	var deSelected = [GitIssueObject]()
 	var searched = [GitIssueObject]()
@@ -46,7 +47,6 @@ class SectionItemEditViewController: UIViewController {
 	
     override func viewDidLoad() {
         super.viewDidLoad()
-		loadData()
 		configureContentView()
 		configureScrollAction()
 		
@@ -57,6 +57,7 @@ class SectionItemEditViewController: UIViewController {
 			configureSearchController()
 		}
 		configureNavigationBar()
+		loadData()
     }
 	
 	override func viewWillAppear(_ animated: Bool) {
@@ -75,19 +76,45 @@ class SectionItemEditViewController: UIViewController {
 		view.backgroundColor = .systemGroupedBackground
 	}
 	
-	
-	
 	func loadData() {
 		switch bottomViewSection {
 		case .assignee:
-			selected = [User.all[0]]
-			deSelected = User.all.suffix(User.all.count - 1)
+			fetch(component: "users")
 		case .label:
-			selected = [Label.all[0]]
-			deSelected = Label.all.suffix(Label.all.count - 1)
+			fetch(component: "labels")
 		case .milestone:
-			selected = [Milestone.all[0]]
-			deSelected = Milestone.all.suffix(Milestone.all.count - 1)
+			fetch(component: "milestones")
+		}
+	}
+	
+	func fetch(component: String) {
+		selected = original
+		
+		HTTPAgent.shared.sendRequest(from: "http://49.50.163.23:3000/api/\(component)", method: .GET) { [weak self] (result) in
+			guard let vc = self else { return }
+			switch result {
+			case .success(let data):
+//				let sample = try? JSONSerialization.jsonObject(with: data) as? [String: Any]
+				var items: [GitIssueObject]?
+				switch vc.bottomViewSection {
+				case .assignee:
+					items = try? JSONDecoder().decode(UserWrapper.self, from: data).users
+				case .label:
+					items = try? JSONDecoder().decode(LabelWrapper.self, from: data).labels
+				case .milestone:
+					items = try? JSONDecoder().decode(MilestoneWrapper.self, from: data).milestones
+				}
+				guard let elements = items else { return }
+				
+				vc.deSelected = elements.filter({ (first) -> Bool in
+					!vc.selected.contains { (second) -> Bool in
+						first.searchText == second.searchText
+					}
+				})
+				vc.applySnapshot(animatingDifferences: true)
+			case .failure(let error):
+				print(error)
+			}
 		}
 	}
 	
@@ -99,4 +126,17 @@ class SectionItemEditViewController: UIViewController {
 		removeFromParent()
 	}
 
+}
+
+
+struct UserWrapper: Codable {
+	let users: [User]
+}
+
+struct LabelWrapper: Codable {
+	let labels: [Label]
+}
+
+struct MilestoneWrapper: Codable {
+	let milestones: [Milestone]
 }

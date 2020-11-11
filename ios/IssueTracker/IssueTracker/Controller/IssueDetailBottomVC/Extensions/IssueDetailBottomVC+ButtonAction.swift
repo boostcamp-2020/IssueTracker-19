@@ -29,6 +29,16 @@ extension IssueDetailBottomViewController {
 		
 		let editSectionItemVC = SectionItemEditViewController(bottomViewSection: type)
 		
+		switch type {
+		case .assignee:
+			editSectionItemVC.original = assignees
+		case .label:
+			editSectionItemVC.original = labels
+		case .milestone:
+			editSectionItemVC.original = milestones
+		}
+		
+		
 		addChild(editSectionItemVC)
 		editSectionItemVC.view.frame = view.bounds
 		view.addSubview(editSectionItemVC.view)

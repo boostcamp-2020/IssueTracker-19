@@ -8,24 +8,15 @@
 
 import UIKit
 
-class IssueComment: GitIssueObject {
-	let author: String
-	let content: String
-	init(author: String, content: String) {
-		self.author = author
-		self.content = content
-        super.init()
-	}
-    
-    required init(from decoder: Decoder) throws {
-        fatalError("init(from:) has not been implemented")
-    }
+struct IssueWrapper: Codable {
+	let issue: Issue2
 }
 
 class IssueDetailViewController: UIViewController, ListCollectionViewProtocol {
 	
 	var issue: Issue!
-	var list: [IssueComment] = []
+	var issueWrapper: IssueWrapper?
+	var list: [Comment] = []
 	var dataSource: DataSource?
 	
 	var collectionView: UICollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewLayout())
@@ -33,12 +24,30 @@ class IssueDetailViewController: UIViewController, ListCollectionViewProtocol {
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
+		print(issue)
+		
+		loadDate()
 		
 		configureHierarchy()
 		configureDataSource()
 		configureBottomView()
 		updateList()
-		
+	}
+	
+	func loadDate() {
+		HTTPAgent.shared.sendRequest(from: "http://49.50.163.23:3000/api/issues/\(issue.no)", method: .GET) { [weak self] (result) in
+			switch result {
+			case .success(let data):
+//				let sample = try? JSONSerialization.jsonObject(with: data) as? [String: Any]
+				self?.issueWrapper = try? JSONDecoder().decode(IssueWrapper.self, from: data)
+				if let comments = self?.issueWrapper?.issue.comments {
+					self?.list = comments
+					self?.updateList()
+				}
+			case .failure(let error):
+				print(error)
+			}
+		}
 	}
 	
 	func configureBottomView() {
@@ -46,18 +55,18 @@ class IssueDetailViewController: UIViewController, ListCollectionViewProtocol {
 				as? IssueDetailBottomViewController
 		else { return }
 		
+		bottomVC.assignees = issue.assignees
+		bottomVC.labels = issue.labels
+		if let milestone = issueWrapper?.issue.milestone {
+			bottomVC.milestones = [milestone]
+		}
+		
 		bottomViewController = bottomVC
 		guard let window = UIApplication.shared.windows.filter { $0.isKeyWindow }.last else { return }
 		window.addSubview(bottomVC.view)
 		bottomVC.setupView(superView: window)
 		window.rootViewController?.addChild(bottomVC)
-	}
-	
-	override func viewDidAppear(_ animated: Bool) {
-		super.viewDidAppear(animated)
-		// TODO: 서버 API 통신 구현 후 viewDidLoad로 이동
-		updateIssueDetail()
-//		bottomViewController?.showViewWithAnimation()
+		
 	}
 	
 	override func viewWillDisappear(_ animated: Bool) {
@@ -67,18 +76,6 @@ class IssueDetailViewController: UIViewController, ListCollectionViewProtocol {
 	override func viewDidLayoutSubviews() {
 		super.viewDidLayoutSubviews()
 		collectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 96, right: 0)
-	}
-	
-	func updateIssueDetail() {
-		list = [
-			IssueComment(author: "godrm",
-						 content: "레이블 전체 목록을 볼 수 있는게 어떨까요\n 전체 설명이 보여야 선택할 수 있으니까\n\n마크다운 문법을 지원하고 \n HTML형태로 보여줘야 할까요"),
-			IssueComment(author: "crong",
-						 content: "긍정적인 기능이네요\n 댓글은 두 줄"),
-			IssueComment(author: "honux",
-						 content: "안녕하세요 호눅스입니다")
-		]
-		updateList()
 	}
 	
 	// MARK: - Tab bar item Actions
