@@ -1,7 +1,7 @@
 import { API } from '@api';
 
 export const uploadService = {
-  addImage(formdata) {
-    return API.post('/api/uploads/image', formdata);
+  addImage(formData) {
+    return API.post('/api/upload/images', formData);
   },
 };
