@@ -4,6 +4,7 @@ import { colors } from '@styles/variables';
 import { flex } from '@styles/utils';
 import { LabelTag, OpenIcon, ClosedIcon } from '@components';
 import milestoneIcon from '@imgs/milestone.svg';
+import { Link } from 'react-router-dom';
 
 const Container = styled.div`
   border: 1px solid ${colors.lighterGray};
@@ -29,6 +30,10 @@ const TopBox = styled.div`
 const Title = styled.div`
   font-size: 1rem;
   font-weight: bold;
+  cursor: pointer;
+  &:hover {
+    color: ${colors.resetFilterColor};
+  }
 `;
 
 const TagBox = styled.div`
@@ -112,7 +117,9 @@ export default function IssueItem(props) {
         {isOpened ? <OpenIcon /> : <ClosedIcon />}
         <TitleContainer>
           <TopBox>
-            <Title>{title}</Title>
+            <Link to={`/issues/${no}`}>
+              <Title>{title}</Title>
+            </Link>
             <TagBox>
               {labels.map(({ no, name, color, description }) => {
                 return (
