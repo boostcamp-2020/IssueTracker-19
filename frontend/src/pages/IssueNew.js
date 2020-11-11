@@ -12,7 +12,7 @@ const IssueContainer = styled.div`
 export default function IssueNew({ user }) {
   const [assignees, setAssignees] = useState([]);
   const [labels, setLabels] = useState([]);
-  const [milestone, setMilestone] = useState(undefined);
+  const [milestone, setMilestone] = useState(null);
 
   const handleAssignToMe = () => {
     const { no, nickname } = user;
@@ -31,11 +31,27 @@ export default function IssueNew({ user }) {
     setMilestone(newMilestone);
   };
 
+  const handleRemoveAssignee = (e, assignee) => {
+    setAssignees(assignees.filter(({ no }) => no !== assignee.no));
+  };
+
+  const handleRemoveLabel = (e, label) => {
+    setLabels(labels.filter(({ no }) => no !== label.no));
+  };
+
+  const handleRemoveMilestone = () => {
+    setMilestone(undefined);
+  };
+
   return (
     <>
       <Header />
       <IssueContainer>
-        <IssueInputBox />
+        <IssueInputBox
+          assigneeNos={assignees.map(a => a.no)}
+          labelNos={labels.map(l => l.no)}
+          milestoneNo={milestone?.no}
+        />
         <IssueSidebar
           assignees={assignees}
           labels={labels}
@@ -44,6 +60,9 @@ export default function IssueNew({ user }) {
           handleClickAssignee={handleClickAssignee}
           handleClickLabel={handleClickLabel}
           handleClickMilestone={handleClickMilestone}
+          handleRemoveAssignee={handleRemoveAssignee}
+          handleRemoveLabel={handleRemoveLabel}
+          handleRemoveMilestone={handleRemoveMilestone}
         />
       </IssueContainer>
     </>
