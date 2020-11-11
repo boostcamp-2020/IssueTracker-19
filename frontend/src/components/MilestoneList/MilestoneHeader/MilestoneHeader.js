@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
-import { API } from '@api';
-import { flexColumn, flexCenter, flex } from '@styles/utils';
 import { colors } from '@styles/variables';
 import MilestoneIcon from '@imgs/milestone.svg';
 import CheckIcon from '@imgs/check.svg';
+import MilestoneGrayIcon from '@imgs/milestone-gray.svg';
+import CheckGrayIcon from '@imgs/check-gray.svg';
 
 const Container = styled.div`
   margin-top: 1.25rem;
@@ -27,24 +27,50 @@ const ButtonBox = styled.div`
   padding: 13px 10px;
   cursor: pointer;
 `;
+const UnselectedButton = styled(ButtonBox)`
+  font-weight: 400;
+  color: #586069;
+`;
 const Img = styled.img`
   width: 20px;
   height: 20px;
   margin-right: 5px;
 `;
-export default function MilestoneHeader({ openCount, closeCount }) {
+export default function MilestoneHeader({ setOpenFilter, openCount, closeCount }) {
+  const [isOpen, setIsOpen] = useState(true);
+  const handleClickOpen = () => {
+    setIsOpen(true);
+    setOpenFilter(true);
+  };
+  const handleClickClose = () => {
+    setIsOpen(false);
+    setOpenFilter(false);
+  };
   return (
     <Container>
-      <ToggleBox>
-        <ButtonBox>
-          <Img src={MilestoneIcon} />
-          {openCount} Open
-        </ButtonBox>
-        <ButtonBox>
-          <Img src={CheckIcon} />
-          {closeCount} Closed
-        </ButtonBox>
-      </ToggleBox>
+      {isOpen ? (
+        <ToggleBox>
+          <ButtonBox onClick={handleClickOpen}>
+            <Img src={MilestoneIcon} />
+            {openCount} Open
+          </ButtonBox>
+          <UnselectedButton onClick={handleClickClose}>
+            <Img src={CheckGrayIcon} />
+            {closeCount} Closed
+          </UnselectedButton>
+        </ToggleBox>
+      ) : (
+        <ToggleBox>
+          <UnselectedButton onClick={handleClickOpen}>
+            <Img src={MilestoneGrayIcon} />
+            {openCount} Open
+          </UnselectedButton>
+          <ButtonBox onClick={handleClickClose}>
+            <Img src={CheckIcon} />
+            {closeCount} Closed
+          </ButtonBox>
+        </ToggleBox>
+      )}
     </Container>
   );
 }
