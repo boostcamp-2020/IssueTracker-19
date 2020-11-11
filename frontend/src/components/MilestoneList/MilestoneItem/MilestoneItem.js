@@ -28,6 +28,7 @@ const TitleHeader = styled.h2`
   font-size: 1.5rem;
   font-weight: 400;
   line-height: 1.2;
+  cursor: pointer;
 `;
 
 const Meta = styled.div`
@@ -131,6 +132,7 @@ export default function MilestoneItem({
   totalTasks,
   closedTasks,
   isClosed,
+  fetchMilestones,
 }) {
   const [closed, setClosed] = useState(isClosed);
   const [isDeleted, setIsDeleted] = useState(false);
@@ -139,17 +141,20 @@ export default function MilestoneItem({
 
   const handleClose = async () => {
     await milestoneService.closeMilestones(no);
+    fetchMilestones();
     setClosed(true);
   };
 
   const handleOpen = async () => {
     milestoneService.openMilestones(no);
+    fetchMilestones();
     setClosed(false);
   };
 
   const handleDelete = async () => {
     if (confirm(`[${title}] 마일스톤을 삭제하시겠습니까?`)) {
       milestoneService.deleteMilestones(no);
+      fetchMilestones();
       setIsDeleted(true);
     }
   };

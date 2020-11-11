@@ -12,6 +12,7 @@ const MilestoneListBox = styled.div`
 export default function MilestoneList() {
   const [milestoneList, setMilestoneList] = useState([]);
   const [count, setCount] = useState({ open: 0, closed: 0 });
+  const [openFilter, setOpenFilter] = useState(true);
   const fetchMilestones = async () => {
     const {
       data: { milestones },
@@ -36,23 +37,30 @@ export default function MilestoneList() {
   useEffect(() => {
     fetchMilestones();
   }, []);
+
   return (
     <MilestoneListBox>
-      <MilestoneHeader openCount={count.open} closeCount={count.closed} />
-      {milestoneList.map(milestone => {
-        const {
-          no,
-          title,
-          dueDate,
-          description,
-          totalTasks,
-          closedTasks,
-          isDeleted,
-          isClosed,
-        } = milestone;
-        if (!isDeleted) {
+      <MilestoneHeader
+        setOpenFilter={setOpenFilter}
+        openCount={count.open}
+        closeCount={count.closed}
+      />
+      {milestoneList
+        .filter(({ isClosed }) => (openFilter ? !isClosed : isClosed))
+        .map(milestone => {
+          const {
+            no,
+            title,
+            dueDate,
+            description,
+            totalTasks,
+            closedTasks,
+            isDeleted,
+            isClosed,
+          } = milestone;
           return (
             <MilestoneItem
+              status={status}
               key={no}
               no={no}
               title={title}
@@ -61,10 +69,10 @@ export default function MilestoneList() {
               totalTasks={totalTasks}
               closedTasks={closedTasks}
               isClosed={isClosed}
+              fetchMilestones={fetchMilestones}
             />
           );
-        }
-      })}
+        })}
     </MilestoneListBox>
   );
 }
