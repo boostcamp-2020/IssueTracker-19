@@ -2,7 +2,7 @@ import pool from '@lib/db';
 
 export const issueModel = {
   getIssueList({ keyword }) {
-    const sql = `SELECT i.no, u.nickname as author, i.title, i.is_opened as isOpened, i.created_at as createdAt, 
+    const sql = `SELECT i.no, u.image, u.nickname as author, i.title, i.is_opened as isOpened, i.created_at as createdAt, 
     i.closed_at as closedAt, m.title as milestoneTitle, m.no as milestoneNo
     FROM issue i 
     LEFT JOIN milestone m ON m.no = i.milestone_no
