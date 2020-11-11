@@ -22,6 +22,7 @@ export default function withAuth(InnerComponent) {
       checkLogin();
     }, []);
 
-    return <InnerComponent user={user} {...props} />;
+    if (user) return <InnerComponent user={user} {...props} />;
+    else return <div>Loading</div>;
   };
 }
