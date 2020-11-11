@@ -88,14 +88,12 @@ class Issue: GitIssueObject, Codable {
         closedAt = nil
         milestoneNo = nil
         milestoneTitle = nil
-
 		image = ""
+		comment = nil
     }
     
     enum CodingKeys: String, CodingKey {
-        case no, title, author, assignees, labels, isOpened, createdAt, closedAt, milestoneNo, milestoneTitle, commentCount, image
-
-        comment = nil
+        case no, title, author, assignees, labels, isOpened, createdAt, closedAt, milestoneNo, milestoneTitle, commentCount, image, comment
     }
     
 	required init(from decoder: Decoder) throws {
@@ -114,7 +112,6 @@ class Issue: GitIssueObject, Codable {
 
 		image = try values.decode(String?.self, forKey: .image)
 
-        
         if values.contains(.comment) {
             comment = try values.decode(Comment?.self, forKey: .comment)
         } else {
