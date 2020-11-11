@@ -59,7 +59,7 @@ export default function IssueDetail({
   };
 
   return (
-    <IssueDetailContext.Provider value={{ issue }}>
+    <IssueDetailContext.Provider value={{ issue, user }}>
       <Header />
       <IssueDetailHeader />
       <IssueContainer>
