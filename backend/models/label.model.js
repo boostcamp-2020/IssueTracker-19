@@ -14,8 +14,10 @@ export const labelModel = {
     return pool.query(sql);
   },
   getLabelByIssueNo({ issueNo }) {
-    const sql = `SELECT label_no as labelNo, issue_no as issueNo 
+    const sql = `SELECT label_no as labelNo, issue_no as issueNo, l.name, l.color, l.description
     FROM issue_label 
+    LEFT JOIN label l
+    ON l.no = issue_label.label_no
     WHERE issue_no = ?;`;
     return pool.execute(sql, [issueNo]);
   },

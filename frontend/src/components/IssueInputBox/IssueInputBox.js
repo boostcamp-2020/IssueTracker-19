@@ -183,8 +183,6 @@ export default function IssueInputBox(props) {
     const loadingText = `![Uploading ${timestamp}_${file.name}...]()`;
     setContent(content + prefex + loadingText);
 
-    // TODO 이미지 전송 구현
-
     try {
       const formData = new FormData();
       formData.append('imgs', file);
