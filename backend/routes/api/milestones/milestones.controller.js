@@ -69,6 +69,7 @@ export const deleteMilestone = async (req, res, next) => {
   try {
     const { no } = req.params;
     await milestoneModel.deleteMilestone({ no });
+    await milestoneModel.deleteIssueMilestone({ no });
     res.status(200).end();
   } catch (err) {
     next(err);

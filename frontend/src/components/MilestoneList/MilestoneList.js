@@ -36,12 +36,20 @@ export default function MilestoneList() {
   useEffect(() => {
     fetchMilestones();
   }, []);
-
   return (
     <MilestoneListBox>
       <MilestoneHeader openCount={count.open} closeCount={count.closed} />
       {milestoneList.map(milestone => {
-        const { no, title, dueDate, description, totalTasks, closedTasks, isDeleted } = milestone;
+        const {
+          no,
+          title,
+          dueDate,
+          description,
+          totalTasks,
+          closedTasks,
+          isDeleted,
+          isClosed,
+        } = milestone;
         if (!isDeleted) {
           return (
             <MilestoneItem
@@ -52,6 +60,7 @@ export default function MilestoneList() {
               description={description}
               totalTasks={totalTasks}
               closedTasks={closedTasks}
+              isClosed={isClosed}
             />
           );
         }

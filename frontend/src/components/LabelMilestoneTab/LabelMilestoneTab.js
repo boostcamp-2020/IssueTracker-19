@@ -15,7 +15,6 @@ export default function LabelMilestoneTab({ submit, buttonName }) {
   return (
     <Box>
       <LabelMilestoneControls milestoneChecked={true} />
-
       {submit ? (
         <Link to="/milestones/new">
           <SubmitButton>{buttonName}</SubmitButton>

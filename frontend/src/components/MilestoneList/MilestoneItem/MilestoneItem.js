@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { colors } from '@styles/variables';
 import CalenderIcon from '@imgs/milestone-calendar.svg';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { milestoneService } from '@services';
 const Container = styled.div`
   width: 100%;
@@ -38,11 +38,11 @@ const Img = styled.img`
   width: 16px;
   height: 16px;
   margin-right: 4px;
-  padding-top: 3px;
 `;
 const Description = styled.div`
   font-size: 16px;
   color: ${colors.metaColor};
+  white-space: pre-wrap;
 `;
 const ProgressBox = styled.div`
   display: table-cell;
@@ -56,6 +56,7 @@ const ProgressBox = styled.div`
 const ProgressBar = styled.progress`
   height: 20px;
   width: 420px;
+  color: ${colors.submitColor};
 `;
 const Status = styled.div`
   display: inline-block;
@@ -79,6 +80,7 @@ const StatusEdit = styled.span`
   margin-right: 1rem;
   color: ${colors.checkedColor};
   text-decoration: none;
+  cursor: pointer;
 `;
 const StatusForm = styled.form`
   display: inline-block;
@@ -96,6 +98,12 @@ const CloseButton = styled(StatusButton)`
 const DeleteButton = styled(StatusButton)`
   color: #cb2431;
 `;
+const DueDate = styled.p`
+  display: flex;
+  align-items: center;
+  margin-top: 3px;
+  margin-bottom: 3px;
+`;
 export default function MilestoneItem({
   no,
   title,
@@ -103,7 +111,11 @@ export default function MilestoneItem({
   description,
   totalTasks,
   closedTasks,
+  isClosed,
 }) {
+  const [closed, setClosed] = useState(isClosed);
+  const [isDeleted, setIsDeleted] = useState(false);
+  const history = useHistory();
   const percentage = totalTasks === 0 ? 0 : Math.floor((closedTasks / totalTasks) * 100);
   const monthNames = [
     'January',
@@ -121,51 +133,85 @@ export default function MilestoneItem({
   ];
   const date = new Date(dueDate);
   const handleClose = async () => {
-    console.log(no);
-    milestoneService.closeMilestones(no);
+    await milestoneService.closeMilestones(no);
+    setClosed(true);
   };
-  return (
-    <Container>
-      <Title>
-        <TitleHeader>{title}</TitleHeader>
-        <Meta>
-          <MetaItem>
-            <Img src={CalenderIcon} />
-            Due by {monthNames[date.getMonth()]} {date.getDate()}, {date.getFullYear()}
-          </MetaItem>
-          <Description>
-            <p>{description}</p>
-          </Description>
-        </Meta>
-      </Title>
-      <ProgressBox>
-        <ProgressBar max="100" value={percentage}></ProgressBar>
-        <div>
-          <Status>
-            <span>{percentage}%</span>
-            <Label>complete</Label>
-          </Status>
-          <Status>
-            <span>{totalTasks - closedTasks}</span>
-            <Label>open</Label>
-          </Status>
-          <Status>
-            <span>{closedTasks}</span>
-            <Label>closed</Label>
-          </Status>
-        </div>
-        <StatusButtonBox>
-          <Link to="/milestones/:no">
-            <StatusEdit>Edit</StatusEdit>
-          </Link>
-          <StatusForm>
-            <CloseButton onClick={handleClose}>Close</CloseButton>
-          </StatusForm>
-          <StatusForm>
-            <DeleteButton>Delete</DeleteButton>
-          </StatusForm>
-        </StatusButtonBox>
-      </ProgressBox>
-    </Container>
-  );
+  const handleOpen = async () => {
+    milestoneService.openMilestones(no);
+    setClosed(false);
+  };
+  const handleDelete = async () => {
+    if (confirm(`[${title}] 마일스톤을 삭제하시겠습니까?`)) {
+      milestoneService.deleteMilestones(no);
+      setIsDeleted(true);
+    }
+  };
+  const handleClickEdit = () => {
+    const editLink = `/milestones/${no}/edit`;
+    history.push({
+      pathname: editLink,
+      state: {
+        no,
+        isClosed,
+        title,
+        dueDate,
+        description,
+      },
+    });
+  };
+  let showDesription = description ? description.split('\n')[0] : ' ';
+  if (!isDeleted)
+    return (
+      <Container>
+        <Title>
+          <TitleHeader>{title}</TitleHeader>
+          <Meta>
+            <MetaItem>
+              {dueDate ? (
+                <DueDate>
+                  <Img src={CalenderIcon} />
+                  Due by {monthNames[date.getMonth()]} {date.getDate()}, {date.getFullYear()}
+                </DueDate>
+              ) : (
+                <DueDate>No due date</DueDate>
+              )}
+            </MetaItem>
+            <Description>
+              <p>{showDesription}</p>
+            </Description>
+          </Meta>
+        </Title>
+        <ProgressBox>
+          <ProgressBar max="100" value={percentage}></ProgressBar>
+          <div>
+            <Status>
+              <span>{percentage}%</span>
+              <Label>complete</Label>
+            </Status>
+            <Status>
+              <span>{totalTasks - closedTasks}</span>
+              <Label>open</Label>
+            </Status>
+            <Status>
+              <span>{closedTasks}</span>
+              <Label>closed</Label>
+            </Status>
+          </div>
+          <StatusButtonBox>
+            <StatusEdit onClick={handleClickEdit}>Edit</StatusEdit>
+            <StatusForm>
+              {!closed ? (
+                <CloseButton onClick={handleClose}>Close</CloseButton>
+              ) : (
+                <CloseButton onClick={handleOpen}>Open</CloseButton>
+              )}
+            </StatusForm>
+            <StatusForm>
+              <DeleteButton onClick={handleDelete}>Delete</DeleteButton>
+            </StatusForm>
+          </StatusButtonBox>
+        </ProgressBox>
+      </Container>
+    );
+  else return null;
 }
