@@ -17,14 +17,14 @@ const App = () => {
   return (
     <BrowserRouter>
       <Switch>
-        <Route path="/" exact render={() => withAuth(Issue)} />
-        <Route path="/issues/new" exact render={() => withAuth(IssueNew)} />
+        <Route path="/" exact component={withAuth(Issue)} />
+        <Route path="/issues/new" exact component={withAuth(IssueNew)} />
         <Route path="/login" component={Login} />
         <Route path="/signup" component={SignUp} />
-        <Route path="/labels" render={() => withAuth(Label)} />
-        <Route path="/milestones" exact render={() => withAuth(Milestone)} />
-        <Route path="/milestones/new" render={() => withAuth(MilestoneNew)} />
-        <Route path="/milestones/:no" render={() => withAuth(MilestoneEdit)} />
+        <Route path="/labels" component={withAuth(Label)} />
+        <Route path="/milestones" exact component={withAuth(Milestone)} />
+        <Route path="/milestones/new" component={withAuth(MilestoneNew)} />
+        <Route path="/milestones/:no" component={withAuth(MilestoneEdit)} />
         <Route component={NotFound} />
       </Switch>
     </BrowserRouter>
