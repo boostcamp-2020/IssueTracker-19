@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import { colors } from '@styles/variables';
 import closeDarkIcon from '@imgs/close-dark.svg';
 import { flex } from '@styles/utils';
-import { ListItem } from '@shared';
 
 const Container = styled.div`
   width: ${props => (props.width ? props.width : '18.5rem')};
