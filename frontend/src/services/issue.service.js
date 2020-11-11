@@ -32,4 +32,7 @@ export const issueService = {
   removeIssuesLabel({ no, labelNo, cancelToken }) {
     return API.delete(`/api/issues/${no}/labels/${labelNo}`, {}, cancelToken);
   },
+  changeIssueTitle({ no, title }) {
+    return API.patch(`/api/issues/${no}/title	`, { title });
+  },
 };

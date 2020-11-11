@@ -18,7 +18,7 @@ export const colors = {
 
   semiWhite: '#fafbfc',
   filterTabColor: '#f6f8fa',
-  submitColor: '#2c974b',
+  submitColor: '#28A745',
   checkedColor: '#0366D6',
   borderColor: '#e1e4e8',
 

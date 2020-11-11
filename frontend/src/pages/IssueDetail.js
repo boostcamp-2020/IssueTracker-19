@@ -12,6 +12,7 @@ const IssueContainer = styled.div`
     width: ${css`calc(100% - ${numerics.marginHorizontal} * 2)`};
   `}
   margin: ${numerics.marginHorizontal};
+  margin-top: 0px;
   display: flex;
 `;
 
@@ -159,7 +160,7 @@ export default function IssueDetail(props) {
   }, []);
 
   return (
-    <IssueDetailContext.Provider value={{ issue, user }}>
+    <IssueDetailContext.Provider value={{ issue, user, fetchIssueDetails }}>
       <Header />
       <IssueDetailHeader />
       <IssueContainer>
