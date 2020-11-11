@@ -3,7 +3,7 @@ import { userService } from '@services';
 import { useHistory } from 'react-router-dom';
 
 export default function withAuth(InnerComponent) {
-  return function WrapperComponent() {
+  return function WrapperComponent(props) {
     const history = useHistory();
     const [user, setUser] = useState(null);
 
@@ -22,6 +22,6 @@ export default function withAuth(InnerComponent) {
       checkLogin();
     }, []);
 
-    return <InnerComponent user={user} />;
+    return <InnerComponent user={user} {...props} />;
   };
 }
