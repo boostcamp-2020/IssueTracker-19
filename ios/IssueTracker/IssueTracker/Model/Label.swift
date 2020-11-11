@@ -12,6 +12,7 @@ class Label: GitIssueObject, Codable {
 	var name: String
 	var description: String?
 	var color: String
+    var no: Int
 	override var searchText: String { name }
     
     enum CodingKeys: String, CodingKey {

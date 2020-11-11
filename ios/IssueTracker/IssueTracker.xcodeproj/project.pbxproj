@@ -57,6 +57,7 @@
 		C104897025518EC50091668C /* LabelCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C104896E25518EC50091668C /* LabelCollectionViewCell.xib */; };
 		C10489732551986B0091668C /* LabelDetailAndAddViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C10489722551986B0091668C /* LabelDetailAndAddViewController.swift */; };
 		C1140D8325527C6F0096C11E /* DesignableClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1140D8225527C6F0096C11E /* DesignableClass.swift */; };
+		C1179589255BCDA20039EBFE /* JoinViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1179588255BCDA20039EBFE /* JoinViewController.swift */; };
 		C117D89E2547C7CF0081DCD7 /* IssueViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C117D89D2547C7CF0081DCD7 /* IssueViewController.swift */; };
 		C12542602547F44C00DE2BB8 /* IssueCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C125425F2547F44C00DE2BB8 /* IssueCollectionViewCell.swift */; };
 		C12542632548007500DE2BB8 /* UIExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C12542622548007500DE2BB8 /* UIExtension.swift */; };
@@ -127,6 +128,7 @@
 		C10489722551986B0091668C /* LabelDetailAndAddViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelDetailAndAddViewController.swift; sourceTree = "<group>"; };
 		C1140D8225527C6F0096C11E /* DesignableClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DesignableClass.swift; sourceTree = "<group>"; };
 		C117957D2559198B0039EBFE /* IssueTracker.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = IssueTracker.entitlements; sourceTree = "<group>"; };
+		C1179588255BCDA20039EBFE /* JoinViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoinViewController.swift; sourceTree = "<group>"; };
 		C117D89D2547C7CF0081DCD7 /* IssueViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueViewController.swift; sourceTree = "<group>"; };
 		C125425F2547F44C00DE2BB8 /* IssueCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueCollectionViewCell.swift; sourceTree = "<group>"; };
 		C12542622548007500DE2BB8 /* UIExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIExtension.swift; sourceTree = "<group>"; };
@@ -216,11 +218,8 @@
 			children = (
 				4CDC3CAA2552F6E500FC672B /* NSLayoutConstraint+description.swift */,
 				4CDC3D2E2556ABD200FC672B /* String+toUIColorPair.swift */,
-
 				4C7B90B9255BA0F200DF5312 /* NotificationName.swift */,
-
 				C162A850255A8A1C0075B296 /* UIColor+toHexString.swift */,
-
 			);
 			path = extension;
 			sourceTree = "<group>";
@@ -308,6 +307,7 @@
 				4CDFDEA6255291F30084A19E /* MilestoneEditViewController.swift */,
 				4CD204872551A5230001B987 /* MilestoneViewController.swift */,
 				C196564B2546B9B6007DD55A /* ViewController.swift */,
+				C1179588255BCDA20039EBFE /* JoinViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -549,6 +549,7 @@
 				4C7B90B2255B624100DF5312 /* SIEAssigneeViewCell.swift in Sources */,
 				C170B359254A9DEC0052FE3D /* Issue.swift in Sources */,
 				4C0DFAD525584509009760B7 /* IssueDetailBottomVC+Scroll.swift in Sources */,
+				C1179589255BCDA20039EBFE /* JoinViewController.swift in Sources */,
 				4CDC3D3F2556B54500FC672B /* BottomViewHeaderView.swift in Sources */,
 				C1048958255112230091668C /* IssueAddViewController.swift in Sources */,
 				4C6DFEEC255A2DC500D665B4 /* SIEViewCell.swift in Sources */,

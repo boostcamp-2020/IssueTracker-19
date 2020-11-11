@@ -53,49 +53,14 @@ class IssueViewController: UIViewController, ListCollectionViewProtocol {
         updateData()
     }
     
-//    func updateDataUser() {
-//        let data = try? JSONEncoder().encode(["id":"a","pw":"123"])
-//
-//        HTTPAgent.shared.sendRequest(from: "http://localhost:3000/api/auth/login", method: .POST, body: data) { (result) in
-//            switch result {
-//            case .success(let data):
-//                HTTPAgent.shared.sendRequest(from: "http://localhost:3000/api/issues", method: .GET) { [weak self] (result) in
-//                    switch result {
-//                    case .success(let data):
-//                        let sample = try? JSONSerialization.jsonObject(with: data) as? [String: Any]
-//                        print(sample)
-//                        let issue = try? JSONDecoder().decode(Issues.self, from: data)
-//                        self?.list = issue!.issues
-//
-//                        self?.updateList()
-//                    case .failure(let error):
-//                        print(error)
-//                    }
-//                }
-//            case .failure(let error):
-//                print(error)
-//            }
-//        }
-//    }
-    
     func updateData() {
-        let data = try? JSONEncoder().encode(["id":"a","pw":"123"])
-        
-        HTTPAgent.shared.sendRequest(from: "http://49.50.163.23:3000/api/auth/login", method: .POST, body: data) { (result) in
+        HTTPAgent.shared.sendRequest(from: "http://49.50.163.23/api/issues", method: .GET) { [weak self] (result) in
             switch result {
             case .success(let data):
-                HTTPAgent.shared.sendRequest(from: "http://49.50.163.23:3000/api/issues", method: .GET) { [weak self] (result) in
-                    switch result {
-                    case .success(let data):
-                        let sample = try? JSONSerialization.jsonObject(with: data) as? [String: Any]
-                        let issue = try? JSONDecoder().decode(Issues.self, from: data)
-                        self?.list = issue!.issues
-						self?.allList = self?.list ?? []
-                        self?.updateList()
-                    case .failure(let error):
-                        print(error)
-                    }
-                }
+                let issue = try? JSONDecoder().decode(Issues.self, from: data)
+                self?.list = issue!.issues
+                self?.allList = self?.list ?? []
+                self?.updateList()
             case .failure(let error):
                 print(error)
             }

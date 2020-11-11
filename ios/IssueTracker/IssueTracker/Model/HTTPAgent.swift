@@ -81,8 +81,8 @@ class HTTPAgent: LoginProtocol {
                 if let json = try? JSONSerialization.jsonObject(with: data!, options: [])
                     as? [String: Any] {
                     if let token = json["access_token"] as? String {
-                        self.getUser(token: token, completion: { statusCode in
-                            NotificationCenter.default.post(name: .googleLoginSuccess, object: self, userInfo: ["statusCode": statusCode])
+                        self.getUser(token: token, completion: { statusCode, id, token in
+                            NotificationCenter.default.post(name: .googleLoginSuccess, object: self, userInfo: ["statusCode": statusCode, "id": id, "pw": token])
                         })
                     }
                 }
@@ -93,7 +93,7 @@ class HTTPAgent: LoginProtocol {
         }
     }
     
-    func getUser(token: String, completion: ((Int) -> Void)? = nil) {
+    func getUser(token: String, completion: ((_ statusCode: Int, _ id: String, _ token: String) -> Void)? = nil) {
         /*
          수정 - 토큰을 서버에서 유지해야할듯
          */
@@ -107,9 +107,15 @@ class HTTPAgent: LoginProtocol {
         request.setValue("token \(token)", forHTTPHeaderField: "Authorization")
         request.setValue("application/vnd.github.v3+json", forHTTPHeaderField: "Accept")
         let task = URLSession.shared.dataTask(with: request) { data, response, _ in
-            if let httpResponse = response as? HTTPURLResponse {
-                completion?(httpResponse.statusCode)
+            guard let httpResponse = response as? HTTPURLResponse else {
+                return
             }
+            let userData = try? JSONSerialization.jsonObject(with: data!) as? [String: Any]
+            let id = userData?["id"] as? Int
+            
+            completion?(httpResponse.statusCode,
+                        String(id!),
+                        token)
         }
         task.resume()
     }
