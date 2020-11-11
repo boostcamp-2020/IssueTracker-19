@@ -346,11 +346,6 @@ export default function IssueSidebar(props) {
         <Content>
           {milestone ? (
             <Item key={milestone.no}>
-              {console.log(
-                getPercentage(milestone.totalTask, milestone.closedTask),
-                milestone,
-                milestone.closedTask,
-              )}
               <MilestoneContainer>
                 <ProgressBox>
                   <ProgressBar

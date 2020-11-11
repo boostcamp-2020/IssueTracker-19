@@ -126,14 +126,13 @@ const ControlBox = styled.div`
 
 const debounce = callback => setTimeout(callback, 1200);
 
-export default function IssueInputBox() {
+export default function IssueInputBox(props) {
   const history = useHistory();
+
+  const { assigneeNos, labelNos, milestoneNo } = props;
 
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
-  const [milestoneNo, setMilestoneNo] = useState(undefined);
-  const [issueNos, setIssueNos] = useState([]);
-  const [labelNos, setLabelNos] = useState([]);
   const [debouceClear, setDebouceClear] = useState(undefined);
 
   const countRef = useRef();
@@ -204,14 +203,16 @@ export default function IssueInputBox() {
       alert('내용을 입력해주세요.');
       return;
     }
+
     try {
       const { status } = await issueService.addIssue({
         title,
         content,
         milestoneNo,
-        issueNos,
+        assigneeNos,
         labelNos,
       });
+
       if (status === 201) {
         history.push('/');
       }

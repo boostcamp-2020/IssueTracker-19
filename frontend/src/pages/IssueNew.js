@@ -12,7 +12,7 @@ const IssueContainer = styled.div`
 export default function IssueNew({ user }) {
   const [assignees, setAssignees] = useState([]);
   const [labels, setLabels] = useState([]);
-  const [milestone, setMilestone] = useState(undefined);
+  const [milestone, setMilestone] = useState(null);
 
   const handleAssignToMe = () => {
     const { no, nickname } = user;
@@ -47,7 +47,11 @@ export default function IssueNew({ user }) {
     <>
       <Header />
       <IssueContainer>
-        <IssueInputBox />
+        <IssueInputBox
+          assigneeNos={assignees.map(a => a.no)}
+          labelNos={labels.map(l => l.no)}
+          milestoneNo={milestone?.no}
+        />
         <IssueSidebar
           assignees={assignees}
           labels={labels}
