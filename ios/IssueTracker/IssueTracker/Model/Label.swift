@@ -9,9 +9,9 @@
 import Foundation
 
 class Label: GitIssueObject, Codable {
-	let name: String
-	let description: String?
-	let color: String
+	var name: String
+	var description: String?
+	var color: String
 	override var searchText: String { name }
     
     enum CodingKeys: String, CodingKey {
