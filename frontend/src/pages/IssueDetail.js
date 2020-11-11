@@ -36,28 +36,88 @@ export default function IssueDetail(props) {
     }
   };
 
-  const handleClickAssignee = (e, user) => {
-    setAssignees([...assignees, user]);
+  const handleClickAssignee = async (e, user) => {
+    try {
+      const { status } = await issueService.addIssuesAssignee({
+        no: issueNo,
+        assigneeNos: [user.no],
+      });
+      if (status === 200) {
+        fetchIssueDetails();
+      }
+    } catch (err) {
+      console.error(err);
+    }
   };
 
-  const handleClickLabel = (e, label) => {
-    setLabels([...labels, label]);
+  const handleClickLabel = async (e, label) => {
+    try {
+      const { status } = await issueService.addIssuesLabel({
+        no: issueNo,
+        labelNos: [label.no],
+      });
+      if (status === 201) {
+        fetchIssueDetails();
+      }
+    } catch (err) {
+      console.error(err);
+    }
   };
 
-  const handleClickMilestone = (e, newMilestone) => {
-    setMilestone(newMilestone);
+  const handleClickMilestone = async (e, newMilestone) => {
+    try {
+      const { status } = await issueService.addIssuesMilestone({
+        no: issueNo,
+        milestoneNo: newMilestone.no,
+      });
+      if (status === 200) {
+        fetchIssueDetails();
+      }
+    } catch (err) {
+      console.error(err);
+    }
   };
 
-  const handleRemoveAssignee = (e, assignee) => {
-    setAssignees(assignees.filter(({ no }) => no !== assignee.no));
+  const handleRemoveAssignee = async (e, assignee) => {
+    try {
+      const { status } = await issueService.removeIssuesAssignee({
+        no: issueNo,
+        assigneeNo: assignee.no,
+      });
+      if (status === 200) {
+        fetchIssueDetails();
+      }
+    } catch (err) {
+      console.error(err);
+    }
   };
 
-  const handleRemoveLabel = (e, label) => {
-    setLabels(labels.filter(({ no }) => no !== label.no));
+  const handleRemoveLabel = async (e, label) => {
+    try {
+      const { status } = await issueService.removeIssuesLabel({
+        no: issueNo,
+        labelNo: label.no,
+      });
+      if (status === 200) {
+        fetchIssueDetails();
+      }
+    } catch (err) {
+      console.error(err);
+    }
   };
 
-  const handleRemoveMilestone = () => {
-    setMilestone(undefined);
+  const handleRemoveMilestone = async () => {
+    try {
+      const { status } = await issueService.addIssuesMilestone({
+        no: issueNo,
+        milestoneNo: null,
+      });
+      if (status === 200) {
+        fetchIssueDetails();
+      }
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   const fetchIssueDetails = async () => {
