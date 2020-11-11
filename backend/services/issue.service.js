@@ -51,6 +51,12 @@ const findIssuesComments = commentList => {
   };
 };
 
+const findIssuesHeadComment = commentList => {
+  return issueNo => {
+    return commentList.find(comment => comment.issueNo === issueNo && comment.isHead);
+  };
+};
+
 const getFilterdIssuesByOptions = (issues, nickname, options = {}) => {
   const { isOpened, author, assignee, milestone, comment, label } = options;
   return issues.filter(issue => {
@@ -114,12 +120,14 @@ export const issueService = {
     const getIssuesLabels = findIssuesLabels(labelList);
     const getIssuesAssignees = findIssuesAssignees(assigneeList);
     const getIssuesComments = findIssuesComments(commentList);
+    const getHeadComment = findIssuesHeadComment(commentList);
 
     const issuesWithLabelsAndAssignees = issues.map(issue => {
       const { no: issueNo, milestoneNo, milestoneTitle } = issue;
       const labels = getIssuesLabels(issueNo);
       const assignees = getIssuesAssignees(issueNo);
       const comments = getIssuesComments(issueNo);
+      const comment = getHeadComment(issueNo);
 
       return {
         ...issue,
@@ -129,6 +137,7 @@ export const issueService = {
         milestoneNo,
         milestoneTitle,
         comments,
+        comment,
       };
     });
 

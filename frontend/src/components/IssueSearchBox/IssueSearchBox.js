@@ -4,8 +4,8 @@ import { Link } from 'react-router-dom';
 import { IssueContext, initialFilterOptions } from '@pages';
 import { flex, flexCenter, borderNoneBox, skyblueBoxShadow } from '@styles/utils';
 import { colors } from '@styles/variables';
-import { SubmitButton } from '@shared';
-import { LabelMilestoneControls, OptionSelectModal, ListItem } from '@components';
+import { SubmitButton, ListItem } from '@shared';
+import { LabelMilestoneControls, OptionSelectModal } from '@components';
 import downArrowIcon from '@imgs/down-arrow.svg';
 import mGlass from '@imgs/m-glass.svg';
 

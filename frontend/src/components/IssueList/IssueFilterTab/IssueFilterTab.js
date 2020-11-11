@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { flex } from '@styles/utils';
 import { colors } from '@styles/variables';
 import FilterBox from './FilterBox/FilterBox';
-import { ListItem } from '@components';
+import { ListItem } from '@shared';
 import { IssueContext } from '@pages';
 import { issueService } from '@services';
 
