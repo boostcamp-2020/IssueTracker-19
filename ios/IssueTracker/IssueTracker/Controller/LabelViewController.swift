@@ -9,8 +9,8 @@
 import UIKit
 
 protocol LabelInsertOrEditProtocol {
-    func labelInsertAction(labelName: String, labelDescription: String, colorCode: String)
-    func labelEditAction(labelName: String, labelDescription: String, colorCode: String, index: Int)
+    func labelInsertAction(labelName: String, labelDescription: String?, colorCode: String)
+    func labelEditAction(labelName: String, labelDescription: String?, colorCode: String, index: Int, number: Int)
 }
 
 class LabelViewController: UIViewController, ListCollectionViewProtocol {
@@ -41,15 +41,9 @@ class LabelViewController: UIViewController, ListCollectionViewProtocol {
     }
     
     func updateData() {
-//        let data = try? JSONEncoder().encode(["id":"a","pw":"123"])
-        
 		HTTPAgent.shared.sendRequest(from: "http://49.50.163.23/api/labels", method: .GET) { [weak self] (result) in
 			switch result {
 			case .success(let data):
-                print(String(data: data, encoding: .utf8))
-                let sample = try? JSONSerialization.jsonObject(with: data) as? [String: [Any]]
-                let sampleLabels = sample!["labels"]
-                
 				let labels = try? JSONDecoder().decode(Labels.self, from: data)
                 if let result = labels?.labels {
                     self?.list = result
@@ -66,25 +60,6 @@ class LabelViewController: UIViewController, ListCollectionViewProtocol {
 				print(error)
 			}
 		}
-//		
-//        HTTPAgent.shared.sendRequest(from: "http://localhost:300/api/auth/login", method: .POST, body: data) { (result) in
-//            switch result {
-//            case .success(_):
-//                HTTPAgent.shared.sendRequest(from: "http://49.50.163.23:3000/api/labels", method: .GET) { [weak self] (result) in
-//                    switch result {
-//                    case .success(let data):
-//                        let sample = try? JSONSerialization.jsonObject(with: data) as? [String: Any]
-//                        let labels = try? JSONDecoder().decode(Labels.self, from: data)
-//                        self?.list = labels!.labels
-//                        self?.updateList()
-//                    case .failure(let error):
-//                        print(error)
-//                    }
-//                }
-//            case .failure(let error):
-//                print(error)
-//            }
-//        }
     }
     
     @IBAction func labelAddAction(_ sender: UIBarButtonItem) {
@@ -145,20 +120,42 @@ extension LabelViewController: UICollectionViewDelegate {
             labelDetailAndAddVC.labelDescription = list[indexPath.item].description ?? ""
             labelDetailAndAddVC.labelColor = list[indexPath.item].color
             labelDetailAndAddVC.labelEditIndex = indexPath.item
+            labelDetailAndAddVC.labelNumber = list[indexPath.item].no
         }
     }
 }
 
 extension LabelViewController: LabelInsertOrEditProtocol {
-    func labelEditAction(labelName: String, labelDescription: String, colorCode: String, index: Int) {
+    func labelEditAction(labelName: String, labelDescription: String?, colorCode: String, index: Int, number: Int) {
         self.list[index].name = labelName
         self.list[index].description = labelDescription
         self.list[index].color = colorCode
+        
+        let data = try? JSONEncoder().encode(["name": labelName, "description": labelDescription, "color": colorCode])
+        HTTPAgent.shared.sendRequest(from: "http://49.50.163.23/api/labels/\(number)", method: .PUT, body: data) { (result) in
+            switch result {
+            case .success(_):
+                break
+            case .failure(let error):
+                print(error)
+            }
+        }
         updateList()
     }
     
-    func labelInsertAction(labelName: String, labelDescription: String, colorCode: String) {
-        self.list.append(Label(name: labelName, description: labelDescription, color: colorCode, no: 1))
+    func labelInsertAction(labelName: String, labelDescription: String?, colorCode: String) {
+        self.list.append(Label(name: labelName, description: labelDescription, color: colorCode, no: 0))
+        
+        let data = try? JSONEncoder().encode(["name": labelName, "description": labelDescription, "color": colorCode])
+        HTTPAgent.shared.sendRequest(from: "http://49.50.163.23/api/labels/", method: .POST, body: data) { (result) in
+            switch result {
+            case .success(_):
+                break
+            case .failure(let error):
+                print(error)
+            }
+        }
+        
         updateList()
     }
 }

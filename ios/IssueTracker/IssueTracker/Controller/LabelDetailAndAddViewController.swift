@@ -22,6 +22,7 @@ class LabelDetailAndAddViewController: UIViewController {
     var labelDescription = ""
     var labelColor = "#333333"
     var labelEditIndex: Int?
+    var labelNumber = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -99,7 +100,7 @@ class LabelDetailAndAddViewController: UIViewController {
             insertDelegate?.labelEditAction(labelName: labelTitleTextField.text ?? "",
                                             labelDescription: labelDescriptionTextField.text ?? "",
                                             colorCode: labelColorCode.titleLabel?.text ?? "",
-                                            index: labelEditIndex)
+                                            index: labelEditIndex, number: labelNumber)
         } else {
             insertDelegate?.labelInsertAction(labelName: labelTitleTextField.text ?? "",
                                               labelDescription: labelDescriptionTextField.text ?? "",
