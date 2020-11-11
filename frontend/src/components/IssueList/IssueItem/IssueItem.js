@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { colors } from '@styles/variables';
-import { flex } from '@styles/utils';
+import { flex, mediumBoxShadow } from '@styles/utils';
 import { LabelTag, OpenIcon, ClosedIcon } from '@components';
 import milestoneIcon from '@imgs/milestone.svg';
 import { Link } from 'react-router-dom';
@@ -69,12 +69,12 @@ const MilestoneImg = styled.img`
 `;
 
 const AssigneeIcon = styled.img`
-  width: 1.25rem;
-  height: 1.25rem;
+  width: 1.5rem;
+  height: 1.5rem;
   margin-right: -8px;
   background-color: #123;
   border-radius: 50%;
-  border: 1px solid #fff;
+  ${mediumBoxShadow};
 `;
 
 const AssigneeBox = styled.div`
@@ -103,6 +103,7 @@ export default function IssueItem(props) {
     milestoneNo,
     milestoneTitle,
     assignees,
+    image,
   } = props;
   const handleCheck = ({ target }) => {
     setIssues(
@@ -147,7 +148,7 @@ export default function IssueItem(props) {
       </IssueDiv>
       <AssigneeBox>
         {assignees.map(assignee => (
-          <AssigneeIcon key={assignee.no}></AssigneeIcon>
+          <AssigneeIcon key={assignee.no} src={assignee.image}></AssigneeIcon>
         ))}
       </AssigneeBox>
     </Container>
