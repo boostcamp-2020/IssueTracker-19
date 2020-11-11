@@ -31,6 +31,18 @@ export default function IssueNew({ user }) {
     setMilestone(newMilestone);
   };
 
+  const handleRemoveAssignee = (e, assignee) => {
+    setAssignees(assignees.filter(({ no }) => no !== assignee.no));
+  };
+
+  const handleRemoveLabel = (e, label) => {
+    setLabels(labels.filter(({ no }) => no !== label.no));
+  };
+
+  const handleRemoveMilestone = () => {
+    setMilestone(undefined);
+  };
+
   return (
     <>
       <Header />
@@ -44,6 +56,9 @@ export default function IssueNew({ user }) {
           handleClickAssignee={handleClickAssignee}
           handleClickLabel={handleClickLabel}
           handleClickMilestone={handleClickMilestone}
+          handleRemoveAssignee={handleRemoveAssignee}
+          handleRemoveLabel={handleRemoveLabel}
+          handleRemoveMilestone={handleRemoveMilestone}
         />
       </IssueContainer>
     </>

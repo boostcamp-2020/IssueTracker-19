@@ -1,11 +1,13 @@
 import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
-import { OptionSelectModal } from '@components';
+import { OptionSelectModal, LabelTag } from '@components';
 import { colors } from '@styles/variables';
 import { flex } from '@styles/utils';
 import GearIcon from './GearIcon/GearIcon';
 import { userService, labelService, milestoneService } from '@services';
 import { LabelIcon, ListItem } from '@shared';
+import closeDarkIcon from '@imgs/close-dark.svg';
+import { getFormattedDueDate, getPercentage } from '@lib/utils';
 
 const MainContainer = styled.div`
   flex-direction: column;
@@ -94,6 +96,50 @@ const IconDesc = styled(EllipsisDiv)`
   color: ${colors.black7};
 `;
 
+const Item = styled.div`
+  ${flex('space-between', 'center')};
+  margin: 0.2rem 0;
+`;
+
+const MilestoneDueDate = styled.div`
+  margin-top: 0.2rem;
+  font-size: 0.7rem;
+  color: ${colors.black8};
+`;
+
+const CloseImg = styled.img`
+  width: 1.1rem;
+  height: 1.1rem;
+  padding: 0.2rem;
+  cursor: pointer;
+  border-radius: 50%;
+  &:hover {
+    background-color: ${colors.lightestGray};
+  }
+`;
+
+const ProgressBox = styled.div`
+  ${flex('flex-start', 'center')}
+`;
+
+const ProgressBar = styled.progress`
+  width: 100%;
+  height: 20px;
+  display: flex;
+  flex: 1;
+  color: ${colors.submitColor};
+`;
+
+const MilestoneContainer = styled.div`
+  width: 100%;
+`;
+
+const MilestoneTitle = styled.div`
+  margin-top: 0.3rem;
+  margin-left: 0.3rem;
+  font-weight: bold;
+`;
+
 export default function IssueSidebar(props) {
   const {
     assignees,
@@ -103,6 +149,9 @@ export default function IssueSidebar(props) {
     handleClickAssignee,
     handleClickLabel,
     handleClickMilestone,
+    handleRemoveAssignee,
+    handleRemoveLabel,
+    handleRemoveMilestone,
   } = props;
 
   const [modalItems, setModalItems] = useState({ users: [], labels: [], milestones: [] });
@@ -195,7 +244,15 @@ export default function IssueSidebar(props) {
         </Header>
         <Content>
           {assignees && assignees.length ? (
-            assignees.map(({ no, nickname }) => <div key={no}>{nickname}</div>)
+            assignees.map(({ no, nickname }) => (
+              <Item key={no}>
+                <div>{nickname}</div>
+                <CloseImg
+                  src={closeDarkIcon}
+                  onClick={e => handleRemoveAssignee(e, { no, nickname })}
+                />
+              </Item>
+            ))
           ) : (
             <div>
               No one—
@@ -236,7 +293,15 @@ export default function IssueSidebar(props) {
         </Header>
         <Content>
           {labels && labels.length
-            ? labels.map(({ no, name }) => <div key={no}>{name}</div>)
+            ? labels.map(({ no, name, color, description }) => (
+                <Item key={no}>
+                  <LabelTag name={name} color={color} size={'0.7rem'} />
+                  <CloseImg
+                    src={closeDarkIcon}
+                    onClick={e => handleRemoveLabel(e, { no, name, color, description })}
+                  />
+                </Item>
+              ))
             : 'None yet'}
         </Content>
         <Line />
@@ -255,15 +320,43 @@ export default function IssueSidebar(props) {
             >
               {modalItems.milestones
                 .filter(m => m.no !== milestone?.no)
-                .map(({ no, title }) => (
-                  <ListItem key={no} onClick={e => handleClickMilestone(e, { no, title })}>
+                .map(({ no, title, dueDate, ...rest }) => (
+                  <MyListItem
+                    key={no}
+                    onClick={e => handleClickMilestone(e, { no, title, dueDate, ...rest })}
+                  >
                     <IconTitle>{title}</IconTitle>
-                  </ListItem>
+                    <MilestoneDueDate>
+                      {dueDate ? getFormattedDueDate(new Date(dueDate)) : null}
+                    </MilestoneDueDate>
+                  </MyListItem>
                 ))}
             </OptionSelectModal>
           </Modal>
         </Header>
-        <Content>{milestone ? <div>{milestone.title}</div> : 'None yet'}</Content>
+        <Content>
+          {milestone ? (
+            <Item key={milestone.no}>
+              {console.log(
+                getPercentage(milestone.totalTask, milestone.closedTask),
+                milestone,
+                milestone.closedTask,
+              )}
+              <MilestoneContainer>
+                <ProgressBox>
+                  <ProgressBar
+                    max={100}
+                    value={getPercentage(milestone.totalTasks, milestone.closedTasks)}
+                  />
+                  <CloseImg src={closeDarkIcon} onClick={() => handleRemoveMilestone()} />
+                </ProgressBox>
+                <MilestoneTitle>{milestone.title}</MilestoneTitle>
+              </MilestoneContainer>
+            </Item>
+          ) : (
+            'None yet'
+          )}
+        </Content>
         <Line />
       </MilestoneBox>
     </MainContainer>
