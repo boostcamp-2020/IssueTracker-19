@@ -99,6 +99,11 @@ const IconDesc = styled(EllipsisDiv)`
 const Item = styled.div`
   ${flex('space-between', 'center')};
   margin: 0.2rem 0;
+  &:hover {
+    > img {
+      visibility: visible;
+    }
+  }
 `;
 
 const MilestoneDueDate = styled.div`
@@ -108,18 +113,22 @@ const MilestoneDueDate = styled.div`
 `;
 
 const CloseImg = styled.img`
+  visibility: hidden;
   width: 1.1rem;
   height: 1.1rem;
   padding: 0.2rem;
   cursor: pointer;
   border-radius: 50%;
-  &:hover {
-    background-color: ${colors.lightestGray};
-  }
+  background-color: ${colors.lightestGray};
 `;
 
 const ProgressBox = styled.div`
   ${flex('flex-start', 'center')}
+  &:hover {
+    > img {
+      visibility: visible;
+    }
+  }
 `;
 
 const ProgressBar = styled.progress`
