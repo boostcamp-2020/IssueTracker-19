@@ -8,7 +8,7 @@
 
 import Foundation
 
-class User: HashableObject, Codable {
+class User: GitIssueObject, Codable {
     enum CodingKeys: String, CodingKey {
         case no, nickname, image
     }
@@ -23,6 +23,7 @@ class User: HashableObject, Codable {
     var no: Int
     var nickname: String
     var image: String?
+	override var searchText: String { nickname }
 	
 	init(no: Int, nickname: String, image: String?) {
 		self.no = no

@@ -21,7 +21,7 @@
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstAttribute="width" secondItem="5Vr-Ju-2sq" secondAttribute="height" id="Hah-KN-ICi"/>
-                            <constraint firstAttribute="width" constant="30" id="QUG-D3-2d3"/>
+                            <constraint firstAttribute="width" priority="999" constant="30" id="QUG-D3-2d3"/>
                         </constraints>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="godrm" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="j7b-V0-TMB">

@@ -17,7 +17,7 @@ class BottomViewAssigneeCell: SectionCell {
 	@IBOutlet weak var nicknameLabel: UILabel!
 	@IBOutlet weak var imageWidthConstraint: NSLayoutConstraint!
 	
-	override var item: HashableObject? {
+	override var item: GitIssueObject? {
 		didSet {
 			guard let user = item as? User else { return }
 			nicknameLabel.text = user.nickname

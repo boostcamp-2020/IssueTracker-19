@@ -248,25 +248,25 @@ extension IssueViewController: UICollectionViewDelegate {
 
 // MARK: - UISearchResultsUpdating Delegate
 extension IssueViewController: UISearchResultsUpdating {
-  func updateSearchResults(for searchController: UISearchController) {
-	list = filteredList(for: searchController.searchBar.text)
-	updateList()
-  }
-  
-  func filteredList(for queryOrNil: String?) -> [Issue] {
-	guard let query = queryOrNil, !query.isEmpty else {
-		return allList
+	func updateSearchResults(for searchController: UISearchController) {
+		list = filteredList(for: searchController.searchBar.text)
+		updateList()
 	}
-	return allList.filter { $0.title.lowercased().contains(query.lowercased()) }
-  }
-  
-  func configureSearchController() {
-	searchController.searchResultsUpdater = self
-	searchController.obscuresBackgroundDuringPresentation = false
-	searchController.searchBar.placeholder = "Search Issues"
-	navigationItem.searchController = searchController
-	definesPresentationContext = true
-  }
+	
+	func filteredList(for queryOrNil: String?) -> [Issue] {
+		guard let query = queryOrNil, !query.isEmpty else {
+			return allList
+		}
+		return allList.filter { $0.title.lowercased().contains(query.lowercased()) }
+	}
+	
+	func configureSearchController() {
+		searchController.searchResultsUpdater = self
+		searchController.obscuresBackgroundDuringPresentation = false
+		searchController.searchBar.placeholder = "Search Issues"
+		navigationItem.searchController = searchController
+		definesPresentationContext = true
+	}
 }
 
 extension IssueViewController: IssueInsertProtocol {

@@ -8,10 +8,11 @@
 
 import Foundation
 
-class Label: HashableObject, Codable {
-	var name: String
-	var description: String?
-	var color: String
+class Label: GitIssueObject, Codable {
+	let name: String
+	let description: String?
+	let color: String
+	override var searchText: String { name }
     
     enum CodingKeys: String, CodingKey {
         case name, description, color
@@ -29,7 +30,7 @@ class Label: HashableObject, Codable {
 		self.description = description
 		self.color = color
 	}
-	static let all = ["bug","documentation", "duplicacte", "enhancement", "good first issue", "help wanted", "invalid", "question", "wontfix"]
+	static let all = ["bug","documentation", "duplicacte", "enhancement", "good first issue", "help wanted", "invalid", "question", "wontfix", "dddddddddddddddd"]
 		.map {
 			Label(name: $0,
 				  description: nil,

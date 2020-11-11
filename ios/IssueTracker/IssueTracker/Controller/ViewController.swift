@@ -10,10 +10,6 @@ import UIKit
 import Combine
 import AuthenticationServices
 
-enum Notification {
-    static let googleLoginSuccess = Foundation.Notification.Name("googleLoginSuccess")
-}
-
 class ViewController: UIViewController {
 	@IBOutlet weak var idTextField: UITextField!
 	@IBOutlet weak var pwdTextField: UITextField!
@@ -79,7 +75,7 @@ class ViewController: UIViewController {
     
     func configureSubscriber() {
         publisher = NotificationCenter.default
-            .publisher(for: Notification.googleLoginSuccess)
+            .publisher(for: .googleLoginSuccess)
             .sink { [weak self] notification in
                 DispatchQueue.main.async {
                     self?.presentIssueList(statusCode: notification.userInfo?["statusCode"] as? Int ?? 0)

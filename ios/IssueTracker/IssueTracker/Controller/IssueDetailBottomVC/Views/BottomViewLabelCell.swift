@@ -15,7 +15,7 @@ class BottomViewLabelCell: SectionCell {
 
 	@IBOutlet weak var titleLabel: UILabel!
 	
-	override var item: HashableObject? {
+	override var item: GitIssueObject? {
 		didSet {
 			guard let label = item as? Label else { return }
 			titleLabel.text = label.name
@@ -27,7 +27,7 @@ class BottomViewLabelCell: SectionCell {
 	
 	override func awakeFromNib() {
         super.awakeFromNib()
-		layer.cornerRadius = 5
+		layer.cornerRadius = 3
 		clipsToBounds = true
     }
 
