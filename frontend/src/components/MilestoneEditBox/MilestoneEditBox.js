@@ -43,6 +43,7 @@ const Textarea = styled.textarea`
   border-radius: 6px;
   border: 1px solid ${colors.borderColor};
   font-size: 14px;
+  resize: none;
 `;
 const SubmitBox = styled.div`
   margin: 5px 60px;

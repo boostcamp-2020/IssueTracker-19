@@ -24,6 +24,7 @@ const TitleHeader = styled.h2`
   font-size: 1.5rem;
   font-weight: 400;
   line-height: 1.2;
+  cursor: pointer;
 `;
 const Meta = styled.div`
   font-size: 14px;
@@ -168,7 +169,7 @@ export default function MilestoneItem({
     return (
       <Container>
         <Title>
-          <TitleHeader>{title}</TitleHeader>
+          <TitleHeader onClick={handleClickEdit}>{title}</TitleHeader>
           <Meta>
             <MetaItem>
               {dueDate ? (
