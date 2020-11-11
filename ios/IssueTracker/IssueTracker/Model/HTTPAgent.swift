@@ -16,6 +16,7 @@ protocol LoginProtocol {
 enum HTTPMethod: String {
     case GET
     case POST
+    case PUT
 }
 
 enum NetworkError: Error {
