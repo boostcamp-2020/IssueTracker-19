@@ -1,6 +1,8 @@
-import React, { useState } from 'react';
+import { withAuth } from '@hoc';
+import React, { useEffect, useState } from 'react';
 import { Header, IssueTitleBox, IssueCommentBox, IssueSidebar } from '@components';
 import { IssueDetailContext } from '@contexts/IssueDetailContext';
+import { issueService } from '@services';
 import styled from 'styled-components';
 import { numerics } from '@styles/variables';
 
@@ -10,10 +12,33 @@ const IssueContainer = styled.div`
   display: flex;
 `;
 
-export default function IssueNew({ user }) {
+export default function IssueDetail({
+  user,
+  match: {
+    params: { issueNo },
+  },
+}) {
   const [assignees, setAssignees] = useState([]);
   const [labels, setLabels] = useState([]);
   const [milestone, setMilestone] = useState(undefined);
+  const [issue, setIssue] = useState({});
+
+  useEffect(async () => {
+    try {
+      const {
+        data: { issue: fetchedIsuue },
+        status,
+      } = await issueService.getIssue({ issueNo });
+      if (status === 200) {
+        setIssue(fetchedIsuue);
+      }
+    } catch (err) {
+      if (err?.response?.status === 401) {
+        history.push('/login');
+      }
+      console.error(err);
+    }
+  }, []);
 
   const handleAssignToMe = () => {
     const { no, nickname } = user;
@@ -33,7 +58,7 @@ export default function IssueNew({ user }) {
   };
 
   return (
-    <IssueDetailContext.Provider value={{}}>
+    <IssueDetailContext.Provider value={{ issue }}>
       <Header />
       <IssueTitleBox />
       <IssueContainer>

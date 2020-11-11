@@ -1,5 +1,5 @@
 import React from 'react';
 
 export default function IssueTitleBox() {
-  return <div></div>;
+  return <div>title</div>;
 }

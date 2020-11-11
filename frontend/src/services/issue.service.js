@@ -5,6 +5,9 @@ export const issueService = {
   getIssues(options) {
     return API.get(`/api/issues?${qs.stringify(options)}`);
   },
+  getIssue({ issueNo }) {
+    return API.get(`/api/issues/${issueNo}`);
+  },
   openIssues({ issueNos }) {
     return API.patch('/api/issues/open', { issueNos });
   },

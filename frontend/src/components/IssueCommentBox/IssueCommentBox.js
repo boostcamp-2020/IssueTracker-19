@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import styled from 'styled-components';
+import { IssueDetailContext } from '@contexts/IssueDetailContext';
 import { colors } from '@styles/variables';
 import { flexColumn } from '@styles/utils';
 
@@ -9,6 +10,12 @@ const MainContainer = styled.div`
   ${flexColumn}
 `;
 
+const CommentBox = styled.div``;
+
+const imageItem = styled.img``;
+
 export default function IssueCommentBox() {
-  return <MainContainer>123</MainContainer>;
+  useContext(IssueDetailContext);
+
+  return <MainContainer></MainContainer>;
 }

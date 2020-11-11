@@ -20,7 +20,7 @@ const App = () => {
       <Switch>
         <Route path="/" exact component={withAuth(Issue)} />
         <Route path="/issues/new" exact component={withAuth(IssueNew)} />
-        <Route path="/issues/" component={withAuth(IssueDetail)} />
+        <Route path="/issues/:issueNo" component={withAuth(IssueDetail)} />
         <Route path="/login" component={Login} />
         <Route path="/signup" component={SignUp} />
         <Route path="/labels" component={withAuth(Label)} />
