@@ -31,7 +31,8 @@ export const colors = {
   borderColorSecondary: '#eaecef',
 
   metaColor: '#6a737d',
-
+  issueGreen: '#28A745',
+  issueRed: '#D73A49',
 };
 
 export const numerics = {

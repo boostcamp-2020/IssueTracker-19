@@ -2,19 +2,23 @@ import React, { useEffect, useState } from 'react';
 import { Header, IssueDetailHeader, IssueCommentBox, IssueSidebar } from '@components';
 import { IssueDetailContext } from '@contexts/IssueDetailContext';
 import { issueService } from '@services';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { numerics } from '@styles/variables';
 import { useParams } from 'react-router-dom';
+import axios from 'axios';
 
 const IssueContainer = styled.div`
-  ${`width: calc(100% - ${numerics.marginHorizontal} * 2)`};
+  ${css`
+    width: ${css`calc(100% - ${numerics.marginHorizontal} * 2)`};
+  `}
   margin: ${numerics.marginHorizontal};
   display: flex;
 `;
 
 export default function IssueDetail(props) {
-  const { user } = props;
+  const source = axios.CancelToken.source();
 
+  const { user } = props;
   const { issueNo } = useParams();
   const [issue, setIssue] = useState({});
 
@@ -27,6 +31,7 @@ export default function IssueDetail(props) {
       const { status } = await issueService.addIssuesAssignee({
         no: issueNo,
         assigneeNos: [user.no],
+        cancelToken: source.token,
       });
       if (status === 200) {
         fetchIssueDetails();
@@ -41,6 +46,7 @@ export default function IssueDetail(props) {
       const { status } = await issueService.addIssuesAssignee({
         no: issueNo,
         assigneeNos: [user.no],
+        cancelToken: source.token,
       });
       if (status === 200) {
         fetchIssueDetails();
@@ -55,6 +61,7 @@ export default function IssueDetail(props) {
       const { status } = await issueService.addIssuesLabel({
         no: issueNo,
         labelNos: [label.no],
+        cancelToken: source.token,
       });
       if (status === 201) {
         fetchIssueDetails();
@@ -69,6 +76,7 @@ export default function IssueDetail(props) {
       const { status } = await issueService.addIssuesMilestone({
         no: issueNo,
         milestoneNo: newMilestone.no,
+        cancelToken: source.token,
       });
       if (status === 200) {
         fetchIssueDetails();
@@ -83,6 +91,7 @@ export default function IssueDetail(props) {
       const { status } = await issueService.removeIssuesAssignee({
         no: issueNo,
         assigneeNo: assignee.no,
+        cancelToken: source.token,
       });
       if (status === 200) {
         fetchIssueDetails();
@@ -97,6 +106,7 @@ export default function IssueDetail(props) {
       const { status } = await issueService.removeIssuesLabel({
         no: issueNo,
         labelNo: label.no,
+        cancelToken: source.token,
       });
       if (status === 200) {
         fetchIssueDetails();
@@ -111,6 +121,7 @@ export default function IssueDetail(props) {
       const { status } = await issueService.addIssuesMilestone({
         no: issueNo,
         milestoneNo: null,
+        cancelToken: source.token,
       });
       if (status === 200) {
         fetchIssueDetails();
@@ -125,7 +136,7 @@ export default function IssueDetail(props) {
       const {
         data: { issue: fetchedIssue },
         status,
-      } = await issueService.getIssue({ issueNo });
+      } = await issueService.getIssue({ issueNo, cancelToken: source.token });
       if (status === 200) {
         setIssue(fetchedIssue);
         setMilestone(fetchedIssue.milestone);
@@ -142,6 +153,9 @@ export default function IssueDetail(props) {
 
   useEffect(() => {
     fetchIssueDetails();
+    return () => {
+      source.cancel('fetchIssueDetails 취소');
+    };
   }, []);
 
   return (

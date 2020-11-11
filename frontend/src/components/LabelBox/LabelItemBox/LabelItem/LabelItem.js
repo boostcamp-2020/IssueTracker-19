@@ -64,7 +64,7 @@ export default function LabelItem({
   return (
     <Box>
       <NameBox>
-        <LabelTag {...{ name, color }} />
+        <LabelTag color={color}>{name}</LabelTag>
       </NameBox>
       <DescBox>{description}</DescBox>
       <ButtonBox>

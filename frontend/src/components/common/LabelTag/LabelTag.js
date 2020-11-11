@@ -11,10 +11,10 @@ const Tag = styled.span`
   font-weight: 500;
 `;
 
-export default function LabelTag({ name, color, size = '0.75rem' }) {
+export default function LabelTag({ color, size = '1rem', children }) {
   return (
     <Tag color={color} size={size}>
-      {name ? name : 'Label preview'}
+      {children}
     </Tag>
   );
 }

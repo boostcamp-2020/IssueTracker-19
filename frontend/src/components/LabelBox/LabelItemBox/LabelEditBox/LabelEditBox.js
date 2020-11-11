@@ -208,7 +208,7 @@ export default function LabelEditBox({
     >
       <EditHeader>
         <ItemBox>
-          <LabelTag name={label.name} color={label.color} />
+          <LabelTag color={label.color}>{label.name}</LabelTag>
         </ItemBox>
         <ItemBox>
           {label.no ? (

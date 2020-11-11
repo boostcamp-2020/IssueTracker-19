@@ -2,8 +2,8 @@ import { API } from '@api';
 import qs from 'qs';
 
 export const issueService = {
-  getIssues(options) {
-    return API.get(`/api/issues?${qs.stringify(options)}`);
+  getIssues(options, { cancelToken } = {}) {
+    return API.get(`/api/issues?${qs.stringify(options)}`, {}, cancelToken);
   },
   getIssue({ issueNo }) {
     return API.get(`/api/issues/${issueNo}`);
@@ -17,19 +17,19 @@ export const issueService = {
   addIssue({ title, content, assigneeNos, milestoneNo, labelNos }) {
     return API.post('/api/issues', { title, content, assigneeNos, milestoneNo, labelNos });
   },
-  addIssuesAssignee({ no, assigneeNos }) {
-    return API.post(`/api/issues/${no}/assignees`, { assigneeNos });
+  addIssuesAssignee({ no, assigneeNos, cancelToken }) {
+    return API.post(`/api/issues/${no}/assignees`, { assigneeNos }, {}, cancelToken);
   },
-  addIssuesLabel({ no, labelNos }) {
-    return API.post(`/api/issues/${no}/labels`, { labelNos });
+  addIssuesLabel({ no, labelNos, cancelToken }) {
+    return API.post(`/api/issues/${no}/labels`, { labelNos }, {}, cancelToken);
   },
-  addIssuesMilestone({ no, milestoneNo }) {
-    return API.patch(`/api/issues/${no}/milestone`, { milestoneNo });
+  addIssuesMilestone({ no, milestoneNo, cancelToken }) {
+    return API.patch(`/api/issues/${no}/milestone`, { milestoneNo }, {}, cancelToken);
   },
-  removeIssuesAssignee({ no, assigneeNo }) {
-    return API.delete(`/api/issues/${no}/assignees/${assigneeNo}`);
+  removeIssuesAssignee({ no, assigneeNo, cancelToken }) {
+    return API.delete(`/api/issues/${no}/assignees/${assigneeNo}`, {}, cancelToken);
   },
-  removeIssuesLabel({ no, labelNo }) {
-    return API.delete(`/api/issues/${no}/labels/${labelNo}`);
+  removeIssuesLabel({ no, labelNo, cancelToken }) {
+    return API.delete(`/api/issues/${no}/labels/${labelNo}`, {}, cancelToken);
   },
 };

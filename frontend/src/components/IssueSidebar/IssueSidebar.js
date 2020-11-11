@@ -8,6 +8,7 @@ import { userService, labelService, milestoneService } from '@services';
 import { LabelIcon, ListItem } from '@shared';
 import closeDarkIcon from '@imgs/close-dark.svg';
 import { getFormattedDueDate, getPercentage } from '@lib/utils';
+import axios from 'axios';
 
 const MainContainer = styled.div`
   flex-direction: column;
@@ -163,6 +164,8 @@ export default function IssueSidebar(props) {
     handleRemoveMilestone,
   } = props;
 
+  const source = axios.CancelToken.source();
+
   const [modalItems, setModalItems] = useState({ users: [], labels: [], milestones: [] });
 
   const assigneeModalRef = useRef();
@@ -211,9 +214,9 @@ export default function IssueSidebar(props) {
           data: { milestones },
         },
       ] = await Promise.all([
-        userService.getUsers(),
-        labelService.getLabels(),
-        milestoneService.getMilestones(),
+        userService.getUsers({ cancelToken: source.token }),
+        labelService.getLabels({ cancelToken: source.token }),
+        milestoneService.getMilestones({ cancelToken: source.token }),
       ]);
       setModalItems({ users, labels, milestones });
     } catch (err) {
@@ -226,6 +229,9 @@ export default function IssueSidebar(props) {
 
   useEffect(() => {
     fetchAllModalItems();
+    return () => {
+      source.cancel('fetchAllModalItems 취소');
+    };
   }, []);
 
   return (
@@ -304,7 +310,9 @@ export default function IssueSidebar(props) {
           {labels && labels.length
             ? labels.map(({ no, name, color, description }) => (
                 <Item key={no}>
-                  <LabelTag name={name} color={color} size={'0.7rem'} />
+                  <LabelTag color={color} size={'0.7rem'}>
+                    {name}
+                  </LabelTag>
                   <CloseImg
                     src={closeDarkIcon}
                     onClick={e => handleRemoveLabel(e, { no, name, color, description })}
