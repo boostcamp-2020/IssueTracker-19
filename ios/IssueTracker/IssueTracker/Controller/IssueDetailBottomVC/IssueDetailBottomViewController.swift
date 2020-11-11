@@ -51,6 +51,7 @@ class IssueDetailBottomViewController: UIViewController {
 	var isBelow = true
 	var gestureRecognizer: UIPanGestureRecognizer?
 	
+	var issueNo: Int!
 	// MARK: Collection view's section items
 	var assignees = [User]()
 	var labels = [Label]()

@@ -41,6 +41,8 @@ class IssueDetailCommentViewCell: UICollectionViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
 		contentView.backgroundColor = .tertiarySystemBackground
+		imageView.layer.cornerRadius = 20
+		imageView.clipsToBounds = true
     }
 	
 	@IBAction func editButtonAction(_ sender: UIButton) {

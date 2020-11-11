@@ -28,6 +28,7 @@
 		4C7B90BA255BA0F200DF5312 /* NotificationName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C7B90B9255BA0F200DF5312 /* NotificationName.swift */; };
 		4C7B90BD255BA28900DF5312 /* IssueDetailBottomVC+Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C7B90BC255BA28900DF5312 /* IssueDetailBottomVC+Notification.swift */; };
 		4C7B90C1255BA66B00DF5312 /* SectionItemEditVC+NavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C7B90C0255BA66B00DF5312 /* SectionItemEditVC+NavigationBar.swift */; };
+		4C7B90E0255C116B00DF5312 /* CommentAddViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C7B90DF255C116B00DF5312 /* CommentAddViewController.swift */; };
 		4C7C11B8254E87CC008FA858 /* IssueDetailCommentViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C7C11B6254E87CC008FA858 /* IssueDetailCommentViewCell.swift */; };
 		4C7C11B9254E87CC008FA858 /* IssueDetailCommentViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C7C11B7254E87CC008FA858 /* IssueDetailCommentViewCell.xib */; };
 		4C7C11C3254EC6B9008FA858 /* IssueDetailHeaderReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C7C11C1254EC6B8008FA858 /* IssueDetailHeaderReusableView.swift */; };
@@ -97,6 +98,7 @@
 		4C7B90B9255BA0F200DF5312 /* NotificationName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationName.swift; sourceTree = "<group>"; };
 		4C7B90BC255BA28900DF5312 /* IssueDetailBottomVC+Notification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "IssueDetailBottomVC+Notification.swift"; sourceTree = "<group>"; };
 		4C7B90C0255BA66B00DF5312 /* SectionItemEditVC+NavigationBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SectionItemEditVC+NavigationBar.swift"; sourceTree = "<group>"; };
+		4C7B90DF255C116B00DF5312 /* CommentAddViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentAddViewController.swift; sourceTree = "<group>"; };
 		4C7C11B6254E87CC008FA858 /* IssueDetailCommentViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueDetailCommentViewCell.swift; sourceTree = "<group>"; };
 		4C7C11B7254E87CC008FA858 /* IssueDetailCommentViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = IssueDetailCommentViewCell.xib; sourceTree = "<group>"; };
 		4C7C11C1254EC6B8008FA858 /* IssueDetailHeaderReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueDetailHeaderReusableView.swift; sourceTree = "<group>"; };
@@ -308,6 +310,7 @@
 				4CD204872551A5230001B987 /* MilestoneViewController.swift */,
 				C196564B2546B9B6007DD55A /* ViewController.swift */,
 				C1179588255BCDA20039EBFE /* JoinViewController.swift */,
+				4C7B90DF255C116B00DF5312 /* CommentAddViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -541,6 +544,7 @@
 				C104895B2551280C0091668C /* FilterViewController.swift in Sources */,
 				4C0DFACF255844B7009760B7 /* SectionItemEditVC+SearchBar.swift in Sources */,
 				C173761A2553F68100E192C0 /* Label.swift in Sources */,
+				4C7B90E0255C116B00DF5312 /* CommentAddViewController.swift in Sources */,
 				4CE0213B2556FA3F0066BCA0 /* GitIssueObject.swift in Sources */,
 				C10489732551986B0091668C /* LabelDetailAndAddViewController.swift in Sources */,
 				C196564A2546B9B6007DD55A /* SceneDelegate.swift in Sources */,

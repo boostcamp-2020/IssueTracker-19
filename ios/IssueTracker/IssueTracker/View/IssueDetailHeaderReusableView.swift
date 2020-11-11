@@ -50,6 +50,16 @@ class IssueDetailHeaderReusableView: UICollectionReusableView {
 			titleLabel.text = issue.title
 			noLabel.text = "#\(issue.no)"
             setLabel(statusLabel, component: (issue.isOpened != 0) ? IssueOpen() : IssueClosed())
+			HTTPAgent.shared.loadImage(urlString: issue.image ?? "") { [weak self] (result) in
+				switch result {
+				case .success(let path):
+					DispatchQueue.main.async {
+						self!.imageView.image = UIImage(contentsOfFile: path)
+					}
+				case .failure(let error):
+					print(error)
+				}
+			}
 		}
 	}
 	
@@ -79,5 +89,7 @@ class IssueDetailHeaderReusableView: UICollectionReusableView {
 	override func awakeFromNib() {
 		super.awakeFromNib()
 		backgroundColor = .tertiarySystemBackground
+		imageView.layer.cornerRadius = 10
+		imageView.clipsToBounds = true
 	}
 }

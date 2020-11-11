@@ -24,6 +24,7 @@ class User: GitIssueObject, Codable {
     var nickname: String
     var image: String?
 	override var searchText: String { nickname }
+	override var number: Int { no }
 	
 	init(no: Int, nickname: String, image: String?) {
 		self.no = no

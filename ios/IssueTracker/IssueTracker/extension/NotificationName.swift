@@ -11,4 +11,6 @@ import Foundation
 extension Notification.Name {
 	static let googleLoginSuccess = Notification.Name("googleLoginSuccess")
 	static let didIssueDetailEditFinish = Notification.Name("didIssueDetailEditFinish")
+	static let didClickCommentButton = Notification.Name("didClickCommentButton")
+	static let didCommentAdd = Notification.Name("didCommentAdd")
 }

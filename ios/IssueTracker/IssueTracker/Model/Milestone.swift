@@ -18,6 +18,7 @@ class Milestone: GitIssueObject, Codable {
 	let dueDate: String?
 	let description: String?
 	override var searchText: String { title }
+	override var number: Int { no }
 	
 	enum CodingKeys: String, CodingKey {
 		case no, title, totalTasks, closedTasks, isClosed, isDeleted, dueDate, description
