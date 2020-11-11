@@ -22,7 +22,7 @@ class ViewController: UIViewController {
 	
 	override func viewDidAppear(_ animated: Bool) {
 		super.viewDidAppear(animated)
-		performSegue(withIdentifier: "loginSuccessSegue", sender: nil)
+//		performSegue(withIdentifier: "loginSuccessSegue", sender: nil)
 //		if let token = UserDefaults.standard.value(forKey: "GoogleToken") as? String {
 //            HTTPAgent.shared.getUser(token: token, completion: { [weak self] statuscode in
 //                if statuscode == 200 {
@@ -35,14 +35,12 @@ class ViewController: UIViewController {
 //            })
 //        }
     }
-    
 
     @IBAction func githubLogin(_ sender: UIButton) {
         HTTPAgent.shared.githubLoginAction()
     }
     
 	@IBAction func appleLogin(_ sender: UIButton) {
-//        performSegue(withIdentifier: "loginSuccessSegue", sender: nil)
         let request = ASAuthorizationAppleIDProvider().createRequest()
         request.requestedScopes = [.fullName, .email]
         let controller = ASAuthorizationController(authorizationRequests: [request])
@@ -66,6 +64,9 @@ class ViewController: UIViewController {
     }
     
     func presentIssueList(statusCode: Int) {
+        /*
+         서버 응답 결과로 처리
+         */
         if statusCode == 200 {
             performSegue(withIdentifier: "loginSuccessSegue", sender: nil)
         } else {
@@ -86,8 +87,13 @@ class ViewController: UIViewController {
 
 extension ViewController: ASAuthorizationControllerDelegate {
     func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
+        
         switch authorization.credential {
         case let appleIDCredential as ASAuthorizationAppleIDCredential:
+            /*
+             appleIDCredential.identityToken
+             */
+            print(String(data: appleIDCredential.identityToken!, encoding: .utf8))
             let userIdentifier = appleIDCredential.user
             let fullName = appleIDCredential.fullName
             let email = appleIDCredential.email
@@ -102,21 +108,13 @@ extension ViewController: ASAuthorizationControllerDelegate {
             break
         }
     }
-    private func saveUserInKeychain(_ userIdentifier: String) {
-
-    }
     private func showResultViewController(userIdentifier: String, fullName: PersonNameComponents?, email: String?) {
         DispatchQueue.main.async {
-//            viewController.userIdentifierLabel.text = userIdentifier
-//            if let givenName = fullName?.givenName {
-//                viewController.givenNameLabel.text = givenName
-//            }
-//            if let familyName = fullName?.familyName {
-//                viewController.familyNameLabel.text = familyName
-//            }
-//            if let email = email {
-//                viewController.emailLabel.text = email
-//            }
+            /*
+             userIdentifier <- id
+             identityToken <- password
+             nickname <- 입력받아야함
+             */
             self.performSegue(withIdentifier: "loginSuccessSegue", sender: nil)
         }
     }
