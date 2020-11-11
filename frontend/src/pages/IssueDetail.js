@@ -16,16 +16,24 @@ export default function IssueDetail(props) {
   const { user } = props;
 
   const { issueNo } = useParams();
-
   const [issue, setIssue] = useState({});
 
   const [assignees, setAssignees] = useState([]);
   const [labels, setLabels] = useState([]);
   const [milestone, setMilestone] = useState(null);
 
-  const handleAssignToMe = () => {
-    const { no, nickname } = user;
-    setAssignees([{ no, nickname }]);
+  const handleAssignToMe = async () => {
+    try {
+      const { status } = await issueService.addIssuesAssignee({
+        no: issueNo,
+        assigneeNos: [user.no],
+      });
+      if (status === 200) {
+        fetchIssueDetails();
+      }
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   const handleClickAssignee = (e, user) => {
@@ -52,7 +60,7 @@ export default function IssueDetail(props) {
     setMilestone(undefined);
   };
 
-  useEffect(async () => {
+  const fetchIssueDetails = async () => {
     try {
       const {
         data: { issue: fetchedIssue },
@@ -63,8 +71,6 @@ export default function IssueDetail(props) {
         setMilestone(fetchedIssue.milestone);
         setLabels(fetchedIssue.labels.map(l => ({ ...l, no: l.labelNo })));
         setAssignees(fetchedIssue.assignees.map(a => ({ ...a, no: a.userNo })));
-
-        console.log(fetchedIssue);
       }
     } catch (err) {
       if (err?.response?.status === 401) {
@@ -72,6 +78,10 @@ export default function IssueDetail(props) {
       }
       console.error(err);
     }
+  };
+
+  useEffect(() => {
+    fetchIssueDetails();
   }, []);
 
   return (

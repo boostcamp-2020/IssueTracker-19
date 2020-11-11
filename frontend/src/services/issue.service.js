@@ -17,4 +17,7 @@ export const issueService = {
   addIssue({ title, content, assigneeNos, milestoneNo, labelNos }) {
     return API.post('/api/issues', { title, content, assigneeNos, milestoneNo, labelNos });
   },
+  addIssuesAssignee({ no, assigneeNos }) {
+    return API.post(`/api/issues/${no}/assignees`, { assigneeNos });
+  },
 };
