@@ -20,4 +20,16 @@ export const issueService = {
   addIssuesAssignee({ no, assigneeNos }) {
     return API.post(`/api/issues/${no}/assignees`, { assigneeNos });
   },
+  addIssuesLabel({ no, labelNos }) {
+    return API.post(`/api/issues/${no}/labels`, { labelNos });
+  },
+  addIssuesMilestone({ no, milestoneNo }) {
+    return API.patch(`/api/issues/${no}/milestone`, { milestoneNo });
+  },
+  removeIssuesAssignee({ no, assigneeNo }) {
+    return API.delete(`/api/issues/${no}/assignees/${assigneeNo}`);
+  },
+  removeIssuesLabel({ no, labelNo }) {
+    return API.delete(`/api/issues/${no}/labels/${labelNo}`);
+  },
 };
