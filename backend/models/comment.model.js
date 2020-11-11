@@ -2,8 +2,8 @@ import pool from '@lib/db';
 
 export const commentModel = {
   getComments() {
-    const sql = `SELECT c.no, c.issue_no as issueNo, u.nickname as author, c.content, c.is_head as isHead, 
-    c.created_at as createdAt, c.updated_at as updatedAt 
+    const sql = `SELECT c.no, c.issue_no as issueNo, u.nickname as author, u.no as authorNo, c.content, c.is_head as isHead, 
+    c.created_at as createdAt, c.updated_at as updatedAt, u.image
     from comment c
     LEFT JOIN user u
     ON c.author_no = u.no
