@@ -54,6 +54,7 @@ const HeaderEditButton = styled.button`
 
 const CommentItemContent = styled.p`
   padding: 1rem;
+  white-space: pre-wrap;
 `;
 
 const calcTimePassed = updatedAt => {

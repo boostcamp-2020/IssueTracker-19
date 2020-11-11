@@ -4,6 +4,7 @@ import { IssueDetailContext } from '@contexts/IssueDetailContext';
 import { issueService } from '@services';
 import styled from 'styled-components';
 import { numerics } from '@styles/variables';
+import { useParams } from 'react-router-dom';
 
 const IssueContainer = styled.div`
   ${`width: calc(100% - ${numerics.marginHorizontal} * 2)`};
@@ -11,39 +12,28 @@ const IssueContainer = styled.div`
   display: flex;
 `;
 
-export default function IssueDetail({
-  user,
-  match: {
-    params: { issueNo },
-  },
-}) {
-  const [assignees, setAssignees] = useState([]);
-  const [labels, setLabels] = useState([]);
-  const [milestone, setMilestone] = useState(undefined);
+export default function IssueDetail(props) {
+  const { user } = props;
+
+  const { issueNo } = useParams();
   const [issue, setIssue] = useState({});
 
-  useEffect(async () => {
+  const [assignees, setAssignees] = useState([]);
+  const [labels, setLabels] = useState([]);
+  const [milestone, setMilestone] = useState(null);
+
+  const handleAssignToMe = async () => {
     try {
-      const {
-        data: { issue: fetchedIssue },
-        status,
-      } = await issueService.getIssue({ issueNo });
+      const { status } = await issueService.addIssuesAssignee({
+        no: issueNo,
+        assigneeNos: [user.no],
+      });
       if (status === 200) {
-        setIssue(fetchedIssue);
-        console.log(fetchedIssue);
+        fetchIssueDetails();
       }
     } catch (err) {
-      console.log('error');
-      if (err?.response?.status === 401) {
-        history.push('/login');
-      }
       console.error(err);
     }
-  }, []);
-
-  const handleAssignToMe = () => {
-    const { no, nickname } = user;
-    setAssignees([{ no, nickname }]);
   };
 
   const handleClickAssignee = (e, user) => {
@@ -57,6 +47,42 @@ export default function IssueDetail({
   const handleClickMilestone = (e, newMilestone) => {
     setMilestone(newMilestone);
   };
+
+  const handleRemoveAssignee = (e, assignee) => {
+    setAssignees(assignees.filter(({ no }) => no !== assignee.no));
+  };
+
+  const handleRemoveLabel = (e, label) => {
+    setLabels(labels.filter(({ no }) => no !== label.no));
+  };
+
+  const handleRemoveMilestone = () => {
+    setMilestone(undefined);
+  };
+
+  const fetchIssueDetails = async () => {
+    try {
+      const {
+        data: { issue: fetchedIssue },
+        status,
+      } = await issueService.getIssue({ issueNo });
+      if (status === 200) {
+        setIssue(fetchedIssue);
+        setMilestone(fetchedIssue.milestone);
+        setLabels(fetchedIssue.labels.map(l => ({ ...l, no: l.labelNo })));
+        setAssignees(fetchedIssue.assignees.map(a => ({ ...a, no: a.userNo })));
+      }
+    } catch (err) {
+      if (err?.response?.status === 401) {
+        history.push('/login');
+      }
+      console.error(err);
+    }
+  };
+
+  useEffect(() => {
+    fetchIssueDetails();
+  }, []);
 
   return (
     <IssueDetailContext.Provider value={{ issue, user }}>
@@ -73,6 +99,9 @@ export default function IssueDetail({
           handleClickAssignee={handleClickAssignee}
           handleClickLabel={handleClickLabel}
           handleClickMilestone={handleClickMilestone}
+          handleRemoveAssignee={handleRemoveAssignee}
+          handleRemoveLabel={handleRemoveLabel}
+          handleRemoveMilestone={handleRemoveMilestone}
         />
       </IssueContainer>
     </IssueDetailContext.Provider>

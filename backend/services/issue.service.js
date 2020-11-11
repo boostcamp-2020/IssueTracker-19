@@ -159,6 +159,6 @@ export const issueService = {
       labelModel.getLabelByIssueNo({ issueNo }),
     ]);
 
-    return { ...issue, milestone: null, assignees, comments, labels };
+    return { ...issue, assignees, comments, labels, milestone: issue.milestone ?? null };
   },
 };
