@@ -57,7 +57,7 @@ const ButtonSpace = styled.div`
   margin-left: 7px;
 `;
 export default function MilestoneEditBox({ isNew }) {
-  const [form, setForm] = useState({ title: ' ', dueDate: '', description: '' });
+  const [form, setForm] = useState({ title: '', dueDate: '', description: '' });
   const [isClosed, setIsClosed] = useState(false);
   const { title, dueDate, description } = form;
 
