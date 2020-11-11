@@ -26,7 +26,7 @@ export const uploadImage = (req, res, next) => {
       }
 
       const fileList =
-        files?.imgs?.reduce((acc, { path }) => {
+        [].concat(files?.imgs)?.reduce((acc, { path }) => {
           return acc.concat(prefix + path.match(/.imgs.*/i)[0]);
         }, []) ?? [];
 
