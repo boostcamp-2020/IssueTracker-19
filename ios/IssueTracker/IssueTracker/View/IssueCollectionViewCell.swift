@@ -50,12 +50,12 @@ class IssueCollectionViewCell: UICollectionViewListCell {
     var issue: Issue? {
         didSet {
             issueTitle.text = issue?.title
-//            issueDescription.text = issue?.description 정보 없음
+            issue?.comment != nil ? (issueDescription.text = issue?.comment?.content) : (issueDescription.text = "")
             milestone.text = issue?.milestoneTitle ?? ""
             milestone.isHidden = (milestone.text == "")
             label.text = issue?.labels.first?.name ?? ""
             label.isHidden = (label.text == "")
-			
+            
 			milestoneWidthConstraint?.isActive = false
 			milestoneWidthConstraint?.constant = milestone.intrinsicContentSize.width + 10
 			milestoneWidthConstraint?.isActive = !milestone.isHidden

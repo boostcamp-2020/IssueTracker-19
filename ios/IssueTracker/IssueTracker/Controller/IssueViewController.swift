@@ -62,9 +62,7 @@ class IssueViewController: UIViewController, ListCollectionViewProtocol {
 		HTTPAgent.shared.sendRequest(from: "http://49.50.163.23:3000/api/issues", method: .GET) { [weak self] (result) in
 			switch result {
 			case .success(let data):
-				let sample = try? JSONSerialization.jsonObject(with: data) as? [String: Any]
 				let issue = try? JSONDecoder().decode(Issues.self, from: data)
-//				print(sample)
 
 				self?.list = issue!.issues
 				self?.allList = self?.list ?? []
