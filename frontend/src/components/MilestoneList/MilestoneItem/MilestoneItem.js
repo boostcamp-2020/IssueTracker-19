@@ -154,8 +154,8 @@ export default function MilestoneItem({
         no,
         isClosed,
         title,
-        dueDate: dueDate ? dueDate : '',
-        description: description ? description : '',
+        dueDate,
+        description,
       },
     });
   };
