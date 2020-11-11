@@ -8,10 +8,10 @@ const Tag = styled.span`
   background-color: ${props => props.color};
   color: ${props => calcFontColor(props.color)};
   font-size: ${props => props.size};
-  font-weight: bold;
+  font-weight: 500;
 `;
 
-export default function LabelTag({ name, color, size = '1rem' }) {
+export default function LabelTag({ name, color, size = '0.75rem' }) {
   return (
     <Tag color={color} size={size}>
       {name ? name : 'Label preview'}
