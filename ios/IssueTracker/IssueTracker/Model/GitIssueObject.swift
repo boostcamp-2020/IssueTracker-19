@@ -13,6 +13,9 @@ class GitIssueObject: Hashable {
 	var searchText: String {
 		""
 	}
+	var number: Int {
+		0
+	}
 	
 	static func == (lhs: GitIssueObject, rhs: GitIssueObject) -> Bool {
 		return lhs.identifier == rhs.identifier

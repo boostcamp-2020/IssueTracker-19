@@ -11,7 +11,14 @@ import UIKit
 // MARK: - User Event Handler
 extension IssueDetailBottomViewController {
 	@IBAction func addCommentAction(_ sender: UIButton) {
-		print(#function)
+		UIView.animate(withDuration: 0.4) { [weak self] in
+			guard let controller = self else { return }
+			controller.view.frame.origin.y = controller.minTop
+		} completion: { [weak self] _ in
+			guard let controller = self else { return }
+			controller.topConstraint?.constant = controller.view.frame.origin.y
+			NotificationCenter.default.post(name: .didClickCommentButton, object: nil)
+		}
 	}
 	
 	@IBAction func upButtonAction(_ sender: UIButton) {
@@ -27,7 +34,7 @@ extension IssueDetailBottomViewController {
 			  let type = BottomViewSection(rawValue: idx)
 		else { return }
 		
-		let editSectionItemVC = SectionItemEditViewController(bottomViewSection: type)
+		let editSectionItemVC = SectionItemEditViewController(bottomViewSection: type, issueNo: issueNo)
 		
 		switch type {
 		case .assignee:

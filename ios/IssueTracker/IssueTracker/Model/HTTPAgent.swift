@@ -17,6 +17,8 @@ enum HTTPMethod: String {
     case GET
     case POST
     case PUT
+	case PATCH
+	case DELETE
 }
 
 enum NetworkError: Error {
@@ -28,9 +30,9 @@ class HTTPAgent: LoginProtocol {
     static let shared = HTTPAgent()
     let session = URLSession.shared
     
-    func sendRequest(from urlString: String, method: HTTPMethod, body: Data? = nil, completion: @escaping (Result<Data, NetworkError>) -> Void) {
+	func sendRequest(from urlString: String, method: HTTPMethod, body: Data? = nil, completion: ((Result<Data, NetworkError>) -> Void)? = nil) {
         guard let url = URL(string: urlString) else {
-            completion(.failure(.URLError))
+            completion?(.failure(.URLError))
             return
         }
         
@@ -43,16 +45,16 @@ class HTTPAgent: LoginProtocol {
         
         session.dataTask(with: request) { (data, response, error) in
             if error != nil {
-                completion(.failure(.responseError))
+                completion?(.failure(.responseError))
             }
             guard let response = response as? HTTPURLResponse,
                   (200...299).contains(response.statusCode),
                   let data = data else {
-                completion(.failure(.responseError))
+                completion?(.failure(.responseError))
                 return
             }
             
-            completion(.success(data))
+            completion?(.success(data))
         }.resume()
     }
     
@@ -122,7 +124,10 @@ class HTTPAgent: LoginProtocol {
     }
 	
 	public func loadImage(urlString: String, reDownload: Bool = false, completion: @escaping (Result<String, NetworkError>) -> Void) {
-		guard let url = URL(string: urlString) else {
+		
+		guard let encodedString = urlString.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed),
+			  let url = URL(string: encodedString) else {
+			print(urlString)
 			completion(.failure(.URLError))
 			return
 		}

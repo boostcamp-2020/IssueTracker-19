@@ -53,13 +53,18 @@ class IssueViewController: UIViewController, ListCollectionViewProtocol {
         updateData()
     }
     
+	override func viewWillAppear(_ animated: Bool) {
+		super.viewWillAppear(animated)
+		updateData()
+	}
+	
     func updateData() {
 		HTTPAgent.shared.sendRequest(from: "http://49.50.163.23:3000/api/issues", method: .GET) { [weak self] (result) in
 			switch result {
 			case .success(let data):
 				let sample = try? JSONSerialization.jsonObject(with: data) as? [String: Any]
 				let issue = try? JSONDecoder().decode(Issues.self, from: data)
-				print(sample)
+//				print(sample)
 
 				self?.list = issue!.issues
 				self?.allList = self?.list ?? []

@@ -61,14 +61,16 @@ class Issue: GitIssueObject, Codable {
     let no: Int
     let title: String
     let author: String
-    let assignees: [User]
-    let labels: [Label]
+	var assignees: [User]
+	var labels: [Label]
     let isOpened: Int
     let createdAt: String
     let closedAt: String?
     let milestoneNo: Int?
     let milestoneTitle: String?
     let commentCount: Int
+	let image: String?
+	
     
     init(title: String, author: String) {
         no = 0
@@ -82,10 +84,11 @@ class Issue: GitIssueObject, Codable {
         closedAt = nil
         milestoneNo = nil
         milestoneTitle = nil
+		image = ""
     }
     
     enum CodingKeys: String, CodingKey {
-        case no, title, author, assignees, labels, isOpened, createdAt, closedAt, milestoneNo, milestoneTitle, commentCount
+        case no, title, author, assignees, labels, isOpened, createdAt, closedAt, milestoneNo, milestoneTitle, commentCount, image
     }
 	required init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
@@ -100,5 +103,6 @@ class Issue: GitIssueObject, Codable {
         milestoneNo = try values.decode(Int?.self, forKey: .milestoneNo)
         milestoneTitle = try values.decode(String?.self, forKey: .milestoneTitle)
         commentCount = try values.decode(Int.self, forKey: .commentCount)
+		image = try values.decode(String?.self, forKey: .image)
     }
 }

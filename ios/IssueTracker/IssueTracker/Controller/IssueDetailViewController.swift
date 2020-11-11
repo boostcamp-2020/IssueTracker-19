@@ -24,25 +24,44 @@ class IssueDetailViewController: UIViewController, ListCollectionViewProtocol {
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		print(issue)
-		
+		configureBottomView()
 		loadDate()
+		
+		configureNotification()
 		
 		configureHierarchy()
 		configureDataSource()
-		configureBottomView()
+		
 		updateList()
+		collectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 96, right: 0)
+	}
+	
+	override func viewWillDisappear(_ animated: Bool) {
+		issue.assignees = bottomViewController?.assignees ?? []
+		issue.labels = bottomViewController?.labels ?? []
+		
+		
+		bottomViewController?.view.removeFromSuperview()
+	}
+	
+	override func viewDidLayoutSubviews() {
+		super.viewDidLayoutSubviews()
+//		collectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 96, right: 0)
 	}
 	
 	func loadDate() {
 		HTTPAgent.shared.sendRequest(from: "http://49.50.163.23:3000/api/issues/\(issue.no)", method: .GET) { [weak self] (result) in
 			switch result {
 			case .success(let data):
-//				let sample = try? JSONSerialization.jsonObject(with: data) as? [String: Any]
+				let json = try? JSONSerialization.jsonObject(with: data) as? [String: Any?]
 				self?.issueWrapper = try? JSONDecoder().decode(IssueWrapper.self, from: data)
 				if let comments = self?.issueWrapper?.issue.comments {
 					self?.list = comments
 					self?.updateList()
+				}
+				if let milestone = self?.issueWrapper?.issue.milestone {
+					self?.bottomViewController?.milestones = [milestone]
+					self?.bottomViewController?.applySnapshot()
 				}
 			case .failure(let error):
 				print(error)
@@ -57,26 +76,23 @@ class IssueDetailViewController: UIViewController, ListCollectionViewProtocol {
 		
 		bottomVC.assignees = issue.assignees
 		bottomVC.labels = issue.labels
-		if let milestone = issueWrapper?.issue.milestone {
-			bottomVC.milestones = [milestone]
-		}
+		
 		
 		bottomViewController = bottomVC
 		guard let window = UIApplication.shared.windows.filter { $0.isKeyWindow }.last else { return }
 		window.addSubview(bottomVC.view)
 		bottomVC.setupView(superView: window)
 		window.rootViewController?.addChild(bottomVC)
+		bottomVC.issueNo = issue.no
 		
 	}
 	
-	override func viewWillDisappear(_ animated: Bool) {
-		bottomViewController?.view.removeFromSuperview()
+	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+		if let controller = segue.destination as? CommentAddViewController {
+			controller.issueNo = issue.no
+		}
 	}
 	
-	override func viewDidLayoutSubviews() {
-		super.viewDidLayoutSubviews()
-		collectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 96, right: 0)
-	}
 	
 	// MARK: - Tab bar item Actions
 	@IBAction func backButton(_ sender: UIBarButtonItem) {
@@ -163,4 +179,26 @@ extension IssueDetailViewController {
 		return layout
 	}
 	
+}
+
+extension IssueDetailViewController {
+	func configureNotification() {
+		NotificationCenter.default.addObserver(self, selector: #selector(didClickCommentButton), name: .didClickCommentButton, object: nil)
+		
+		NotificationCenter.default.addObserver(self, selector: #selector(didCommentAdd), name: .didCommentAdd, object: nil)
+	}
+	
+	@objc func didClickCommentButton() {
+		performSegue(withIdentifier: "addCommentSegue", sender: nil)
+	}
+	
+	@objc func didCommentAdd(_ notification: Notification) {
+		if let controller = notification.object as? CommentAddViewController {
+			DispatchQueue.main.async {
+				controller.dismiss(animated: true, completion: nil)
+			}
+			self.loadDate()
+			self.updateList(animatingDifferences: true)
+		}
+	}
 }

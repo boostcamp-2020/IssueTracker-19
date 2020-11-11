@@ -26,6 +26,7 @@ class SectionItemEditViewController: UIViewController {
 	let searchController = UISearchController(searchResultsController: nil)
 	
 	let bottomViewSection: BottomViewSection
+	let issueNo: Int
 	
 	let topSpace = CGFloat(10)
 	var height: CGFloat { view.frame.height }
@@ -36,8 +37,9 @@ class SectionItemEditViewController: UIViewController {
 	var deSelected = [GitIssueObject]()
 	var searched = [GitIssueObject]()
 	
-	init(bottomViewSection: BottomViewSection) {
+	init(bottomViewSection: BottomViewSection, issueNo: Int) {
 		self.bottomViewSection = bottomViewSection
+		self.issueNo = issueNo
 		super.init(nibName: nil, bundle: nil)
 	}
 	
@@ -118,9 +120,10 @@ class SectionItemEditViewController: UIViewController {
 		}
 	}
 	
-	func remove(with data: [GitIssueObject]? = nil) {
-		NotificationCenter.default.post(name: .didIssueDetailEditFinish, object: data)
-		
+	func remove(_ isEdited: Bool = false) {
+		NotificationCenter.default.post(name: .didIssueDetailEditFinish,
+										object: bottomViewSection,
+										userInfo: isEdited ?  ["selected": selected] : nil)
 		willMove(toParent: nil)
 		view.removeFromSuperview()
 		removeFromParent()

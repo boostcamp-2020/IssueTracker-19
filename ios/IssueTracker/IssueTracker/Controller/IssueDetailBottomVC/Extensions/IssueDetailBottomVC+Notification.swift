@@ -18,9 +18,17 @@ extension IssueDetailBottomViewController {
 		mainView.isUserInteractionEnabled = true
 		gestureRecognizer?.isEnabled = true
 		
-		guard let items = notification.object else { return }
-		
-		
+		guard let selected = notification.userInfo?["selected"] as? [GitIssueObject],
+			  let type = notification.object as? BottomViewSection else { return }
+
+		if let items = selected as? [User], type == .assignee {
+			assignees = items
+		}else if let items = selected as? [Label], type == .label {
+			labels = items
+		}else if let items = selected as? [Milestone], type == .milestone {
+			milestones = items
+		}
+		applySnapshot()
 	}
 	
 }
