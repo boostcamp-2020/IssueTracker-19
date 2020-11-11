@@ -9,7 +9,7 @@ import CheckGrayIcon from '@imgs/check-gray.svg';
 const Container = styled.div`
   margin-top: 1.25rem;
   width: 100%;
-  background-color: #f6f8fa;
+  background-color: ${colors.filterTabColor};
   border: 1px solid ${colors.borderColor};
   box-sizing: border-box;
   border-radius: 6px 6px 0 0;

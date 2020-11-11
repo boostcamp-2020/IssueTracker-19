@@ -10,21 +10,26 @@ import { LabelBoxContext } from '@components/LabelBox/LabelBoxContext';
 
 const Box = styled.form`
   ${flexColumn};
-  background-color: ${colors.lightestGray};
+  background-color: ${props => props.color};
   padding: 1.5rem;
+  border: ${props => props.borderLine} solid #e1e4e8;
+  border-radius: ${props => props.border};
+  margin-bottom: 16px;
 `;
 
 const InputLabel = styled.label`
-  font-weight: bold;
+  font-size: 14px;
+  font-weight: 600;
 `;
 
 const InputBox = styled.input`
-  padding: 0.25em;
+  padding: 5px 12px;
+  font-weight: 350;
   width: ${props => (props.width ? props.width : 'auto')};
 
-  font-size: inherit;
-  border: 1px solid ${colors.lightGray};
-  border-radius: 4px;
+  font-size: 14px;
+  border: 1px solid ${colors.lighterGray};
+  border-radius: 6px;
   outline: none;
 
   &:focus {
@@ -63,8 +68,10 @@ const ItemBoxRow = styled.div`
 
 const DeleteButton = styled.button`
   margin: auto;
-  font-size: inherit;
-  color: ${colors.black6};
+  color: ${colors.resetDefaultColor};
+  background-color: #fff;
+  font-size: 12px;
+  font-weight: 400;
   outline: none;
   border: none;
   cursor: pointer;
@@ -97,6 +104,7 @@ const PreventSubmitButton = styled(SubmitButton)`
 `;
 
 export default function LabelEditBox({
+  isNew,
   no = null,
   name = '',
   description = '',
@@ -192,7 +200,12 @@ export default function LabelEditBox({
   };
 
   return (
-    <Box onSubmit={handleSubmit}>
+    <Box
+      border={isNew ? '6px' : '0'}
+      borderLine={isNew ? '1px' : '0'}
+      color={isNew ? colors.filterTabColor : '#fff'}
+      onSubmit={handleSubmit}
+    >
       <EditHeader>
         <ItemBox>
           <LabelTag name={label.name} color={label.color} />

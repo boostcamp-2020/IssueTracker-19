@@ -9,22 +9,20 @@ import { LabelBoxContext } from '@components/LabelBox/LabelBoxContext';
 
 const Box = styled.div`
   ${flexColumn};
-  margin-top: 2rem;
+  margin-top: 1.25rem;
 `;
 
 const TopBox = styled.div`
-  border: 2px solid ${colors.lightGray};
-  border-radius: 0.25rem;
+  border-radius: 6px 6px 0 0;
 `;
 
 const BottomBox = styled.div`
-  margin-top: 2rem;
   ${flexColumn};
-  border: 2px solid ${colors.lightGray};
-  border-radius: 0.25rem;
+  border: 1px solid ${colors.lighterGray};
+  border-radius: 6px 6px 0 0;
 
   & > * {
-    border-bottom: 2px solid ${colors.lightGray};
+    border-bottom: 1px solid ${colors.lighterGray};
   }
 
   & > *:last-child {
@@ -33,8 +31,11 @@ const BottomBox = styled.div`
 `;
 
 const LabelHeader = styled.div`
-  padding: 1rem;
-  background-color: ${colors.lightestGray};
+  padding: 16px;
+  background-color: ${colors.filterTabColor};
+  font-size: 14px;
+  font-weight: 600;
+  border-radius: 6px 6px 0 0;
 `;
 
 export default function LabelItemBox() {
@@ -60,12 +61,12 @@ export default function LabelItemBox() {
     <Box>
       {isAdding ? (
         <TopBox>
-          <LabelEditBox reloadLabels={getLabels} />
+          <LabelEditBox isNew={true} reloadLabels={getLabels} />
         </TopBox>
       ) : null}
 
       <BottomBox>
-        <LabelHeader>8 Labels</LabelHeader>
+        <LabelHeader>{labels.length} Labels</LabelHeader>
 
         {labels.map(label => {
           if (editingLabels.has(label.no))

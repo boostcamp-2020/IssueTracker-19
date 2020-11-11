@@ -4,7 +4,7 @@ import { Header, MilestoneEditBox, MilestoneNewHeader } from '@components';
 import { numerics } from '@styles/variables';
 
 const Container = styled.div`
-  margin: 32px ${numerics.marginHorizontal};
+  margin: ${numerics.marginHorizontal};
 `;
 
 export default function MilestoneNew() {

@@ -16,6 +16,9 @@ const NameBox = styled.div`
 
 const DescBox = styled.div`
   width: 55%;
+  font-size: 12px;
+  font-weight: 400;
+  color: ${colors.resetDefaultColor};
 `;
 
 const ButtonBox = styled.div`
@@ -26,7 +29,9 @@ const ButtonBox = styled.div`
 
 const Button = styled.button`
   background-color: inherit;
-  color: ${colors.black6};
+  color: ${colors.resetDefaultColor};
+  font-size: 12px;
+  font-weight: 400;
   border: none;
   outline: none;
   cursor: pointer;
