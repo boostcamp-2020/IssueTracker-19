@@ -2,8 +2,8 @@ import pool from '@lib/db';
 
 export const commentModel = {
   getComments() {
-    const sql = `SELECT c.no, c.issue_no as issueNo, u.nickname as author, c.content, c.is_head as isHead, 
-    c.created_at as createdAt, c.updated_at as updatedAt 
+    const sql = `SELECT c.no, c.issue_no as issueNo, u.nickname as author, u.no as authorNo, c.content, c.is_head as isHead, 
+    c.created_at as createdAt, c.updated_at as updatedAt, u.image
     from comment c
     LEFT JOIN user u
     ON c.author_no = u.no
@@ -11,9 +11,11 @@ export const commentModel = {
     return pool.query(sql);
   },
   getCommentsByIssueNo({ issueNo }) {
-    const sql = `SELECT no, issue_no as issueNo, author_no as authorNo, content, is_head as isHead,
-    created_at as createdAt, updated_at as updatedAt
-    from comment 
+    const sql = `SELECT u.no, issue_no as issueNo, author_no as authorNo, content, u.nickname as author, is_head as isHead,
+    created_at as createdAt, updated_at as updatedAt, u.image
+    from comment c 
+    LEFT JOIN user u
+    ON u.no = c.author_no
     WHERE issue_no = ?;`;
     return pool.execute(sql, [issueNo]);
   },

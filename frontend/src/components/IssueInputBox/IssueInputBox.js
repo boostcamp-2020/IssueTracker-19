@@ -4,7 +4,7 @@ import { colors } from '@styles/variables';
 import { flex, skyblueBoxShadow } from '@styles/utils';
 import { SubmitButton, CancelButton } from '@shared';
 import { Link, useHistory } from 'react-router-dom';
-import { issueService } from '@services';
+import { issueService, uploadService } from '@services';
 
 const MainContainer = styled.div`
   width: calc(70% - 10rem);
@@ -126,14 +126,13 @@ const ControlBox = styled.div`
 
 const debounce = callback => setTimeout(callback, 1200);
 
-export default function IssueInputBox() {
+export default function IssueInputBox(props) {
   const history = useHistory();
+
+  const { assigneeNos, labelNos, milestoneNo } = props;
 
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
-  const [milestoneNo, setMilestoneNo] = useState(undefined);
-  const [issueNos, setIssueNos] = useState([]);
-  const [labelNos, setLabelNos] = useState([]);
   const [debouceClear, setDebouceClear] = useState(undefined);
 
   const countRef = useRef();
@@ -186,11 +185,26 @@ export default function IssueInputBox() {
 
     // TODO 이미지 전송 구현
 
-    setTimeout(() => {
-      const fileUrl = `![${fileNameWithoutExt}](http://~~)`;
-      const rep = contentRef.current.textContent.replace(loadingText, fileUrl);
-      setContent(rep);
-    }, 8000);
+    try {
+      const formData = new FormData();
+      formData.append('imgs', file);
+
+      const {
+        data: { fileList },
+        status,
+      } = await uploadService.addImage(formData);
+      if (status === 200) {
+        const fileUrl = `![${fileNameWithoutExt}](${fileList[0]})`;
+        const rep = contentRef.current.textContent.replace(loadingText, fileUrl);
+        setContent(rep);
+      }
+    } catch (err) {
+      if (err?.response?.status === 401) {
+        history.push('/login');
+        return;
+      }
+      console.error(err);
+    }
   };
 
   const handleSubmit = async e => {
@@ -204,14 +218,16 @@ export default function IssueInputBox() {
       alert('내용을 입력해주세요.');
       return;
     }
+
     try {
       const { status } = await issueService.addIssue({
         title,
         content,
         milestoneNo,
-        issueNos,
+        assigneeNos,
         labelNos,
       });
+
       if (status === 201) {
         history.push('/');
       }
