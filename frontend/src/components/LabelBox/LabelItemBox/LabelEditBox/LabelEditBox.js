@@ -68,7 +68,7 @@ const ItemBoxRow = styled.div`
 
 const DeleteButton = styled.button`
   margin: auto;
-  margin-right: 1.2rem;
+  margin-right: 20px;
   color: ${colors.resetDefaultColor};
   background-color: #fff;
   font-size: 14px;
@@ -209,7 +209,7 @@ export default function LabelEditBox({
     >
       <EditHeader>
         <ItemBox>
-          <LabelTag color={label.color}>{isNew ? 'Label preview' : label.name}</LabelTag>
+          <LabelTag color={label.color}>{label.name ? label.name : 'Label preview'}</LabelTag>
         </ItemBox>
         <ItemBox>
           {label.no ? (
