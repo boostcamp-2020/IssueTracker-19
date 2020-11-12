@@ -111,7 +111,7 @@ extension FilterSelectViewController {
                 var items: [String]?
                 switch filterCase {
                 case .users:
-                    items = try? JSONDecoder().decode(UserWrapper.self, from: data).users.map { $0.nickname }
+					items = try? JSONDecoder().decode(UserWrapper.self, from: data).users.map { $0.nickname ?? $0.no.description }
                 case .labels:
                     items = try? JSONDecoder().decode(LabelWrapper.self, from: data).labels.map { $0.name }
                 case .milestones:

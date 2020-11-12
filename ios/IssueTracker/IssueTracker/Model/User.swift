@@ -16,14 +16,14 @@ class User: GitIssueObject, Codable {
     required init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
         no = try values.decode(Int.self, forKey: .no)
-        nickname = try values.decode(String.self, forKey: .nickname)
+        nickname = try values.decode(String?.self, forKey: .nickname)
         image = try values.decode(String?.self, forKey: .image)
     }
 	
     var no: Int
-    var nickname: String
+    var nickname: String?
     var image: String?
-	override var searchText: String { nickname }
+	override var searchText: String { nickname ?? "" }
 	override var number: Int { no }
 	
 	init(no: Int, nickname: String, image: String?) {
