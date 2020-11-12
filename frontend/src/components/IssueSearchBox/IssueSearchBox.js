@@ -178,12 +178,21 @@ export default function IssueSearchBox() {
         return acc + ` author:${val}`;
       }
       if (key === 'label' && val.length) {
+        if (val[0] === '@null') {
+          return acc + ` no:label`;
+        }
         return acc + val.reduce((acc, cur) => acc + ` label:${cur}`, '');
       }
       if (key === 'milestone' && val) {
+        if (val === '@null') {
+          return acc + ` no:milestone`;
+        }
         return acc + ` milestone:${val}`;
       }
       if (key === 'assignee' && val) {
+        if (val === '@null') {
+          return acc + ` no:assignee`;
+        }
         return acc + ` assignee:${val}`;
       }
       if (key === 'comment' && val) {
