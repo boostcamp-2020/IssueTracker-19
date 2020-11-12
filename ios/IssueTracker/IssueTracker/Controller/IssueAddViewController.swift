@@ -75,14 +75,14 @@ class IssueAddViewController: UIViewController {
     }
     
     @IBAction func issueAddButton(_ sender: UIButton) {
-        /*
-         서버 통신
-         issueTitleTextField.text <- 이슈 제목
-         markdownResult <- 마크다운 형식으로 작성한 String
-         */
         guard let title = issueTitleTextField.text, title != "" else {
             presentAlert(title: "이슈 제목", message: "이슈 제목을 입력하지 않았어요!")
             return
+        }
+        markdownResult = markdownTextView.text
+        for index in 0..<markDownImageStringArray.count {
+            markdownResult = markdownResult.replacingOccurrences(of: "#image\(index)#",
+                                                                  with: markDownImageStringArray[index])
         }
         issueInsertDelegate?.issueInsertAction(issueTitle: title, issueComment: markdownResult)
         dismiss(animated: true, completion: nil)

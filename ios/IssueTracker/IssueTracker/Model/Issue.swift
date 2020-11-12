@@ -15,6 +15,8 @@ class Comment: GitIssueObject, Codable {
 	let content: String
 	let updatedAt: String
 	let image: String?
+    
+    
 	
 	enum CodingKeys: String, CodingKey {
 		case no, author, authorNo, content, updatedAt, image
@@ -74,23 +76,6 @@ class Issue: GitIssueObject, Codable {
 	
 
     let comment: Comment?
-
-    
-    init(title: String, author: String) {
-        no = 0
-        self.title = title
-        self.author = author
-        assignees = []
-        labels = []
-        isOpened = 1
-        createdAt = "\(Date())"
-        commentCount = 1
-        closedAt = nil
-        milestoneNo = nil
-        milestoneTitle = nil
-		image = ""
-		comment = nil
-    }
     
     enum CodingKeys: String, CodingKey {
         case no, title, author, assignees, labels, isOpened, createdAt, closedAt, milestoneNo, milestoneTitle, commentCount, image, comment

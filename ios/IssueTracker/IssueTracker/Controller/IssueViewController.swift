@@ -13,6 +13,8 @@ protocol IssueInsertProtocol {
 }
 
 class IssueViewController: UIViewController, ListCollectionViewProtocol {
+    @IBOutlet weak var filterOrSelectAll: UIBarButtonItem!
+    
     struct Issues: Decodable {
         var issues: [Issue]
     }
@@ -74,7 +76,17 @@ class IssueViewController: UIViewController, ListCollectionViewProtocol {
     }
     
     @IBAction func filterButton(_ sender: UIBarButtonItem) {
-        performSegue(withIdentifier: "filterSegue", sender: nil)
+        if !isEditing {
+            performSegue(withIdentifier: "filterSegue", sender: nil)
+        } else {
+            if filterOrSelectAll.title == "Select All" {
+                collectionView.selectAll(animated: false)
+                filterOrSelectAll.title = "DeSelect All"
+            } else {
+                collectionView.deselectAll(animated: false)
+                filterOrSelectAll.title = "Select All"
+            }
+        }
     }
     	
 	func addFloatingButton(view: UIView) {
@@ -105,26 +117,21 @@ class IssueViewController: UIViewController, ListCollectionViewProtocol {
 extension IssueViewController {
     func createSwipeLayout() -> UICollectionViewLayout {
         var config = UICollectionLayoutListConfiguration(appearance: .plain)
+        
         config.trailingSwipeActionsConfigurationProvider = { (indexPath) -> UISwipeActionsConfiguration in
-            return UISwipeActionsConfiguration(actions: [UIContextualAction(
+            return UISwipeActionsConfiguration(actions: [
+                                                UIContextualAction(
                                                     style: .destructive,
                                                     title: "Delete",
                                                     handler: { [weak self] _, _, completion in
-                                                        let sample = self?.list[indexPath.item]
-                                                        self?.list.removeAll { $0 == sample }
-                                                        self?.updateList()
+                                                        let issue = self?.list[indexPath.item]
+                                                        self?.issueDeleteAction(issue: issue!)
                                                         completion(true)
-                                                    })])
+                                                    })
+            ])
         }
         
         config.backgroundColor = .systemBackground
-        
-        return UICollectionViewCompositionalLayout.list(using: config)
-    }
-    
-    func createNoneswipeLayout() -> UICollectionViewLayout {
-        var config = UICollectionLayoutListConfiguration(appearance: .plain)
-        config.backgroundColor = .systemGray5
         
         return UICollectionViewCompositionalLayout.list(using: config)
     }
@@ -138,7 +145,7 @@ extension IssueViewController {
         floatingButton.isHidden = editing
         
         if editing {
-            let add = UIBarButtonItem(title: "선택 이슈 닫기", style: .plain, target: self, action: nil)
+            let add = UIBarButtonItem(title: "선택 이슈 닫기", style: .plain, target: self, action: #selector(issueCloseAction))
             let spacer = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil)
             toolbar.setItems([spacer, add], animated: false)
             tabBarController?.tabBar.isHidden = true
@@ -146,10 +153,38 @@ extension IssueViewController {
             toolbarBottomConstraint?.constant = toolbar.frame.height-tabBarController!.tabBar.frame.height
             toolbar.layoutIfNeeded()
             toolbar.isHidden = false
+            filterOrSelectAll.title = "Select All"
         } else {
             tabBarController?.tabBar.isHidden = false
             toolbar.isHidden = true
+            filterOrSelectAll.title = "filter"
         }
+    }
+    
+    @objc private func issueCloseAction() {
+        guard let indexPaths = collectionView.indexPathsForSelectedItems else {
+            return
+        }
+        var issueNumbers = [Int]()
+        for indexPath in indexPaths {
+            issueNumbers.append(list[indexPath.item].no)
+        }
+        let data = try? JSONEncoder().encode(["issueNos": issueNumbers])
+        HTTPAgent.shared.sendRequest(from: "http://49.50.163.23/api/issues/close",
+                                     method: .PATCH,
+                                     body: data,
+                                     completion: { [weak self] (result) in
+                                        switch result {
+                                        case .success(_):
+                                            self?.updateData()
+                                            self?.updateList()
+                                            DispatchQueue.main.async {
+                                                self?.setEditing(false, animated: true)
+                                            }
+                                        case .failure(let error):
+                                            print(error)
+                                        }
+                                     })
     }
 }
 extension IssueViewController {
@@ -232,11 +267,54 @@ extension IssueViewController: UISearchResultsUpdating {
 
 extension IssueViewController: IssueInsertProtocol {
     func issueInsertAction(issueTitle: String, issueComment: String) {
-        /*
-         이슈 생성시 첫 comment 정보를 입력받게 생성자 수정 필요
-         */
-        let issue = Issue(title: issueTitle, author: issueComment)
-        list.append(issue)
-        updateList()
+        let data = try? JSONEncoder().encode(["title": issueTitle, "content": issueComment])
+        HTTPAgent.shared.sendRequest(from: "http://49.50.163.23/api/issues",
+                                     method: .POST,
+                                     body: data,
+                                     completion: { [weak self] (result) in
+            switch result {
+            case .success(_):
+                self?.updateData()
+                self?.updateList()
+            case .failure(let error):
+                print(error)
+            }
+        })
     }
+    
+    func issueDeleteAction(issue: Issue) {
+        HTTPAgent.shared.sendRequest(from: "http://49.50.163.23/api/issues/\(issue.no)",
+                                     method: .DELETE,
+                                     completion: { [weak self] (result) in
+            switch result {
+            case .success(_):
+                self?.updateData()
+                self?.updateList()
+            case .failure(let error):
+                print(error)
+            }
+        })
+    }
+}
+extension UICollectionView {
+
+    /// Iterates through all sections & items and selects them.
+    func selectAll(animated: Bool) {
+        (0..<numberOfSections).compactMap { (section) -> [IndexPath]? in
+            return (0..<numberOfItems(inSection: section)).compactMap({ (item) -> IndexPath? in
+                return IndexPath(item: item, section: section)
+            })
+        }.flatMap { $0 }.forEach { (indexPath) in
+            selectItem(at: indexPath, animated: animated, scrollPosition: [])
+        }
+
+    }
+
+    /// Deselects all selected cells.
+    func deselectAll(animated: Bool) {
+        indexPathsForSelectedItems?.forEach({ (indexPath) in
+            deselectItem(at: indexPath, animated: animated)
+        })
+    }
+
 }
