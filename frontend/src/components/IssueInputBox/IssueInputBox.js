@@ -5,8 +5,9 @@ import { flex, skyblueBoxShadow } from '@styles/utils';
 import { SubmitButton, CancelButton } from '@shared';
 import { Link, useHistory } from 'react-router-dom';
 import { issueService, uploadService } from '@services';
+import { debounce } from '@lib/utils';
 
-const MainContainer = styled.div`
+export const MainContainer = styled.div`
   width: calc(70% - 10rem);
   margin-left: 10rem;
   border: 1px solid ${colors.lighterGray};
@@ -31,13 +32,13 @@ const TitleInput = styled.input`
   }
 `;
 
-const TagContainer = styled.div`
+export const TagContainer = styled.div`
   height: 3rem;
   position: relative;
   border-bottom: 1px solid ${colors.lighterGray};
 `;
 
-const TagBox = styled.button`
+export const TagBox = styled.button`
   bottom: -1px;
   left: 0;
   position: absolute;
@@ -55,12 +56,12 @@ const TagBox = styled.button`
   z-index: 2;
 `;
 
-const ContentContainer = styled.div`
+export const ContentContainer = styled.div`
   position: relative;
   padding: 0.5rem;
 `;
 
-const TextArea = styled.textarea`
+export const TextArea = styled.textarea`
   display: flex;
   flex: 1;
   min-width: 100%;
@@ -81,7 +82,7 @@ const TextArea = styled.textarea`
   }
 `;
 
-const TextCountBox = styled.div`
+export const TextCountBox = styled.div`
   opacity: ${props => (props.visiable ? 1 : 0)};
   transition: 0.4s;
   position: absolute;
@@ -93,7 +94,7 @@ const TextCountBox = styled.div`
   padding: 0.5rem 0.8rem;
 `;
 
-const FileLabel = styled.label`
+export const FileLabel = styled.label`
   width: 100%;
   padding: 0.4rem;
   display: block;
@@ -108,7 +109,7 @@ const FileLabel = styled.label`
   cursor: pointer;
 `;
 
-const FileSelectInput = styled.input`
+export const FileSelectInput = styled.input`
   position: absolute;
   width: 1px;
   height: 1px;
@@ -119,12 +120,10 @@ const FileSelectInput = styled.input`
   border: 0;
 `;
 
-const ControlBox = styled.div`
+export const ControlBox = styled.div`
   ${flex('space-between', 'center')}
   margin:0.5rem;
 `;
-
-const debounce = callback => setTimeout(callback, 1200);
 
 export default function IssueInputBox(props) {
   const history = useHistory();
@@ -150,7 +149,7 @@ export default function IssueInputBox(props) {
 
   const showTextCount = () => {
     setVisable(true);
-    countRef.current.textContent = `${content.length} characters`;
+    countRef.current.textContent = `${contentRef.current.textContent.length} characters`;
     if (debouceClear) {
       clearTimeout(debouceClear);
     }
@@ -161,7 +160,7 @@ export default function IssueInputBox(props) {
     setTitle(value);
   };
 
-  const handleContentChange = ({ target: { value } }) => {
+  const handleContentChange = async ({ target: { value } }) => {
     setContent(value);
     if (debouceClear) {
       clearTimeout(debouceClear);
