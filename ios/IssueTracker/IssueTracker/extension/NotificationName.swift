@@ -13,6 +13,7 @@ extension Notification.Name {
 	static let didIssueDetailEditFinish = Notification.Name("didIssueDetailEditFinish")
 	static let didClickCommentButton = Notification.Name("didClickCommentButton")
 	static let didCommentAdd = Notification.Name("didCommentAdd")
-	static let didClickBottomViewCloseIssueButton = Notification.Name("didClickBottomViewCloseIssueButton")
+	static let didClickBottomViewOpenCloseIssueButton = Notification.Name("didClickBottomViewOpenCloseIssueButton")
 	static let didClickBottomViewEditButton = Notification.Name("didClickBottomViewEditButton")
+	static let shouldUpdateHeaderInBottomVC = Notification.Name("shouldUpdateHeaderInBottomVC")
 }

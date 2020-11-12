@@ -24,7 +24,7 @@
                                 <color key="titleColor" systemColor="systemRedColor"/>
                             </state>
                             <connections>
-                                <action selector="closeButtonAction:" destination="U6b-Vx-4bR" eventType="touchUpInside" id="Lf7-p2-nww"/>
+                                <action selector="openCloseButtonAction:" destination="U6b-Vx-4bR" eventType="touchUpInside" id="Lf7-p2-nww"/>
                             </connections>
                         </button>
                     </subviews>
@@ -50,6 +50,9 @@
                 <constraint firstItem="1jn-iS-kGj" firstAttribute="top" secondItem="U6b-Vx-4bR" secondAttribute="top" constant="40" id="gdN-fF-ASc"/>
                 <constraint firstItem="VXr-Tz-HHm" firstAttribute="bottom" secondItem="1jn-iS-kGj" secondAttribute="bottom" priority="999" constant="20" id="qUn-Bm-7EY"/>
             </constraints>
+            <connections>
+                <outlet property="button" destination="ryE-n5-owF" id="PGV-b8-S32"/>
+            </connections>
             <point key="canvasLocation" x="-57.971014492753625" y="65.625"/>
         </collectionReusableView>
     </objects>

@@ -94,7 +94,7 @@ extension IssueDetailBottomViewController {
 	func configureDataSource() {
 		dataSource = createDataSource()
 		
-		dataSource.supplementaryViewProvider = { collectionView, kind, indexPath in
+		dataSource.supplementaryViewProvider = { [weak self] collectionView, kind, indexPath in
 			if kind == UICollectionView.elementKindSectionHeader {
 				guard let headerView = collectionView.dequeueReusableSupplementaryView(
 					ofKind: kind,
@@ -110,6 +110,7 @@ extension IssueDetailBottomViewController {
 					withReuseIdentifier: BottomViewFooterView.identifier,
 					for: indexPath) as? BottomViewFooterView
 				else { return nil }
+				footerView.isOpened = self?.issue.isOpened == 1 ? true : false
 				return footerView
 			}
 		}

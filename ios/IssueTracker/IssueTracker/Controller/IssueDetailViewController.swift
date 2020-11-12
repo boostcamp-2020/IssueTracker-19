@@ -37,16 +37,7 @@ class IssueDetailViewController: UIViewController, ListCollectionViewProtocol {
 	}
 	
 	override func viewWillDisappear(_ animated: Bool) {
-		issue.assignees = bottomViewController?.assignees ?? []
-		issue.labels = bottomViewController?.labels ?? []
-		
-		
-		bottomViewController?.view.removeFromSuperview()
-	}
-	
-	override func viewDidLayoutSubviews() {
-		super.viewDidLayoutSubviews()
-//		collectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 96, right: 0)
+		bottomViewController?.remove()
 	}
 	
 	func loadDate() {
@@ -74,17 +65,12 @@ class IssueDetailViewController: UIViewController, ListCollectionViewProtocol {
 				as? IssueDetailBottomViewController
 		else { return }
 		
-		bottomVC.assignees = issue.assignees
-		bottomVC.labels = issue.labels
-		
-		
+		bottomVC.issue = issue
 		bottomViewController = bottomVC
 		guard let window = UIApplication.shared.windows.filter { $0.isKeyWindow }.last else { return }
 		window.addSubview(bottomVC.view)
 		bottomVC.setupView(superView: window)
 		window.rootViewController?.addChild(bottomVC)
-		bottomVC.issueNo = issue.no
-		
 	}
 	
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -190,6 +176,8 @@ extension IssueDetailViewController {
 		NotificationCenter.default.addObserver(self, selector: #selector(didClickCommentButton), name: .didClickCommentButton, object: nil)
 		
 		NotificationCenter.default.addObserver(self, selector: #selector(didCommentAdd), name: .didCommentAdd, object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(shouldUpdateHeaderInBottomVC), name: .shouldUpdateHeaderInBottomVC, object: nil)
+		
 	}
 	
 	@objc func didClickCommentButton() {
@@ -205,4 +193,10 @@ extension IssueDetailViewController {
 			self.updateList(animatingDifferences: true)
 		}
 	}
+	
+	@objc func shouldUpdateHeaderInBottomVC() {
+		updateList()
+	}
 }
+
+
