@@ -17,6 +17,7 @@ router.use('/milestone', authenticated, milestoneRouter);
 router.use('/open', authenticated, openRouter);
 router.use('/close', authenticated, closeRouter);
 
-router.use('/', issueNoController.getIssue);
+router.get('/', issueNoController.getIssue);
+router.delete('/', issueNoController.deleteIssue);
 
 export default router;
