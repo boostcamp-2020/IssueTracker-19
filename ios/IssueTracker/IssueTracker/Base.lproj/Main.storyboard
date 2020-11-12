@@ -119,6 +119,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="filterOrSelectAll" destination="mE4-D3-bVU" id="CWG-6C-rg2"/>
                         <segue destination="Zva-Qn-br1" kind="presentation" identifier="newIssueSegue" id="Pck-2y-p0S"/>
                         <segue destination="oiX-ag-8Nt" kind="show" identifier="issueDetailSegue" id="zdS-aN-lOz"/>
                         <segue destination="cU1-Sd-kyi" kind="presentation" identifier="filterSegue" id="Pdg-FI-22b"/>
