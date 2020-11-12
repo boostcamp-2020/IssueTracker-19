@@ -26,6 +26,14 @@ export const skyblueBoxShadow = css`
   box-shadow: 0 0 0 3px #b3d1f3;
 `;
 
+export const lightBoxShadow = css`
+  box-shadow: 1px 1px 4px 1.5px rgba(0, 0, 0, 0.1);
+`;
+
+export const mediumBoxShadow = css`
+  box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.15);
+`;
+
 // 배경색에 따라서 글자색을 검은색 혹은 흰색을 결정
 export const calcFontColor = backgroundColor => {
   const d = document.createElement('div');

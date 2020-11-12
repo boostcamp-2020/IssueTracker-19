@@ -10,10 +10,10 @@ export const userService = {
   signup({ id, nickname, pw, auth }) {
     return API.post('/api/auth/signup', { id, nickname, pw, auth });
   },
-  getUsers() {
-    return API.get('/api/users');
+  getUsers({ cancelToken } = {}) {
+    return API.get('/api/users', {}, cancelToken);
   },
-  checkLogin() {
-    return API.get('/api/auth/check');
+  checkLogin({ cancelToken } = {}) {
+    return API.get('/api/auth/check', {}, cancelToken);
   },
 };

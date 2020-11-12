@@ -1,8 +1,8 @@
 import { API } from '@api';
 
 export const labelService = {
-  getLabels() {
-    return API.get('/api/labels');
+  getLabels({ cancelToken } = {}) {
+    return API.get('/api/labels', {}, cancelToken);
   },
 
   addLabel({ name, description, color }) {

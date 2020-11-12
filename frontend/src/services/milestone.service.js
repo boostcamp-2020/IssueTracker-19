@@ -1,8 +1,8 @@
 import { API } from '@api';
 
 export const milestoneService = {
-  getMilestones() {
-    return API.get('/api/milestones');
+  getMilestones({ cancelToken } = {}) {
+    return API.get('/api/milestones', {}, cancelToken);
   },
   closeMilestones(no) {
     return API.patch(`/api/milestones/${no}/close`);
