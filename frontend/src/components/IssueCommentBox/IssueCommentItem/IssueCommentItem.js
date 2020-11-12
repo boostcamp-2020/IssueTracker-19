@@ -9,7 +9,7 @@ import { flex, flexColumn, toTimeAgoString } from '@styles/utils';
 const Box = styled.div`
   position: relative;
   ${flexColumn}
-  width: 100%;
+  width: calc(100% - 80px);
   ${props =>
     !props.editMode === true &&
     css`
