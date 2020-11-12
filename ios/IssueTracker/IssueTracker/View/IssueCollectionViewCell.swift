@@ -54,6 +54,7 @@ class IssueCollectionViewCell: UICollectionViewListCell {
             milestone.text = issue?.milestoneTitle ?? ""
             milestone.isHidden = (milestone.text == "")
             label.text = issue?.labels.first?.name ?? ""
+            label.backgroundColor = UIColor(issue?.labels.first?.color ?? "#333333")
             label.isHidden = (label.text == "")
             
 			milestoneWidthConstraint?.isActive = false

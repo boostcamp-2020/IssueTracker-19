@@ -105,16 +105,18 @@ class IssueViewController: UIViewController, ListCollectionViewProtocol {
 extension IssueViewController {
     func createSwipeLayout() -> UICollectionViewLayout {
         var config = UICollectionLayoutListConfiguration(appearance: .plain)
+        
         config.trailingSwipeActionsConfigurationProvider = { (indexPath) -> UISwipeActionsConfiguration in
-            return UISwipeActionsConfiguration(actions: [UIContextualAction(
+            return UISwipeActionsConfiguration(actions: [
+                                                UIContextualAction(
                                                     style: .destructive,
                                                     title: "Delete",
                                                     handler: { [weak self] _, _, completion in
-                                                        let sample = self?.list[indexPath.item]
-                                                        self?.list.removeAll { $0 == sample }
-                                                        self?.updateList()
+                                                        let issue = self?.list[indexPath.item]
+                                                        self?.issueDeleteAction(issue: issue!)
                                                         completion(true)
-                                                    })])
+                                                    })
+            ])
         }
         
         config.backgroundColor = .systemBackground
@@ -235,8 +237,32 @@ extension IssueViewController: IssueInsertProtocol {
         /*
          이슈 생성시 첫 comment 정보를 입력받게 생성자 수정 필요
          */
-        let issue = Issue(title: issueTitle, author: issueComment)
-        list.append(issue)
-        updateList()
+        let data = try? JSONEncoder().encode(["title": issueTitle, "content": issueComment])
+        HTTPAgent.shared.sendRequest(from: "http://49.50.163.23/api/issues",
+                                     method: .POST,
+                                     body: data,
+                                     completion: { [weak self] (result) in
+            switch result {
+            case .success(_):
+                self?.updateData()
+                self?.updateList()
+            case .failure(let error):
+                print(error)
+            }
+        })
+    }
+    
+    func issueDeleteAction(issue: Issue) {
+        HTTPAgent.shared.sendRequest(from: "http://49.50.163.23/api/issues/\(issue.no)",
+                                     method: .DELETE,
+                                     completion: { [weak self] (result) in
+            switch result {
+            case .success(_):
+                self?.updateData()
+                self?.updateList()
+            case .failure(let error):
+                print(error)
+            }
+        })
     }
 }
