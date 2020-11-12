@@ -74,15 +74,16 @@ class ViewController: UIViewController {
 		
 		let data = try? JSONEncoder().encode(["id": id, "pw": pw])
 		HTTPAgent.shared.sendRequest(from: "http://49.50.163.23/api/auth/login", method: .POST, body: data) { [weak self] (result) in
-			switch result {
-			case .success(_):
-				DispatchQueue.main.async {
+			DispatchQueue.main.async {
+				switch result {
+				case .success(_):
 					UserDefaults.standard.setValue(id, forKey: "ID")
 					UserDefaults.standard.setValue(pw, forKey: "PW")
 					self?.performSegue(withIdentifier: "loginSuccessSegue", sender: nil)
+					
+				case .failure(let error):
+					self?.presentAlert(title: "로그인", message: "아이디와 비밀번호를 확인해 주세요.")
 				}
-			case .failure(let error):
-				self?.presentAlert(title: "로그인", message: "아이디와 비밀번호를 확인해 주세요.")
 			}
 		}
 	}
