@@ -19,4 +19,5 @@ extension Notification.Name {
 	static let shouldReloadDataInMilestoneVC = Notification.Name("shouldReloadDataInMilestoneVC")
 	static let shouldScrollDown = Notification.Name("shouldScrollDown")
 	static let shouldScrollUp = Notification.Name("shouldScrollUp")
+	static let didClickCommentOptionButton = Notification.Name("didClickCommentOptionButton")
 }

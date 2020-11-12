@@ -46,5 +46,6 @@ class IssueDetailCommentViewCell: UICollectionViewCell {
     }
 	
 	@IBAction func editButtonAction(_ sender: UIButton) {
+		NotificationCenter.default.post(name: .didClickCommentOptionButton, object: issueComment)
 	}
 }
