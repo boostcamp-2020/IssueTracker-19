@@ -64,31 +64,62 @@ extension SectionItemEditViewController {
 	}
 	
 	func createDataSource() -> DataSource {
-		return DataSource(collectionView: collectionView) {[weak self] collectionView, indexPath, item in
-			guard let self = self else { return nil }
-			switch self.bottomViewSection {
+		return DataSource(collectionView: collectionView) { [weak self] collectionView, indexPath, item in
+			switch self?.bottomViewSection {
 			case .assignee:
 				return collectionView.dequeueConfiguredReusableCell(
-					using: UICollectionView.CellRegistration<SIEAssigneeViewCell, GitIssueObject>(handler: self.updateCell),
+					using: UICollectionView.CellRegistration<SIEAssigneeViewCell, GitIssueObject>{ cell, indexPath, item in
+						let buttonImage: UIImage?
+						if indexPath.section == 0 && self?.searchMode == false {
+							let image = UIImage(systemName: "xmark.circle.fill")?.withRenderingMode(.alwaysOriginal)
+							buttonImage = image?.withTintColor(.lightGray)
+						} else {
+							buttonImage = UIImage(systemName: "plus.circle")
+						}
+						cell.button.setImage(buttonImage, for: .normal)
+						cell.item = item
+					},
 					for: indexPath,
 					item: item)
 			case .label:
 				return collectionView.dequeueConfiguredReusableCell(
-					using: UICollectionView.CellRegistration<SIELabelViewCell, GitIssueObject>(handler: self.updateCell),
+					using: UICollectionView.CellRegistration<SIELabelViewCell, GitIssueObject>{ cell, indexPath, item in
+						let buttonImage: UIImage?
+						if indexPath.section == 0 && self?.searchMode == false {
+							let image = UIImage(systemName: "xmark.circle.fill")?.withRenderingMode(.alwaysOriginal)
+							buttonImage = image?.withTintColor(.lightGray)
+						} else {
+							buttonImage = UIImage(systemName: "plus.circle")
+						}
+						cell.button.setImage(buttonImage, for: .normal)
+						cell.item = item
+					},
 					for: indexPath,
 					item: item)
 			case .milestone:
 				return collectionView.dequeueConfiguredReusableCell(
-					using: UICollectionView.CellRegistration<SIEMilestoneViewCell, GitIssueObject>(handler: self.updateCell),
+					using: UICollectionView.CellRegistration<SIEMilestoneViewCell, GitIssueObject>{ cell, indexPath, item in
+						let buttonImage: UIImage?
+						if indexPath.section == 0 && self?.searchMode == false {
+							let image = UIImage(systemName: "xmark.circle.fill")?.withRenderingMode(.alwaysOriginal)
+							buttonImage = image?.withTintColor(.lightGray)
+						} else {
+							buttonImage = UIImage(systemName: "plus.circle")
+						}
+						cell.button.setImage(buttonImage, for: .normal)
+						cell.item = item
+					},
 					for: indexPath,
 					item: item)
+			case .none:
+				return nil
 			}
 		}
 	}
-	
+
 	func updateCell(cell: SIEViewCell, indexPath: IndexPath, item: GitIssueObject) {
 		let buttonImage: UIImage?
-		if indexPath.section == 0 && self.searchMode == false {
+		if indexPath.section == 0 && searchMode == false {
 			let image = UIImage(systemName: "xmark.circle.fill")?.withRenderingMode(.alwaysOriginal)
 			buttonImage = image?.withTintColor(.lightGray)
 		} else {
@@ -98,16 +129,17 @@ extension SectionItemEditViewController {
 		cell.item = item
 	}
 	
+	
 	func configureDataSource() {
 		let headerRegistration = UICollectionView.SupplementaryRegistration
 		<SIEHeaderView>(elementKind: "Header") { view, _, _ in
 			view.label.text = "SELECTED"
 		}
-		
+
 		let footerRegistration = UICollectionView.SupplementaryRegistration
 		<SIEFooterView>(elementKind: "Footer") { [weak self] view, _, _ in
 			guard let self = self else { return }
-			
+
 			let headerText: String
 			switch self.bottomViewSection {
 			case .assignee:
@@ -120,14 +152,14 @@ extension SectionItemEditViewController {
 			view.label.text = headerText
 		}
 
-		dataSource.supplementaryViewProvider = { (view, kind, index) in
+		dataSource.supplementaryViewProvider = { [weak self] (view, kind, index) in
 			if kind == UICollectionView.elementKindSectionHeader {
-				return self.collectionView.dequeueConfiguredReusableSupplementary(
+				return self?.collectionView.dequeueConfiguredReusableSupplementary(
 					using: headerRegistration,
 					for: index
 				)
 			} else {
-				return self.collectionView.dequeueConfiguredReusableSupplementary(
+				return self?.collectionView.dequeueConfiguredReusableSupplementary(
 					using: footerRegistration,
 					for: index
 				)
@@ -168,3 +200,4 @@ extension SectionItemEditViewController {
 		return layout
 	}
 }
+

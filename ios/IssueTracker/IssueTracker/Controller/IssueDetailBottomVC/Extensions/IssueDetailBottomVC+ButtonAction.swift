@@ -28,35 +28,4 @@ extension IssueDetailBottomViewController {
 		print(#function)
 	}
 	
-	func sectionHeaderEditButtonAction(idx: Int?) {
-		
-		guard let idx = idx,
-			  let type = BottomViewSection(rawValue: idx)
-		else { return }
-		
-		let editSectionItemVC = SectionItemEditViewController(bottomViewSection: type, issueNo: issueNo)
-		
-		switch type {
-		case .assignee:
-			editSectionItemVC.original = assignees
-		case .label:
-			editSectionItemVC.original = labels
-		case .milestone:
-			editSectionItemVC.original = milestones
-		}
-		
-		
-		addChild(editSectionItemVC)
-		editSectionItemVC.view.frame = view.bounds
-		view.addSubview(editSectionItemVC.view)
-		editSectionItemVC.didMove(toParent: self)
-		editSectionItemVC.navItem.title = type.text
-
-		mainView.isUserInteractionEnabled = false
-		gestureRecognizer?.isEnabled = false
-	}
-	
-	func closeButtonAction() {
-		print("close issue")
-	}
 }

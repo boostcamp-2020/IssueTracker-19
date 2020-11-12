@@ -102,6 +102,10 @@ class IssueDetailViewController: UIViewController, ListCollectionViewProtocol {
 	@IBAction func editButton(_ sender: UIBarButtonItem) {
 		
 	}
+	
+	deinit {
+		print(#function)
+	}
 }
 
 // MARK: - Collection View Configuration
@@ -134,7 +138,7 @@ extension IssueDetailViewController {
 			cell.issueComment = item
 			return cell
 		}
-		dataSource?.supplementaryViewProvider = { collectionView, kind, indexPath in
+		dataSource?.supplementaryViewProvider = { [weak self] collectionView, kind, indexPath in
 			guard kind == UICollectionView.elementKindSectionHeader,
 				  let headerView = collectionView.dequeueReusableSupplementaryView(
 					ofKind: kind,
@@ -142,7 +146,7 @@ extension IssueDetailViewController {
 					for: indexPath) as? IssueDetailHeaderReusableView
 			else { return nil }
 			
-			headerView.issue = self.issue
+			headerView.issue = self?.issue
 			return headerView
 		}
 	}

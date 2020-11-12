@@ -72,6 +72,13 @@ class IssueDetailBottomViewController: UIViewController {
 		showViewWithAnimation()
 	}
 	
+	override func viewDidDisappear(_ animated: Bool) {
+		super.viewDidDisappear(animated)
+		willMove(toParent: nil)
+		view.removeFromSuperview()
+		removeFromParent()
+	}
+	
 	func setupView(superView: UIView) {
 		view.translatesAutoresizingMaskIntoConstraints = false
 		topConstraint = view.topAnchor.constraint(equalTo: superView.topAnchor, constant: screenHeight)
@@ -98,5 +105,8 @@ class IssueDetailBottomViewController: UIViewController {
 			guard let controller = self else { return }
 			controller.topConstraint?.constant = controller.minTop
 		}
+	}
+	deinit {
+		print(#function)
 	}
 }

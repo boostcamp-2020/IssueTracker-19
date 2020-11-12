@@ -11,6 +11,8 @@ import Foundation
 extension IssueDetailBottomViewController {
 	func configureNotification() {
 		NotificationCenter.default.addObserver(self, selector: #selector(onDidFinishEdit), name: .didIssueDetailEditFinish, object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(sectionHeaderEditButtonAction), name: .didClickBottomViewEditButton, object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(closeButtonAction), name: .didClickBottomViewCloseIssueButton, object: nil)
 		
 	}
 	
@@ -29,6 +31,37 @@ extension IssueDetailBottomViewController {
 			milestones = items
 		}
 		applySnapshot()
+	}
+	
+	@objc func sectionHeaderEditButtonAction(_ notification: Notification) {
+		guard let idx = notification.object as? Int,
+			  let type = BottomViewSection(rawValue: idx)
+		else { return }
+		
+		let editSectionItemVC = SectionItemEditViewController(bottomViewSection: type, issueNo: issueNo)
+		
+		switch type {
+		case .assignee:
+			editSectionItemVC.original = assignees
+		case .label:
+			editSectionItemVC.original = labels
+		case .milestone:
+			editSectionItemVC.original = milestones
+		}
+		
+		
+		addChild(editSectionItemVC)
+		editSectionItemVC.view.frame = view.bounds
+		view.addSubview(editSectionItemVC.view)
+		editSectionItemVC.didMove(toParent: self)
+		editSectionItemVC.navItem.title = type.text
+
+		mainView.isUserInteractionEnabled = false
+		gestureRecognizer?.isEnabled = false
+	}
+	
+	@objc func closeButtonAction() {
+		print("close issue")
 	}
 	
 }
