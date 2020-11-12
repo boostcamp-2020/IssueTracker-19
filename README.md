@@ -1,9 +1,12 @@
 # 💎 [Group 19] 이슈 트래커 clone project
 
-## Week 1 마일스톤
+## [WBE 배포 주소]
 
-- [iOS](https://github.com/boostcamp-2020/IssueTracker-19/projects/2)
-- [Web](https://github.com/boostcamp-2020/IssueTracker-19/projects/1)
+http://49.50.163.23
+
+### API 문서
+
+- [API 문서](https://github.com/boostcamp-2020/IssueTracker-19/wiki/%5BAPI-%EB%AC%B8%EC%84%9C%5D)
 
 ## Git 사용규칙
 
@@ -34,10 +37,6 @@
 ### 데이터베이스 구조
 
 - [DB Visualization](https://github.com/boostcamp-2020/IssueTracker-19/wiki/DB)
-
-### API 문서
-
-- [API 문서](https://github.com/boostcamp-2020/IssueTracker-19/wiki/%5BAPI-%EB%AC%B8%EC%84%9C%5D)
 
 ## iOS
 
