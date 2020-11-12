@@ -57,6 +57,9 @@
 		C104896F25518EC50091668C /* LabelCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C104896D25518EC50091668C /* LabelCollectionViewCell.swift */; };
 		C104897025518EC50091668C /* LabelCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C104896E25518EC50091668C /* LabelCollectionViewCell.xib */; };
 		C10489732551986B0091668C /* LabelDetailAndAddViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C10489722551986B0091668C /* LabelDetailAndAddViewController.swift */; };
+		C1100380255D3052006E0DD2 /* FilterSelectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C110037F255D3052006E0DD2 /* FilterSelectViewController.swift */; };
+		C1100387255D4F6C006E0DD2 /* SelectLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1100386255D4F6C006E0DD2 /* SelectLabel.swift */; };
+		C110038A255D5B62006E0DD2 /* UICollectionView+Select.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1100389255D5B62006E0DD2 /* UICollectionView+Select.swift */; };
 		C1140D8325527C6F0096C11E /* DesignableClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1140D8225527C6F0096C11E /* DesignableClass.swift */; };
 		C1179589255BCDA20039EBFE /* JoinViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1179588255BCDA20039EBFE /* JoinViewController.swift */; };
 		C117D89E2547C7CF0081DCD7 /* IssueViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C117D89D2547C7CF0081DCD7 /* IssueViewController.swift */; };
@@ -128,6 +131,9 @@
 		C104896D25518EC50091668C /* LabelCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelCollectionViewCell.swift; sourceTree = "<group>"; };
 		C104896E25518EC50091668C /* LabelCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LabelCollectionViewCell.xib; sourceTree = "<group>"; };
 		C10489722551986B0091668C /* LabelDetailAndAddViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelDetailAndAddViewController.swift; sourceTree = "<group>"; };
+		C110037F255D3052006E0DD2 /* FilterSelectViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterSelectViewController.swift; sourceTree = "<group>"; };
+		C1100386255D4F6C006E0DD2 /* SelectLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectLabel.swift; sourceTree = "<group>"; };
+		C1100389255D5B62006E0DD2 /* UICollectionView+Select.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionView+Select.swift"; sourceTree = "<group>"; };
 		C1140D8225527C6F0096C11E /* DesignableClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DesignableClass.swift; sourceTree = "<group>"; };
 		C117957D2559198B0039EBFE /* IssueTracker.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = IssueTracker.entitlements; sourceTree = "<group>"; };
 		C1179588255BCDA20039EBFE /* JoinViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoinViewController.swift; sourceTree = "<group>"; };
@@ -222,6 +228,7 @@
 				4CDC3D2E2556ABD200FC672B /* String+toUIColorPair.swift */,
 				4C7B90B9255BA0F200DF5312 /* NotificationName.swift */,
 				C162A850255A8A1C0075B296 /* UIColor+toHexString.swift */,
+				C1100389255D5B62006E0DD2 /* UICollectionView+Select.swift */,
 			);
 			path = extension;
 			sourceTree = "<group>";
@@ -291,6 +298,7 @@
 				4C4404322551BCBE0075AD9B /* MilestoneViewCell.swift */,
 				4C4404332551BCBE0075AD9B /* MilestoneViewCell.xib */,
 				4C3B3F082552ABC800231F67 /* BottomBorderView.swift */,
+				C1100386255D4F6C006E0DD2 /* SelectLabel.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -301,6 +309,7 @@
 				4C6DFEDF255A2BBF00D665B4 /* SectionItemEditVC */,
 				4CDC3D1B255697A600FC672B /* IssueDetailBottomVC */,
 				C104895A2551280C0091668C /* FilterViewController.swift */,
+				C110037F255D3052006E0DD2 /* FilterSelectViewController.swift */,
 				C1048957255112230091668C /* IssueAddViewController.swift */,
 				4CB6F8FC254D639300901E9D /* IssueDetailViewController.swift */,
 				C117D89D2547C7CF0081DCD7 /* IssueViewController.swift */,
@@ -532,6 +541,7 @@
 				4C7C11B8254E87CC008FA858 /* IssueDetailCommentViewCell.swift in Sources */,
 				4CD2047925514E4C0001B987 /* CornerRoundedFloatingView.swift in Sources */,
 				4C7C11C3254EC6B9008FA858 /* IssueDetailHeaderReusableView.swift in Sources */,
+				C1100387255D4F6C006E0DD2 /* SelectLabel.swift in Sources */,
 				C196564A2546B9B6007DD55A /* SceneDelegate.swift in Sources */,
 				C1140D8325527C6F0096C11E /* DesignableClass.swift in Sources */,
 				4C0DFAD2255844E3009760B7 /* IssueDetailBottomVC+CollectionView.swift in Sources */,
@@ -545,7 +555,9 @@
 				4C0DFACF255844B7009760B7 /* SectionItemEditVC+SearchBar.swift in Sources */,
 				C173761A2553F68100E192C0 /* Label.swift in Sources */,
 				4C7B90E0255C116B00DF5312 /* CommentAddViewController.swift in Sources */,
+				C110038A255D5B62006E0DD2 /* UICollectionView+Select.swift in Sources */,
 				4CE0213B2556FA3F0066BCA0 /* GitIssueObject.swift in Sources */,
+				C1100380255D3052006E0DD2 /* FilterSelectViewController.swift in Sources */,
 				C10489732551986B0091668C /* LabelDetailAndAddViewController.swift in Sources */,
 				C196564A2546B9B6007DD55A /* SceneDelegate.swift in Sources */,
 				C104896F25518EC50091668C /* LabelCollectionViewCell.swift in Sources */,

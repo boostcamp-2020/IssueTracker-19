@@ -22,34 +22,41 @@ class ViewController: UIViewController {
 	
 	override func viewDidAppear(_ animated: Bool) {
 		super.viewDidAppear(animated)
-        loginChecker()
+        localChecker()
     }
     
-    private func loginChecker() {
+    private func localChecker() {
         if let ID = UserDefaults.standard.value(forKey: "ID") as? String {
             guard let PW = UserDefaults
                     .standard.value(forKey: "PW") as? String else {
                 return
             }
             
-            let data = try? JSONEncoder().encode(["id":ID,"pw":PW])
-            
-            HTTPAgent.shared.sendRequest(from: "http://49.50.163.23/api/auth/login", method: .POST, body: data) { [weak self] (result) in
-                switch result {
-                case .success(_):
-                    DispatchQueue.main
-                        .async {
-                            self?.performSegue(withIdentifier: "loginSuccessSegue", sender: nil)
-                        }
-                case .failure(let error):
-                    print(error)
-                }
-            }
-            
+            loginChecker(ID: ID, PW: PW, auth: nil)
         }
     }
+    
+    private func loginChecker(ID: String, PW: String, auth: String?) {
+        let data = try? JSONEncoder().encode(["id": ID,"pw": PW])
+        HTTPAgent.shared.sendRequest(from: "http://49.50.163.23/api/auth/login", method: .POST, body: data) { [weak self] (result) in
+            switch result {
+            case .success(_):
+                DispatchQueue.main
+                    .async {
+                        self?.performSegue(withIdentifier: "loginSuccessSegue", sender: nil)
+                    }
+            case .failure(let error):
+                print(error)
+                DispatchQueue.main
+                    .async {
+                        self?.performSegue(withIdentifier: "JoinSegue", sender: ["id": ID, "pw": PW, "auth": auth!])
+                    }
+            }
+        }
+    }
+    
     @IBAction func githubLogin(_ sender: UIButton) {
-//        HTTPAgent.shared.githubLoginAction()
+        HTTPAgent.shared.githubLoginAction()
     }
     
 	@IBAction func appleLogin(_ sender: UIButton) {
@@ -92,7 +99,7 @@ class ViewController: UIViewController {
          서버 응답 결과로 처리
          */
         if statusCode == 200 {
-            self.performSegue(withIdentifier: "JoinSegue", sender: ["id": id, "pw": pw, "auth": "GITHUB"])
+            loginChecker(ID: id, PW: pw, auth: "GITHUB")
         } else {
             presentAlert(title: "실패", message: "구글 로그인에 실패했습니다.")
         }
@@ -136,7 +143,7 @@ extension ViewController: ASAuthorizationControllerDelegate {
     }
     private func showResultViewController(userIdentifier: String, token: String) {
         DispatchQueue.main.async {
-            self.performSegue(withIdentifier: "JoinSegue", sender: ["id": userIdentifier, "pw": token, "auth": "APPLE"])
+            self.loginChecker(ID: userIdentifier, PW: token, auth: "APPLE")
         }
     }
     

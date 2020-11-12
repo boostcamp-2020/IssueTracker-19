@@ -12,6 +12,10 @@ protocol IssueInsertProtocol {
     func issueInsertAction(issueTitle: String, issueComment: String)
 }
 
+protocol IssueFilterProtocol {
+    func issueFilterAddAction(query: SearchQuery)
+}
+
 class IssueViewController: UIViewController, ListCollectionViewProtocol {
     @IBOutlet weak var filterOrSelectAll: UIBarButtonItem!
     
@@ -168,6 +172,7 @@ extension IssueViewController {
         var issueNumbers = [Int]()
         for indexPath in indexPaths {
             issueNumbers.append(list[indexPath.item].no)
+            list[indexPath.item].isOpened = 0
         }
         let data = try? JSONEncoder().encode(["issueNos": issueNumbers])
         HTTPAgent.shared.sendRequest(from: "http://49.50.163.23/api/issues/close",
@@ -230,6 +235,10 @@ extension IssueViewController {
         
         if let issueAddVC = segue.destination as? IssueAddViewController {
             issueAddVC.issueInsertDelegate = self
+        }
+        
+        if let filterVC = segue.destination as? FilterViewController {
+            filterVC.filterDelegate = self
         }
 	}
 }
@@ -296,25 +305,40 @@ extension IssueViewController: IssueInsertProtocol {
         })
     }
 }
-extension UICollectionView {
 
-    /// Iterates through all sections & items and selects them.
-    func selectAll(animated: Bool) {
-        (0..<numberOfSections).compactMap { (section) -> [IndexPath]? in
-            return (0..<numberOfItems(inSection: section)).compactMap({ (item) -> IndexPath? in
-                return IndexPath(item: item, section: section)
-            })
-        }.flatMap { $0 }.forEach { (indexPath) in
-            selectItem(at: indexPath, animated: animated, scrollPosition: [])
+extension IssueViewController: IssueFilterProtocol {
+    func issueFilterAddAction(query: SearchQuery) {
+        var urlString = "http://49.50.163.23/api/issues?"
+        if query.isOpened != -1 {
+            urlString.append("isOpened=\(query.isOpened)&")
         }
-
-    }
-
-    /// Deselects all selected cells.
-    func deselectAll(animated: Bool) {
-        indexPathsForSelectedItems?.forEach({ (indexPath) in
-            deselectItem(at: indexPath, animated: animated)
+        if query.author != "" {
+            urlString.append("author=\(query.author)&")
+        }
+        if query.assignee != "" {
+            urlString.append("assignee=\(query.assignee)&")
+        }
+        if query.milestone != "" {
+            urlString.append("milestone=\(query.milestone)&")
+        }
+        if query.comment != -1 {
+            urlString.append("comment=\(query.comment)&")
+        }
+        if query.label != "" {
+            urlString.append("label=\(query.label)&")
+        }
+        
+        urlString.removeLast(1)
+        HTTPAgent.shared.sendRequest(from: urlString, method: .GET, completion: { [weak self] (result) in
+            switch result {
+            case .success(let data):
+                let issue = try? JSONDecoder().decode(Issues.self, from: data)
+                self?.list = issue!.issues
+                self?.allList = self?.list ?? []
+                self?.updateList()
+            case .failure(let error):
+                print(error)
+            }
         })
     }
-
 }

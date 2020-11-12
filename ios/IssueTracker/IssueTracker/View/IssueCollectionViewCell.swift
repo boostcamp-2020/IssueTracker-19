@@ -64,7 +64,9 @@ class IssueCollectionViewCell: UICollectionViewListCell {
             milestone.text = issue?.milestoneTitle ?? ""
             milestone.isHidden = (milestone.text == "")
             label.text = issue?.labels.first?.name ?? ""
-            label.backgroundColor = UIColor(issue?.labels.first?.color ?? "#333333")
+            let pair = (issue?.labels.first?.color ?? "#333333").toUIColorPair()
+            label.backgroundColor = pair.0
+            label.textColor = pair.1
             label.isHidden = (label.text == "")
             changeIsOpenedLabel(isOpenedLabel, component: (issue?.isOpened != 0) ? IssueOpen() : IssueClosed())
             
