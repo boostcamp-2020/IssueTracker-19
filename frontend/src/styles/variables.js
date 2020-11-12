@@ -33,6 +33,8 @@ export const colors = {
   metaColor: '#6a737d',
   issueGreen: '#28A745',
   issueRed: '#D73A49',
+  myCommentColor: '#eef6ff',
+  otherCommentColor: '#f7f7f7',
 };
 
 export const numerics = {

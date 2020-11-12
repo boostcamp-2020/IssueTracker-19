@@ -5,7 +5,6 @@ import { issueModel } from '@models';
  * GET /api/issues/:no
  */
 export const getIssue = async (req, res, next) => {
-  console.log('get');
   try {
     const { no } = req.params;
     const issue = await issueService.getIssue({ no });

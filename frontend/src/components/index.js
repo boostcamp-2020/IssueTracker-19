@@ -11,4 +11,5 @@ export { default as MilestoneEditBox } from './MilestoneEditBox/MilestoneEditBox
 export { default as MilestoneNewHeader } from './MilestoneNewHeader/MilestoneNewHeader';
 export { default as LabelMilestoneTab } from './LabelMilestoneTab/LabelMilestoneTab';
 export { default as MilestoneList } from './MilestoneList/MilestoneList';
+export { default as IssueCommentInputBox } from './IssueCommentInputBox/IssueCommentInputBox';
 export * from './common';

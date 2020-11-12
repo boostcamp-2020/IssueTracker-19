@@ -13,7 +13,7 @@ export const issueModel = {
   },
   getIssueByNo({ no }) {
     const sql = `SELECT i.no, u.nickname as author, i.title, i.is_opened as isOpened, i.created_at as createdAt, 
-    i.closed_at as closedAt, i.milestone_no as milestoneNo
+    i.closed_at as closedAt, i.milestone_no as milestoneNo, u.image
     FROM issue i 
     LEFT JOIN user u ON u.no = i.author_no
     WHERE i.no = ?;`;

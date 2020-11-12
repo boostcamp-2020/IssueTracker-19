@@ -5,3 +5,4 @@ export { default as OptionSelectModal } from './OptionSelectModal/OptionSelectMo
 export { default as LabelMilestoneControls } from './LabelMilestoneControls/LabelMilestoneControls';
 export { default as Header } from './Header/Header';
 export { default as ProgressBar } from './ProgressBar/ProgressBar';
+export { default as CommentInputBox } from './CommentInputBox/CommentInputBox';

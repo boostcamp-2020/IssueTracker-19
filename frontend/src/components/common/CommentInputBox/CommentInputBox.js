@@ -1,15 +1,14 @@
 import React, { useEffect, useRef, useState } from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { colors } from '@styles/variables';
 import { flex, skyblueBoxShadow } from '@styles/utils';
 import { SubmitButton, CancelButton } from '@shared';
 import { Link, useHistory } from 'react-router-dom';
-import { issueService, uploadService } from '@services';
+import { uploadService } from '@services';
 import { debounce } from '@lib/utils';
 
-export const MainContainer = styled.div`
-  width: calc(70% - 10rem);
-  margin-left: 10rem;
+const MainContainer = styled.div`
+  width: 100%;
   border: 1px solid ${colors.lighterGray};
   border-radius: 5px;
 `;
@@ -32,13 +31,13 @@ const TitleInput = styled.input`
   }
 `;
 
-export const TagContainer = styled.div`
+const TagContainer = styled.div`
   height: 3rem;
   position: relative;
   border-bottom: 1px solid ${colors.lighterGray};
 `;
 
-export const TagBox = styled.button`
+const TagBox = styled.button`
   bottom: -1px;
   left: 0;
   position: absolute;
@@ -56,12 +55,12 @@ export const TagBox = styled.button`
   z-index: 2;
 `;
 
-export const ContentContainer = styled.div`
+const ContentContainer = styled.div`
   position: relative;
   padding: 0.5rem;
 `;
 
-export const TextArea = styled.textarea`
+const TextArea = styled.textarea`
   display: flex;
   flex: 1;
   min-width: 100%;
@@ -82,7 +81,7 @@ export const TextArea = styled.textarea`
   }
 `;
 
-export const TextCountBox = styled.div`
+const TextCountBox = styled.div`
   opacity: ${props => (props.visiable ? 1 : 0)};
   transition: 0.4s;
   position: absolute;
@@ -94,7 +93,7 @@ export const TextCountBox = styled.div`
   padding: 0.5rem 0.8rem;
 `;
 
-export const FileLabel = styled.label`
+const FileLabel = styled.label`
   width: 100%;
   padding: 0.4rem;
   display: block;
@@ -109,7 +108,7 @@ export const FileLabel = styled.label`
   cursor: pointer;
 `;
 
-export const FileSelectInput = styled.input`
+const FileSelectInput = styled.input`
   position: absolute;
   width: 1px;
   height: 1px;
@@ -120,18 +119,15 @@ export const FileSelectInput = styled.input`
   border: 0;
 `;
 
-export const ControlBox = styled.div`
+const ControlBox = styled.div`
   ${flex('space-between', 'center')}
   margin:0.5rem;
 `;
 
-export default function IssueInputBox(props) {
+export default function CommentInputBox(props) {
   const history = useHistory();
 
-  const { assigneeNos, labelNos, milestoneNo } = props;
-
-  const [title, setTitle] = useState('');
-  const [content, setContent] = useState('');
+  const { content, setContent, handleSubmit } = props;
   const [debouceClear, setDebouceClear] = useState(undefined);
 
   const countRef = useRef();
@@ -154,10 +150,6 @@ export default function IssueInputBox(props) {
       clearTimeout(debouceClear);
     }
     setDebouceClear(debounce(() => setVisable(false)));
-  };
-
-  const handleTitleChange = ({ target: { value } }) => {
-    setTitle(value);
   };
 
   const handleContentChange = async ({ target: { value } }) => {
@@ -204,53 +196,9 @@ export default function IssueInputBox(props) {
     }
   };
 
-  const handleSubmit = async e => {
-    e.preventDefault();
-    if (!title.trim()) {
-      alert('제목을 입력해주세요.');
-      return;
-    }
-
-    if (!content.trim()) {
-      alert('내용을 입력해주세요.');
-      return;
-    }
-
-    try {
-      const { status } = await issueService.addIssue({
-        title,
-        content,
-        milestoneNo,
-        assigneeNos,
-        labelNos,
-      });
-
-      if (status === 201) {
-        history.push('/');
-      }
-    } catch (err) {
-      if (err.response.status === 401) {
-        history.push('/login');
-        return;
-      }
-      alert('이슈 생성 실패', err.message);
-      console.error(err);
-    }
-  };
-
   return (
     <MainContainer>
       <form onSubmit={handleSubmit}>
-        <TitleContainer>
-          <TitleInput
-            name="title"
-            placeholder={'Title'}
-            onChange={handleTitleChange}
-            value={title}
-            autoComplete={'off'}
-            required
-          />
-        </TitleContainer>
         <TagContainer>
           <TagBox>Write</TagBox>
         </TagContainer>
@@ -270,12 +218,7 @@ export default function IssueInputBox(props) {
             <FileSelectInput name="image" type={'file'} onChange={handleImageChange} />
           </FileLabel>
         </ContentContainer>
-        <ControlBox>
-          <Link to="/">
-            <CancelButton type={'button'}>Cancel</CancelButton>
-          </Link>
-          <SubmitButton>Submit new issue</SubmitButton>
-        </ControlBox>
+        {props.controlBox}
       </form>
     </MainContainer>
   );

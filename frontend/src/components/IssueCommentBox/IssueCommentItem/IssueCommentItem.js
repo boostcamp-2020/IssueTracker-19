@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
+import marked from 'marked';
 import styled from 'styled-components';
+import { IssueCommentInputBox } from '@components';
 import { colors } from '@styles/variables';
 import { darken } from 'polished';
-import { flex, flexColumn } from '@styles/utils';
-
-const myCommentColor = '#eef6ff';
-const otherCommentColor = '#f7f7f7';
+import { flex, flexColumn, toTimeAgoString } from '@styles/utils';
 
 const Box = styled.div`
+  position: relative;
   ${flexColumn}
   width: 100%;
   border: 2px solid ${props => darken(0.1, props.color)};
@@ -40,7 +40,7 @@ const HeaderOwner = styled.span`
   font-size: 0.875rem;
   color: ${colors.black5};
   font-weight: bold;
-  border: 2px solid ${darken(0.05, myCommentColor)};
+  border: 2px solid ${darken(0.05, colors.myCommentColor)};
   border-radius: 5px;
 `;
 
@@ -57,32 +57,49 @@ const CommentItemContent = styled.p`
   white-space: pre-wrap;
 `;
 
-const calcTimePassed = updatedAt => {
-  return '22 mins ago';
-};
-
 export default function IssueCommentItem({ comment, user }) {
   const isMine = comment.authorNo === user.no;
-  const commentColor = isMine ? myCommentColor : otherCommentColor;
+  const commentColor = isMine ? colors.myCommentColor : colors.otherCommentColor;
+
+  const [editMode, setEditMode] = useState(false);
+
+  const handleEditClick = () => {
+    setEditMode(true);
+  };
 
   return (
     <Box color={commentColor}>
-      <CommentItemHeader color={commentColor}>
-        <HeaderDiv>
-          <HeaderAuthor>{comment.author}</HeaderAuthor>
-          <HeaderTime>{`commented ${calcTimePassed(comment.updatedAt)}`}</HeaderTime>
-        </HeaderDiv>
+      {editMode ? (
+        <IssueCommentInputBox
+          setEditMode={setEditMode}
+          commentNo={comment.no}
+          content={comment.content}
+        />
+      ) : (
+        <>
+          <CommentItemHeader color={commentColor}>
+            <HeaderDiv>
+              <HeaderAuthor>{comment.author}</HeaderAuthor>
+              <HeaderTime>{`commented ${toTimeAgoString(comment.updatedAt)}`}</HeaderTime>
+            </HeaderDiv>
 
-        <HeaderDiv>
-          {isMine ? (
-            <>
-              <HeaderOwner>Owner</HeaderOwner>
-              <HeaderEditButton>Edit</HeaderEditButton>
-            </>
-          ) : null}
-        </HeaderDiv>
-      </CommentItemHeader>
-      <CommentItemContent>{comment.content}</CommentItemContent>
+            <HeaderDiv>
+              {isMine ? (
+                <>
+                  <HeaderOwner>Owner</HeaderOwner>
+                  <HeaderEditButton type="button" onClick={handleEditClick}>
+                    Edit
+                  </HeaderEditButton>
+                </>
+              ) : null}
+            </HeaderDiv>
+          </CommentItemHeader>
+          <CommentItemContent
+            className="markdown-body"
+            dangerouslySetInnerHTML={{ __html: marked(comment.content) }}
+          />
+        </>
+      )}
     </Box>
   );
 }

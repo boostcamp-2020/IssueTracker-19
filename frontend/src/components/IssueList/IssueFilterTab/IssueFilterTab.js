@@ -74,12 +74,10 @@ export default function IssueFilterTab({ setIssues, issues }) {
 
   const handleLabelFilter = e => {
     const label = e?.target?.textContent;
-    console.log(label, filterOptions.label);
     if (label === 'Unlabeled') {
       setFilterOptions({ ...filterOptions, label: ['@null'] });
       return;
     }
-    console.log([...new Set([...filterOptions.label, label])].filter(l => l !== '@null'));
     setFilterOptions({
       ...filterOptions,
       label: [...new Set([...filterOptions.label, label])].filter(l => l !== '@null'),

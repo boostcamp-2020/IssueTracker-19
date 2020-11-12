@@ -53,3 +53,17 @@ export const pickRandomColor = () => {
   const hexString = Math.floor(Math.random() * 0xffffff).toString(16);
   return ('#000000'.substr(0, 7 - hexString.length) + hexString).toUpperCase();
 };
+
+export const toTimeAgoString = updatedAt => {
+  const elapsedSeconds = Math.floor((new Date() - new Date(updatedAt)) / 1000);
+  if (elapsedSeconds < 60) return `${elapsedSeconds} seconds ago`;
+
+  const elapsedMinutes = Math.floor(elapsedSeconds / 60);
+  if (elapsedMinutes < 60) return `${elapsedMinutes} minutes ago`;
+
+  const elapsedHours = Math.floor(elapsedMinutes / 60);
+  if (elapsedHours < 24) return `${elapsedHours} hours ago`;
+
+  const elaspedDays = Math.floor(elapsedHours / 24);
+  return `${elaspedDays} days ago`;
+};

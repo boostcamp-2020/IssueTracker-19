@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
 import styled, { css } from 'styled-components';
 import { IssueDetailContext } from '@contexts/IssueDetailContext';
-import { flexColumn, flex } from '@styles/utils';
+import { flexColumn, flex, toTimeAgoString } from '@styles/utils';
 import { numerics, colors } from '@styles/variables';
 import { LabelTag, OpenIcon, ClosedIcon } from '@components';
 import { SubmitButton, CancelButton } from '@shared';
@@ -124,6 +124,8 @@ export default function IssueDetailHeader() {
           <DescText>
             <NicknameText>{user.nickname}</NicknameText>{' '}
             <InfoText>{isOpened ? 'opened this issue' : 'closed this issue'}</InfoText>
+            <InfoText>{` ${toTimeAgoString(issue.createdAt)}`}</InfoText>
+            <InfoText>{` ㆍ ${issue?.comments?.length - 1} comments`}</InfoText>
           </DescText>
         </DescContainer>
         <Line />
