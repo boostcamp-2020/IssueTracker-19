@@ -7,9 +7,15 @@
 //
 
 import UIKit
+import MarkdownView
 
 struct IssueWrapper: Codable {
 	let issue: Issue2
+}
+
+class MarkdownWrapper {
+	let markdown = MarkdownView()
+	var height: CGFloat?
 }
 
 class IssueDetailViewController: UIViewController, ListCollectionViewProtocol {
@@ -17,6 +23,7 @@ class IssueDetailViewController: UIViewController, ListCollectionViewProtocol {
 	var issue: Issue!
 	var issueWrapper: IssueWrapper?
 	var list: [Comment] = []
+	var markdownWrapper: [MarkdownWrapper] = []
 	var dataSource: DataSource?
 	
 	var collectionView: UICollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewLayout())
@@ -41,24 +48,46 @@ class IssueDetailViewController: UIViewController, ListCollectionViewProtocol {
 	}
 	
 	func loadDate() {
+		markdownWrapper.forEach{$0.markdown.removeFromSuperview()}
+		markdownWrapper = []
 		HTTPAgent.shared.sendRequest(from: "http://49.50.163.23:3000/api/issues/\(issue.no)", method: .GET) { [weak self] (result) in
+			guard let self = self else { return }
 			switch result {
 			case .success(let data):
 				let json = try? JSONSerialization.jsonObject(with: data) as? [String: Any?]
-				self?.issueWrapper = try? JSONDecoder().decode(IssueWrapper.self, from: data)
-				if let comments = self?.issueWrapper?.issue.comments {
-					self?.list = comments
-					self?.updateList()
+				self.issueWrapper = try? JSONDecoder().decode(IssueWrapper.self, from: data)
+				if let comments = self.issueWrapper?.issue.comments {
+					self.list = comments
+					print(comments.count)
+					
+					DispatchQueue.main.async { [weak self] in
+						guard let self = self else { return }
+						comments.forEach { (comment) in
+							let wrapper = MarkdownWrapper()
+
+							wrapper.markdown.frame = CGRect(origin: CGPoint(x: 0, y: self.view.frame.height + 100), size: self.view.frame.size)
+							wrapper.markdown.isScrollEnabled = false
+							wrapper.markdown.load(markdown: comment.content)
+							wrapper.markdown.onRendered = { [weak self] height in
+								wrapper.height = height
+								self?.updateList()
+							}
+							
+							self.markdownWrapper.append(wrapper)
+						}
+					}
+					
 				}
-				if let milestone = self?.issueWrapper?.issue.milestone {
-					self?.bottomViewController?.milestones = [milestone]
-					self?.bottomViewController?.applySnapshot()
+				if let milestone = self.issueWrapper?.issue.milestone {
+					self.bottomViewController?.milestones = [milestone]
+					self.bottomViewController?.applySnapshot()
 				}
 			case .failure(let error):
 				print(error)
 			}
 		}
 	}
+	
 	
 	func configureBottomView() {
 		guard let bottomVC = storyboard?.instantiateViewController(identifier: "issueDetailBottomVC")
@@ -150,13 +179,14 @@ extension IssueDetailViewController {
 	}
 	
 	func configureDataSource() {
-		dataSource = DataSource(collectionView: collectionView) { collectionView, indexPath, item in
+		dataSource = DataSource(collectionView: collectionView) {[weak self] collectionView, indexPath, item in
 			guard let cell = collectionView
 					.dequeueReusableCell(withReuseIdentifier: IssueDetailCommentViewCell.identifier,
 										 for: indexPath) as? IssueDetailCommentViewCell
 			else { return nil }
 			
 			cell.issueComment = item
+			cell.wrapper = self?.markdownWrapper[indexPath.row]
 			return cell
 		}
 		dataSource?.supplementaryViewProvider = { [weak self] collectionView, kind, indexPath in
