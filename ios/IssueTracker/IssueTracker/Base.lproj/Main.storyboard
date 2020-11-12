@@ -175,8 +175,10 @@
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rcX-xx-vt0">
                                         <rect key="frame" x="20" y="10" width="17.5" height="23"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="19"/>
-                                        <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <state key="normal" image="xmark" catalog="system"/>
+                                        <color key="tintColor" systemColor="labelColor"/>
+                                        <state key="normal" image="xmark" catalog="system">
+                                            <color key="titleColor" systemColor="secondarySystemBackgroundColor"/>
+                                        </state>
                                         <connections>
                                             <action selector="cancelButton:" destination="vbQ-aR-pab" eventType="touchUpInside" id="G3G-yj-08N"/>
                                             <action selector="closeButtonAction:" destination="1m3-1x-TNp" eventType="touchUpInside" id="pJ5-al-wg2"/>
@@ -185,7 +187,7 @@
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="m7e-Ke-eF6">
                                         <rect key="frame" x="20" y="334" width="39" height="30"/>
                                         <state key="normal" title="초기화">
-                                            <color key="titleColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <color key="titleColor" systemColor="systemGrayColor"/>
                                         </state>
                                         <connections>
                                             <action selector="resetButton:" destination="vbQ-aR-pab" eventType="touchUpInside" id="fft-2H-mF5"/>
@@ -218,9 +220,14 @@
                                             <constraint firstAttribute="bottom" secondItem="I3m-Ny-YBU" secondAttribute="bottom" id="Wyo-ny-IIw"/>
                                             <constraint firstItem="I3m-Ny-YBU" firstAttribute="top" secondItem="Xou-Tm-YTN" secondAttribute="top" id="aRM-TX-EE0"/>
                                         </constraints>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="color" keyPath="shadowColor">
+                                                <color key="value" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
                                     </view>
                                 </subviews>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <color key="backgroundColor" systemColor="tertiarySystemBackgroundColor"/>
                                 <constraints>
                                     <constraint firstAttribute="trailing" secondItem="Xou-Tm-YTN" secondAttribute="trailing" constant="20" id="0NS-oD-kF7"/>
                                     <constraint firstItem="rcX-xx-vt0" firstAttribute="top" secondItem="IXJ-gu-Rv2" secondAttribute="top" constant="10" id="2cN-A4-bPS"/>
@@ -278,7 +285,6 @@
                                                         <textInputTraits key="textInputTraits"/>
                                                     </textField>
                                                 </subviews>
-                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                 <constraints>
                                                     <constraint firstItem="Tee-c0-PKV" firstAttribute="leading" secondItem="zIa-Mn-gbG" secondAttribute="leading" constant="20" id="MeG-k6-gLY"/>
                                                     <constraint firstAttribute="bottom" secondItem="Tee-c0-PKV" secondAttribute="bottom" constant="10" id="OgJ-KU-r4U"/>
@@ -308,7 +314,6 @@
                                                         <textInputTraits key="textInputTraits"/>
                                                     </textField>
                                                 </subviews>
-                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                 <constraints>
                                                     <constraint firstItem="RKd-gt-pVa" firstAttribute="bottom" secondItem="yuo-pr-F3j" secondAttribute="bottom" id="Cer-UL-Dpn"/>
                                                     <constraint firstAttribute="bottom" secondItem="yuo-pr-F3j" secondAttribute="bottom" constant="10" id="Mgu-3K-D7f"/>
@@ -363,7 +368,6 @@
                                                         </userDefinedRuntimeAttributes>
                                                     </view>
                                                 </subviews>
-                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                 <constraints>
                                                     <constraint firstItem="bIh-P9-HSe" firstAttribute="bottom" secondItem="4ef-MY-gKo" secondAttribute="bottom" id="2fG-zv-poD"/>
                                                     <constraint firstItem="F3L-Se-OTs" firstAttribute="width" secondItem="jcD-b8-o2X" secondAttribute="width" multiplier="0.0748503" id="2vt-x3-VlJ"/>
@@ -382,7 +386,6 @@
                                                 </userDefinedRuntimeAttributes>
                                             </view>
                                         </subviews>
-                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                         <constraints>
                                             <constraint firstItem="jcD-b8-o2X" firstAttribute="height" secondItem="zIa-Mn-gbG" secondAttribute="height" id="0tH-On-V8L"/>
                                             <constraint firstItem="qnO-Cd-jFL" firstAttribute="leading" secondItem="IYR-qw-2zF" secondAttribute="leading" id="Cli-DN-Fr3"/>
@@ -1049,7 +1052,7 @@
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="by8-am-hLx">
                                         <rect key="frame" x="20" y="10" width="18" height="30"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="19"/>
-                                        <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <color key="tintColor" systemColor="labelColor"/>
                                         <state key="normal" image="xmark" catalog="system">
                                             <color key="titleColor" systemColor="labelColor"/>
                                         </state>
@@ -1112,7 +1115,7 @@
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <datePicker contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="date" translatesAutoresizingMaskIntoConstraints="NO" id="nAB-gH-Oxm">
-                                                                <rect key="frame" x="70" y="10" width="244" height="40"/>
+                                                                <rect key="frame" x="69.5" y="10" width="244.5" height="40"/>
                                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 <color key="tintColor" systemColor="labelColor"/>
                                                                 <locale key="locale" localeIdentifier="ko"/>
@@ -1195,7 +1198,7 @@
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lw3-tT-nOT">
                                         <rect key="frame" x="20" y="334" width="39" height="30"/>
                                         <state key="normal" title="초기화">
-                                            <color key="titleColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <color key="titleColor" systemColor="systemGrayColor"/>
                                         </state>
                                         <connections>
                                             <action selector="resetButtonAction:" destination="1m3-1x-TNp" eventType="touchUpInside" id="o20-Lf-FKQ"/>
@@ -1341,6 +1344,9 @@
         </systemColor>
         <systemColor name="placeholderTextColor">
             <color red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.29999999999999999" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="secondarySystemBackgroundColor">
+            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="secondarySystemFillColor">
             <color red="0.47058823529411764" green="0.47058823529411764" blue="0.50196078431372548" alpha="0.16" colorSpace="custom" customColorSpace="sRGB"/>
