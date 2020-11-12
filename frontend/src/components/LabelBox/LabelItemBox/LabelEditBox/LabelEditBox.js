@@ -47,7 +47,7 @@ const EditBody = styled.div`
   ${flex('space-between')}
 
   & > * {
-    margin: 0 10px;
+    margin-right: 20px;
   }
 `;
 
