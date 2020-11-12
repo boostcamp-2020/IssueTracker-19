@@ -35,4 +35,10 @@ export const issueService = {
   changeIssueTitle({ no, title }) {
     return API.patch(`/api/issues/${no}/title	`, { title });
   },
+  openIssue({ no }) {
+    return API.patch(`/api/issues/${no}/open`);
+  },
+  closeIssue({ no }) {
+    return API.patch(`/api/issues/${no}/close`);
+  },
 };
