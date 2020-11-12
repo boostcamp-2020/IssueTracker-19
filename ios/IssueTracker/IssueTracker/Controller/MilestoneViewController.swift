@@ -16,20 +16,28 @@ class MilestoneViewController: UIViewController, ListCollectionViewProtocol {
 	
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-//        self.view.addSubview(UIView(frame: .zero))
 		configureHierarchy()
 		configureDataSource()
-		updateData()
 		updateList()
+		
+		NotificationCenter.default.addObserver(
+			self,
+			selector: #selector(updateData),
+			name: .shouldReloadDataInMilestoneVC,
+			object: nil
+		)
     }
+	
+	override func viewWillAppear(_ animated: Bool) {
+		super.viewWillAppear(animated)
+		updateData()
+	}
 	
 	override func viewDidAppear(_ animated: Bool) {
 		super.viewDidAppear(animated)
 	}
 
-	func updateData() {
-		
+	@objc func updateData() {
 		HTTPAgent.shared.sendRequest(from: "http://49.50.163.23:3000/api/milestones", method: .GET) { [weak self] (result) in
 			guard let vc = self else { return }
 			switch result {
@@ -41,10 +49,6 @@ class MilestoneViewController: UIViewController, ListCollectionViewProtocol {
 				print(error)
 			}
 		}
-//		list = [
-//			Milestone(no: 1, title: "스프린트2", totalTasks: 36, closedTasks: 23, isClosed: 0, isDeleted: 0, dueDate: "Date()", description: "이번 배포를 위한 스프린트"),
-//			Milestone(no: 2, title: "스프린트3", totalTasks: 0, closedTasks: 0, isClosed: 0, isDeleted: 0, dueDate: "Date()", description: "다음 배포를 위한 스프린트")
-//		]
 	}
 	
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

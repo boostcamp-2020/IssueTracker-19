@@ -1050,7 +1050,9 @@
                                         <rect key="frame" x="20" y="10" width="18" height="30"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="19"/>
                                         <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <state key="normal" image="xmark" catalog="system"/>
+                                        <state key="normal" image="xmark" catalog="system">
+                                            <color key="titleColor" systemColor="labelColor"/>
+                                        </state>
                                         <connections>
                                             <action selector="closeButtonAction:" destination="1m3-1x-TNp" eventType="touchUpInside" id="E2q-UR-zyI"/>
                                         </connections>
@@ -1081,9 +1083,11 @@
                                                                 <rect key="frame" x="69.5" y="31.5" width="244.5" height="18.5"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                                 <textInputTraits key="textInputTraits"/>
+                                                                <connections>
+                                                                    <action selector="textFieldChanged:" destination="1m3-1x-TNp" eventType="editingChanged" id="Xjd-cQ-8ty"/>
+                                                                </connections>
                                                             </textField>
                                                         </subviews>
-                                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                         <constraints>
                                                             <constraint firstItem="gCk-Ow-JsM" firstAttribute="leading" secondItem="KLR-zB-ihl" secondAttribute="trailing" constant="20" id="7UR-fe-hls"/>
                                                             <constraint firstAttribute="bottom" secondItem="KLR-zB-ihl" secondAttribute="bottom" constant="10" id="IOw-RZ-FSV"/>
@@ -1107,17 +1111,18 @@
                                                                 <nil key="textColor"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
-                                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="yyyy-mm-dd(선택)" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="QSF-Cd-kK0">
-                                                                <rect key="frame" x="69.5" y="20" width="244.5" height="19"/>
-                                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                                <textInputTraits key="textInputTraits"/>
-                                                            </textField>
+                                                            <datePicker contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="date" translatesAutoresizingMaskIntoConstraints="NO" id="nAB-gH-Oxm">
+                                                                <rect key="frame" x="70" y="10" width="244" height="40"/>
+                                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                <color key="tintColor" systemColor="labelColor"/>
+                                                                <locale key="locale" localeIdentifier="ko"/>
+                                                            </datePicker>
                                                         </subviews>
-                                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                         <constraints>
                                                             <constraint firstAttribute="bottom" secondItem="HgB-HH-KNS" secondAttribute="bottom" constant="10" id="7Dg-cT-gBs"/>
-                                                            <constraint firstItem="QSF-Cd-kK0" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="HgB-HH-KNS" secondAttribute="trailing" id="XnF-tY-aSx"/>
-                                                            <constraint firstItem="QSF-Cd-kK0" firstAttribute="centerY" secondItem="HgB-HH-KNS" secondAttribute="centerY" id="sad-xg-NcV"/>
+                                                            <constraint firstAttribute="bottom" secondItem="nAB-gH-Oxm" secondAttribute="bottom" constant="10" id="8aa-zU-bI5"/>
+                                                            <constraint firstItem="nAB-gH-Oxm" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="HgB-HH-KNS" secondAttribute="trailing" constant="10" id="Je2-H4-asb"/>
+                                                            <constraint firstItem="nAB-gH-Oxm" firstAttribute="top" secondItem="cvt-Ln-EmV" secondAttribute="top" constant="10" id="h0H-UR-HMr"/>
                                                         </constraints>
                                                         <userDefinedRuntimeAttributes>
                                                             <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
@@ -1138,9 +1143,11 @@
                                                                 <rect key="frame" x="69.5" y="31.5" width="244.5" height="18.5"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                                 <textInputTraits key="textInputTraits"/>
+                                                                <connections>
+                                                                    <action selector="textFieldChanged:" destination="1m3-1x-TNp" eventType="editingDidEnd" id="wNz-ot-6EQ"/>
+                                                                </connections>
                                                             </textField>
                                                         </subviews>
-                                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                         <constraints>
                                                             <constraint firstItem="v3k-TA-smI" firstAttribute="bottom" secondItem="0Ai-nM-Qq8" secondAttribute="bottom" id="3NS-Qv-5iC"/>
                                                             <constraint firstItem="v3k-TA-smI" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="0Ai-nM-Qq8" secondAttribute="trailing" id="DYR-fC-Q9A"/>
@@ -1153,9 +1160,8 @@
                                                         </userDefinedRuntimeAttributes>
                                                     </view>
                                                 </subviews>
-                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                 <constraints>
-                                                    <constraint firstItem="QSF-Cd-kK0" firstAttribute="leading" secondItem="gCk-Ow-JsM" secondAttribute="leading" id="073-4C-v5U"/>
+                                                    <constraint firstItem="nAB-gH-Oxm" firstAttribute="trailing" relation="lessThanOrEqual" secondItem="gCk-Ow-JsM" secondAttribute="trailing" id="6OJ-c7-yei"/>
                                                     <constraint firstAttribute="trailing" secondItem="pHG-ZY-Lpv" secondAttribute="trailing" id="7Ij-FA-JmT"/>
                                                     <constraint firstItem="cvt-Ln-EmV" firstAttribute="top" secondItem="pHG-ZY-Lpv" secondAttribute="bottom" id="Bwy-xN-C3V"/>
                                                     <constraint firstItem="0Ai-nM-Qq8" firstAttribute="leading" secondItem="HgB-HH-KNS" secondAttribute="leading" id="Epm-So-MIr"/>
@@ -1167,8 +1173,8 @@
                                                     <constraint firstItem="v3k-TA-smI" firstAttribute="trailing" secondItem="gCk-Ow-JsM" secondAttribute="trailing" id="b9c-FB-nE3"/>
                                                     <constraint firstAttribute="height" constant="180" id="e6I-80-QlP"/>
                                                     <constraint firstAttribute="trailing" secondItem="Ffl-Uw-38x" secondAttribute="trailing" id="fPV-BE-9nV"/>
+                                                    <constraint firstItem="nAB-gH-Oxm" firstAttribute="leading" secondItem="gCk-Ow-JsM" secondAttribute="leading" id="h1s-ma-GIY"/>
                                                     <constraint firstItem="Ffl-Uw-38x" firstAttribute="height" secondItem="pHG-ZY-Lpv" secondAttribute="height" id="ipC-3F-XZZ"/>
-                                                    <constraint firstItem="QSF-Cd-kK0" firstAttribute="trailing" secondItem="gCk-Ow-JsM" secondAttribute="trailing" id="mZh-LW-SIs"/>
                                                     <constraint firstItem="v3k-TA-smI" firstAttribute="leading" secondItem="gCk-Ow-JsM" secondAttribute="leading" id="nn4-oa-aZo"/>
                                                     <constraint firstAttribute="trailing" secondItem="cvt-Ln-EmV" secondAttribute="trailing" id="noW-GF-R9K"/>
                                                     <constraint firstItem="Ffl-Uw-38x" firstAttribute="leading" secondItem="vl5-oe-JLZ" secondAttribute="leading" id="sFZ-jP-CiE"/>
@@ -1218,9 +1224,14 @@
                                             <constraint firstItem="RXC-FB-Kux" firstAttribute="top" secondItem="NuW-hu-64G" secondAttribute="top" id="lQb-Tv-fOn"/>
                                             <constraint firstItem="RXC-FB-Kux" firstAttribute="leading" secondItem="NuW-hu-64G" secondAttribute="leading" id="osk-cz-rgT"/>
                                         </constraints>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="color" keyPath="shadowColor">
+                                                <color key="value" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
                                     </view>
                                 </subviews>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <color key="backgroundColor" systemColor="tertiarySystemBackgroundColor"/>
                                 <constraints>
                                     <constraint firstItem="NuW-hu-64G" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="lw3-tT-nOT" secondAttribute="trailing" id="AcY-9z-jrY"/>
                                     <constraint firstAttribute="trailing" secondItem="0sv-3j-b0z" secondAttribute="trailing" id="BgR-aF-VRd"/>
@@ -1276,16 +1287,17 @@
                         <barButtonItem key="leftBarButtonItem" systemItem="stop" id="U70-78-pcd"/>
                     </navigationItem>
                     <connections>
+                        <outlet property="datePicker" destination="nAB-gH-Oxm" id="Nol-NG-AEE"/>
                         <outlet property="descriptionTextField" destination="v3k-TA-smI" id="Jgv-4l-nE4"/>
-                        <outlet property="dueDateTextField" destination="QSF-Cd-kK0" id="sOs-2K-0Bd"/>
                         <outlet property="popupView" destination="nGw-p7-3Ki" id="gub-hK-wkD"/>
                         <outlet property="popupViewCenterYconstraint" destination="OBm-hn-54s" id="E9n-BB-GGk"/>
+                        <outlet property="saveButton" destination="RXC-FB-Kux" id="Zbq-Vg-beB"/>
                         <outlet property="titleTextField" destination="gCk-Ow-JsM" id="5ky-OF-Ba9"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7HF-kt-pfo" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3787.6923076923076" y="801.89573459715632"/>
+            <point key="canvasLocation" x="3786.9565217391309" y="801.5625"/>
         </scene>
         <!--마일스톤-->
         <scene sceneID="PPE-9e-Ykn">
