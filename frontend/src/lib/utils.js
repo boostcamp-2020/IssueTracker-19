@@ -22,3 +22,5 @@ export const getFormattedDueDate = date =>
 
 export const getPercentage = (total, closed) =>
   total === 0 ? 0 : Math.floor((closed / total) * 100);
+
+export const debounce = callback => setTimeout(callback, 1200);
