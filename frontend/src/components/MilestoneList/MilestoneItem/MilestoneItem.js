@@ -5,6 +5,7 @@ import CalenderIcon from '@imgs/milestone-calendar.svg';
 import { useHistory } from 'react-router-dom';
 import { milestoneService } from '@services';
 import { getFormattedDueDate, getPercentage } from '@lib/utils';
+import { ProgressBar } from '@components';
 
 const Container = styled.div`
   width: 100%;
@@ -60,13 +61,7 @@ const ProgressBox = styled.div`
   border-right: 1px solid ${colors.borderColorSecondary};
   border-top: 1px solid ${colors.borderColorSecondary};
   padding: 15px 20px;
-  width: 420px;
-`;
-
-const ProgressBar = styled.progress`
-  height: 20px;
-  width: 420px;
-  color: ${colors.submitColor};
+  width: 550px;
 `;
 
 const Status = styled.div`
@@ -198,7 +193,7 @@ export default function MilestoneItem({
             </Meta>
           </Title>
           <ProgressBox>
-            <ProgressBar max="100" value={percentage}></ProgressBar>
+            <ProgressBar percentage={percentage} />
             <div>
               <Status>
                 <span>{percentage}%</span>
