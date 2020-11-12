@@ -16,10 +16,6 @@ class JoinViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        print(id)
-        print(pw)
-        print(auth)
     }
     
     @IBAction func joinButton(_ sender: UIButton) {
@@ -39,32 +35,24 @@ class JoinViewController: UIViewController {
                 UserDefaults.standard.setValue(self?.pw, forKey: "PW")
                 self?.loginChecker()
             case .failure(let error):
+                print("여기냐?")
                 print(error)
             }
         }
     }
     
     private func loginChecker() {
-        if let ID = UserDefaults.standard.value(forKey: "ID") as? String {
-            guard let PW = UserDefaults
-                    .standard.value(forKey: "PW") as? String else {
-                return
+        let data = try? JSONEncoder().encode(["id": self.id,"pw": self.pw])
+        HTTPAgent.shared.sendRequest(from: "http://49.50.163.23/api/auth/login", method: .POST, body: data) { [weak self] (result) in
+            switch result {
+            case .success(_):
+                DispatchQueue.main
+                    .async {
+                        self?.performSegue(withIdentifier: "JoinSuccessSegue", sender: nil)
+                    }
+            case .failure(let error):
+                print(error)
             }
-            
-            let data = try? JSONEncoder().encode(["id":ID,"pw":PW])
-            
-            HTTPAgent.shared.sendRequest(from: "http://49.50.163.23/api/auth/login", method: .POST, body: data) { [weak self] (result) in
-                switch result {
-                case .success(_):
-                    DispatchQueue.main
-                        .async {
-                            self?.performSegue(withIdentifier: "JoinSuccessSegue", sender: nil)
-                        }
-                case .failure(let error):
-                    print(error)
-                }
-            }
-            
         }
     }
     
