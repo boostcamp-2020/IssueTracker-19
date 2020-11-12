@@ -19,6 +19,7 @@ class MilestoneViewCell: UICollectionViewCell {
 	@IBOutlet weak var descriptionLabel: UILabel!
 	@IBOutlet weak var openTasksLabel: UILabel!
 	@IBOutlet weak var closedTasksLabel: UILabel!
+	@IBOutlet weak var badgeView: UIView!
 	
 	var milestone: Milestone? {
 		didSet {
@@ -33,7 +34,6 @@ class MilestoneViewCell: UICollectionViewCell {
 			descriptionLabel.text = milestone.description ?? ""
 			openTasksLabel.text = "\(milestone.totalTasks - milestone.closedTasks) open"
 			closedTasksLabel.text = "\(milestone.closedTasks) closed"
-			
 		}
 	}
 	
@@ -41,6 +41,9 @@ class MilestoneViewCell: UICollectionViewCell {
         super.awakeFromNib()
 		backgroundColor = .tertiarySystemBackground
 		dueDateLabel.widthAnchor.constraint(greaterThanOrEqualToConstant: dueDateLabel.intrinsicContentSize.width).isActive = true
+		badgeView.layer.cornerRadius = 10
+		badgeView.layer.borderWidth = 1
+		badgeView.layer.borderColor = UIColor.lightGray.cgColor
     }
 
 }
