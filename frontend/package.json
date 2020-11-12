@@ -37,12 +37,15 @@
   "dependencies": {
     "axios": "^0.21.0",
     "core-js": "^3.6.5",
+    "github-markdown-css": "^4.0.0",
+    "marked": "^1.2.3",
     "polished": "^4.0.3",
     "qs": "^6.9.4",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-router-dom": "^5.2.0",
     "regenerator-runtime": "^0.13.7",
-    "styled-components": "^5.2.0"
+    "styled-components": "^5.2.0",
+    "to-string-loader": "^1.1.6"
   }
 }
