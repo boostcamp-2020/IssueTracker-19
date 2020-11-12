@@ -12,10 +12,8 @@ class BottomViewFooterView: UICollectionReusableView {
 	static var identifier: String {
 		Self.self.description()
 	}
-
-	var closure: (() -> Void)?
 	
 	@IBAction func closeButtonAction(_ sender: UIButton) {
-		closure?()
+		NotificationCenter.default.post(name: .didClickBottomViewCloseIssueButton, object: nil)
 	}
 }

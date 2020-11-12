@@ -24,7 +24,7 @@ class BottomViewAssigneeCell: SectionCell {
 				switch result {
 				case .success(let path):
 					DispatchQueue.main.async {
-						self!.imageView.image = UIImage(contentsOfFile: path)
+						self?.imageView.image = UIImage(contentsOfFile: path)
 					}
 				case .failure(let error):
 					print(error)

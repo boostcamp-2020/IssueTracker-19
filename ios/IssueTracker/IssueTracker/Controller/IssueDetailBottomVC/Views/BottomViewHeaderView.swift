@@ -14,12 +14,11 @@ class BottomViewHeaderView: UICollectionReusableView {
 	}
 	
 	var sectionIdx: Int?
-	var closure: ((Int?) -> Void)?
 	
 	@IBOutlet weak var titleLabel: UILabel!
 	
 	@IBAction func editButtonAction(_ sender: UIButton) {
-		closure?(sectionIdx)
+		NotificationCenter.default.post(name: .didClickBottomViewEditButton, object: sectionIdx)
 	}
 	
 }

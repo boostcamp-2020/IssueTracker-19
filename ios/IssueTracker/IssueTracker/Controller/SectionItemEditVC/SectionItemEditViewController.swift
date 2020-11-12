@@ -9,7 +9,13 @@
 import UIKit
 
 
-class SectionItemEditViewController: UIViewController {
+protocol foo {
+	associatedtype DataSource
+	
+	func createDataSource() -> DataSource
+}
+
+class SectionItemEditViewController: UIViewController, foo {
 	enum Section {
 		case selected, deSelected
 	}
@@ -51,10 +57,10 @@ class SectionItemEditViewController: UIViewController {
         super.viewDidLoad()
 		configureContentView()
 		configureScrollAction()
-		
+
 		configureCollectionView()
 		configureDataSource()
-		
+
 		if bottomViewSection != .milestone {
 			configureSearchController()
 		}
@@ -129,6 +135,9 @@ class SectionItemEditViewController: UIViewController {
 		removeFromParent()
 	}
 
+	deinit {
+		print(#function)
+	}
 }
 
 

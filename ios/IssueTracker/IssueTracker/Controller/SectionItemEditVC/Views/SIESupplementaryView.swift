@@ -72,8 +72,10 @@ class SIEFooterView: UICollectionReusableView {
 		
 		addSubview(label)
 		label.translatesAutoresizingMaskIntoConstraints = false
+		let heightConstraint = heightAnchor.constraint(equalToConstant: 60)
+		heightConstraint.priority = .defaultLow
 		NSLayoutConstraint.activate([
-			heightAnchor.constraint(equalToConstant: 60),
+			heightConstraint,
 			label.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
 			label.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20),
 			label.centerYAnchor.constraint(equalTo: centerYAnchor)
