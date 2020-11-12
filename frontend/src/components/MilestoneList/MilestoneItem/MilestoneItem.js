@@ -61,7 +61,7 @@ const ProgressBox = styled.div`
   border-right: 1px solid ${colors.borderColorSecondary};
   border-top: 1px solid ${colors.borderColorSecondary};
   padding: 15px 20px;
-  width: 420px;
+  width: 550px;
 `;
 
 const Status = styled.div`
