@@ -16,8 +16,6 @@ class IssueAddViewController: UIViewController {
     @IBOutlet weak var markdownTextView: UITextView!
     let markDown = MarkdownView()
     let picker = UIImagePickerController()
-    var markDownImageStringArray = [String]()
-    var markdownResult: String = ""
     var issueInsertDelegate: IssueInsertProtocol?
     
     override func viewDidLoad() {
@@ -52,13 +50,7 @@ class IssueAddViewController: UIViewController {
     private func transMarkDownText() {
         markDown.isHidden = false
         markdownTextView.isHidden = true
-        
-        markdownResult = markdownTextView.text
-        for index in 0..<markDownImageStringArray.count {
-            markdownResult = markdownResult.replacingOccurrences(of: "#image\(index)#",
-                                                                  with: markDownImageStringArray[index])
-        }
-        markDown.load(markdown: markdownResult)
+        markDown.load(markdown: markdownTextView.text)
         /*
          markdownView load 메서드 수정
          pod 설치 후, load 메서드에 코드를 추가해줘야함.
@@ -79,12 +71,7 @@ class IssueAddViewController: UIViewController {
             presentAlert(title: "이슈 제목", message: "이슈 제목을 입력하지 않았어요!")
             return
         }
-        markdownResult = markdownTextView.text
-        for index in 0..<markDownImageStringArray.count {
-            markdownResult = markdownResult.replacingOccurrences(of: "#image\(index)#",
-                                                                  with: markDownImageStringArray[index])
-        }
-        issueInsertDelegate?.issueInsertAction(issueTitle: title, issueComment: markdownResult)
+        issueInsertDelegate?.issueInsertAction(issueTitle: title, issueComment: markdownTextView.text)
         dismiss(animated: true, completion: nil)
     }
     
@@ -93,6 +80,10 @@ class IssueAddViewController: UIViewController {
         let defaultAction = UIAlertAction(title: "OK", style: .destructive)
         alert.addAction(defaultAction)
         present(alert, animated: false, completion: nil)
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        view.endEditing(true)
     }
 }
 
@@ -121,13 +112,28 @@ extension IssueAddViewController: UIImagePickerControllerDelegate, UINavigationC
             return
         }
         
-        let testString = image.jpegData(compressionQuality: 0.2)?.base64EncodedString()
-        let logoString = "data:image/png;base64, \(testString!)"
-        let resultString = "\n<img src=\"#image\(markDownImageStringArray.count)#\"></img>\n"
+        let imageData = image.jpegData(compressionQuality: 1)!
+        let boundary = generateBoundaryString()
+        let bodyData = HTTPAgent.shared.createBody(boundary: boundary, data: imageData, mimeType: "image/jpg", filename: "image")
+        HTTPAgent.shared.sendImage(from: "http://49.50.163.23/api/upload/images", boundary: boundary, method: .POST, body: bodyData, completion: { [weak self] (result) in
+            switch result {
+            case .success(let data):
+                let urlList = try? JSONSerialization.jsonObject(with: data) as? [String: Any]
+                let resultURL = urlList?["fileList"] as? [String]
+                let resultURLString = "<img src=\"\(resultURL?[0] ?? "")\">\n"
+                DispatchQueue.main.async {
+                    self?.markdownTextView.text.append(resultURLString)
+                }
+            case .failure(let error):
+                print(error)
+            }
+        })
         
-        markDownImageStringArray.append(logoString)
-        markdownTextView.text.append(resultString)
         dismiss(animated: true, completion: nil)
+    }
+    
+    private func generateBoundaryString() -> String {
+        return "Boundary-\(UUID().uuidString)"
     }
     
     @objc private func insertImageURL() {

@@ -58,6 +58,47 @@ class HTTPAgent: LoginProtocol {
         }.resume()
     }
     
+    func sendImage(from urlString: String, boundary: String, method: HTTPMethod, body: Data? = nil, completion: ((Result<Data, NetworkError>) -> Void)? = nil) {
+        guard let url = URL(string: urlString) else {
+            completion?(.failure(.URLError))
+            return
+        }
+        
+        var request = URLRequest(url: url)
+        request.httpMethod = method.rawValue
+        if let body = body {
+            request.setValue("multipart/form-data; boundary=\(boundary)", forHTTPHeaderField: "Content-Type")
+            request.httpBody = body
+        }
+        
+        session.dataTask(with: request) { (data, response, error) in
+            if error != nil {
+                completion?(.failure(.responseError))
+            }
+            guard let response = response as? HTTPURLResponse,
+                  (200...299).contains(response.statusCode),
+                  let data = data else {
+                completion?(.failure(.responseError))
+                return
+            }
+            
+            completion?(.success(data))
+        }.resume()
+    }
+    
+    func createBody(boundary: String, data: Data, mimeType: String, filename: String) -> Data {
+        var body = Data()
+        let imgDataKey = "imgs"
+        let boundaryPrefix = "--\(boundary)\r\n"
+        body.append(boundaryPrefix.data(using: .utf8)!)
+        body.append("Content-Disposition: form-data; name=\"\(imgDataKey)\"; filename=\"\(filename)\"\r\n".data(using: .utf8)!)
+        body.append("Content-Type: \(mimeType)\r\n\r\n".data(using: .utf8)!)
+        body.append(data)
+        body.append("\r\n".data(using: .utf8)!)
+        body.append("--".appending(boundary.appending("--")).data(using: .utf8)!)
+        return body as Data
+    }
+    
     func githubLoginAction() {
         let urlString = "https://github.com/login/oauth/authorize?client_id=cdb63bb140a5645dbcfc&scope=user"
         if let url = URL(string: urlString), UIApplication.shared.canOpenURL(url) {
