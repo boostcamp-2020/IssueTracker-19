@@ -329,7 +329,9 @@ extension IssueViewController: IssueFilterProtocol {
         }
         
         urlString.removeLast(1)
-        HTTPAgent.shared.sendRequest(from: urlString, method: .GET, completion: { [weak self] (result) in
+        
+        let encodedString = urlString.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
+        HTTPAgent.shared.sendRequest(from: encodedString, method: .GET, completion: { [weak self] (result) in
             switch result {
             case .success(let data):
                 let issue = try? JSONDecoder().decode(Issues.self, from: data)
