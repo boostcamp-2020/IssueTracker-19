@@ -65,7 +65,12 @@ class IssueDetailViewController: UIViewController, ListCollectionViewProtocol {
 						comments.forEach { (comment) in
 							let wrapper = MarkdownWrapper()
 
-							wrapper.markdown.frame = CGRect(origin: CGPoint(x: 0, y: self.view.frame.height + 100), size: self.view.frame.size)
+							var frame = CGRect()
+							frame.origin = .zero
+							frame.size = self.view.frame.size
+							frame.size.width -= 40
+							wrapper.markdown.frame = frame
+							
 							wrapper.markdown.isScrollEnabled = false
 							wrapper.markdown.load(markdown: comment.content)
 							wrapper.markdown.onRendered = { [weak self] height in

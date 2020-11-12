@@ -49,7 +49,8 @@ class IssueDetailCommentViewCell: UICollectionViewCell {
 				return
 			}
 			wrapper.markdown.removeFromSuperview()
-			markdownHeight.constant = height
+			markdownHeight.constant = height + 50
+			print(height)
 			mdContentView.addSubview(wrapper.markdown)
 			wrapper.markdown.translatesAutoresizingMaskIntoConstraints = false
 			NSLayoutConstraint.activate([
