@@ -165,9 +165,26 @@ extension IssueViewController {
         guard let indexPaths = collectionView.indexPathsForSelectedItems else {
             return
         }
+        var issueNumbers = [Int]()
         for indexPath in indexPaths {
-            print(indexPath.item)
+            issueNumbers.append(list[indexPath.item].no)
         }
+        let data = try? JSONEncoder().encode(["issueNos": issueNumbers])
+        HTTPAgent.shared.sendRequest(from: "http://49.50.163.23/api/issues/close",
+                                     method: .PATCH,
+                                     body: data,
+                                     completion: { [weak self] (result) in
+                                        switch result {
+                                        case .success(_):
+                                            self?.updateData()
+                                            self?.updateList()
+                                            DispatchQueue.main.async {
+                                                self?.setEditing(false, animated: true)
+                                            }
+                                        case .failure(let error):
+                                            print(error)
+                                        }
+                                     })
     }
 }
 extension IssueViewController {

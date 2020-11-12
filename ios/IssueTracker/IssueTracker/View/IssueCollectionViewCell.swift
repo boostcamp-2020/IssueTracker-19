@@ -11,6 +11,7 @@ import UIKit
 class IssueCollectionViewCell: UICollectionViewListCell {
     var milestoneWidthConstraint: NSLayoutConstraint?
     var labelWidthContraint: NSLayoutConstraint?
+    var isOpenedLabelWidthContraint: NSLayoutConstraint?
     let issueTitle: UILabel = {
         let label = UILabel()
         label.text = "레이블 목록 보기 구현"
@@ -47,6 +48,15 @@ class IssueCollectionViewCell: UICollectionViewListCell {
         return label
     }()
     
+    let isOpenedLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Opened"
+        label.font = UIFont(name: "AppleSDGothicNeo-SemiBold", size: 15)
+        label.numberOfLines = 1
+        label.textAlignment = .center
+        return label
+    }()
+    
     var issue: Issue? {
         didSet {
             issueTitle.text = issue?.title
@@ -56,13 +66,11 @@ class IssueCollectionViewCell: UICollectionViewListCell {
             label.text = issue?.labels.first?.name ?? ""
             label.backgroundColor = UIColor(issue?.labels.first?.color ?? "#333333")
             label.isHidden = (label.text == "")
+            changeIsOpenedLabel(isOpenedLabel, component: (issue?.isOpened != 0) ? IssueOpen() : IssueClosed())
             
-			milestoneWidthConstraint?.isActive = false
+            isOpenedLabelWidthContraint?.constant = isOpenedLabel.intrinsicContentSize.width + 10
 			milestoneWidthConstraint?.constant = milestone.intrinsicContentSize.width + 10
-			milestoneWidthConstraint?.isActive = !milestone.isHidden
-			labelWidthContraint?.isActive = false
 			labelWidthContraint?.constant = label.intrinsicContentSize.width + 10
-			labelWidthContraint?.isActive = !label.isHidden
         }
     }
         
@@ -81,6 +89,7 @@ class IssueCollectionViewCell: UICollectionViewListCell {
         setupIssueDescription()
         setupMilestone()
         setupLabel()
+        setupIsOpenedLabel()
     }
     
     private func setupIssueTitle() {
@@ -136,6 +145,37 @@ class IssueCollectionViewCell: UICollectionViewListCell {
         label.backgroundColor = .systemPink
         label.layer.cornerRadius = 5
         label.clipsToBounds = true
+    }
+    
+    private func setupIsOpenedLabel() {
+        contentView.addSubview(isOpenedLabel)
+        isOpenedLabel.translatesAutoresizingMaskIntoConstraints = false
+        isOpenedLabelWidthContraint = isOpenedLabel.widthAnchor.constraint(equalToConstant: isOpenedLabel.intrinsicContentSize.width + 20)
+        NSLayoutConstraint.activate([
+            isOpenedLabel.topAnchor.constraint(equalTo: label.bottomAnchor, constant: 3),
+            isOpenedLabel.heightAnchor.constraint(equalToConstant: 23),
+            isOpenedLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -10),
+            isOpenedLabelWidthContraint!
+        ])
+    }
+    
+    func changeIsOpenedLabel(_ label: UILabel, component: IssueStatusViewComponent) {
+        label.layer.borderWidth = 1
+        label.layer.borderColor = component.normalColor.cgColor
+        label.layer.cornerRadius = 5
+
+        let attachment = NSTextAttachment()
+        attachment.image = component.icon?.withTintColor(component.darkColor)
+
+        let fullString = NSMutableAttributedString(attachment: attachment)
+        fullString.append(NSAttributedString(string: component.text))
+
+        label.attributedText = fullString
+        label.textColor = component.darkColor
+        label.layer.backgroundColor = component.lightColor.cgColor
+        
+        label.textAlignment = .center
+        label.translatesAutoresizingMaskIntoConstraints = false
     }
     
     func setupBaseView(inset: CGFloat) {
