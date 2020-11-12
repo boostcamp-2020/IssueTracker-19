@@ -171,12 +171,39 @@ extension IssueDetailViewController {
 	
 }
 
+// MARK: - Notification
 extension IssueDetailViewController {
 	func configureNotification() {
-		NotificationCenter.default.addObserver(self, selector: #selector(didClickCommentButton), name: .didClickCommentButton, object: nil)
-		
-		NotificationCenter.default.addObserver(self, selector: #selector(didCommentAdd), name: .didCommentAdd, object: nil)
-		NotificationCenter.default.addObserver(self, selector: #selector(shouldUpdateHeaderInBottomVC), name: .shouldUpdateHeaderInBottomVC, object: nil)
+		NotificationCenter.default.addObserver(
+			self,
+			selector: #selector(didClickCommentButton),
+			name: .didClickCommentButton,
+			object: nil
+		)
+		NotificationCenter.default.addObserver(
+			self,
+			selector: #selector(didCommentAdd),
+			name: .didCommentAdd,
+			object: nil
+		)
+		NotificationCenter.default.addObserver(
+			self,
+			selector: #selector(shouldUpdateHeaderInBottomVC),
+			name: .shouldUpdateHeaderInBottomVC,
+			object: nil
+		)
+		NotificationCenter.default.addObserver(
+			self,
+			selector: #selector(scrollUp),
+			name: .shouldScrollUp,
+			object: nil
+		)
+		NotificationCenter.default.addObserver(
+			self,
+			selector: #selector(scrollDown),
+			name: .shouldScrollDown,
+			object: nil
+		)
 		
 	}
 	
@@ -197,6 +224,16 @@ extension IssueDetailViewController {
 	@objc func shouldUpdateHeaderInBottomVC() {
 		updateList()
 	}
+	
+	@objc func scrollDown() {
+		guard let indexPath = collectionView.indexPathsForVisibleItems.sorted().first,
+			  indexPath.row == 0 else { return }
+		collectionView.scrollToItem(at: indexPath, at: .top, animated: true)
+	}
+	
+	@objc func scrollUp() {
+		let indexPath = IndexPath(row: 0, section: 0)
+		collectionView.scrollToItem(at: indexPath, at: .bottom, animated: true)
+		
+	}
 }
-
-

@@ -22,10 +22,12 @@ extension IssueDetailBottomViewController {
 	}
 	
 	@IBAction func upButtonAction(_ sender: UIButton) {
-		print(#function)
+		NotificationCenter.default.post(name: .shouldScrollUp, object: nil)
 	}
 	@IBAction func downButtonAction(_ sender: UIButton) {
-		print(#function)
+		NotificationCenter.default.post(name: .shouldScrollDown, object: nil)
 	}
+	
+	
 	
 }
