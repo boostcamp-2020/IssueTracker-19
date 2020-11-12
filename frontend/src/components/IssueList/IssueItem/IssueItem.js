@@ -72,7 +72,6 @@ const AssigneeIcon = styled.img`
   width: 1.5rem;
   height: 1.5rem;
   margin-right: -8px;
-  background-color: #123;
   border-radius: 50%;
   ${mediumBoxShadow};
 `;
