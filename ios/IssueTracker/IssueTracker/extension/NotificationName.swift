@@ -17,4 +17,6 @@ extension Notification.Name {
 	static let didClickBottomViewEditButton = Notification.Name("didClickBottomViewEditButton")
 	static let shouldUpdateHeaderInBottomVC = Notification.Name("shouldUpdateHeaderInBottomVC")
 	static let shouldReloadDataInMilestoneVC = Notification.Name("shouldReloadDataInMilestoneVC")
+	static let shouldScrollDown = Notification.Name("shouldScrollDown")
+	static let shouldScrollUp = Notification.Name("shouldScrollUp")
 }
