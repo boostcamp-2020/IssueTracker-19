@@ -75,7 +75,12 @@ class IssueDetailViewController: UIViewController, ListCollectionViewProtocol {
 	
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 		if let controller = segue.destination as? CommentAddViewController {
-			controller.issueNo = issue.no
+			if let comment = sender as? Comment {
+				controller.commentNo = comment.no
+				controller.comment = comment
+			} else {
+				controller.issueNo = issue.no
+			}
 		}
 	}
 	
@@ -234,8 +239,51 @@ extension IssueDetailViewController {
 			name: .shouldScrollDown,
 			object: nil
 		)
-		
+		NotificationCenter.default.addObserver(
+			self,
+			selector: #selector(didClickCommentOptionButton),
+			name: .didClickCommentOptionButton,
+			object: nil
+		)
 	}
+	
+	@objc func didClickCommentOptionButton(_ notification: Notification) {
+		guard let comment = notification.object as? Comment else { return }
+		let actionSheet = UIAlertController(title: nil,
+											message: nil,
+											preferredStyle: .actionSheet)
+		let deleteAction = UIAlertAction(title: "Delete", style: .destructive) { [weak self] _ in
+			HTTPAgent.shared.sendRequest(from: "http://49.50.163.23:3000/api/comments/\(comment.no.description)",
+										 method: .DELETE) { [weak self] result in
+				guard let self = self else { return }
+				switch result {
+				case .success(_):
+					guard let idx = self.list.firstIndex(where: { $0.no == comment.no }) else { return }
+					self.list.remove(at: idx)
+					self.updateList()
+					
+				case .failure(let error):
+					print(error)
+				}
+			}
+			
+			
+		}
+		let editAction = UIAlertAction(title: "Edit", style: .default) { [weak self] _ in
+			self?.performSegue(withIdentifier: "addCommentSegue", sender: comment)
+		}
+		let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+		
+		actionSheet.addAction(deleteAction)
+		actionSheet.addAction(editAction)
+		actionSheet.addAction(cancelAction)
+		
+		self.present(actionSheet, animated: true, completion: nil)
+	}
+	
+	
+	
+	
 	
 	@objc func didClickCommentButton() {
 		performSegue(withIdentifier: "addCommentSegue", sender: nil)

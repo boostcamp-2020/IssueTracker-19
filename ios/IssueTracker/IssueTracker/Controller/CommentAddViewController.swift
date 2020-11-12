@@ -14,11 +14,24 @@ class CommentAddViewController: UIViewController {
 	@IBOutlet weak var textView: UITextView!
 	@IBOutlet weak var doneButton: UIBarButtonItem!
 	
-	var issueNo: Int!
+	var issueNo: Int?
+	var commentNo: Int?
+	var comment: Comment?
+	
 	
 	override func viewDidLoad() {
         super.viewDidLoad()
+		
     }
+	
+	override func viewWillAppear(_ animated: Bool) {
+		super.viewWillAppear(animated)
+		if let comment = comment {
+			textView.text = comment.content
+			textView.textColor = .label
+			textView.becomeFirstResponder()
+		}
+	}
     
 
 	@IBAction func cancelButtonAction(_ sender: UIBarButtonItem) {
@@ -43,16 +56,31 @@ class CommentAddViewController: UIViewController {
 			  !content.isEmpty
 		else { return }
 		
-		let data = try? JSONEncoder().encode(["issueNo": issueNo.description, "content": content])
-		
-		HTTPAgent.shared.sendRequest(from: "http://49.50.163.23:3000/api/comments/", method: .POST, body: data) { [weak self] (result) in
-			switch result {
-			case .success(_):
-				NotificationCenter.default.post(name: .didCommentAdd, object: self)
-			case .failure(let error):
-				print(error)
+		if let issueNo = issueNo {
+			let data = try? JSONEncoder().encode(["issueNo": issueNo.description, "content": content])
+			
+			HTTPAgent.shared.sendRequest(from: "http://49.50.163.23:3000/api/comments/", method: .POST, body: data) { [weak self] (result) in
+				switch result {
+				case .success(_):
+					NotificationCenter.default.post(name: .didCommentAdd, object: self)
+				case .failure(let error):
+					print(error)
+				}
+			}
+		} else if let commentNo = commentNo {
+			let data = try? JSONEncoder().encode(["content": content])
+			
+			HTTPAgent.shared.sendRequest(from: "http://49.50.163.23:3000/api/comments/\(commentNo.description)", method: .PATCH, body: data) { [weak self] (result) in
+				switch result {
+				case .success(_):
+					NotificationCenter.default.post(name: .didCommentAdd, object: self)
+				case .failure(let error):
+					print(error)
+				}
 			}
 		}
+		
+		
 	}
 }
 
@@ -66,6 +94,9 @@ extension CommentAddViewController: UITextViewDelegate {
 	
 	func textViewDidChange(_ textView: UITextView) {
 		doneButton.isEnabled = !textView.text.isEmpty
+		if let comment = comment {
+			doneButton.isEnabled = doneButton.isEnabled && comment.content != textView.text
+		}
 	}
 	
 }
