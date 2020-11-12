@@ -66,21 +66,40 @@ const getFilterdIssuesByOptions = (issues, nickname, options = {}) => {
         return false;
       }
     }
+
     if (author) {
       const authorNickname = author === '@me' ? nickname : author;
       if (issue.author !== authorNickname) {
         return false;
       }
     }
+
     if (assignee) {
+      if (assignee === '@null') {
+        if (issue.assignees.length > 0) {
+          return false;
+        }
+        return true;
+      }
       const assigneeNickname = assignee === '@me' ? nickname : assignee;
       if (!issue.assignees.some(a => a.nickname === assigneeNickname)) {
         return false;
       }
     }
-    if (milestone && issue.milestoneTitle !== milestone) {
-      return false;
+
+    if (milestone) {
+      if (milestone === '@null') {
+        if (issue.milestoneTitle) {
+          return false;
+        }
+        return true;
+      }
+
+      if (issue.milestoneTitle !== milestone) {
+        return false;
+      }
     }
+
     if (+comment) {
       // TODO : isHead인 코멘트를 내가 작성한 코멘트라고 할지 안할지에 따라 아래 조건이 수정됨
       const authorNickname = nickname;
@@ -94,13 +113,29 @@ const getFilterdIssuesByOptions = (issues, nickname, options = {}) => {
     }
 
     if (label) {
+      // label 조건이 여러 조건일 때(배열로 올 때)
       if (Array.isArray(label)) {
-        // label 조건이 여러 조건일 때(배열로 올 때)
+        if (label[0] === '@null') {
+          if (issue.labels.length > 0) {
+            return false;
+          }
+          return true;
+        }
         if (!label.every(l => issue.labels.some(issueLabel => issueLabel.name === l))) {
           return false;
         }
-      } else if (!issue.labels.some(issueLabel => issueLabel.name === label)) {
-        // label 조건이 단일 조건일 때
+        return true;
+      }
+
+      // label 조건이 단일 조건일 때
+      if (label === '@null') {
+        if (issue.labels.length > 0) {
+          return false;
+        }
+        return true;
+      }
+
+      if (!issue.labels.some(issueLabel => issueLabel.name === label)) {
         return false;
       }
     }

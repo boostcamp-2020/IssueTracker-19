@@ -63,4 +63,8 @@ export const issueModel = {
     )});`;
     return pool.query(sql);
   },
+  deleteIssue({ no }) {
+    const sql = `DELETE FROM issue WHERE no=?;`;
+    return pool.execute(sql, [no]);
+  },
 };

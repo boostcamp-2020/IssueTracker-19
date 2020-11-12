@@ -57,7 +57,7 @@ export default function IssueFilterTab({ setIssues, issues }) {
   const handleMilestoneFilter = e => {
     const milestone = e?.target?.textContent ?? null;
     if (milestone === 'Issues with no milestone') {
-      setFilterOptions({ ...filterOptions, milestone: null });
+      setFilterOptions({ ...filterOptions, milestone: '@null' });
       return;
     }
     setFilterOptions({ ...filterOptions, milestone });
@@ -66,7 +66,7 @@ export default function IssueFilterTab({ setIssues, issues }) {
   const handleAssigneeFilter = e => {
     const assignee = e?.target?.textContent;
     if (assignee === 'Assigned to nobody') {
-      setFilterOptions({ ...filterOptions, assignee: null });
+      setFilterOptions({ ...filterOptions, assignee: '@null' });
       return;
     }
     setFilterOptions({ ...filterOptions, assignee });
@@ -74,11 +74,16 @@ export default function IssueFilterTab({ setIssues, issues }) {
 
   const handleLabelFilter = e => {
     const label = e?.target?.textContent;
+    console.log(label, filterOptions.label);
     if (label === 'Unlabeled') {
-      setFilterOptions({ ...filterOptions, label: [] });
+      setFilterOptions({ ...filterOptions, label: ['@null'] });
       return;
     }
-    setFilterOptions({ ...filterOptions, label: [...new Set([...filterOptions.label, label])] });
+    console.log([...new Set([...filterOptions.label, label])].filter(l => l !== '@null'));
+    setFilterOptions({
+      ...filterOptions,
+      label: [...new Set([...filterOptions.label, label])].filter(l => l !== '@null'),
+    });
   };
 
   const handleOpenIssues = async () => {

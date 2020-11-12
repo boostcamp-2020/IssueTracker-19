@@ -83,13 +83,29 @@ export default function SignUpBox() {
         <InputBox>
           <label>
             아이디
-            <Input type="text" name="id" onChange={handleChange} value={id} required />
+            <Input
+              type="text"
+              name="id"
+              onChange={handleChange}
+              value={id}
+              required
+              minLength="6"
+              maxLength="12"
+            />
           </label>
         </InputBox>
         <InputBox>
           <label>
             닉네임
-            <Input type="text" name="nickname" onChange={handleChange} value={nickname} required />
+            <Input
+              type="text"
+              name="nickname"
+              onChange={handleChange}
+              value={nickname}
+              required
+              minLength="6"
+              maxLength="12"
+            />
           </label>
         </InputBox>
         <InputBox>
@@ -102,6 +118,8 @@ export default function SignUpBox() {
               value={pw}
               autoComplete="true"
               required
+              minLength="6"
+              maxLength="12"
             />
           </label>
         </InputBox>
