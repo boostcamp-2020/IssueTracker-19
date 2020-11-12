@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import marked from 'marked';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { IssueCommentInputBox } from '@components';
 import { colors } from '@styles/variables';
 import { darken } from 'polished';
@@ -10,14 +10,22 @@ const Box = styled.div`
   position: relative;
   ${flexColumn}
   width: 100%;
-  border: 2px solid ${props => darken(0.1, props.color)};
+  ${props =>
+    !props.editMode === true &&
+    css`
+      border: 1px solid ${darken(0.1, props.color)};
+    `};
+  border-radius: 5px;
+  box-sizing: border-box;
 `;
 
 const CommentItemHeader = styled.div`
-  ${flex()}
-  justify-content: space-between;
+  ${flex('space-between')}
   padding: 0.5rem 1rem;
-  border-bottom: 2px solid ${props => darken(0.1, props.color)};
+  box-sizing: border-box;
+  border-bottom: 1px solid ${props => darken(0.1, props.color)};
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
   background-color: ${props => props.color};
 `;
 
@@ -68,7 +76,7 @@ export default function IssueCommentItem({ comment, user }) {
   };
 
   return (
-    <Box color={commentColor}>
+    <Box color={commentColor} editMode={editMode}>
       {editMode ? (
         <IssueCommentInputBox
           setEditMode={setEditMode}
