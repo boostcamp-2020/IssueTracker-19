@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
-import { OptionSelectModal, LabelTag } from '@components';
+import { OptionSelectModal, LabelTag, ProgressBar } from '@components';
 import { colors } from '@styles/variables';
 import { flex } from '@styles/utils';
 import GearIcon from './GearIcon/GearIcon';
@@ -118,6 +118,7 @@ const CloseImg = styled.img`
   width: 1.1rem;
   height: 1.1rem;
   padding: 0.2rem;
+  margin-left: 0.5rem;
   cursor: pointer;
   border-radius: 50%;
   background-color: ${colors.lightestGray};
@@ -130,14 +131,6 @@ const ProgressBox = styled.div`
       visibility: visible;
     }
   }
-`;
-
-const ProgressBar = styled.progress`
-  width: 100%;
-  height: 20px;
-  display: flex;
-  flex: 1;
-  color: ${colors.submitColor};
 `;
 
 const MilestoneContainer = styled.div`
@@ -357,8 +350,7 @@ export default function IssueSidebar(props) {
               <MilestoneContainer>
                 <ProgressBox>
                   <ProgressBar
-                    max={100}
-                    value={getPercentage(milestone.totalTasks, milestone.closedTasks)}
+                    percentage={getPercentage(milestone.totalTasks, milestone.closedTasks)}
                   />
                   <CloseImg src={closeDarkIcon} onClick={() => handleRemoveMilestone()} />
                 </ProgressBox>
