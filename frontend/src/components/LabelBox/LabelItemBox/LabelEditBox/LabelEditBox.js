@@ -71,7 +71,7 @@ const DeleteButton = styled.button`
   margin-right: 20px;
   color: ${colors.resetDefaultColor};
   background-color: #fff;
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 400;
   outline: none;
   border: none;
@@ -213,7 +213,7 @@ export default function LabelEditBox({
         </ItemBox>
         <ItemBox>
           {label.no ? (
-            <DeleteButton trpe="button" onClick={handleDelete}>
+            <DeleteButton type="button" onClick={handleDelete}>
               Delete
             </DeleteButton>
           ) : null}
