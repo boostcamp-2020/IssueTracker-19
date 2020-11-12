@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { colors } from '@styles/variables';
 
 const ProgressBarBackground = styled.span`
+  width: 100%;
   height: 10px;
   display: flex;
   overflow: hidden;
@@ -19,10 +20,8 @@ const Progress = styled.span`
 
 export default function ProgressBar({ percentage }) {
   return (
-    <>
-      <ProgressBarBackground>
-        <Progress width={'' + percentage + '%'}></Progress>
-      </ProgressBarBackground>
-    </>
+    <ProgressBarBackground>
+      <Progress width={`${percentage}%`}></Progress>
+    </ProgressBarBackground>
   );
 }

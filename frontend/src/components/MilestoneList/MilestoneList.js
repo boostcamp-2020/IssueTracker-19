@@ -13,6 +13,7 @@ export default function MilestoneList() {
   const [milestoneList, setMilestoneList] = useState([]);
   const [count, setCount] = useState({ open: 0, closed: 0 });
   const [openFilter, setOpenFilter] = useState(true);
+
   const fetchMilestones = async () => {
     const {
       data: { milestones },

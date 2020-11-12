@@ -63,17 +63,19 @@ export default function MilestoneEditBox({ isNew }) {
 
   const history = useHistory();
   const location = useLocation();
+
   const handleChange = ({ target }) => {
     const { name, value } = target;
     setForm({ ...form, [name]: value });
   };
+
   useEffect(() => {
     if (location.state) {
       setForm({
         ...form,
-        title: location.state.title,
-        dueDate: location.state.dueDate,
-        description: location.state.description,
+        title: location.state.title ?? '',
+        dueDate: location.state.dueDate ?? '',
+        description: location.state.description ?? '',
       });
       setIsClosed(location.state.isClosed);
     }
@@ -82,10 +84,9 @@ export default function MilestoneEditBox({ isNew }) {
   const handleSubmit = async e => {
     e.preventDefault();
     try {
-      if (dueDate === '') setForm({ ...form, dueDate: null });
       const { data, status } = await milestoneService.addMilestones({
         title,
-        dueDate,
+        dueDate: dueDate === '' ? null : dueDate,
         description,
       });
       if (status === 201) {
@@ -96,17 +97,21 @@ export default function MilestoneEditBox({ isNew }) {
       console.error(err);
     }
   };
+
   const handleClose = async () => {
     await milestoneService.closeMilestones(location.state.no);
     setIsClosed(true);
   };
+
   const handleOpen = async () => {
     await milestoneService.openMilestones(location.state.no);
     setIsClosed(false);
   };
+
   const handleCancel = () => {
     history.goBack();
   };
+
   const handleSaveChange = async () => {
     await milestoneService.editMilestones({
       no: location.state.no,
@@ -116,6 +121,7 @@ export default function MilestoneEditBox({ isNew }) {
     });
     history.push('/milestones');
   };
+
   return (
     <Form onSubmit={handleSubmit}>
       <Container>
@@ -150,6 +156,7 @@ export default function MilestoneEditBox({ isNew }) {
             cols="40"
             rows="20"
             value={description}
+            required
           />
         </InputBox>
       </Container>

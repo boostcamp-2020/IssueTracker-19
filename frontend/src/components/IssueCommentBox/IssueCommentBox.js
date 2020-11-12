@@ -33,6 +33,7 @@ const ImageItem = styled.img`
 
 const MyCommentBox = styled.div`
   ${flex()};
+  margin-top: 1rem;
 `;
 
 const ControlBox = styled.div`

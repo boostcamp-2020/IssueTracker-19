@@ -175,7 +175,7 @@ export default function MilestoneItem({
       {!isDeleted ? (
         <Container>
           <Title>
-            <TitleHeader>{title}</TitleHeader>
+            <TitleHeader onClick={handleClickEdit}>{title}</TitleHeader>
             <Meta>
               <MetaItem>
                 {dueDate ? (

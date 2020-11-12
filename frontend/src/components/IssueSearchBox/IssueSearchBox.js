@@ -82,6 +82,7 @@ const IssueSubmitButton = styled(SubmitButton)`
 `;
 
 const ClearContainer = styled.div`
+  display: inline-flex;
   margin-left: 0.2rem;
   &:hover {
     span {
