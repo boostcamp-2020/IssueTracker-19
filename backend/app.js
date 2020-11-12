@@ -16,12 +16,14 @@ import passportConfig from './lib/passport';
 const app = express();
 const port = process.env.PORT || 3000;
 
+app.set('port', port);
 app.use(cors());
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, '../frontend/dist')));
 app.use(session(config.session));
 app.use((req, res, next) => {
   res.locals.session = req.session;
@@ -37,8 +39,7 @@ app.all('*', (req, res) => {
     res.redirect(process.env.DEV_URL);
     return;
   }
-  // TODO : sendFile 경로 수정 -> frontend build 결과물의 index.html로 변경
-  res.sendFile(path.join(__dirname, 'public/index.html'));
+  res.sendFile(path.join(__dirname, '../frontend/dist/index.html'));
 });
 
 app.use((req, res, next) => {

@@ -5,6 +5,7 @@
   "scripts": {
     "start:dev": "cross-env MODE=dev nodemon --exec babel-node app.js",
     "start": "pm2 start app.js --interpreter node_modules/.bin/babel-node",
+    "local": "nodemon --exec babel-node app.js",
     "test": "jest"
   },
   "_moduleAliases": {
@@ -29,6 +30,7 @@
     "express": "^4.17.1",
     "express-mysql-session": "^2.1.4",
     "express-session": "^1.17.1",
+    "formidable": "^1.2.2",
     "http-errors": "^1.8.0",
     "jsonwebtoken": "^8.5.1",
     "module-alias": "^2.2.2",

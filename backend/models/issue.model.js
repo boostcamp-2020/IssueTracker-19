@@ -2,7 +2,7 @@ import pool from '@lib/db';
 
 export const issueModel = {
   getIssueList({ keyword }) {
-    const sql = `SELECT i.no, u.nickname as author, i.title, i.is_opened as isOpened, i.created_at as createdAt, 
+    const sql = `SELECT i.no, u.image, u.nickname as author, i.title, i.is_opened as isOpened, i.created_at as createdAt, 
     i.closed_at as closedAt, m.title as milestoneTitle, m.no as milestoneNo
     FROM issue i 
     LEFT JOIN milestone m ON m.no = i.milestone_no
@@ -13,7 +13,7 @@ export const issueModel = {
   },
   getIssueByNo({ no }) {
     const sql = `SELECT i.no, u.nickname as author, i.title, i.is_opened as isOpened, i.created_at as createdAt, 
-    i.closed_at as closedAt, i.milestone_no as milestoneNo
+    i.closed_at as closedAt, i.milestone_no as milestoneNo, u.image
     FROM issue i 
     LEFT JOIN user u ON u.no = i.author_no
     WHERE i.no = ?;`;
@@ -50,7 +50,21 @@ export const issueModel = {
     return pool.execute(sql, [no]);
   },
   closeIssue({ no }) {
-    const sql = 'UPDATE issue SET is_opened=0 WHERE no=?;';
+    const sql = 'UPDATE issue SET is_opened=0, closed_at=current_timestamp() WHERE no=?;';
+    return pool.execute(sql, [no]);
+  },
+  openIssues({ issueNos }) {
+    const sql = `UPDATE issue SET is_opened=1 WHERE no IN (${issueNos.join(',')});`;
+    return pool.query(sql);
+  },
+  closeIssues({ issueNos }) {
+    const sql = `UPDATE issue SET is_opened=0, closed_at=current_timestamp() WHERE no IN (${issueNos.join(
+      ',',
+    )});`;
+    return pool.query(sql);
+  },
+  deleteIssue({ no }) {
+    const sql = `DELETE FROM issue WHERE no=?;`;
     return pool.execute(sql, [no]);
   },
 };

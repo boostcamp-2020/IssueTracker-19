@@ -51,6 +51,12 @@ const findIssuesComments = commentList => {
   };
 };
 
+const findIssuesHeadComment = commentList => {
+  return issueNo => {
+    return commentList.find(comment => comment.issueNo === issueNo && comment.isHead);
+  };
+};
+
 const getFilterdIssuesByOptions = (issues, nickname, options = {}) => {
   const { isOpened, author, assignee, milestone, comment, label } = options;
   return issues.filter(issue => {
@@ -60,21 +66,40 @@ const getFilterdIssuesByOptions = (issues, nickname, options = {}) => {
         return false;
       }
     }
+
     if (author) {
       const authorNickname = author === '@me' ? nickname : author;
       if (issue.author !== authorNickname) {
         return false;
       }
     }
+
     if (assignee) {
+      if (assignee === '@null') {
+        if (issue.assignees.length > 0) {
+          return false;
+        }
+        return true;
+      }
       const assigneeNickname = assignee === '@me' ? nickname : assignee;
       if (!issue.assignees.some(a => a.nickname === assigneeNickname)) {
         return false;
       }
     }
-    if (milestone && issue.milestone !== milestone) {
-      return false;
+
+    if (milestone) {
+      if (milestone === '@null') {
+        if (issue.milestoneTitle) {
+          return false;
+        }
+        return true;
+      }
+
+      if (issue.milestoneTitle !== milestone) {
+        return false;
+      }
     }
+
     if (+comment) {
       // TODO : isHead인 코멘트를 내가 작성한 코멘트라고 할지 안할지에 따라 아래 조건이 수정됨
       const authorNickname = nickname;
@@ -88,13 +113,29 @@ const getFilterdIssuesByOptions = (issues, nickname, options = {}) => {
     }
 
     if (label) {
+      // label 조건이 여러 조건일 때(배열로 올 때)
       if (Array.isArray(label)) {
-        // label 조건이 여러 조건일 때(배열로 올 때)
-        if (!label.some(l => issue.labels.some(issueLabel => issueLabel.name === l))) {
+        if (label[0] === '@null') {
+          if (issue.labels.length > 0) {
+            return false;
+          }
+          return true;
+        }
+        if (!label.every(l => issue.labels.some(issueLabel => issueLabel.name === l))) {
           return false;
         }
-      } else if (!issue.labels.some(issueLabel => issueLabel.name === label)) {
-        // label 조건이 단일 조건일 때
+        return true;
+      }
+
+      // label 조건이 단일 조건일 때
+      if (label === '@null') {
+        if (issue.labels.length > 0) {
+          return false;
+        }
+        return true;
+      }
+
+      if (!issue.labels.some(issueLabel => issueLabel.name === label)) {
         return false;
       }
     }
@@ -114,12 +155,14 @@ export const issueService = {
     const getIssuesLabels = findIssuesLabels(labelList);
     const getIssuesAssignees = findIssuesAssignees(assigneeList);
     const getIssuesComments = findIssuesComments(commentList);
+    const getHeadComment = findIssuesHeadComment(commentList);
 
     const issuesWithLabelsAndAssignees = issues.map(issue => {
       const { no: issueNo, milestoneNo, milestoneTitle } = issue;
       const labels = getIssuesLabels(issueNo);
       const assignees = getIssuesAssignees(issueNo);
       const comments = getIssuesComments(issueNo);
+      const comment = getHeadComment(issueNo);
 
       return {
         ...issue,
@@ -129,6 +172,7 @@ export const issueService = {
         milestoneNo,
         milestoneTitle,
         comments,
+        comment,
       };
     });
 
@@ -150,6 +194,6 @@ export const issueService = {
       labelModel.getLabelByIssueNo({ issueNo }),
     ]);
 
-    return { ...issue, milestone: null, assignees, comments, labels };
+    return { ...issue, assignees, comments, labels, milestone: issue.milestone ?? null };
   },
 };

@@ -10,6 +10,7 @@ module.exports = {
   resolve: {
     alias: {
       '@components': path.resolve(__dirname, './src/components'),
+      '@contexts': path.resolve(__dirname, './src/contexts'),
       '@pages': path.resolve(__dirname, './src/pages'),
       '@services': path.resolve(__dirname, './src/services'),
       '@lib': path.resolve(__dirname, './src/lib'),
@@ -19,6 +20,7 @@ module.exports = {
       '@imgs': path.resolve(__dirname, './src/imgs'),
       '@styles': path.resolve(__dirname, './src/styles'),
       '@shared': path.resolve(__dirname, './src/styles/shared'),
+      '@hoc': path.resolve(__dirname, './src/hoc'),
       '@': path.resolve(__dirname, './src'),
     },
   },
@@ -42,6 +44,12 @@ module.exports = {
       {
         test: /\.s[ac]ss$/i,
         use: ['style-loader', 'css-loader', 'sass-loader'],
+        exclude: /node_modules/,
+      },
+      {
+        test: /\.css$/,
+        use: ['to-string-loader', 'css-loader'], // use to-string-loader for 3rd party css
+        include: /node_modules/,
       },
       {
         test: /\.(png|jpe?g|gif|svg)$/i,

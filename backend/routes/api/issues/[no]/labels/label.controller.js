@@ -1,4 +1,4 @@
-import { issueLabelModel } from '@models';
+import { issueLabelModel, labelModel } from '@models';
 import { verify } from '@lib/utils';
 import { errorMessage } from '@lib/constants';
 
@@ -7,11 +7,11 @@ import { errorMessage } from '@lib/constants';
  */
 export const addIssueLabel = async (req, res, next) => {
   const { no } = req.params;
-  const { labelNo } = req.body;
+  const { labelNos } = req.body;
 
   try {
-    if (verify([labelNo])) {
-      await issueLabelModel.addIssueLabel({ issueNo: no, labelNo });
+    if (verify([labelNos]) && labelNos.length) {
+      await labelModel.bulkAddIssueLabel({ issueNo: no, labelNos });
       res.status(201).end();
       return;
     }

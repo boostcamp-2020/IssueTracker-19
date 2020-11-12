@@ -5,6 +5,8 @@ import commentRouter from './comments';
 import issueRouter from './issues';
 import labelRouter from './labels';
 import milestoneRouter from './milestones';
+import userRouter from './users';
+import uploadRouter from './upload';
 
 const router = express.Router({ mergeParams: true });
 
@@ -13,5 +15,7 @@ router.use('/comments', authenticated, commentRouter);
 router.use('/issues', authenticated, issueRouter);
 router.use('/labels', authenticated, labelRouter);
 router.use('/milestones', authenticated, milestoneRouter);
+router.use('/users', userRouter);
+router.use('/upload', uploadRouter);
 
 export default router;

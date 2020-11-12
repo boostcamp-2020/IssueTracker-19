@@ -11,8 +11,10 @@ export const assigneeModel = {
     return pool.query(sql);
   },
   getAssigneesByIssueNo({ issueNo }) {
-    const sql = `SELECT user_no as userNo, issue_no as issueNo 
-    FROM assignee 
+    const sql = `SELECT a.user_no as userNo, a.issue_no as issueNo, u.nickname
+    FROM assignee a
+    LEFT JOIN user u
+    ON u.no = a.user_no
     WHERE issue_no = ?;`;
     return pool.execute(sql, [issueNo]);
   },

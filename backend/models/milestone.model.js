@@ -8,7 +8,8 @@ export const milestoneModel = {
       FROM milestone AS M 
       LEFT OUTER JOIN issue AS I 
       ON M.no=I.milestone_no 
-      GROUP BY M.no;`;
+      GROUP BY M.no
+      HAVING M.is_deleted=0;`;
     return pool.query(sql);
   },
   getMilestone({ no }) {
@@ -38,6 +39,10 @@ export const milestoneModel = {
   },
   deleteMilestone({ no }) {
     const sql = 'UPDATE milestone SET is_deleted=1 WHERE no=?;';
+    return pool.execute(sql, [no]);
+  },
+  deleteIssueMilestone({ no }) {
+    const sql = 'UPDATE issue SET milestone_no=NULL WHERE milestone_no=?;';
     return pool.execute(sql, [no]);
   },
   openMilestone({ no }) {

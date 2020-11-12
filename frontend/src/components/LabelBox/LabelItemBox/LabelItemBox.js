@@ -1,39 +1,51 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { API } from '@api';
 import styled from 'styled-components';
 import { colors } from '@styles/variables';
 import { flexColumn } from '@styles/utils';
 import LabelItem from './LabelItem/LabelItem';
 import LabelEditBox from './LabelEditBox/LabelEditBox';
+import { LabelBoxContext } from '@components/LabelBox/LabelBoxContext';
 
 const Box = styled.div`
   ${flexColumn};
-  margin-top: 2rem;
-  border: 2px solid ${colors.lightGray};
-  border-radius: 0.25rem;
+  margin-top: 1.25rem;
 `;
 
-const LabelHeader = styled.div`
-  padding: 1rem;
-  border-bottom: 2px solid ${colors.lightGray};
+const TopBox = styled.div`
+  border-radius: 6px 6px 0 0;
+`;
 
-  &:last-child {
+const BottomBox = styled.div`
+  ${flexColumn};
+  border: 1px solid ${colors.lighterGray};
+  border-radius: 6px 6px 0 0;
+
+  & > * {
+    border-bottom: 1px solid ${colors.lighterGray};
+  }
+
+  & > *:last-child {
     border-bottom: none;
   }
 `;
 
-const tempLabels = JSON.parse(
-  '{"labels":[{"no":1,"name":"backend","description":"backend 작업","color":"#FFFFFF"},{"no":2,"name":"frontend","description":"frontend 작업","color":"#333333"}]}',
-);
+const LabelHeader = styled.div`
+  padding: 16px;
+  background-color: ${colors.filterTabColor};
+  font-size: 14px;
+  font-weight: 600;
+  border-radius: 6px 6px 0 0;
+`;
 
 export default function LabelItemBox() {
-  const [fetched, setFetched] = useState(false);
   const [labels, setLabels] = useState([]);
+  const [editingLabels, setEditingLabels] = useState(new Set());
+  const { isAdding } = useContext(LabelBoxContext);
 
   const getLabels = async () => {
     try {
       const { data, status } = await API.get('/api/labels');
-      setFetched(true);
       setLabels(data.labels);
     } catch (err) {
       console.log(err);
@@ -41,15 +53,44 @@ export default function LabelItemBox() {
     }
   };
 
-  if (!fetched) getLabels();
+  useEffect(() => {
+    getLabels();
+  }, []);
 
   return (
     <Box>
-      <LabelHeader>8 Labels</LabelHeader>
-      <LabelEditBox />
-      {labels.map(label => (
-        <LabelItem key={label.no} {...label} />
-      ))}
+      {isAdding ? (
+        <TopBox>
+          <LabelEditBox isNew={true} reloadLabels={getLabels} />
+        </TopBox>
+      ) : null}
+
+      <BottomBox>
+        <LabelHeader>{labels.length} Labels</LabelHeader>
+
+        {labels.map(label => {
+          if (editingLabels.has(label.no))
+            return (
+              <LabelEditBox
+                key={label.no}
+                reloadLabels={getLabels}
+                {...label}
+                setEditingLabels={setEditingLabels}
+                editingLabels={editingLabels}
+              />
+            );
+          else
+            return (
+              <LabelItem
+                key={label.no}
+                {...label}
+                reloadLabels={getLabels}
+                setEditingLabels={setEditingLabels}
+                editingLabels={editingLabels}
+              />
+            );
+        })}
+      </BottomBox>
     </Box>
   );
 }

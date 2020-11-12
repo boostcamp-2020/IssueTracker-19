@@ -1,54 +1,75 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
-import { flex, calFontColor } from '@styles/utils';
+import { labelService } from '@services';
+import { flex } from '@styles/utils';
 import { colors } from '@styles/variables';
+import { LabelTag } from '@components';
 
 const Box = styled.div`
   ${flex('flex-start', 'center')};
   padding: 1rem;
-  border-bottom: 2px solid ${colors.lightGray};
-
-  &:last-child {
-    border-bottom: none;
-  }
 `;
 
 const NameBox = styled.div`
-  flex-grow: 2;
+  width: 30%;
 `;
 
 const DescBox = styled.div`
-  flex-grow: 5;
+  width: 55%;
+  font-size: 14px;
+  font-weight: 400;
+  color: ${colors.resetDefaultColor};
 `;
 
 const ButtonBox = styled.div`
-  flex-grow: 1;
+  width: 15%;
   ${flex()};
   justify-content: space-around;
 `;
 
-const CustomLink = styled(Link)`
-  color: ${colors.black6};
+const Button = styled.button`
+  background-color: inherit;
+  color: ${colors.resetDefaultColor};
+  font-size: 14px;
+  font-weight: 400;
+  border: none;
+  outline: none;
+  cursor: pointer;
 `;
 
-// const Name = styled.span`
-//   background-color: ${color};
-//   color: ${calFontColor(color)};
-// `;
+export default function LabelItem({
+  no,
+  name,
+  description,
+  color,
+  reloadLabels,
+  setEditingLabels,
+  editingLabels,
+}) {
+  const handleDelete = async () => {
+    if (!confirm(`${name} 레이블을 삭제 하시겠습니까?`)) return;
 
-const Name = styled.span``;
+    try {
+      const { status } = await labelService.deleteLabel({
+        no,
+      });
+      reloadLabels();
+    } catch ({ response: { status } }) {}
+  };
 
-export default function LabelItem({ no, name, description, color }) {
+  const handleSetEditing = () => {
+    setEditingLabels(new Set([...editingLabels, no]));
+  };
+
   return (
     <Box>
       <NameBox>
-        <Name style={{ backgroundColor: color, color: calFontColor(color) }}>{name}</Name>
+        <LabelTag color={color}>{name}</LabelTag>
       </NameBox>
       <DescBox>{description}</DescBox>
       <ButtonBox>
-        <CustomLink to="/">Edit</CustomLink>
-        <CustomLink to="/">Delete</CustomLink>
+        <Button onClick={handleSetEditing}>Edit</Button>
+        <Button onClick={handleDelete}>Delete</Button>
       </ButtonBox>
     </Box>
   );

@@ -5,9 +5,11 @@ import issueNoRouter from './[no]';
 
 const router = express.Router({ mergeParams: true });
 
-router.use('/:no', issueNoRouter);
-
 router.get('/', issuesController.getIssues);
 router.post('/', authenticated, issuesController.addIssue);
+router.patch('/open', authenticated, issuesController.openMultipleIssues);
+router.patch('/close', authenticated, issuesController.closeMultipleIssues);
+
+router.use('/:no', issueNoRouter);
 
 export default router;

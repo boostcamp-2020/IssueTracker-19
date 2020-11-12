@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { API } from '@api';
 import { flexColumn } from '@styles/utils';
 import { useHistory } from 'react-router-dom';
 import { AUTH } from '@constants/index';
+import { userService } from '@services';
 
 const SignUpContainer = styled.div`
   background-color: #ecf0f1;
@@ -64,15 +64,15 @@ export default function SignUpBox() {
 
   const handleSubmit = async e => {
     e.preventDefault();
-    const data = { id, nickname, pw, auth: AUTH.DEFAULT };
     try {
-      const { status } = await API.post('/api/auth/signup', data);
+      const { data, status } = await userService.signup({ id, nickname, pw, auth: AUTH.DEFAULT });
       if (status === 200) {
         history.push('/login');
+        return;
       }
-      // TODO 200 이외의 코드 에러 처리
     } catch (err) {
       console.error(err);
+      alert('중복된 아이디 또는 닉네임입니다.');
     }
   };
 
@@ -83,13 +83,29 @@ export default function SignUpBox() {
         <InputBox>
           <label>
             아이디
-            <Input type="text" name="id" onChange={handleChange} value={id} required />
+            <Input
+              type="text"
+              name="id"
+              onChange={handleChange}
+              value={id}
+              required
+              minLength="6"
+              maxLength="12"
+            />
           </label>
         </InputBox>
         <InputBox>
           <label>
             닉네임
-            <Input type="text" name="nickname" onChange={handleChange} value={nickname} required />
+            <Input
+              type="text"
+              name="nickname"
+              onChange={handleChange}
+              value={nickname}
+              required
+              minLength="6"
+              maxLength="12"
+            />
           </label>
         </InputBox>
         <InputBox>
@@ -102,6 +118,8 @@ export default function SignUpBox() {
               value={pw}
               autoComplete="true"
               required
+              minLength="6"
+              maxLength="12"
             />
           </label>
         </InputBox>
