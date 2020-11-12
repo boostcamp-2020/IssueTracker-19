@@ -9,11 +9,24 @@
 import UIKit
 
 class BottomViewFooterView: UICollectionReusableView {
+	@IBOutlet weak var button: UIButton!
 	static var identifier: String {
 		Self.self.description()
 	}
 	
-	@IBAction func closeButtonAction(_ sender: UIButton) {
-		NotificationCenter.default.post(name: .didClickBottomViewCloseIssueButton, object: nil)
+	var isOpened: Bool? {
+		didSet {
+			if isOpened == true {
+				button.setTitle("Close Issue", for: .normal)
+				button.setTitleColor(.systemRed, for: .normal)
+			} else {
+				button.setTitle("Open Issue", for: .normal)
+				button.setTitleColor(.systemGreen, for: .normal)
+			}
+		}
+	}
+	
+	@IBAction func openCloseButtonAction(_ sender: UIButton) {
+		NotificationCenter.default.post(name: .didClickBottomViewOpenCloseIssueButton, object: isOpened)
 	}
 }

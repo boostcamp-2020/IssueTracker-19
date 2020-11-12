@@ -63,7 +63,7 @@ class Issue: GitIssueObject, Codable {
     let author: String
 	var assignees: [User]
 	var labels: [Label]
-    let isOpened: Int
+    var isOpened: Int
     let createdAt: String
     let closedAt: String?
     let milestoneNo: Int?

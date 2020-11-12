@@ -51,7 +51,10 @@ class IssueDetailBottomViewController: UIViewController {
 	var isBelow = true
 	var gestureRecognizer: UIPanGestureRecognizer?
 	
-	var issueNo: Int!
+	var issue: Issue!
+	
+//	var issueNo: Int!
+//	var issueIsOpened: Bool!
 	// MARK: Collection view's section items
 	var assignees = [User]()
 	var labels = [Label]()
@@ -72,12 +75,12 @@ class IssueDetailBottomViewController: UIViewController {
 		showViewWithAnimation()
 	}
 	
-	override func viewDidDisappear(_ animated: Bool) {
-		super.viewDidDisappear(animated)
+	func remove() {
 		willMove(toParent: nil)
 		view.removeFromSuperview()
 		removeFromParent()
 	}
+	
 	
 	func setupView(superView: UIView) {
 		view.translatesAutoresizingMaskIntoConstraints = false
@@ -92,9 +95,8 @@ class IssueDetailBottomViewController: UIViewController {
 	}
 	
 	func loadData() {
-//		assignees = User.all
-//		labels = Label.all
-//		milestones = [Milestone.all[0]]
+		assignees = issue.assignees
+		labels = issue.labels
 	}
 	
 	func showViewWithAnimation() {
