@@ -61,7 +61,7 @@ struct Issue2: Codable {
 class Issue: GitIssueObject, Codable {
     
     let no: Int
-    let title: String
+    var title: String
     let author: String
 	var assignees: [User]
 	var labels: [Label]

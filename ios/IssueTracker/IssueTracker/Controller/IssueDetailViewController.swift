@@ -86,7 +86,36 @@ class IssueDetailViewController: UIViewController, ListCollectionViewProtocol {
 	}
 	
 	@IBAction func editButton(_ sender: UIBarButtonItem) {
-		
+		let alert = UIAlertController(title: "Edit title", message: nil, preferredStyle: .alert)
+
+		alert.addTextField { [weak self](textField) in
+			textField.text = self?.issue.title ?? ""
+		}
+
+		alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [weak self, weak alert] (_) in
+			guard let textFields = alert?.textFields,
+				  let textField = textFields.first,
+				  let issue = self?.issue,
+				  let new = textField.text,
+				  issue.title != new
+				  else { return }
+
+			HTTPAgent.shared.sendRequest(
+				from: "http://49.50.163.23:3000/api/issues/\(issue.no.description)/title",
+				method: .PATCH,
+				body: try? JSONEncoder().encode(["title": new])) { result in
+				switch result {
+				case .success(_):
+					self?.issue.title = new
+					self?.updateList()
+				case .failure(_):
+					break
+				}
+			}
+				
+		}))
+
+		self.present(alert, animated: true, completion: nil)
 	}
 	
 	deinit {
@@ -98,6 +127,7 @@ class IssueDetailViewController: UIViewController, ListCollectionViewProtocol {
 extension IssueDetailViewController {
 	func configureHierarchy() {
 		collectionView.collectionViewLayout = createLayout()
+		collectionView.backgroundColor = .systemBackground
 		collectionView.register(UINib(nibName: "IssueDetailHeaderReusableView", bundle: nil),
 								forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
 								withReuseIdentifier: IssueDetailHeaderReusableView.identifier)

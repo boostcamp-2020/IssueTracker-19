@@ -64,6 +64,7 @@ class MilestoneViewController: UIViewController, ListCollectionViewProtocol {
 extension MilestoneViewController {
 	func configureHierarchy() {
 		collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: createLayout())
+		collectionView.backgroundColor = .systemBackground
 		collectionView.delegate = self
 		collectionView.register(UINib(nibName: "MilestoneViewCell", bundle: nil),
 								forCellWithReuseIdentifier: MilestoneViewCell.identifier)

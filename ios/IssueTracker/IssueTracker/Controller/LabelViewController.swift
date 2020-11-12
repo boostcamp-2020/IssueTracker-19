@@ -70,6 +70,7 @@ class LabelViewController: UIViewController, ListCollectionViewProtocol {
 extension LabelViewController {
     func configureHierarchy() {
         collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: createLayout())
+		collectionView.backgroundColor = .systemBackground
         view.addSubview(collectionView)
         
         collectionView.translatesAutoresizingMaskIntoConstraints = false

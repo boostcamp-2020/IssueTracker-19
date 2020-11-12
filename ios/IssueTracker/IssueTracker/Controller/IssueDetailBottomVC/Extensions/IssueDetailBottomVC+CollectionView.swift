@@ -126,7 +126,9 @@ extension IssueDetailBottomViewController {
 		snapshot.appendItems(labels)
 		snapshot.appendSections([.milestone])
 		snapshot.appendItems(milestones)
-		dataSource.apply(snapshot, animatingDifferences: false)
+		DispatchQueue.main.async {
+			self.dataSource.apply(snapshot, animatingDifferences: false)
+		}
 	}
 	
 }
