@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17126"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionReusableView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="U6b-Vx-4bR" customClass="IssueDetailHeaderReusableView" customModule="IssueTracker" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="134"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <subviews>
+                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="person.crop.square.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="ozN-1i-n69">
+                    <rect key="frame" x="10" y="55" width="20" height="17.5"/>
+                    <constraints>
+                        <constraint firstAttribute="width" secondItem="ozN-1i-n69" secondAttribute="height" id="fpk-d8-dQ4"/>
+                        <constraint firstAttribute="height" constant="20" id="u3q-xF-UMt"/>
+                    </constraints>
+                </imageView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MAK-CL-hl6">
+                    <rect key="frame" x="10" y="84" width="300" height="30"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" horizontalCompressionResistancePriority="749" text="author" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ha3-Od-cgP">
+                    <rect key="frame" x="40" y="55.5" width="218.5" height="17"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="#no" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6ag-Kt-hOQ">
+                    <rect key="frame" x="278.5" y="53.5" width="31.5" height="21"/>
+                    <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                    <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XUA-XP-12N">
+                    <rect key="frame" x="10" y="124" width="0.0" height="0.0"/>
+                    <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="17"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hAz-e9-69q">
+                    <rect key="frame" x="310" y="124" width="0.0" height="0.0"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="VXr-Tz-HHm"/>
+            <constraints>
+                <constraint firstItem="VXr-Tz-HHm" firstAttribute="bottom" secondItem="XUA-XP-12N" secondAttribute="bottom" constant="10" id="8s4-gy-NVp"/>
+                <constraint firstItem="ozN-1i-n69" firstAttribute="top" secondItem="VXr-Tz-HHm" secondAttribute="top" constant="10" id="9nU-rQ-zeA"/>
+                <constraint firstItem="MAK-CL-hl6" firstAttribute="leading" secondItem="ozN-1i-n69" secondAttribute="leading" id="E1h-S3-kII"/>
+                <constraint firstItem="6ag-Kt-hOQ" firstAttribute="centerY" secondItem="ozN-1i-n69" secondAttribute="centerY" id="MNH-ml-AX2"/>
+                <constraint firstItem="6ag-Kt-hOQ" firstAttribute="leading" secondItem="ha3-Od-cgP" secondAttribute="trailing" constant="20" id="NgQ-5X-SlM"/>
+                <constraint firstItem="ha3-Od-cgP" firstAttribute="centerY" secondItem="ozN-1i-n69" secondAttribute="centerY" id="Pao-it-Qh7"/>
+                <constraint firstItem="VXr-Tz-HHm" firstAttribute="trailing" secondItem="6ag-Kt-hOQ" secondAttribute="trailing" constant="10" id="RWe-h8-vij"/>
+                <constraint firstItem="MAK-CL-hl6" firstAttribute="trailing" secondItem="6ag-Kt-hOQ" secondAttribute="trailing" id="TwQ-dL-Tde"/>
+                <constraint firstItem="hAz-e9-69q" firstAttribute="bottom" secondItem="XUA-XP-12N" secondAttribute="bottom" id="cQy-JS-PiB"/>
+                <constraint firstItem="ha3-Od-cgP" firstAttribute="leading" secondItem="ozN-1i-n69" secondAttribute="trailing" constant="10" id="ePq-o5-lEs"/>
+                <constraint firstItem="ozN-1i-n69" firstAttribute="leading" secondItem="VXr-Tz-HHm" secondAttribute="leading" constant="10" id="mFc-mp-GCZ"/>
+                <constraint firstItem="XUA-XP-12N" firstAttribute="top" secondItem="MAK-CL-hl6" secondAttribute="bottom" constant="10" id="mvR-fu-CnN"/>
+                <constraint firstItem="XUA-XP-12N" firstAttribute="leading" secondItem="ozN-1i-n69" secondAttribute="leading" id="tWK-NN-m7Q"/>
+                <constraint firstItem="hAz-e9-69q" firstAttribute="top" secondItem="XUA-XP-12N" secondAttribute="top" id="w0n-pH-jAy"/>
+                <constraint firstItem="VXr-Tz-HHm" firstAttribute="trailing" secondItem="hAz-e9-69q" secondAttribute="trailing" constant="10" id="wO6-xL-I3N"/>
+                <constraint firstItem="MAK-CL-hl6" firstAttribute="top" secondItem="ozN-1i-n69" secondAttribute="bottom" constant="10" id="xkH-Xa-ybI"/>
+            </constraints>
+            <connections>
+                <outlet property="authorLabel" destination="ha3-Od-cgP" id="nI7-SI-mJh"/>
+                <outlet property="imageView" destination="ozN-1i-n69" id="PYu-FF-iuk"/>
+                <outlet property="noLabel" destination="6ag-Kt-hOQ" id="OjB-Jc-zER"/>
+                <outlet property="statusLabel" destination="XUA-XP-12N" id="xox-3D-GAX"/>
+                <outlet property="titleLabel" destination="MAK-CL-hl6" id="cy6-5P-mJW"/>
+                <outlet property="tmpLabel" destination="hAz-e9-69q" id="tPX-87-1JC"/>
+            </connections>
+            <point key="canvasLocation" x="-17.39130434782609" y="28.125"/>
+        </collectionReusableView>
+    </objects>
+    <resources>
+        <image name="person.crop.square.fill" catalog="system" width="128" height="114"/>
+    </resources>
+</document>

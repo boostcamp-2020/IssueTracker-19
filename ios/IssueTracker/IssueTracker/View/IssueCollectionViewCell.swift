@@ -9,12 +9,9 @@
 import UIKit
 
 class IssueCollectionViewCell: UICollectionViewListCell {
-    let view: UIView = {
-        let view = UIView()
-        view.backgroundColor = UIColor.systemGray6
-        return view
-    }()
-    
+    var milestoneWidthConstraint: NSLayoutConstraint?
+    var labelWidthContraint: NSLayoutConstraint?
+    var isOpenedLabelWidthContraint: NSLayoutConstraint?
     let issueTitle: UILabel = {
         let label = UILabel()
         label.text = "레이블 목록 보기 구현"
@@ -50,10 +47,38 @@ class IssueCollectionViewCell: UICollectionViewListCell {
         label.textAlignment = .center
         return label
     }()
+    
+    let isOpenedLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Opened"
+        label.font = UIFont(name: "AppleSDGothicNeo-SemiBold", size: 15)
+        label.numberOfLines = 1
+        label.textAlignment = .center
+        return label
+    }()
+    
+    var issue: Issue? {
+        didSet {
+            issueTitle.text = issue?.title
+            issue?.comment != nil ? (issueDescription.text = issue?.comment?.content) : (issueDescription.text = "")
+            milestone.text = issue?.milestoneTitle ?? ""
+            milestone.isHidden = (milestone.text == "")
+            label.text = issue?.labels.first?.name ?? ""
+            let pair = (issue?.labels.first?.color ?? "#333333").toUIColorPair()
+            label.backgroundColor = pair.0
+            label.textColor = pair.1
+            label.isHidden = (label.text == "")
+            changeIsOpenedLabel(isOpenedLabel, component: (issue?.isOpened != 0) ? IssueOpen() : IssueClosed())
+            
+            isOpenedLabelWidthContraint?.constant = isOpenedLabel.intrinsicContentSize.width + 10
+			milestoneWidthConstraint?.constant = milestone.intrinsicContentSize.width + 10
+			labelWidthContraint?.constant = label.intrinsicContentSize.width + 10
+        }
+    }
         
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setupViews(inset: 30)
+        setupViews(inset: 0)
     }
     
     required init?(coder: NSCoder) {
@@ -66,73 +91,102 @@ class IssueCollectionViewCell: UICollectionViewListCell {
         setupIssueDescription()
         setupMilestone()
         setupLabel()
+        setupIsOpenedLabel()
     }
     
     private func setupIssueTitle() {
-        view.addSubview(issueTitle)
+        contentView.addSubview(issueTitle)
         issueTitle.translatesAutoresizingMaskIntoConstraints = false
+        let issueTitleWidthConstraint = issueTitle.widthAnchor.constraint(equalTo: contentView.widthAnchor, multiplier: 0.6)
+        issueTitleWidthConstraint.priority = UILayoutPriority(999)
         NSLayoutConstraint.activate([
-            issueTitle.topAnchor.constraint(equalTo: view.topAnchor, constant: 10),
-            issueTitle.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.25),
-            issueTitle.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 15),
-            issueTitle.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.6)
+            issueTitle.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10),
+            issueTitle.heightAnchor.constraint(equalTo: contentView.heightAnchor, multiplier: 0.25),
+            issueTitle.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 15),
+            issueTitleWidthConstraint
         ])
     }
     
     private func setupIssueDescription() {
-        view.addSubview(issueDescription)
+        contentView.addSubview(issueDescription)
         issueDescription.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             issueDescription.topAnchor.constraint(equalTo: issueTitle.bottomAnchor),
-            issueDescription.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.6),
+            issueDescription.heightAnchor.constraint(equalTo: contentView.heightAnchor, multiplier: 0.6),
             issueDescription.leadingAnchor.constraint(equalTo: issueTitle.leadingAnchor),
             issueDescription.widthAnchor.constraint(equalTo: issueTitle.widthAnchor)
         ])
     }
     
     private func setupMilestone() {
-        view.addSubview(milestone)
+        contentView.addSubview(milestone)
         milestone.translatesAutoresizingMaskIntoConstraints = false
+        milestoneWidthConstraint = milestone.widthAnchor.constraint(equalToConstant: milestone.intrinsicContentSize.width + 20)
         NSLayoutConstraint.activate([
-            milestone.topAnchor.constraint(equalTo: view.topAnchor, constant: 10),
-            milestone.heightAnchor.constraint(equalToConstant: milestone.intrinsicContentSize.height + 5),
-            milestone.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10),
-            milestone.widthAnchor.constraint(equalToConstant: milestone.intrinsicContentSize.width + 20),
+            milestone.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10),
+            milestone.heightAnchor.constraint(equalToConstant: 23),
+            milestone.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -10),
+            milestoneWidthConstraint!,
             milestone.leadingAnchor.constraint(greaterThanOrEqualTo: issueTitle.trailingAnchor, constant: 1)
         ])
+		milestone.textColor = .systemGray
+		milestone.backgroundColor = .quaternarySystemFill
         milestone.layer.borderWidth = 1
         milestone.layer.cornerRadius = 5
-        milestone.layer.borderColor = UIColor.systemGray3.cgColor
+        milestone.layer.borderColor = UIColor.lightGray.cgColor
     }
     
     private func setupLabel() {
-        view.addSubview(label)
+        contentView.addSubview(label)
         label.translatesAutoresizingMaskIntoConstraints = false
+        labelWidthContraint = label.widthAnchor.constraint(equalToConstant: label.intrinsicContentSize.width + 20)
         NSLayoutConstraint.activate([
             label.topAnchor.constraint(equalTo: milestone.bottomAnchor, constant: 3),
-            label.heightAnchor.constraint(equalToConstant: label.intrinsicContentSize.height + 5),
-            label.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10),
-            label.widthAnchor.constraint(equalToConstant: label.intrinsicContentSize.width + 20)
+            label.heightAnchor.constraint(equalToConstant: 23),
+            label.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -10),
+            labelWidthContraint!
         ])
         label.backgroundColor = .systemPink
         label.layer.cornerRadius = 5
         label.clipsToBounds = true
     }
     
-    func setupBaseView(inset: CGFloat) {
-        addSubview(view)
-        view.translatesAutoresizingMaskIntoConstraints = false
+    private func setupIsOpenedLabel() {
+        contentView.addSubview(isOpenedLabel)
+        isOpenedLabel.translatesAutoresizingMaskIntoConstraints = false
+        isOpenedLabelWidthContraint = isOpenedLabel.widthAnchor.constraint(equalToConstant: isOpenedLabel.intrinsicContentSize.width + 20)
         NSLayoutConstraint.activate([
-            view.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
-            view.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor),
-            view.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: inset),
-            view.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor),
-            separatorLayoutGuide.leadingAnchor.constraint(equalTo: leadingAnchor)
+            isOpenedLabel.topAnchor.constraint(equalTo: label.bottomAnchor, constant: 3),
+            isOpenedLabel.heightAnchor.constraint(equalToConstant: 23),
+            isOpenedLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -10),
+            isOpenedLabelWidthContraint!
         ])
-        view.backgroundColor = UIColor.systemBackground
+    }
+    
+    func changeIsOpenedLabel(_ label: UILabel, component: IssueStatusViewComponent) {
+        label.layer.borderWidth = 1
+        label.layer.borderColor = component.normalColor.cgColor
+        label.layer.cornerRadius = 5
+
+        let attachment = NSTextAttachment()
+        attachment.image = component.icon?.withTintColor(component.darkColor)
+
+        let fullString = NSMutableAttributedString(attachment: attachment)
+        fullString.append(NSAttributedString(string: component.text))
+
+        label.attributedText = fullString
+        label.textColor = component.darkColor
+        label.layer.backgroundColor = component.lightColor.cgColor
+        
+        label.textAlignment = .center
+        label.translatesAutoresizingMaskIntoConstraints = false
+    }
+    
+    func setupBaseView(inset: CGFloat) {
+		contentView.backgroundColor = .tertiarySystemBackground
     }
     
     func setupViewsIfNeeded() {
-        contentView.backgroundColor = .systemBackground
+        contentView.backgroundColor = .tertiarySystemBackground
     }
 }
