@@ -121,7 +121,7 @@ class IssueViewController: UIViewController, ListCollectionViewProtocol {
 extension IssueViewController {
     func createSwipeLayout() -> UICollectionViewLayout {
         var config = UICollectionLayoutListConfiguration(appearance: .plain)
-        
+		
         config.trailingSwipeActionsConfigurationProvider = { (indexPath) -> UISwipeActionsConfiguration in
             return UISwipeActionsConfiguration(actions: [
                                                 UIContextualAction(
@@ -214,7 +214,7 @@ extension IssueViewController {
             cell.setupViewsIfNeeded()
             cell.issue = item
             cell.accessories = [.multiselect()]
-            cell.backgroundConfiguration?.backgroundColor = .systemBackground
+            cell.backgroundConfiguration?.backgroundColor = .tertiarySystemBackground
         }
         
         dataSource = DataSource(collectionView: collectionView) { (collectionView: UICollectionView, indexPath: IndexPath, item: Issue) -> UICollectionViewCell? in

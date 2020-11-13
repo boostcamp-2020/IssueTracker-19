@@ -129,9 +129,11 @@ class IssueCollectionViewCell: UICollectionViewListCell {
             milestoneWidthConstraint!,
             milestone.leadingAnchor.constraint(greaterThanOrEqualTo: issueTitle.trailingAnchor, constant: 1)
         ])
+		milestone.textColor = .systemGray
+		milestone.backgroundColor = .quaternarySystemFill
         milestone.layer.borderWidth = 1
         milestone.layer.cornerRadius = 5
-        milestone.layer.borderColor = UIColor.systemGray3.cgColor
+        milestone.layer.borderColor = UIColor.lightGray.cgColor
     }
     
     private func setupLabel() {
