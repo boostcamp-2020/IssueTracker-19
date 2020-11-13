@@ -1,8 +1,8 @@
 # 💎 [Group 19] 이슈 트래커 clone project
 
-## [WBE 배포 주소]
+## [WEB 배포 주소]
 
-http://49.50.163.23
+- http://issuetracker.ga/
 
 ### API 문서
 
