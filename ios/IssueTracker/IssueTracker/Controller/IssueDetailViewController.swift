@@ -48,7 +48,12 @@ class IssueDetailViewController: UIViewController, ListCollectionViewProtocol {
 	}
 	
 	func loadDate() {
-		markdownWrapper.forEach{$0.markdown.removeFromSuperview()}
+		markdownWrapper.forEach{ tmp in
+			DispatchQueue.main.async {
+				tmp.markdown.removeFromSuperview()
+			}
+			
+		}
 		markdownWrapper = []
 		HTTPAgent.shared.sendRequest(from: "http://49.50.163.23:3000/api/issues/\(issue.no)", method: .GET) { [weak self] (result) in
 			guard let self = self else { return }
@@ -73,12 +78,12 @@ class IssueDetailViewController: UIViewController, ListCollectionViewProtocol {
 							
 							wrapper.markdown.isScrollEnabled = false
 							wrapper.markdown.load(markdown: comment.content)
+							self.markdownWrapper.append(wrapper)
 							wrapper.markdown.onRendered = { [weak self] height in
 								wrapper.height = height
 								self?.updateList()
 							}
 							
-							self.markdownWrapper.append(wrapper)
 						}
 					}
 					
@@ -191,7 +196,13 @@ extension IssueDetailViewController {
 			else { return nil }
 			
 			cell.issueComment = item
-			cell.wrapper = self?.markdownWrapper[indexPath.row]
+			
+			if let count = self?.markdownWrapper.count, count > indexPath.item {
+				cell.wrapper = self?.markdownWrapper[indexPath.item]
+				
+			}
+			print(indexPath.item)
+			print(self?.markdownWrapper.count)
 			return cell
 		}
 		dataSource?.supplementaryViewProvider = { [weak self] collectionView, kind, indexPath in
@@ -295,10 +306,16 @@ extension IssueDetailViewController {
 				case .success(_):
 					guard let idx = self.list.firstIndex(where: { $0.no == comment.no }) else { return }
 					self.list.remove(at: idx)
+					print(1123)
 					self.updateList()
 					
 				case .failure(let error):
 					print(error)
+					DispatchQueue.main.async {
+						
+						self.presentAlert(title: "삭제 불가", message: "다른 유저의 정보를 수정할 수 없습니다.")
+					}
+					
 				}
 			}
 			
@@ -315,8 +332,6 @@ extension IssueDetailViewController {
 		
 		self.present(actionSheet, animated: true, completion: nil)
 	}
-	
-	
 	
 	
 	
@@ -348,5 +363,13 @@ extension IssueDetailViewController {
 		let indexPath = IndexPath(row: 0, section: 0)
 		collectionView.scrollToItem(at: indexPath, at: .bottom, animated: true)
 		
+	}
+	
+	
+	func presentAlert(title: String, message: String) {
+		let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+		let defaultAction = UIAlertAction(title: "OK", style: .destructive)
+		alert.addAction(defaultAction)
+		present(alert, animated: false, completion: nil)
 	}
 }

@@ -69,18 +69,34 @@ class CommentAddViewController: UIViewController {
 			}
 		} else if let commentNo = commentNo {
 			let data = try? JSONEncoder().encode(["content": content])
-			
+			print(commentNo)
 			HTTPAgent.shared.sendRequest(from: "http://49.50.163.23:3000/api/comments/\(commentNo.description)", method: .PATCH, body: data) { [weak self] (result) in
+				print("qwerwqer")
+				
 				switch result {
 				case .success(_):
 					NotificationCenter.default.post(name: .didCommentAdd, object: self)
 				case .failure(let error):
 					print(error)
+					DispatchQueue.main.async {
+						
+						self?.presentAlert(title: "수정 불가", message: "다른 유저의 정보를 수정할 수 없습니다.")
+						
+					}
 				}
 			}
 		}
 		
 		
+	}
+	func presentAlert(title: String, message: String) {
+		let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+		let defaultAction = UIAlertAction(title: "OK", style: .destructive, handler: { [weak self](_) in
+			self?.dismiss(animated: true, completion: nil)
+		})
+		
+		alert.addAction(defaultAction)
+		present(alert, animated: false, completion: nil)
 	}
 }
 
