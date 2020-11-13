@@ -229,6 +229,7 @@ export default function LabelEditBox({
             value={label.name}
             placeholder="Label name"
             required
+            maxLength={30}
           />
         </ItemBox>
         <ItemBox flexGrow={4}>
@@ -239,6 +240,7 @@ export default function LabelEditBox({
             onChange={handleLabel}
             value={label.description ? label.description : ''}
             placeholder="Description (optional)"
+            maxLength={90}
           />
         </ItemBox>
         <ItemBox>
