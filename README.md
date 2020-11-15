@@ -126,7 +126,6 @@
 ## iOS
 
 ### 앱 실행화면
-
 <p align=“center”>
   <kbd><img src="https://user-images.githubusercontent.com/31726630/99057284-ed5a0800-25de-11eb-9320-8316d8247aa3.gif" width="250"></kbd>
   <kbd><img src="https://user-images.githubusercontent.com/31726630/99057798-9e60a280-25df-11eb-9ceb-764e2ebdb4ac.gif" width="250"></kbd>
@@ -142,6 +141,6 @@
  <kbd><img src="https://user-images.githubusercontent.com/31726630/99058930-33b06680-25e1-11eb-9ec4-cc9c11bc6876.gif" width="250"></kbd>
 </p>
 
-### 최종 배포 링크
 
+### 최종 배포 링크
 https://kr.object.ncloudstorage.com/issuetracker-19/default.html
