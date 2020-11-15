@@ -1,10 +1,10 @@
 #!/bin/bash
 
-git checkout web
+git checkout master
 git fetch
 
 head=`git rev-parse HEAD`
-origin=`git rev-parse origin/web`
+origin=`git rev-parse origin/master`
 
 if [ $head != $origin ]; then
         git pull
