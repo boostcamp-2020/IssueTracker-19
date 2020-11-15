@@ -33,6 +33,13 @@ const CheckCount = styled.span`
   font-size: 0.9rem;
 `;
 
+const UserIcon = styled.img`
+  width: 1.5rem;
+  height: 1.5rem;
+  margin-right: 0.5rem;
+  border-radius: 50%;
+`;
+
 export default function IssueFilterTab({ setIssues, issues }) {
   const {
     filterOptions,
@@ -127,8 +134,9 @@ export default function IssueFilterTab({ setIssues, issues }) {
         ) : (
           <>
             <FilterBox name="Author" title="Filter by author">
-              {users.map(({ nickname }) => (
+              {users.map(({ nickname, image }) => (
                 <ListItem key={nickname} onClick={handleAuthorFilter}>
+                  <UserIcon src={image} />
                   {nickname}
                 </ListItem>
               ))}
@@ -151,8 +159,9 @@ export default function IssueFilterTab({ setIssues, issues }) {
                 ))}
             </FilterBox>
             <FilterBox name="Assignees" title={`Filter by who's assigned`}>
-              {[{ nickname: 'Assigned to nobody' }].concat(users).map(({ nickname }) => (
+              {[{ nickname: 'Assigned to nobody' }].concat(users).map(({ nickname, image }) => (
                 <ListItem key={nickname} onClick={handleAssigneeFilter}>
+                  {image && <UserIcon src={image} />}
                   {nickname}
                 </ListItem>
               ))}
