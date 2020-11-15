@@ -28,6 +28,6 @@ export default function withAuth(InnerComponent) {
       };
     }, []);
 
-    return <>{user ? <InnerComponent user={user} {...props} /> : <div>Loading</div>}</>;
+    return user ? <InnerComponent user={user} {...props} /> : <div>Loading</div>;
   };
 }
