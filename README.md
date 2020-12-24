@@ -2,7 +2,7 @@
 
 ## [WEB 배포 주소]
 
-- http://issuetracker.ga/
+- ~http://issuetracker.ga/~ (서버 반납)
 
 # [WEB 실행 화면]
 
